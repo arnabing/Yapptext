@@ -1,15 +1,22 @@
 import OpenAI from 'openai'
 
-if (!process.env.OPENAI_API_KEY) {
-  throw new Error('Missing OPENAI_API_KEY environment variable')
-}
+let openaiClient: OpenAI | null = null
 
-export const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-})
+function getOpenAIClient(): OpenAI {
+  if (!openaiClient) {
+    if (!process.env.OPENAI_API_KEY) {
+      throw new Error('Missing OPENAI_API_KEY environment variable')
+    }
+    openaiClient = new OpenAI({
+      apiKey: process.env.OPENAI_API_KEY,
+    })
+  }
+  return openaiClient
+}
 
 export async function transcribeAudio(file: File): Promise<string> {
   try {
+    const openai = getOpenAIClient()
     const transcription = await openai.audio.transcriptions.create({
       file: file,
       model: 'whisper-1',
