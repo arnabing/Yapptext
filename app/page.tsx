@@ -21,6 +21,7 @@ export default function Home() {
   const [wordCount, setWordCount] = useState(0)
   const [minutesUsed, setMinutesUsed] = useState(0)
   const [dailyLimit] = useState(20)
+  const [statusMessage, setStatusMessage] = useState('')
   
   const fileInputRef = useRef<HTMLInputElement>(null)
   const processingTimerRef = useRef<NodeJS.Timeout | null>(null)
@@ -71,8 +72,8 @@ export default function Home() {
       return
     }
 
-    if (selectedFile.size > 25 * 1024 * 1024) {
-      setError('File size must be less than 25MB')
+    if (selectedFile.size > 20 * 1024 * 1024) {
+      setError('File size must be less than 20MB (approx. 20 minutes of audio)')
       setState('error')
       return
     }
@@ -99,30 +100,57 @@ export default function Home() {
       setProcessingTime(prev => prev + 1)
     }, 1000)
 
-    const progressInterval = setInterval(() => {
-      setProgress(prev => {
-        if (prev >= 90) return prev
-        return prev + Math.random() * 15
-      })
-    }, 500)
-
     try {
       const formData = new FormData()
       formData.append('audio', file)
 
-      const response = await fetch('/api/transcribe', {
-        method: 'POST',
-        body: formData,
+      // Use XMLHttpRequest for real upload progress
+      const xhr = new XMLHttpRequest()
+      
+      const uploadPromise = new Promise<any>((resolve, reject) => {
+        xhr.upload.addEventListener('progress', (e) => {
+          if (e.lengthComputable) {
+            const percentComplete = Math.round((e.loaded / e.total) * 50) // 0-50% for upload
+            setProgress(percentComplete)
+            setStatusMessage('Uploading audio file...')
+          }
+        })
+
+        xhr.addEventListener('load', () => {
+          if (xhr.status === 200) {
+            try {
+              const data = JSON.parse(xhr.responseText)
+              resolve(data)
+            } catch (e) {
+              reject(new Error('Invalid response format'))
+            }
+          } else {
+            try {
+              const errorData = JSON.parse(xhr.responseText)
+              reject(new Error(errorData.error || `Request failed with status ${xhr.status}`))
+            } catch {
+              reject(new Error(`Request failed with status ${xhr.status}`))
+            }
+          }
+        })
+
+        xhr.addEventListener('error', () => {
+          reject(new Error('Network error occurred. Please try again.'))
+        })
+
+        xhr.addEventListener('timeout', () => {
+          reject(new Error('Request timed out. Please try with a smaller file.'))
+        })
+
+        xhr.open('POST', '/api/transcribe')
+        xhr.timeout = 120000 // 2 minutes timeout
+        xhr.send(formData)
       })
 
-      clearInterval(progressInterval)
-      
-      if (!response.ok) {
-        const data = await response.json()
-        throw new Error(data.error || 'Failed to transcribe audio')
-      }
-
-      const data = await response.json()
+      // After upload completes, show processing status
+      setProgress(50) // Upload complete, now processing
+      setStatusMessage('Processing with OpenAI Whisper...')
+      const data = await uploadPromise
       
       setProgress(100)
       setTranscript(data.text)
@@ -134,7 +162,6 @@ export default function Home() {
         clearInterval(processingTimerRef.current)
       }
     } catch (err) {
-      clearInterval(progressInterval)
       if (processingTimerRef.current) {
         clearInterval(processingTimerRef.current)
       }
@@ -250,12 +277,15 @@ export default function Home() {
                 <CardContent className="p-6">
                   <div className="flex items-center gap-2 mb-4">
                     <Loader2 className="h-4 w-4 animate-spin" />
-                    <span className="font-medium">Processing audio...</span>
+                    <span className="font-medium">
+                      {statusMessage || 'Processing audio...'}
+                    </span>
                   </div>
                   <Progress value={progress} className="mb-2" />
-                  <p className="text-sm text-muted-foreground">
-                    {processingTime > 0 && `${processingTime} seconds elapsed`}
-                  </p>
+                  <div className="flex justify-between text-sm text-muted-foreground">
+                    <span>{progress < 50 ? 'Uploading' : 'Transcribing'}...</span>
+                    <span>{processingTime > 0 && `${processingTime}s`}</span>
+                  </div>
                 </CardContent>
               </Card>
             )}

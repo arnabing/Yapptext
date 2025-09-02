@@ -5,14 +5,21 @@ import { checkRateLimit, updateUsage } from '@/lib/rate-limit'
 export const maxDuration = 60 // Maximum function duration: 60 seconds
 
 export async function POST(request: NextRequest) {
+  console.log('\n=== TRANSCRIBE ENDPOINT START ===')
+  console.log('Timestamp:', new Date().toISOString())
+  console.log('Headers:', Object.fromEntries(request.headers.entries()))
+  
   try {
     // Get IP address for rate limiting
     const ip = request.headers.get('x-forwarded-for')?.split(',')[0] || 
                request.headers.get('x-real-ip') || 
                'unknown'
+    console.log('Client IP:', ip)
 
     // Check rate limit
+    console.log('Checking rate limit...')
     const { allowed, remaining, minutesUsed } = await checkRateLimit(ip)
+    console.log('Rate limit result:', { allowed, remaining, minutesUsed })
     
     if (!allowed) {
       return NextResponse.json(
@@ -22,20 +29,31 @@ export async function POST(request: NextRequest) {
     }
 
     // Parse form data
+    console.log('Parsing form data...')
     const formData = await request.formData()
     const audioFile = formData.get('audio') as File
+    console.log('Form data parsed, audio file:', audioFile ? 'present' : 'missing')
     
     if (!audioFile) {
+      console.error('No audio file in form data')
       return NextResponse.json(
         { error: 'No audio file provided' },
         { status: 400 }
       )
     }
 
-    // Validate file size
-    if (audioFile.size > 25 * 1024 * 1024) {
+    console.log('Audio file details:', {
+      name: audioFile.name,
+      size: audioFile.size,
+      type: audioFile.type,
+      sizeInMB: (audioFile.size / 1024 / 1024).toFixed(2)
+    })
+
+    // Validate file size (20MB limit - well under OpenAI's 25MB limit)
+    if (audioFile.size > 20 * 1024 * 1024) {
+      console.error('File too large:', audioFile.size)
       return NextResponse.json(
-        { error: 'File size must be less than 25MB' },
+        { error: 'File size must be less than 20MB' },
         { status: 400 }
       )
     }
@@ -63,8 +81,18 @@ export async function POST(request: NextRequest) {
       )
     }
 
+    console.log(`Processing audio file: ${audioFile.name}, size: ${(audioFile.size / 1024 / 1024).toFixed(2)}MB`)
+    console.log('Environment check:')
+    console.log('- OPENAI_API_KEY exists:', !!process.env.OPENAI_API_KEY)
+    console.log('- OPENAI_API_KEY length:', process.env.OPENAI_API_KEY?.length)
+    console.log('- OPENAI_API_KEY prefix:', process.env.OPENAI_API_KEY?.substring(0, 20))
+
     // Transcribe the audio
+    console.log('Starting transcription...')
+    const startTime = Date.now()
     const text = await transcribeAudio(audioFile)
+    const transcriptionTime = Date.now() - startTime
+    console.log(`Transcription completed in ${transcriptionTime}ms`)
     
     // Update usage
     const newUsage = await updateUsage(ip, estimatedMinutes)
@@ -81,7 +109,16 @@ export async function POST(request: NextRequest) {
     })
     
   } catch (error) {
-    console.error('Transcription error:', error)
+    console.error('=== TRANSCRIPTION ERROR ===')
+    console.error('Error type:', typeof error)
+    console.error('Error instance:', error instanceof Error)
+    console.error('Full error:', error)
+    
+    if (error instanceof Error) {
+      console.error('Error message:', error.message)
+      console.error('Error stack:', error.stack)
+      console.error('Error name:', error.name)
+    }
     
     // Check if it's an OpenAI API error
     if (error instanceof Error && error.message.includes('OpenAI')) {
@@ -95,5 +132,7 @@ export async function POST(request: NextRequest) {
       { error: 'Failed to transcribe audio. Please try again.' },
       { status: 500 }
     )
+  } finally {
+    console.log('=== TRANSCRIBE ENDPOINT END ===\n')
   }
 }
