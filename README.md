@@ -1,11 +1,15 @@
-# YappText - Simple Audio Transcription
+# YappText - Advanced Audio Transcription with Speaker Detection
 
-A clean, privacy-focused audio transcription web app that converts audio files to text using OpenAI's Whisper API.
+A powerful, privacy-focused audio transcription web app with automatic speaker detection, powered by AssemblyAI.
 
 ## Features
 
 - 🎵 Support for MP3, WAV, M4A, WebM, MP4 audio files
-- 📝 Fast, accurate transcription using OpenAI Whisper
+- 🎤 **Automatic speaker diarization** - Identifies different speakers
+- 📝 **Smart formatting** - Auto-chapters and paragraph detection
+- 🌍 **99 language support** with automatic detection
+- 💬 **Translation** - Translate transcripts to any language
+- ⏱️ **Word-level timestamps** - Precise audio synchronization
 - 🔒 Privacy-first: No files stored, processed in memory only
 - 📱 Mobile-responsive design
 - ⚡ Simple drag-and-drop interface
@@ -16,7 +20,8 @@ A clean, privacy-focused audio transcription web app that converts audio files t
 
 - **Framework**: Next.js 14 (App Router)
 - **UI**: Shadcn/ui components + Tailwind CSS
-- **Transcription**: OpenAI Whisper API
+- **Transcription**: AssemblyAI API (with speaker detection)
+- **Translation**: OpenAI GPT-3.5 API
 - **Rate Limiting**: Vercel KV (Redis)
 - **Deployment**: Vercel
 
@@ -28,19 +33,27 @@ A clean, privacy-focused audio transcription web app that converts audio files t
    npm install
    ```
 
-3. Copy `.env.example` to `.env.local` and add your OpenAI API key:
+3. Copy `.env.example` to `.env.local` and add your API keys:
    ```bash
    cp .env.example .env.local
    ```
 
-4. Get your OpenAI API key from [OpenAI Platform](https://platform.openai.com/api-keys)
+4. Get your API keys:
+   - **AssemblyAI**: Sign up at [AssemblyAI](https://www.assemblyai.com) for $50 free credits
+   - **OpenAI** (for translation): Get from [OpenAI Platform](https://platform.openai.com/api-keys)
 
-5. Run the development server:
+5. Add to `.env.local`:
+   ```env
+   ASSEMBLYAI_API_KEY=your_assemblyai_key
+   OPENAI_API_KEY=your_openai_key
+   ```
+
+6. Run the development server:
    ```bash
    npm run dev
    ```
 
-6. Open [http://localhost:3000](http://localhost:3000)
+7. Open [http://localhost:3000](http://localhost:3000)
 
 **Note**: Rate limiting will be disabled in local development unless you configure Vercel KV.
 
@@ -54,7 +67,8 @@ A clean, privacy-focused audio transcription web app that converts audio files t
    - Import your GitHub repository
 
 3. Configure environment variables in Vercel:
-   - Add `OPENAI_API_KEY` with your OpenAI API key
+   - Add `ASSEMBLYAI_API_KEY` with your AssemblyAI API key
+   - Add `OPENAI_API_KEY` with your OpenAI API key (for translation)
 
 4. Enable Vercel KV for rate limiting:
    - Go to your project dashboard
@@ -79,13 +93,20 @@ Edit the validation in `app/page.tsx` and `app/api/transcribe/route.ts`:
 if (selectedFile.size > 25 * 1024 * 1024) // 25MB limit
 ```
 
-## API Usage
+## API Usage & Pricing
 
-The app uses OpenAI's Whisper API which costs approximately $0.006 per minute of audio.
+### AssemblyAI (Transcription)
+- **Cost**: $0.27 per hour ($0.0045 per minute)
+- **Free Credits**: $50 on signup (185 hours of audio)
+- **Features included**: Speaker detection, auto-chapters, formatting
+
+### OpenAI (Translation)
+- **Cost**: ~$0.002 per 1,000 tokens (roughly 750 words)
+- **Used for**: Text translation to other languages
 
 With the default 20-minute daily limit per user:
-- Maximum cost per user per day: ~$0.12
-- Monthly cost for 100 daily users: ~$360
+- Maximum transcription cost per user per day: ~$0.09
+- Monthly cost for 100 daily users: ~$270
 
 ## Privacy & Security
 
@@ -95,14 +116,23 @@ With the default 20-minute daily limit per user:
 - ✅ Rate limiting by IP address only
 - ✅ All API calls are server-side (API key never exposed)
 
+## Current Capabilities
+
+- ✅ Speaker diarization (automatic speaker detection)
+- ✅ Auto-chapters and smart paragraph formatting
+- ✅ 99 language support with auto-detection
+- ✅ Translation to any language
+- ✅ Word-level timestamps for audio sync
+- ✅ Sentiment analysis (optional)
+
 ## Future Enhancements
 
 - [ ] Live microphone recording
-- [ ] Multiple export formats (SRT, VTT, etc.)
-- [ ] User accounts with history
-- [ ] Batch processing
-- [ ] Language detection and translation
-- [ ] Speaker diarization
+- [ ] Multiple export formats (SRT, VTT, PDF)
+- [ ] User accounts with transcript history
+- [ ] Batch processing for multiple files
+- [ ] Real-time transcription
+- [ ] Custom vocabulary and terminology
 
 ## License
 

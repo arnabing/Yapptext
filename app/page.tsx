@@ -4,9 +4,9 @@ import { useState, useRef, useEffect, ChangeEvent, DragEvent } from 'react'
 import { Card, CardContent } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Progress } from '@/components/ui/progress'
-import { Textarea } from '@/components/ui/textarea'
 import { Alert, AlertDescription } from '@/components/ui/alert'
 import { Upload, CheckCircle, Copy, AlertCircle, FileAudio, Loader2 } from 'lucide-react'
+import { TranscriptView } from '@/components/TranscriptView'
 
 type AppState = 'idle' | 'file-selected' | 'processing' | 'complete' | 'error'
 
@@ -14,6 +14,8 @@ export default function Home() {
   const [state, setState] = useState<AppState>('idle')
   const [file, setFile] = useState<File | null>(null)
   const [transcript, setTranscript] = useState('')
+  const [utterances, setUtterances] = useState<any[]>([])
+  const [chapters, setChapters] = useState<any[]>([])
   const [progress, setProgress] = useState(0)
   const [error, setError] = useState('')
   const [isDragging, setIsDragging] = useState(false)
@@ -149,11 +151,13 @@ export default function Home() {
 
       // After upload completes, show processing status
       setProgress(50) // Upload complete, now processing
-      setStatusMessage('Processing with OpenAI Whisper...')
+      setStatusMessage('Processing with AssemblyAI...')
       const data = await uploadPromise
       
       setProgress(100)
       setTranscript(data.text)
+      setUtterances(data.utterances || [])
+      setChapters(data.chapters || [])
       setWordCount(data.words || data.text.split(' ').length)
       setMinutesUsed(data.minutesUsed || minutesUsed + data.duration)
       setState('complete')
@@ -191,6 +195,8 @@ export default function Home() {
     setState('idle')
     setFile(null)
     setTranscript('')
+    setUtterances([])
+    setChapters([])
     setProgress(0)
     setError('')
     setProcessingTime(0)
@@ -309,22 +315,25 @@ export default function Home() {
             {/* Transcript Display */}
             {transcript && state === 'complete' && (
               <>
-                <div className="relative">
-                  <Textarea
-                    readOnly
-                    value={transcript}
-                    className="min-h-[300px] resize-none pr-20 font-mono text-sm"
+                <div className="space-y-4">
+                  <div className="flex justify-between items-center">
+                    <h3 className="text-lg font-semibold">Transcript</h3>
+                    <Button
+                      id="copy-button"
+                      size="sm"
+                      variant="outline"
+                      onClick={copyToClipboard}
+                    >
+                      <Copy className="h-4 w-4 mr-2" />
+                      Copy
+                    </Button>
+                  </div>
+                  
+                  <TranscriptView
+                    utterances={utterances}
+                    chapters={chapters}
+                    fullText={transcript}
                   />
-                  <Button
-                    id="copy-button"
-                    size="sm"
-                    variant="outline"
-                    className="absolute top-2 right-2"
-                    onClick={copyToClipboard}
-                  >
-                    <Copy className="h-4 w-4 mr-2" />
-                    Copy
-                  </Button>
                 </div>
 
                 <Button variant="outline" className="w-full" onClick={reset}>
