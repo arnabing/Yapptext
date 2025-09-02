@@ -7,6 +7,7 @@ import { Progress } from '@/components/ui/progress'
 import { Alert, AlertDescription } from '@/components/ui/alert'
 import { Upload, CheckCircle, Copy, AlertCircle, FileAudio, Loader2 } from 'lucide-react'
 import { TranscriptView } from '@/components/TranscriptView'
+import { AudioControls } from '@/components/AudioControls'
 
 type AppState = 'idle' | 'file-selected' | 'processing' | 'complete' | 'error'
 
@@ -24,6 +25,8 @@ export default function Home() {
   const [minutesUsed, setMinutesUsed] = useState(0)
   const [dailyLimit] = useState(20)
   const [statusMessage, setStatusMessage] = useState('')
+  const [audioUrl, setAudioUrl] = useState<string>('')
+  const [currentPlayTime, setCurrentPlayTime] = useState(0)
   
   const fileInputRef = useRef<HTMLInputElement>(null)
   const processingTimerRef = useRef<NodeJS.Timeout | null>(null)
@@ -66,6 +69,10 @@ export default function Home() {
   }
 
   const handleFileSelect = (selectedFile: File) => {
+    // Create audio URL for playback
+    const url = URL.createObjectURL(selectedFile)
+    setAudioUrl(url)
+    
     const validTypes = ['audio/mp3', 'audio/mpeg', 'audio/wav', 'audio/wave', 'audio/x-wav', 'audio/m4a', 'audio/x-m4a', 'audio/webm', 'audio/mp4']
     
     if (!validTypes.includes(selectedFile.type) && !selectedFile.name.match(/\.(mp3|wav|m4a|webm|mp4)$/i)) {
@@ -201,6 +208,8 @@ export default function Home() {
     setError('')
     setProcessingTime(0)
     setWordCount(0)
+    setAudioUrl('')
+    setCurrentPlayTime(0)
     if (fileInputRef.current) {
       fileInputRef.current.value = ''
     }
@@ -315,6 +324,14 @@ export default function Home() {
             {/* Transcript Display */}
             {transcript && state === 'complete' && (
               <>
+                {/* Audio Player */}
+                {audioUrl && (
+                  <AudioControls
+                    audioUrl={audioUrl}
+                    onTimeUpdate={setCurrentPlayTime}
+                  />
+                )}
+                
                 <div className="space-y-4">
                   <div className="flex justify-between items-center">
                     <h3 className="text-lg font-semibold">Transcript</h3>
@@ -333,6 +350,7 @@ export default function Home() {
                     utterances={utterances}
                     chapters={chapters}
                     fullText={transcript}
+                    currentTime={currentPlayTime * 1000}
                   />
                 </div>
 

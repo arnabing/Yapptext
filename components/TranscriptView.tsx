@@ -68,21 +68,15 @@ export function TranscriptView({
   const groupedUtterances: Array<{
     speaker: string
     segments: TranscriptSegment[]
-    chapter?: Chapter | null
   }> = []
   
   let currentGroup: typeof groupedUtterances[0] | null = null
   
   utterances.forEach((utterance) => {
-    const chapter = getChapterForUtterance(utterance)
-    
-    if (!currentGroup || 
-        currentGroup.speaker !== utterance.speaker || 
-        currentGroup.chapter?.headline !== chapter?.headline) {
+    if (!currentGroup || currentGroup.speaker !== utterance.speaker) {
       currentGroup = {
         speaker: utterance.speaker,
-        segments: [utterance],
-        chapter
+        segments: [utterance]
       }
       groupedUtterances.push(currentGroup)
     } else {
@@ -91,48 +85,56 @@ export function TranscriptView({
   })
 
   return (
-    <ScrollArea className="h-[400px] rounded-md border">
-      <div className="p-6 space-y-6">
+    <ScrollArea className="h-[500px] rounded-md border">
+      <div className="p-4 space-y-4">
+        {/* Show chapters at the top if they exist */}
+        {chapters && chapters.length > 0 && (
+          <div className="mb-6 p-4 bg-muted/50 rounded-lg">
+            <h3 className="text-sm font-semibold mb-2">Chapters</h3>
+            <div className="space-y-2">
+              {chapters.map((chapter, idx) => (
+                <div key={idx} className="text-sm">
+                  <span className="font-medium">{chapter.headline}</span>
+                  <span className="text-muted-foreground ml-2">
+                    {formatTime(chapter.start / 1000)}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+        
+        {/* Transcript segments */}
         {groupedUtterances.map((group, groupIndex) => {
           const isActive = currentTime >= group.segments[0].start && 
                           currentTime <= group.segments[group.segments.length - 1].end
           
           return (
-            <div key={groupIndex} className="space-y-3">
-              {/* Chapter heading if this is the start of a new chapter */}
-              {group.chapter && (groupIndex === 0 || 
-                groupedUtterances[groupIndex - 1]?.chapter?.headline !== group.chapter.headline) && (
-                <div className="space-y-2 pb-2">
-                  <h3 className="text-lg font-semibold">{group.chapter.headline}</h3>
-                  <p className="text-sm text-muted-foreground">{group.chapter.summary}</p>
-                  <Separator />
-                </div>
-              )}
+            <div 
+              key={groupIndex} 
+              className={`space-y-2 ${isActive ? 'bg-accent/50 -mx-2 px-2 py-1 rounded-md' : ''}`}
+            >
+              <div className="flex items-center gap-2">
+                <Badge 
+                  variant="secondary" 
+                  className={speakerColorMap[group.speaker]}
+                >
+                  {group.speaker}
+                </Badge>
+                <span className="text-xs text-muted-foreground">
+                  {formatTime(group.segments[0].start / 1000)}
+                </span>
+              </div>
               
-              {/* Speaker segment */}
-              <div className={`space-y-2 ${isActive ? 'bg-accent/50 -mx-2 px-2 py-1 rounded-md' : ''}`}>
-                <div className="flex items-center gap-2">
-                  <Badge 
-                    variant="secondary" 
-                    className={speakerColorMap[group.speaker]}
+              <div className="space-y-1">
+                {group.segments.map((segment, segIndex) => (
+                  <p 
+                    key={segIndex}
+                    className="text-sm leading-relaxed pl-2"
                   >
-                    {group.speaker}
-                  </Badge>
-                  <span className="text-xs text-muted-foreground">
-                    {formatTime(group.segments[0].start / 1000)}
-                  </span>
-                </div>
-                
-                <div className="space-y-1">
-                  {group.segments.map((segment, segIndex) => (
-                    <p 
-                      key={segIndex}
-                      className="text-sm leading-relaxed pl-2"
-                    >
-                      {segment.text}
-                    </p>
-                  ))}
-                </div>
+                    {segment.text}
+                  </p>
+                ))}
               </div>
             </div>
           )
