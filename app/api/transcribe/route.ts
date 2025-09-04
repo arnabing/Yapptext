@@ -32,7 +32,7 @@ export async function POST(request: NextRequest) {
     console.log('Parsing form data...')
     const formData = await request.formData()
     const audioFile = formData.get('audio') as File
-    const useNanoModel = formData.get('useNanoModel') === 'true'
+    const useNanoModel = true // Always use nano model (3x faster)
     const enableSentiment = formData.get('enableSentiment') === 'true'
     const enableKeyPhrases = formData.get('enableKeyPhrases') === 'true'
     

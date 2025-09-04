@@ -12,8 +12,7 @@ import { AudioControls } from '@/components/AudioControls'
 import { LanguageSelector } from '@/components/LanguageSelector'
 import { Progress } from '@/components/ui/progress'
 import { Badge } from '@/components/ui/badge'
-import { Switch } from '@/components/ui/switch'
-import { Label } from '@/components/ui/label'
+import { getSampleTranscript } from '@/lib/sample-transcripts'
 
 type AppState = 'idle' | 'file-selected' | 'processing' | 'complete' | 'error'
 
@@ -40,30 +39,33 @@ export default function Home() {
   const [originalUtterances, setOriginalUtterances] = useState<any[]>([])
   const [audioDuration, setAudioDuration] = useState(0) // in seconds
   const [estimatedTime, setEstimatedTime] = useState(0) // in seconds
-  const [useNanoModel, setUseNanoModel] = useState(false) // Use faster Nano model
+  // Nano model is now default - no toggle needed
   
   const fileInputRef = useRef<HTMLInputElement>(null)
   const processingTimerRef = useRef<NodeJS.Timeout | null>(null)
   
-  // Sample audio files
+  // Sample audio files with preloaded transcripts
   const sampleAudios = [
     { 
-      name: 'JFK Moon Speech',
-      url: 'https://www.nasa.gov/62284main_jfk_moon_speech.mp3',
-      duration: '2 min',
-      description: 'Historic speech'
+      name: 'I Have a Dream',
+      id: 'i_have_a_dream',
+      file: '/samples/I Have a Dream.mp3',
+      duration: '17 min',
+      description: 'MLK\'s historic speech'
     },
     {
-      name: 'Interview Sample',  
-      url: 'https://upload.wikimedia.org/wikipedia/commons/7/75/Winston_Churchill_-_Be_Ye_Men_of_Valour.ogg',
-      duration: '3 min',
-      description: 'Churchill speech'
+      name: 'Pulp Fiction',
+      id: 'pulp_fiction',  
+      file: '/samples/pulp_fiction.mp3',
+      duration: '4 min',
+      description: 'Royale with Cheese scene'
     },
     {
-      name: 'Podcast Demo',
-      url: 'https://upload.wikimedia.org/wikipedia/commons/4/4b/FDR_Pearl_Harbor.ogg', 
-      duration: '1 min',
-      description: 'FDR address'
+      name: 'Lil Wayne Deposition',
+      id: 'lil_wayne_deposition',
+      file: '/samples/lil_wayne_deposition.mp3', 
+      duration: '5 min',
+      description: 'Legal deposition excerpt'
     }
   ]
 
@@ -166,7 +168,7 @@ export default function Home() {
     try {
       const formData = new FormData()
       formData.append('audio', file)
-      formData.append('useNanoModel', useNanoModel.toString())
+      formData.append('useNanoModel', 'true') // Always use nano model (3x faster)
       formData.append('enableSentiment', 'true')
       formData.append('enableKeyPhrases', 'true')
 
@@ -463,17 +465,77 @@ export default function Home() {
                         className="cursor-pointer hover:bg-primary/10 transition-colors py-2 px-3"
                         onClick={async () => {
                           console.log('Loading sample:', sample.name)
-                          setStatusMessage('Loading sample audio...')
-                          try {
-                            const response = await fetch(sample.url)
-                            const blob = await response.blob()
-                            const file = new File([blob], sample.name + '.mp3', { type: 'audio/mpeg' })
-                            handleFileSelect(file)
-                            console.log('Sample loaded successfully:', sample.name)
-                          } catch (error) {
-                            console.error('Failed to load sample:', error)
-                            setError('Failed to load sample audio')
-                            setState('error')
+                          
+                          // Check if we have a preloaded transcript for this sample
+                          const sampleTranscript = getSampleTranscript(sample.id)
+                          
+                          if (sampleTranscript) {
+                            // Use preloaded transcript for a seamless experience
+                            setState('processing')
+                            setProgress(0)
+                            setStatusMessage('Loading sample...')
+                            setProcessingTime(0)
+                            
+                            // Start processing timer for realism
+                            processingTimerRef.current = setInterval(() => {
+                              setProcessingTime(prev => prev + 1)
+                            }, 1000)
+                            
+                            // Set audio URL for playback
+                            setAudioUrl(sample.file)
+                            setAudioDuration(sampleTranscript.transcript.duration)
+                            
+                            // Simulate processing with realistic progress
+                            let currentProgress = 0
+                            const progressInterval = setInterval(() => {
+                              currentProgress += 20
+                              setProgress(Math.min(currentProgress, 90))
+                              
+                              if (currentProgress >= 40) {
+                                setStatusMessage('Processing transcript...')
+                              }
+                              if (currentProgress >= 70) {
+                                setStatusMessage('Analyzing speakers...')
+                              }
+                            }, 200)
+                            
+                            // After a brief delay, load the preloaded data
+                            setTimeout(() => {
+                              clearInterval(progressInterval)
+                              if (processingTimerRef.current) {
+                                clearInterval(processingTimerRef.current)
+                              }
+                              
+                              setProgress(100)
+                              setTranscript(sampleTranscript.transcript.text)
+                              setUtterances(sampleTranscript.transcript.utterances)
+                              setChapters(sampleTranscript.transcript.chapters)
+                              setAllWords(sampleTranscript.transcript.allWords)
+                              setWordCount(sampleTranscript.transcript.words)
+                              setState('complete')
+                              
+                              // Trigger success animation
+                              confettiPresets.success()
+                              
+                              toast({
+                                title: 'Sample loaded!',
+                                description: `${sample.name} transcript ready`,
+                              })
+                            }, 1500) // Brief delay for realism
+                            
+                          } else {
+                            // Fallback: load the audio file normally (for files without preloaded transcripts)
+                            try {
+                              const response = await fetch(sample.file)
+                              const blob = await response.blob()
+                              const file = new File([blob], sample.name + '.mp3', { type: 'audio/mpeg' })
+                              handleFileSelect(file)
+                              console.log('Sample loaded for processing:', sample.name)
+                            } catch (error) {
+                              console.error('Failed to load sample:', error)
+                              setError('Failed to load sample audio')
+                              setState('error')
+                            }
                           }
                         }}
                       >
@@ -482,21 +544,6 @@ export default function Home() {
                         <span className="ml-2 text-xs text-muted-foreground">{sample.duration}</span>
                       </Badge>
                     ))}
-                  </div>
-                  
-                  {/* Speed Toggle */}
-                  <div className="flex items-center space-x-2 mt-4 pt-4 border-t">
-                    <Switch
-                      id="nano-mode"
-                      checked={useNanoModel}
-                      onCheckedChange={setUseNanoModel}
-                    />
-                    <Label htmlFor="nano-mode" className="flex flex-col">
-                      <span className="text-sm font-medium">Fast mode (Nano)</span>
-                      <span className="text-xs text-muted-foreground">
-                        {useNanoModel ? '3x faster, slightly less accurate' : 'Best accuracy (default)'}
-                      </span>
-                    </Label>
                   </div>
                 </div>
               </>

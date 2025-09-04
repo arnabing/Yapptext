@@ -88,10 +88,8 @@ export async function transcribeWithAssemblyAI(audioFile: File, options?: {
       // Don't specify language_code when using language_detection
     }
     
-    // Add Nano model for faster processing if requested
-    if (options?.useNanoModel) {
-      transcriptOptions.speech_model = 'nano'
-    }
+    // Always use nano model (3x faster)
+    transcriptOptions.speech_model = 'nano'
     
     // Add sentiment analysis if requested
     if (options?.enableSentiment) {

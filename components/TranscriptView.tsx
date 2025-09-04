@@ -163,8 +163,7 @@ export function TranscriptView({
                                       : 'bg-primary/20')
                                   )}
                                   style={{
-                                    fontWeight: isCurrentWord ? 600 : 400,
-                                    transition: 'font-weight 0.2s, background-color 0.2s'
+                                    transition: 'background-color 0.2s'
                                   }}
                                 >
                                   {word.text}{' '}
@@ -221,8 +220,7 @@ export function TranscriptView({
                                   isCurrentWord && 'bg-primary/30'
                                 )}
                                 style={{
-                                  fontWeight: isCurrentWord ? 600 : 400,
-                                  transition: 'font-weight 0.2s, background-color 0.2s'
+                                  transition: 'background-color 0.2s'
                                 }}
                               >
                                 {word.text}{' '}
