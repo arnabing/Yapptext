@@ -6,10 +6,14 @@ A powerful, privacy-focused audio transcription web app with automatic speaker d
 
 - 🎵 Support for MP3, WAV, M4A, WebM, MP4 audio files
 - 🎤 **Automatic speaker diarization** - Identifies different speakers
-- 📝 **Smart formatting** - Auto-chapters and paragraph detection
+- 📝 **Smart formatting** - Paragraph detection and conversation layout
 - 🌍 **99 language support** with automatic detection
 - 💬 **Translation** - Translate transcripts to any language
-- ⏱️ **Word-level timestamps** - Precise audio synchronization
+- ⏱️ **Word-level timestamps** - Synchronized highlighting during playback
+- 🚀 **Fast Mode (Nano)** - 3x faster transcription with slight accuracy tradeoff
+- 🎭 **Sentiment Analysis** - Analyze emotional tone of conversations
+- 🔑 **Key Phrases** - Automatic extraction of important concepts
+- 🎪 **Sample Audio** - Built-in demos for quick testing
 - 🔒 Privacy-first: No files stored, processed in memory only
 - 📱 Mobile-responsive design
 - ⚡ Simple drag-and-drop interface
@@ -96,9 +100,15 @@ if (selectedFile.size > 25 * 1024 * 1024) // 25MB limit
 ## API Usage & Pricing
 
 ### AssemblyAI (Transcription)
-- **Cost**: $0.27 per hour ($0.0045 per minute)
-- **Free Credits**: $50 on signup (185 hours of audio)
-- **Features included**: Speaker detection, auto-chapters, formatting
+- **Best Model (Default)**:
+  - **Cost**: $0.37 per hour (~$0.006 per minute)
+  - **Use for**: High accuracy, complex audio, multiple speakers
+- **Nano Model (Fast Mode)**:
+  - **Cost**: $0.12 per hour (~$0.002 per minute)  
+  - **Use for**: Quick transcriptions, cost efficiency
+  - **Speed**: 3x faster than Best model
+- **Free Credits**: $50 on signup (135 hours with Best, 400+ hours with Nano)
+- **Features included**: Speaker detection, sentiment analysis, key phrases extraction
 
 ### OpenAI (Translation)
 - **Cost**: ~$0.002 per 1,000 tokens (roughly 750 words)
@@ -119,11 +129,16 @@ With the default 20-minute daily limit per user:
 ## Current Capabilities
 
 - ✅ Speaker diarization (automatic speaker detection)
-- ✅ Auto-chapters and smart paragraph formatting
+- ✅ Smart paragraph formatting with iMessage-style layout
 - ✅ 99 language support with auto-detection
 - ✅ Translation to any language
-- ✅ Word-level timestamps for audio sync
-- ✅ Sentiment analysis (optional)
+- ✅ Word-level timestamps with synchronized highlighting
+- ✅ Sentiment analysis (enabled by default)
+- ✅ Key phrases extraction (enabled by default)
+- ✅ Fast Mode toggle (Nano model for 3x speed)
+- ✅ Sample audio for testing
+- ✅ Improved audio controls with seek buttons
+- ✅ Success animations with confetti
 
 ## Future Enhancements
 

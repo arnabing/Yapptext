@@ -38,14 +38,21 @@ yapptext/
 ## Core Features
 1. **Audio Upload**: Drag-and-drop or click to select audio files
 2. **File Validation**: MP3, WAV, M4A, WebM, MP4 (max 25MB)
-3. **Transcription**: AssemblyAI with automatic speaker detection
+3. **Transcription Models**:
+   - **Best Model** (default): Highest accuracy for complex audio
+   - **Nano Model**: 3x faster, cost-effective option
 4. **Speaker Diarization**: Identifies and labels different speakers
-5. **Auto-Chapters**: Smart paragraph and section detection
-6. **Translation**: Translate transcripts to any language
-7. **Audio Playback**: Synchronized highlighting with playback
-8. **Rate Limiting**: 20 minutes of audio per day per IP
-9. **Privacy**: No file storage, memory-only processing
-10. **Copy to Clipboard**: One-click transcript copying
+5. **Smart Formatting**: iMessage-style conversation layout
+6. **Audio Intelligence**:
+   - Sentiment analysis per sentence
+   - Key phrases extraction
+   - Word-level timestamps
+7. **Translation**: Translate transcripts to any language
+8. **Audio Playback**: Synchronized word highlighting
+9. **Sample Audio**: Built-in demos for testing
+10. **Rate Limiting**: 20 minutes of audio per day per IP
+11. **Privacy**: No file storage, memory-only processing
+12. **Copy to Clipboard**: One-click transcript copying
 
 ## Environment Variables
 ```env
@@ -64,7 +71,11 @@ Transcribes audio files using AssemblyAI with speaker detection.
 
 **Request:**
 - Method: POST
-- Body: FormData with 'audio' file
+- Body: FormData with:
+  - 'audio': File (required)
+  - 'useNanoModel': string ('true'/'false')
+  - 'enableSentiment': string ('true'/'false')
+  - 'enableKeyPhrases': string ('true'/'false')
 - Max size: 25MB
 
 **Response:**
@@ -74,20 +85,23 @@ Transcribes audio files using AssemblyAI with speaker detection.
   "words": 150,
   "utterances": [
     {
-      "speaker": "A",
+      "speaker": "Speaker A",
       "text": "Speaker A's text",
       "start": 0,
-      "end": 5000
+      "end": 5000,
+      "words": [
+        {"text": "word", "start": 0, "end": 100, "confidence": 0.98}
+      ]
     }
   ],
-  "chapters": [
-    {
-      "headline": "Chapter title",
-      "summary": "Chapter summary",
-      "start": 0,
-      "end": 10000
-    }
+  "chapters": [],
+  "allWords": [
+    {"text": "word", "start": 0, "end": 100, "confidence": 0.98, "speaker": "Speaker A"}
   ],
+  "sentimentAnalysis": [
+    {"text": "sentence", "sentiment": "positive", "confidence": 0.95}
+  ],
+  "keyPhrases": ["important phrase", "key concept"],
   "duration": 5,
   "minutesUsed": 5,
   "remainingMinutes": 15
@@ -179,10 +193,15 @@ Update accepted types in:
 5. Deploy
 
 ### Cost Considerations
-- AssemblyAI: $0.27/hour (~$0.0045 per minute)
+- AssemblyAI Best Model: $0.37/hour (~$0.006 per minute)
+- AssemblyAI Nano Model: $0.12/hour (~$0.002 per minute)
 - OpenAI Translation: ~$0.002 per 1,000 tokens
-- Daily limit of 20 min/user = max $0.09/user/day
-- Free tier: $50 AssemblyAI credits (185 hours)
+- Daily limit of 20 min/user:
+  - Best Model: max $0.12/user/day
+  - Nano Model: max $0.04/user/day
+- Free tier: $50 AssemblyAI credits:
+  - Best Model: ~135 hours
+  - Nano Model: ~400 hours
 - Monitor usage in both AssemblyAI and OpenAI dashboards
 
 ## Security Best Practices
@@ -194,9 +213,12 @@ Update accepted types in:
 
 ## Performance Optimization
 - Files processed in memory (no disk I/O)
-- Efficient chunking for large files
-- Progress indication for better UX
-- Minimal client-side JavaScript
+- Direct buffer upload (no base64 encoding)
+- Nano model option for 3x faster processing
+- Real-time progress with time estimates
+- Word-level highlighting without text reflow
+- Optimized for mobile with responsive design
+- Sample audio for instant testing
 
 ## Troubleshooting
 
@@ -231,10 +253,14 @@ curl http://localhost:3000/api/check-limit
 
 ## AI Agent Tips
 - The entire UI is in `app/page.tsx` for simplicity
-- All shadcn components are pre-installed
+- All shadcn components are pre-installed (including Switch, Label, Badge, Progress)
 - Rate limiting gracefully degrades without KV
 - File processing is stateless and secure
 - The app is optimized for mobile devices
+- Confetti animations trigger on successful transcription
+- Console logging is extensive for debugging
+- Fast Mode toggle uses AssemblyAI's Nano model
+- Sentiment and key phrases are enabled by default
 
 ## License
 MIT - See LICENSE file

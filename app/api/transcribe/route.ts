@@ -32,7 +32,12 @@ export async function POST(request: NextRequest) {
     console.log('Parsing form data...')
     const formData = await request.formData()
     const audioFile = formData.get('audio') as File
+    const useNanoModel = formData.get('useNanoModel') === 'true'
+    const enableSentiment = formData.get('enableSentiment') === 'true'
+    const enableKeyPhrases = formData.get('enableKeyPhrases') === 'true'
+    
     console.log('Form data parsed, audio file:', audioFile ? 'present' : 'missing')
+    console.log('Options:', { useNanoModel, enableSentiment, enableKeyPhrases })
     
     if (!audioFile) {
       console.error('No audio file in form data')
@@ -90,7 +95,11 @@ export async function POST(request: NextRequest) {
     // Transcribe the audio with AssemblyAI
     console.log('Starting transcription with AssemblyAI...')
     const startTime = Date.now()
-    const { text, utterances, chapters, duration } = await transcribeWithAssemblyAI(audioFile)
+    const { text, utterances, chapters, duration, allWords, sentimentAnalysis, keyPhrases } = await transcribeWithAssemblyAI(audioFile, {
+      useNanoModel,
+      enableSentiment,
+      enableKeyPhrases
+    })
     const transcriptionTime = Date.now() - startTime
     console.log(`Transcription completed in ${transcriptionTime}ms`)
     
@@ -106,6 +115,9 @@ export async function POST(request: NextRequest) {
       utterances,
       chapters,
       duration,
+      allWords,
+      sentimentAnalysis,
+      keyPhrases,
       minutesUsed: newUsage,
       remainingMinutes: Math.max(0, 20 - newUsage)
     })

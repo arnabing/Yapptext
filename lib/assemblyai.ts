@@ -7,11 +7,20 @@ const client = new AssemblyAI({
   apiKey: process.env.ASSEMBLYAI_API_KEY!
 })
 
+export interface Word {
+  text: string
+  start: number
+  end: number
+  confidence: number
+  speaker?: string
+}
+
 export interface TranscriptSegment {
   speaker: string
   text: string
   start: number
   end: number
+  words?: Word[]
 }
 
 export interface Chapter {
@@ -29,13 +38,21 @@ export interface TranscriptionResult {
   duration: number
   minutesUsed: number
   remainingMinutes: number
+  allWords?: Word[]
 }
 
-export async function transcribeWithAssemblyAI(audioFile: File): Promise<{
+export async function transcribeWithAssemblyAI(audioFile: File, options?: {
+  useNanoModel?: boolean
+  enableSentiment?: boolean
+  enableKeyPhrases?: boolean
+}): Promise<{
   text: string
   utterances: TranscriptSegment[]
   chapters: Chapter[]
   duration: number
+  allWords: Word[]
+  sentimentAnalysis?: any
+  keyPhrases?: string[]
 }> {
   console.log('transcribeWithAssemblyAI called')
   console.log('API Key in function:', !!process.env.ASSEMBLYAI_API_KEY)
@@ -45,57 +62,116 @@ export async function transcribeWithAssemblyAI(audioFile: File): Promise<{
   }
 
   try {
-    // Convert File to buffer
+    // Convert File to buffer for direct upload (much faster than base64)
     console.log('Converting file to buffer...')
     const buffer = await audioFile.arrayBuffer()
-    const base64 = Buffer.from(buffer).toString('base64')
-    const dataUrl = `data:${audioFile.type};base64,${base64}`
-
-    console.log('Calling AssemblyAI API...')
+    
+    console.log('Calling AssemblyAI API with direct buffer upload...')
+    const startTime = Date.now()
+    
     // Upload and transcribe with speaker diarization
-    const transcript = await client.transcripts.transcribe({
-      audio: dataUrl,
+    // Using direct buffer upload instead of base64 data URL for better performance
+    console.log('Starting AssemblyAI transcription with options:')
+    console.log('- Model:', options?.useNanoModel ? 'nano (fast)' : 'best (accurate)')
+    console.log('- speaker_labels: true')
+    console.log('- sentiment_analysis:', options?.enableSentiment || false)
+    console.log('- auto_highlights:', options?.enableKeyPhrases || false)
+    console.log('- File size:', (buffer.byteLength / 1024 / 1024).toFixed(2), 'MB')
+    
+    const transcriptOptions: any = {
+      audio: Buffer.from(buffer),
       speaker_labels: true,
-      auto_chapters: true,
+      auto_chapters: false, // Disabled to improve processing speed
       language_detection: true,
       format_text: true,
-      punctuate: true
+      punctuate: true,
       // Don't specify language_code when using language_detection
-    })
+    }
     
+    // Add Nano model for faster processing if requested
+    if (options?.useNanoModel) {
+      transcriptOptions.speech_model = 'nano'
+    }
+    
+    // Add sentiment analysis if requested
+    if (options?.enableSentiment) {
+      transcriptOptions.sentiment_analysis = true
+    }
+    
+    // Add key phrases extraction if requested
+    if (options?.enableKeyPhrases) {
+      transcriptOptions.auto_highlights = true
+    }
+    
+    const transcript = await client.transcripts.transcribe(transcriptOptions)
+    
+    const uploadTime = Date.now() - startTime
     console.log('AssemblyAI response status:', transcript.status)
+    console.log(`Transcription completed in ${uploadTime}ms`)
 
   // Wait for transcription to complete
   if (transcript.status === 'error') {
     throw new Error(transcript.error || 'Transcription failed')
   }
 
-  // Map utterances to our format
+  // Map utterances to our format, including word-level data
+  console.log('Processing utterances:', transcript.utterances?.length || 0)
   const utterances: TranscriptSegment[] = transcript.utterances?.map(utt => ({
     speaker: `Speaker ${utt.speaker}`,
     text: utt.text,
     start: utt.start,
-    end: utt.end
+    end: utt.end,
+    words: utt.words?.map(w => ({
+      text: w.text,
+      start: w.start,
+      end: w.end,
+      confidence: w.confidence,
+      speaker: `Speaker ${utt.speaker}`
+    }))
+  })) || []
+  
+  // Collect all words for word-level highlighting
+  console.log('Total words in transcript:', transcript.words?.length || 0)
+  const allWords: Word[] = transcript.words?.map(w => ({
+    text: w.text,
+    start: w.start,
+    end: w.end,
+    confidence: w.confidence,
+    speaker: w.speaker !== undefined ? `Speaker ${w.speaker}` : undefined
   })) || []
 
-  // Map chapters to our format
-  const chapters: Chapter[] = transcript.chapters?.map(chapter => ({
-    headline: chapter.headline,
-    summary: chapter.summary,
-    start: chapter.start,
-    end: chapter.end
-  })) || []
+  // Map chapters to our format (empty since we disabled auto_chapters)
+  const chapters: Chapter[] = [] // Disabled for better performance
 
     // Calculate duration in minutes
     const durationMs = transcript.audio_duration || 0
     const duration = Math.ceil(durationMs / 60000)
 
-    console.log('Transcription successful, returning results')
+    // Extract sentiment analysis results if available
+    const sentimentAnalysis = transcript.sentiment_analysis_results || null
+    
+    // Extract key phrases if available
+    const keyPhrases = transcript.auto_highlights_result?.results?.map(
+      (highlight: any) => highlight.text
+    ) || []
+    
+    console.log('Transcription successful!')
+    console.log('- Text length:', transcript.text?.length || 0, 'characters')
+    console.log('- Utterances:', utterances.length)
+    console.log('- Speakers detected:', new Set(utterances.map(u => u.speaker)).size)
+    console.log('- Duration:', duration, 'minutes')
+    console.log('- Sentiment analysis segments:', sentimentAnalysis?.length || 0)
+    console.log('- Key phrases found:', keyPhrases.length)
+    console.log(`- Processing took: ${uploadTime}ms`)
+    
     return {
       text: transcript.text || '',
       utterances,
       chapters,
-      duration
+      duration,
+      allWords,
+      sentimentAnalysis,
+      keyPhrases
     }
   } catch (error) {
     console.error('AssemblyAI transcription error:', error)

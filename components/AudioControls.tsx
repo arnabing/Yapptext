@@ -3,14 +3,16 @@
 import { useState, useRef, useEffect } from 'react'
 import { Button } from '@/components/ui/button'
 import { Slider } from '@/components/ui/slider'
-import { Play, Pause, SkipBack, SkipForward } from 'lucide-react'
+import { Card } from '@/components/ui/card'
+import { Play, Pause, ChevronLeft, ChevronRight } from 'lucide-react'
 
 interface AudioControlsProps {
   audioUrl: string
   onTimeUpdate?: (time: number) => void
+  className?: string
 }
 
-export function AudioControls({ audioUrl, onTimeUpdate }: AudioControlsProps) {
+export function AudioControls({ audioUrl, onTimeUpdate, className = '' }: AudioControlsProps) {
   const audioRef = useRef<HTMLAudioElement>(null)
   const [isPlaying, setIsPlaying] = useState(false)
   const [currentTime, setCurrentTime] = useState(0)
@@ -43,6 +45,32 @@ export function AudioControls({ audioUrl, onTimeUpdate }: AudioControlsProps) {
       audio.removeEventListener('ended', handleEnded)
     }
   }, [onTimeUpdate])
+  
+  // Keyboard shortcuts
+  useEffect(() => {
+    const handleKeyPress = (e: KeyboardEvent) => {
+      // Ignore if user is typing in an input
+      if (e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement) return
+      
+      switch(e.key) {
+        case ' ':
+          e.preventDefault()
+          togglePlayPause()
+          break
+        case 'ArrowLeft':
+          e.preventDefault()
+          skipBackward()
+          break
+        case 'ArrowRight':
+          e.preventDefault()
+          skipForward()
+          break
+      }
+    }
+    
+    window.addEventListener('keydown', handleKeyPress)
+    return () => window.removeEventListener('keydown', handleKeyPress)
+  }, [isPlaying])
 
   const togglePlayPause = () => {
     const audio = audioRef.current
@@ -68,12 +96,26 @@ export function AudioControls({ audioUrl, onTimeUpdate }: AudioControlsProps) {
     const audio = audioRef.current
     if (!audio) return
     audio.currentTime = Math.max(0, audio.currentTime - 10)
+    
+    // Visual feedback
+    const btn = document.getElementById('skip-back-btn')
+    if (btn) {
+      btn.classList.add('scale-95')
+      setTimeout(() => btn.classList.remove('scale-95'), 150)
+    }
   }
 
   const skipForward = () => {
     const audio = audioRef.current
     if (!audio) return
     audio.currentTime = Math.min(duration, audio.currentTime + 10)
+    
+    // Visual feedback
+    const btn = document.getElementById('skip-forward-btn')
+    if (btn) {
+      btn.classList.add('scale-95')
+      setTimeout(() => btn.classList.remove('scale-95'), 150)
+    }
   }
 
   const formatTime = (seconds: number) => {
@@ -83,55 +125,76 @@ export function AudioControls({ audioUrl, onTimeUpdate }: AudioControlsProps) {
   }
 
   return (
-    <div className="w-full space-y-4 p-4 border rounded-lg bg-background">
+    <Card className={`fixed bottom-0 left-0 right-0 z-50 rounded-none border-x-0 border-b-0 shadow-2xl ${className}`}>
       <audio ref={audioRef} src={audioUrl} />
       
-      <div className="flex items-center justify-center gap-2">
-        <Button
-          variant="ghost"
-          size="icon"
-          onClick={skipBackward}
-          className="h-8 w-8"
-        >
-          <SkipBack className="h-4 w-4" />
-        </Button>
-        
-        <Button
-          variant="default"
-          size="icon"
-          onClick={togglePlayPause}
-          className="h-10 w-10"
-        >
-          {isPlaying ? (
-            <Pause className="h-5 w-5" />
-          ) : (
-            <Play className="h-5 w-5" />
-          )}
-        </Button>
-        
-        <Button
-          variant="ghost"
-          size="icon"
-          onClick={skipForward}
-          className="h-8 w-8"
-        >
-          <SkipForward className="h-4 w-4" />
-        </Button>
-      </div>
-
-      <div className="space-y-1">
-        <Slider
-          value={[currentTime]}
-          max={duration || 100}
-          step={0.1}
-          onValueChange={handleSliderChange}
-          className="w-full"
-        />
-        <div className="flex justify-between text-xs text-muted-foreground">
-          <span>{formatTime(currentTime)}</span>
-          <span>{formatTime(duration)}</span>
+      <div className="bg-background/95 backdrop-blur-md">
+        <div className="container max-w-5xl mx-auto px-4 py-4">
+          <div className="flex items-center gap-4">
+            {/* Play/Pause and Skip Controls */}
+            <div className="flex items-center gap-1">
+              <Button
+                id="skip-back-btn"
+                variant="ghost"
+                size="icon"
+                onClick={skipBackward}
+                className="h-9 w-9 transition-transform"
+                title="Skip back 10 seconds"
+              >
+                <ChevronLeft className="h-5 w-5" />
+              </Button>
+              
+              <Button
+                variant="default"
+                size="icon"
+                onClick={togglePlayPause}
+                className="h-10 w-10 mx-1 shadow-md hover:shadow-lg transition-all"
+                title={isPlaying ? 'Pause' : 'Play'}
+              >
+                {isPlaying ? (
+                  <Pause className="h-5 w-5" />
+                ) : (
+                  <Play className="h-5 w-5 ml-0.5" />
+                )}
+              </Button>
+              
+              <Button
+                id="skip-forward-btn"
+                variant="ghost"
+                size="icon"
+                onClick={skipForward}
+                className="h-9 w-9 transition-transform"
+                title="Skip forward 10 seconds"
+              >
+                <ChevronRight className="h-5 w-5" />
+              </Button>
+            </div>
+            
+            {/* Current time */}
+            <span className="text-sm font-mono tabular-nums text-muted-foreground min-w-[3.5rem] text-center">
+              {formatTime(currentTime)}
+            </span>
+            
+            {/* Timeline Slider */}
+            <div className="flex-1 flex items-center gap-3">
+              <Slider
+                value={[currentTime]}
+                max={duration || 100}
+                step={0.1}
+                onValueChange={handleSliderChange}
+                className="flex-1"
+                aria-label="Seek audio"
+              />
+            </div>
+            
+            {/* Duration */}
+            <span className="text-sm font-mono tabular-nums text-muted-foreground min-w-[3.5rem] text-center">
+              {formatTime(duration)}
+            </span>
+            
+          </div>
         </div>
       </div>
-    </div>
+    </Card>
   )
 }
