@@ -310,6 +310,7 @@ export default function Home() {
         },
         body: JSON.stringify({
           text: originalTranscript,
+          utterances: originalUtterances,
           targetLanguage,
         }),
       })
@@ -324,11 +325,15 @@ export default function Home() {
         })
       } else {
         setTranscript(data.translatedText)
-        // Clear utterances for translated text since we don't have speaker segments for translations
-        setUtterances([])
+        // Use translated utterances if available, otherwise clear
+        if (data.translatedUtterances) {
+          setUtterances(data.translatedUtterances)
+        } else {
+          setUtterances([])
+        }
         toast({
           title: "✨ Translation complete!",
-          description: `Translated to ${targetLanguage}`,
+          description: `Translated to ${targetLanguage} ${data.translatedUtterances ? 'with speaker segments preserved' : ''}`,
         })
       }
     } catch (error) {

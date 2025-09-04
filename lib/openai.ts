@@ -66,14 +66,14 @@ export async function transcribeAudio(file: File): Promise<string> {
     console.log('Calling openai.audio.transcriptions.create()...')
     const transcriptionStartTime = Date.now()
     
-    const transcription = await openai.audio.transcriptions.create(requestPayload)
+    const transcription = await openai.audio.transcriptions.create(requestPayload as any)
     
     const transcriptionDuration = Date.now() - transcriptionStartTime
     console.log(`OpenAI API call completed in ${transcriptionDuration}ms`)
     console.log('Transcription response type:', typeof transcription)
     console.log('Transcription successful!')
     
-    return transcription.text || transcription as any
+    return (transcription as any).text || transcription as any
   } catch (error: any) {
     console.error('\n=== OPENAI TRANSCRIPTION ERROR ===')
     console.error('Error caught at:', new Date().toISOString())
@@ -118,7 +118,7 @@ export async function transcribeAudio(file: File): Promise<string> {
         })
         
         console.log('Retry successful!')
-        return transcription.text || transcription as any
+        return (transcription as any).text || transcription as any
       } catch (retryError: any) {
         console.error('=== RETRY FAILED ===')
         console.error('Retry error:', retryError)
