@@ -85,15 +85,15 @@ export async function transcribeWithAssemblyAI(audioInput: File | string, option
       // Don't specify language_code when using language_detection
     }
     
-    // Handle URL vs File input - use audio_url for URLs, audio for buffers
+    // Handle URL vs File input - SDK expects 'audio' for BOTH URLs and buffers
     if (options?.isUrl && typeof audioInput === 'string') {
       console.log('Using audio URL:', audioInput)
-      transcriptOptions.audio_url = audioInput // Use audio_url for URLs
+      transcriptOptions.audio = audioInput // Use 'audio' for URLs (SDK handles it)
     } else if (audioInput instanceof File) {
       console.log('Converting file to buffer...')
       const buffer = await audioInput.arrayBuffer()
       console.log('- File size:', (buffer.byteLength / 1024 / 1024).toFixed(2), 'MB')
-      transcriptOptions.audio = Buffer.from(buffer) // Use audio for buffers
+      transcriptOptions.audio = Buffer.from(buffer) // Use 'audio' for buffers
     } else {
       throw new Error('Invalid audio input: must be a URL string or File object')
     }
@@ -130,7 +130,9 @@ export async function transcribeWithAssemblyAI(audioInput: File | string, option
   // Debug logging to understand the response structure
   console.log('Transcript response keys:', Object.keys(completedTranscript))
   console.log('Has utterances?', !!completedTranscript.utterances)
+  console.log('Utterances count:', completedTranscript.utterances?.length || 0)
   console.log('Has words?', !!completedTranscript.words)
+  console.log('Words count:', completedTranscript.words?.length || 0)
   
   // Map utterances to our format, including word-level data
   console.log('Processing utterances:', completedTranscript.utterances?.length || 0)
@@ -138,8 +140,12 @@ export async function transcribeWithAssemblyAI(audioInput: File | string, option
     console.log('First utterance:', {
       speaker: completedTranscript.utterances[0].speaker,
       text: completedTranscript.utterances[0].text?.substring(0, 50) + '...',
-      hasWords: !!completedTranscript.utterances[0].words
+      hasWords: !!completedTranscript.utterances[0].words,
+      wordsCount: completedTranscript.utterances[0].words?.length || 0
     })
+    // Check for multiple speakers
+    const speakers = new Set(completedTranscript.utterances.map((u: any) => u.speaker))
+    console.log('Unique speakers found:', Array.from(speakers))
   }
   
   const utterances: TranscriptSegment[] = completedTranscript.utterances?.map((utt: any) => ({
