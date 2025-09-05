@@ -243,8 +243,8 @@ export default function Home() {
       formData.append("fileName", file.name);
       formData.append("fileSize", file.size.toString());
       formData.append("useNanoModel", "true"); // Always use nano model (3x faster)
-      formData.append("enableSentiment", "true");
-      formData.append("enableKeyPhrases", "true");
+      formData.append("enableSentiment", "false"); // Disabled for speed
+      formData.append("enableKeyPhrases", "false"); // Disabled for speed
 
       // Use XMLHttpRequest for processing progress
       const xhr = new XMLHttpRequest();

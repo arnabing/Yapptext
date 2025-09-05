@@ -75,14 +75,14 @@ export async function transcribeWithAssemblyAI(audioInput: File | string, option
   try {
     const startTime = Date.now()
     
-    // Prepare transcription options
+    // Prepare transcription options - optimized for speed
     let transcriptOptions: any = {
-      speaker_labels: true,
-      auto_chapters: false, // Disabled to improve processing speed
-      language_detection: true,
+      speaker_labels: true, // Keep for speaker identification
+      auto_chapters: false, // Disabled for speed
+      language_detection: false, // Disabled for speed - assume English
+      language_code: 'en', // Specify language to avoid detection overhead
       format_text: true,
       punctuate: true,
-      // Don't specify language_code when using language_detection
     }
     
     // Handle URL vs File input
@@ -118,10 +118,8 @@ export async function transcribeWithAssemblyAI(audioInput: File | string, option
     }
     
     const client = getClient()
-    const transcript = await client.transcripts.transcribe(transcriptOptions)
-    
-    // Poll for completion
-    const completedTranscript = await client.transcripts.waitForCompletion(transcript.id)
+    // transcribe() already waits for completion, no need to call waitForCompletion
+    const completedTranscript = await client.transcripts.transcribe(transcriptOptions)
     
     const uploadTime = Date.now() - startTime
     console.log('AssemblyAI response status:', completedTranscript.status)
