@@ -3,9 +3,19 @@ import { AssemblyAI } from 'assemblyai'
 console.log('AssemblyAI lib loading, API key exists:', !!process.env.ASSEMBLYAI_API_KEY)
 console.log('AssemblyAI API key length:', process.env.ASSEMBLYAI_API_KEY?.length)
 
-const client = new AssemblyAI({
-  apiKey: process.env.ASSEMBLYAI_API_KEY!
-})
+let client: AssemblyAI | null = null
+
+function getClient(): AssemblyAI {
+  if (!client) {
+    if (!process.env.ASSEMBLYAI_API_KEY) {
+      throw new Error('ASSEMBLYAI_API_KEY is not configured')
+    }
+    client = new AssemblyAI({
+      apiKey: process.env.ASSEMBLYAI_API_KEY
+    })
+  }
+  return client
+}
 
 export interface Word {
   text: string
@@ -107,7 +117,7 @@ export async function transcribeWithAssemblyAI(audioInput: File | string, option
       transcriptOptions.auto_highlights = true
     }
     
-    const transcript = await client.transcripts.transcribe(transcriptOptions)
+    const transcript = await getClient().transcripts.transcribe(transcriptOptions)
     
     const uploadTime = Date.now() - startTime
     console.log('AssemblyAI response status:', transcript.status)
