@@ -120,7 +120,7 @@ export async function transcribeWithAssemblyAI(audioInput: File | string, option
     const transcript = await client.transcripts.transcribe(transcriptOptions)
     
     // Explicitly wait for completion to ensure we get all data including utterances
-    const completedTranscript = await client.transcripts.waitForCompletion(transcript.id)
+    const completedTranscript = await client.transcripts.waitUntilReady(transcript.id)
     
     const uploadTime = Date.now() - startTime
     console.log('AssemblyAI response status:', completedTranscript.status)
