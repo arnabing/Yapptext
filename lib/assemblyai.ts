@@ -117,25 +117,29 @@ export async function transcribeWithAssemblyAI(audioInput: File | string, option
       transcriptOptions.auto_highlights = true
     }
     
-    const transcript = await getClient().transcripts.transcribe(transcriptOptions)
+    const client = getClient()
+    const transcript = await client.transcripts.transcribe(transcriptOptions)
+    
+    // Poll for completion
+    const completedTranscript = await client.transcripts.waitForCompletion(transcript.id)
     
     const uploadTime = Date.now() - startTime
-    console.log('AssemblyAI response status:', transcript.status)
+    console.log('AssemblyAI response status:', completedTranscript.status)
     console.log(`Transcription completed in ${uploadTime}ms`)
 
-  // Wait for transcription to complete
-  if (transcript.status === 'error') {
-    throw new Error(transcript.error || 'Transcription failed')
+  // Check for errors
+  if (completedTranscript.status === 'error') {
+    throw new Error(completedTranscript.error || 'Transcription failed')
   }
 
   // Map utterances to our format, including word-level data
-  console.log('Processing utterances:', transcript.utterances?.length || 0)
-  const utterances: TranscriptSegment[] = transcript.utterances?.map(utt => ({
+  console.log('Processing utterances:', completedTranscript.utterances?.length || 0)
+  const utterances: TranscriptSegment[] = completedTranscript.utterances?.map((utt: any) => ({
     speaker: `Speaker ${utt.speaker}`,
     text: utt.text,
     start: utt.start,
     end: utt.end,
-    words: utt.words?.map(w => ({
+    words: utt.words?.map((w: any) => ({
       text: w.text,
       start: w.start,
       end: w.end,
@@ -145,8 +149,8 @@ export async function transcribeWithAssemblyAI(audioInput: File | string, option
   })) || []
   
   // Collect all words for word-level highlighting
-  console.log('Total words in transcript:', transcript.words?.length || 0)
-  const allWords: Word[] = transcript.words?.map(w => ({
+  console.log('Total words in transcript:', completedTranscript.words?.length || 0)
+  const allWords: Word[] = completedTranscript.words?.map((w: any) => ({
     text: w.text,
     start: w.start,
     end: w.end,
@@ -158,19 +162,19 @@ export async function transcribeWithAssemblyAI(audioInput: File | string, option
   const chapters: Chapter[] = [] // Disabled for better performance
 
     // Calculate duration in minutes
-    const durationMs = transcript.audio_duration || 0
+    const durationMs = completedTranscript.audio_duration || 0
     const duration = Math.ceil(durationMs / 60000)
 
     // Extract sentiment analysis results if available
-    const sentimentAnalysis = transcript.sentiment_analysis_results || null
+    const sentimentAnalysis = completedTranscript.sentiment_analysis_results || null
     
     // Extract key phrases if available
-    const keyPhrases = transcript.auto_highlights_result?.results?.map(
+    const keyPhrases = completedTranscript.auto_highlights_result?.results?.map(
       (highlight: any) => highlight.text
     ) || []
     
     console.log('Transcription successful!')
-    console.log('- Text length:', transcript.text?.length || 0, 'characters')
+    console.log('- Text length:', completedTranscript.text?.length || 0, 'characters')
     console.log('- Utterances:', utterances.length)
     console.log('- Speakers detected:', new Set(utterances.map(u => u.speaker)).size)
     console.log('- Duration:', duration, 'minutes')
@@ -179,7 +183,7 @@ export async function transcribeWithAssemblyAI(audioInput: File | string, option
     console.log(`- Processing took: ${uploadTime}ms`)
     
     return {
-      text: transcript.text || '',
+      text: completedTranscript.text || '',
       utterances,
       chapters,
       duration,
