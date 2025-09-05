@@ -41,10 +41,11 @@ export interface TranscriptionResult {
   allWords?: Word[]
 }
 
-export async function transcribeWithAssemblyAI(audioFile: File, options?: {
+export async function transcribeWithAssemblyAI(audioInput: File | string, options?: {
   useNanoModel?: boolean
   enableSentiment?: boolean
   enableKeyPhrases?: boolean
+  isUrl?: boolean
 }): Promise<{
   text: string
   utterances: TranscriptSegment[]
@@ -62,24 +63,10 @@ export async function transcribeWithAssemblyAI(audioFile: File, options?: {
   }
 
   try {
-    // Convert File to buffer for direct upload (much faster than base64)
-    console.log('Converting file to buffer...')
-    const buffer = await audioFile.arrayBuffer()
-    
-    console.log('Calling AssemblyAI API with direct buffer upload...')
     const startTime = Date.now()
     
-    // Upload and transcribe with speaker diarization
-    // Using direct buffer upload instead of base64 data URL for better performance
-    console.log('Starting AssemblyAI transcription with options:')
-    console.log('- Model:', options?.useNanoModel ? 'nano (fast)' : 'best (accurate)')
-    console.log('- speaker_labels: true')
-    console.log('- sentiment_analysis:', options?.enableSentiment || false)
-    console.log('- auto_highlights:', options?.enableKeyPhrases || false)
-    console.log('- File size:', (buffer.byteLength / 1024 / 1024).toFixed(2), 'MB')
-    
-    const transcriptOptions: any = {
-      audio: Buffer.from(buffer),
+    // Prepare transcription options
+    let transcriptOptions: any = {
       speaker_labels: true,
       auto_chapters: false, // Disabled to improve processing speed
       language_detection: true,
@@ -87,6 +74,25 @@ export async function transcribeWithAssemblyAI(audioFile: File, options?: {
       punctuate: true,
       // Don't specify language_code when using language_detection
     }
+    
+    // Handle URL vs File input
+    if (options?.isUrl && typeof audioInput === 'string') {
+      console.log('Using audio URL:', audioInput)
+      transcriptOptions.audio_url = audioInput
+    } else if (audioInput instanceof File) {
+      console.log('Converting file to buffer...')
+      const buffer = await audioInput.arrayBuffer()
+      console.log('- File size:', (buffer.byteLength / 1024 / 1024).toFixed(2), 'MB')
+      transcriptOptions.audio = Buffer.from(buffer)
+    } else {
+      throw new Error('Invalid audio input: must be a URL string or File object')
+    }
+    
+    console.log('Starting AssemblyAI transcription with options:')
+    console.log('- Model:', options?.useNanoModel ? 'nano (fast)' : 'best (accurate)')
+    console.log('- speaker_labels: true')
+    console.log('- sentiment_analysis:', options?.enableSentiment || false)
+    console.log('- auto_highlights:', options?.enableKeyPhrases || false)
     
     // Always use nano model (3x faster)
     transcriptOptions.speech_model = 'nano'

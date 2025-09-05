@@ -47,6 +47,7 @@ export function TranscriptView({
   const scrollRef = useRef<HTMLDivElement>(null)
   const activeRef = useRef<HTMLDivElement>(null)
   
+  
   useEffect(() => {
     if (activeRef.current && scrollRef.current) {
       const element = activeRef.current
@@ -63,8 +64,8 @@ export function TranscriptView({
   // If no utterances, display plain text
   if (!utterances || utterances.length === 0) {
     return (
-      <ScrollArea className="h-[calc(100vh-20rem)] md:h-[calc(100vh-16rem)] rounded-md border">
-        <div className="p-4 md:p-6">
+      <ScrollArea className="h-full">
+        <div className="p-4 md:p-6 max-w-4xl mx-auto pb-36">
           <p className="text-sm md:text-base leading-relaxed whitespace-pre-wrap break-words">{fullText}</p>
         </div>
       </ScrollArea>
@@ -79,18 +80,28 @@ export function TranscriptView({
     )
   }
 
-  // Create speaker to color mapping  
+  // Create speaker to color mapping and determine main speaker
   const speakers = Array.from(new Set(utterances.map(u => u.speaker)))
-  const isConversation = speakers.length === 2 // Check if it's a 2-person conversation
   
-  // Colors for multi-speaker (3+) scenarios
-  const multiSpeakerColors = [
-    { bg: 'bg-blue-500/10', border: 'border-blue-500/20', avatar: 'bg-blue-500' },
-    { bg: 'bg-green-500/10', border: 'border-green-500/20', avatar: 'bg-green-500' },
-    { bg: 'bg-purple-500/10', border: 'border-purple-500/20', avatar: 'bg-purple-500' },
-    { bg: 'bg-orange-500/10', border: 'border-orange-500/20', avatar: 'bg-orange-500' },
-    { bg: 'bg-pink-500/10', border: 'border-pink-500/20', avatar: 'bg-pink-500' },
-    { bg: 'bg-yellow-500/10', border: 'border-yellow-500/20', avatar: 'bg-yellow-500' }
+  // Count utterances per speaker to find main speaker (most frequent)
+  const speakerCounts = utterances.reduce((acc, u) => {
+    acc[u.speaker] = (acc[u.speaker] || 0) + 1
+    return acc
+  }, {} as Record<string, number>)
+  
+  // Main speaker is the most frequent one (or first if equal)
+  const mainSpeaker = speakers.reduce((main, speaker) => 
+    speakerCounts[speaker] > speakerCounts[main] ? speaker : main
+  , speakers[0])
+  
+  // Colors for secondary speakers
+  const secondaryColors = [
+    'bg-blue-500',
+    'bg-green-500',
+    'bg-purple-500',
+    'bg-orange-500',
+    'bg-pink-500',
+    'bg-yellow-500'
   ]
   
   // Group consecutive utterances by the same speaker
@@ -114,96 +125,41 @@ export function TranscriptView({
   })
 
   return (
-    <ScrollArea className="h-[calc(100vh-20rem)] md:h-[calc(100vh-16rem)] rounded-md border" ref={scrollRef}>
-      <div className="p-4 md:p-6 space-y-3">
+    <ScrollArea className="h-full" ref={scrollRef}>
+      <div className="p-4 md:p-6 space-y-3 max-w-4xl mx-auto pb-36">
         {/* Chapters section removed for better performance */}
         
-        {/* Transcript segments */}
+        {/* Transcript segments - Standardized iMessage style for all */}
         {groupedUtterances.map((group, groupIndex) => {
           const isActive = currentTime >= group.segments[0].start && 
                           currentTime <= group.segments[group.segments.length - 1].end
           
+          const isMainSpeaker = group.speaker === mainSpeaker
           const speakerIndex = speakers.indexOf(group.speaker)
-          const isSecondSpeaker = speakerIndex === 1
           
-          // For 2-speaker conversations
-          if (isConversation) {
-            return (
-              <div 
-                key={groupIndex}
-                ref={isActive ? activeRef : null}
-                className={`flex ${isSecondSpeaker ? 'justify-end' : 'justify-start'} mb-4`}
-              >
-                <div className={`max-w-[85%] md:max-w-[70%] space-y-1`}>
-                  <div className={`text-xs font-medium text-muted-foreground mb-1 ${
-                    isSecondSpeaker ? 'text-right' : ''
-                  }`}>
-                    {group.speaker}
-                  </div>
-                  <Card className={cn(
-                    "border-0 shadow-sm transition-all",
-                    isSecondSpeaker 
-                      ? 'bg-primary text-primary-foreground' 
-                      : 'bg-muted',
-                    isActive && 'ring-2 ring-primary/30'
-                  )}>
-                    <div className="px-3 md:px-4 py-2">
-                      {group.segments.map((segment, segIndex) => (
-                        <p key={segIndex} className="text-sm leading-relaxed break-words">
-                          {segment.words && segment.words.length > 0 ? (
-                            segment.words.map((word, wordIndex) => {
-                              const isCurrentWord = currentTime >= word.start && currentTime <= word.end
-                              return (
-                                <span
-                                  key={wordIndex}
-                                  className={cn(
-                                    "transition-colors duration-200",
-                                    isCurrentWord && (isSecondSpeaker 
-                                      ? 'bg-primary-foreground/20' 
-                                      : 'bg-primary/20')
-                                  )}
-                                  style={{
-                                    transition: 'background-color 0.2s'
-                                  }}
-                                >
-                                  {word.text}{' '}
-                                </span>
-                              )
-                            })
-                          ) : (
-                            segment.text
-                          )}
-                        </p>
-                      ))}
-                    </div>
-                  </Card>
-                  <span className={`text-xs text-muted-foreground ${
-                    isSecondSpeaker ? 'text-right block' : ''
-                  }`}>
-                    {formatTime(group.segments[0].start / 1000)}
-                  </span>
-                </div>
-              </div>
-            )
-          }
-          
-          // For multi-speaker (3+) conversations
-          const colorScheme = multiSpeakerColors[speakerIndex % multiSpeakerColors.length]
+          // Get color for secondary speakers
+          const secondaryColorIndex = !isMainSpeaker ? 
+            speakers.filter(s => s !== mainSpeaker).indexOf(group.speaker) : -1
+          const bgColor = !isMainSpeaker ? 
+            secondaryColors[secondaryColorIndex % secondaryColors.length] : ''
           
           return (
             <div 
               key={groupIndex}
               ref={isActive ? activeRef : null}
-              className="flex justify-start mb-4"
+              className={`flex ${!isMainSpeaker ? 'justify-end' : 'justify-start'} mb-4`}
             >
-              <div className="max-w-[90%] md:max-w-[85%] space-y-1">
-                <div className="text-xs font-medium text-muted-foreground mb-1">
+              <div className={`max-w-[85%] md:max-w-[70%] space-y-1`}>
+                <div className={`text-xs font-medium text-muted-foreground mb-1 ${
+                  !isMainSpeaker ? 'text-right' : ''
+                }`}>
                   {group.speaker}
                 </div>
                 <Card className={cn(
-                  "border transition-all",
-                  colorScheme.border,
-                  colorScheme.bg,
+                  "border-0 shadow-sm transition-all",
+                  !isMainSpeaker 
+                    ? `${bgColor} text-white` 
+                    : 'bg-muted',
                   isActive && 'ring-2 ring-primary/30'
                 )}>
                   <div className="px-3 md:px-4 py-2">
@@ -217,7 +173,9 @@ export function TranscriptView({
                                 key={wordIndex}
                                 className={cn(
                                   "transition-colors duration-200",
-                                  isCurrentWord && 'bg-primary/30'
+                                  isCurrentWord && (!isMainSpeaker 
+                                    ? 'bg-white/20' 
+                                    : 'bg-primary/20')
                                 )}
                                 style={{
                                   transition: 'background-color 0.2s'
@@ -234,7 +192,9 @@ export function TranscriptView({
                     ))}
                   </div>
                 </Card>
-                <span className="text-xs text-muted-foreground">
+                <span className={`text-xs text-muted-foreground ${
+                  !isMainSpeaker ? 'text-right block' : ''
+                }`}>
                   {formatTime(group.segments[0].start / 1000)}
                 </span>
               </div>

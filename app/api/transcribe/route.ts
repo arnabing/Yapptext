@@ -31,62 +31,77 @@ export async function POST(request: NextRequest) {
     // Parse form data
     console.log('Parsing form data...')
     const formData = await request.formData()
+    
+    // Get either the audio URL (from blob) or file (fallback)
+    const audioUrl = formData.get('audioUrl') as string
     const audioFile = formData.get('audio') as File
+    
     const useNanoModel = true // Always use nano model (3x faster)
     const enableSentiment = formData.get('enableSentiment') === 'true'
     const enableKeyPhrases = formData.get('enableKeyPhrases') === 'true'
     
-    console.log('Form data parsed, audio file:', audioFile ? 'present' : 'missing')
+    console.log('Form data parsed')
+    console.log('Audio URL:', audioUrl ? 'present' : 'missing')
+    console.log('Audio file:', audioFile ? 'present' : 'missing')
     console.log('Options:', { useNanoModel, enableSentiment, enableKeyPhrases })
     
-    if (!audioFile) {
-      console.error('No audio file in form data')
+    if (!audioUrl && !audioFile) {
+      console.error('No audio URL or file in form data')
       return NextResponse.json(
-        { error: 'No audio file provided' },
+        { error: 'No audio provided' },
         { status: 400 }
       )
     }
 
-    console.log('Audio file details:', {
-      name: audioFile.name,
-      size: audioFile.size,
-      type: audioFile.type,
-      sizeInMB: (audioFile.size / 1024 / 1024).toFixed(2)
-    })
+    // If using URL, we don't need to validate size (already done during blob upload)
+    if (audioFile && !audioUrl) {
+      console.log('Using direct file upload (fallback)')
+      console.log('Audio file details:', {
+        name: audioFile.name,
+        size: audioFile.size,
+        type: audioFile.type,
+        sizeInMB: (audioFile.size / 1024 / 1024).toFixed(2)
+      })
 
-    // Validate file size (20MB limit - well under OpenAI's 25MB limit)
-    if (audioFile.size > 20 * 1024 * 1024) {
-      console.error('File too large:', audioFile.size)
-      return NextResponse.json(
-        { error: 'File size must be less than 20MB' },
-        { status: 400 }
-      )
+        // Validate file size for direct upload (4.5MB Vercel limit)
+        if (audioFile.size > 4.5 * 1024 * 1024) {
+          console.error('File too large for direct upload:', audioFile.size)
+          return NextResponse.json(
+            { error: 'File too large. Please use a file smaller than 4.5MB or upgrade for larger files.' },
+            { status: 400 }
+          )
+        }
+      }
+
+    // Only validate file type and size for direct file uploads (not blob URLs)
+    if (audioFile) {
+      // Validate file type
+      const validTypes = ['audio/mp3', 'audio/mpeg', 'audio/wav', 'audio/wave', 'audio/x-wav', 
+                         'audio/m4a', 'audio/x-m4a', 'audio/webm', 'audio/mp4']
+      
+      if (!validTypes.includes(audioFile.type) && 
+          !audioFile.name.match(/\.(mp3|wav|m4a|webm|mp4)$/i)) {
+        return NextResponse.json(
+          { error: 'Invalid file type. Please upload an audio file.' },
+          { status: 400 }
+        )
+      }
+
+      // Estimate duration for rate limiting
+      const estimatedMinutes = estimateAudioDuration(audioFile.size)
+      
+      // Check if this would exceed the limit
+      if (minutesUsed + estimatedMinutes > 20) {
+        return NextResponse.json(
+          { error: `This file would exceed your daily limit. You have ${remaining} minutes remaining.` },
+          { status: 429 }
+        )
+      }
+
+      console.log(`Processing audio file: ${audioFile.name}, size: ${(audioFile.size / 1024 / 1024).toFixed(2)}MB`)
+    } else if (audioUrl) {
+      console.log(`Processing audio from URL: ${audioUrl}`)
     }
-
-    // Validate file type
-    const validTypes = ['audio/mp3', 'audio/mpeg', 'audio/wav', 'audio/wave', 'audio/x-wav', 
-                       'audio/m4a', 'audio/x-m4a', 'audio/webm', 'audio/mp4']
-    
-    if (!validTypes.includes(audioFile.type) && 
-        !audioFile.name.match(/\.(mp3|wav|m4a|webm|mp4)$/i)) {
-      return NextResponse.json(
-        { error: 'Invalid file type. Please upload an audio file.' },
-        { status: 400 }
-      )
-    }
-
-    // Estimate duration for rate limiting
-    const estimatedMinutes = estimateAudioDuration(audioFile.size)
-    
-    // Check if this would exceed the limit
-    if (minutesUsed + estimatedMinutes > 20) {
-      return NextResponse.json(
-        { error: `This file would exceed your daily limit. You have ${remaining} minutes remaining.` },
-        { status: 429 }
-      )
-    }
-
-    console.log(`Processing audio file: ${audioFile.name}, size: ${(audioFile.size / 1024 / 1024).toFixed(2)}MB`)
     console.log('Environment check:')
     console.log('- ASSEMBLYAI_API_KEY exists:', !!process.env.ASSEMBLYAI_API_KEY)
     console.log('- ASSEMBLYAI_API_KEY length:', process.env.ASSEMBLYAI_API_KEY?.length)
@@ -95,10 +110,14 @@ export async function POST(request: NextRequest) {
     // Transcribe the audio with AssemblyAI
     console.log('Starting transcription with AssemblyAI...')
     const startTime = Date.now()
-    const { text, utterances, chapters, duration, allWords, sentimentAnalysis, keyPhrases } = await transcribeWithAssemblyAI(audioFile, {
+    
+    // Pass either URL or file to AssemblyAI
+    const audioInput = audioUrl || audioFile
+    const { text, utterances, chapters, duration, allWords, sentimentAnalysis, keyPhrases } = await transcribeWithAssemblyAI(audioInput, {
       useNanoModel,
       enableSentiment,
-      enableKeyPhrases
+      enableKeyPhrases,
+      isUrl: !!audioUrl
     })
     const transcriptionTime = Date.now() - startTime
     console.log(`Transcription completed in ${transcriptionTime}ms`)

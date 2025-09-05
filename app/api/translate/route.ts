@@ -21,7 +21,7 @@ export async function POST(request: NextRequest) {
       console.log(`Translating ${utterances.length} utterances to ${targetLanguage}`)
       
       const translatedUtterances = await Promise.all(
-        utterances.map(async (utterance: any) => {
+        utterances.map(async (utterance: any, index: number) => {
           const completion = await openai.chat.completions.create({
             model: 'gpt-3.5-turbo',
             messages: [
@@ -38,9 +38,14 @@ export async function POST(request: NextRequest) {
             max_tokens: 1000,
           })
           
+          const translatedText = completion.choices[0]?.message?.content || utterance.text
+          
           return {
             ...utterance,
-            text: completion.choices[0]?.message?.content || utterance.text
+            text: translatedText,
+            // Clear word-level data for translated utterances
+            // This ensures the translated text is displayed instead of original words
+            words: undefined
           }
         })
       )

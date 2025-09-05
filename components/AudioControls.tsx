@@ -3,16 +3,16 @@
 import { useState, useRef, useEffect } from 'react'
 import { Button } from '@/components/ui/button'
 import { Slider } from '@/components/ui/slider'
-import { Card } from '@/components/ui/card'
 import { Play, Pause, ChevronLeft, ChevronRight } from 'lucide-react'
 
 interface AudioControlsProps {
   audioUrl: string
   onTimeUpdate?: (time: number) => void
   className?: string
+  fileName?: string
 }
 
-export function AudioControls({ audioUrl, onTimeUpdate, className = '' }: AudioControlsProps) {
+export function AudioControls({ audioUrl, onTimeUpdate, className = '', fileName }: AudioControlsProps) {
   const audioRef = useRef<HTMLAudioElement>(null)
   const [isPlaying, setIsPlaying] = useState(false)
   const [currentTime, setCurrentTime] = useState(0)
@@ -125,11 +125,17 @@ export function AudioControls({ audioUrl, onTimeUpdate, className = '' }: AudioC
   }
 
   return (
-    <Card className={`fixed bottom-0 left-0 right-0 z-50 rounded-none border-x-0 border-b-0 shadow-2xl ${className}`}>
+    <div className={`fixed bottom-0 left-0 right-0 z-50 ${className}`}>
       <audio ref={audioRef} src={audioUrl} />
       
-      <div className="bg-background/95 backdrop-blur-md">
+      <div className="bg-background/80 backdrop-blur border-t">
         <div className="container max-w-5xl mx-auto px-4 py-4">
+          {/* File name display */}
+          {fileName && (
+            <div className="text-xs text-muted-foreground mb-2 text-center truncate">
+              {fileName}
+            </div>
+          )}
           <div className="flex items-center gap-4">
             {/* Play/Pause and Skip Controls */}
             <div className="flex items-center gap-1">
@@ -195,6 +201,6 @@ export function AudioControls({ audioUrl, onTimeUpdate, className = '' }: AudioC
           </div>
         </div>
       </div>
-    </Card>
+    </div>
   )
 }
