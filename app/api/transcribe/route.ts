@@ -153,6 +153,15 @@ export async function POST(request: NextRequest) {
       console.error('Error name:', error.name)
     }
     
+    // Check for missing API key
+    if (!process.env.ASSEMBLYAI_API_KEY) {
+      console.error('ASSEMBLYAI_API_KEY is not configured in environment')
+      return NextResponse.json(
+        { error: 'Transcription service not configured. Please contact support.' },
+        { status: 503 }
+      )
+    }
+    
     // Check if it's an AssemblyAI API error
     if (error instanceof Error && error.message.includes('AssemblyAI')) {
       return NextResponse.json(
