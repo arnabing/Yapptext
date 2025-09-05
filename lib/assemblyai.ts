@@ -75,34 +75,33 @@ export async function transcribeWithAssemblyAI(audioInput: File | string, option
   try {
     const startTime = Date.now()
     
-    // Prepare the audio input
-    let audioData: string | Buffer
+    // Prepare transcription options - using the format that was working
+    let transcriptOptions: any = {
+      speaker_labels: true,
+      speech_model: 'nano', // 3x faster
+      language_detection: true, // Re-enable language detection for better speaker separation
+      format_text: true,
+      punctuate: true,
+      // Don't specify language_code when using language_detection
+    }
+    
+    // Handle URL vs File input - use audio_url for URLs, audio for buffers
     if (options?.isUrl && typeof audioInput === 'string') {
       console.log('Using audio URL:', audioInput)
-      audioData = audioInput
+      transcriptOptions.audio_url = audioInput // Use audio_url for URLs
     } else if (audioInput instanceof File) {
       console.log('Converting file to buffer...')
       const buffer = await audioInput.arrayBuffer()
       console.log('- File size:', (buffer.byteLength / 1024 / 1024).toFixed(2), 'MB')
-      audioData = Buffer.from(buffer)
+      transcriptOptions.audio = Buffer.from(buffer) // Use audio for buffers
     } else {
       throw new Error('Invalid audio input: must be a URL string or File object')
-    }
-    
-    // Prepare transcription options following SDK format
-    const transcriptOptions: any = {
-      audio: audioData, // SDK accepts both URL and Buffer in 'audio' field
-      speaker_labels: true, // Enable speaker detection
-      speech_model: 'nano', // Use nano model for speed (3x faster)
-      language_code: 'en', // Specify language to avoid detection overhead
-      format_text: true,
-      punctuate: true,
     }
     
     console.log('Starting AssemblyAI transcription with options:')
     console.log('- Model: nano (fast)')
     console.log('- speaker_labels: true')
-    console.log('- language_code: en')
+    console.log('- language_detection: true')
     console.log('- sentiment_analysis:', options?.enableSentiment || false)
     console.log('- auto_highlights:', options?.enableKeyPhrases || false)
     
@@ -116,11 +115,8 @@ export async function transcribeWithAssemblyAI(audioInput: File | string, option
     }
     
     const client = getClient()
-    // Submit the transcription job
-    const transcript = await client.transcripts.transcribe(transcriptOptions)
-    
-    // Explicitly wait for completion to ensure we get all data including utterances
-    const completedTranscript = await client.transcripts.waitUntilReady(transcript.id)
+    // transcribe() already polls until completed - no need for waitUntilReady
+    const completedTranscript = await client.transcripts.transcribe(transcriptOptions)
     
     const uploadTime = Date.now() - startTime
     console.log('AssemblyAI response status:', completedTranscript.status)
