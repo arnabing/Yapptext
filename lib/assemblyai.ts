@@ -75,44 +75,42 @@ export async function transcribeWithAssemblyAI(audioInput: File | string, option
   try {
     const startTime = Date.now()
     
-    // Prepare transcription options - optimized for speed
-    let transcriptOptions: any = {
-      speaker_labels: true, // Keep for speaker identification
-      auto_chapters: false, // Disabled for speed
-      language_detection: false, // Disabled for speed - assume English
+    // Prepare the audio input
+    let audioData: string | Buffer
+    if (options?.isUrl && typeof audioInput === 'string') {
+      console.log('Using audio URL:', audioInput)
+      audioData = audioInput
+    } else if (audioInput instanceof File) {
+      console.log('Converting file to buffer...')
+      const buffer = await audioInput.arrayBuffer()
+      console.log('- File size:', (buffer.byteLength / 1024 / 1024).toFixed(2), 'MB')
+      audioData = Buffer.from(buffer)
+    } else {
+      throw new Error('Invalid audio input: must be a URL string or File object')
+    }
+    
+    // Prepare transcription options following SDK format
+    const transcriptOptions: any = {
+      audio: audioData, // SDK accepts both URL and Buffer in 'audio' field
+      speaker_labels: true, // Enable speaker detection
+      speech_model: 'nano', // Use nano model for speed (3x faster)
       language_code: 'en', // Specify language to avoid detection overhead
       format_text: true,
       punctuate: true,
     }
     
-    // Handle URL vs File input
-    if (options?.isUrl && typeof audioInput === 'string') {
-      console.log('Using audio URL:', audioInput)
-      transcriptOptions.audio_url = audioInput
-    } else if (audioInput instanceof File) {
-      console.log('Converting file to buffer...')
-      const buffer = await audioInput.arrayBuffer()
-      console.log('- File size:', (buffer.byteLength / 1024 / 1024).toFixed(2), 'MB')
-      transcriptOptions.audio = Buffer.from(buffer)
-    } else {
-      throw new Error('Invalid audio input: must be a URL string or File object')
-    }
-    
     console.log('Starting AssemblyAI transcription with options:')
-    console.log('- Model:', options?.useNanoModel ? 'nano (fast)' : 'best (accurate)')
+    console.log('- Model: nano (fast)')
     console.log('- speaker_labels: true')
+    console.log('- language_code: en')
     console.log('- sentiment_analysis:', options?.enableSentiment || false)
     console.log('- auto_highlights:', options?.enableKeyPhrases || false)
     
-    // Always use nano model (3x faster)
-    transcriptOptions.speech_model = 'nano'
-    
-    // Add sentiment analysis if requested
+    // Add optional features if requested
     if (options?.enableSentiment) {
       transcriptOptions.sentiment_analysis = true
     }
     
-    // Add key phrases extraction if requested
     if (options?.enableKeyPhrases) {
       transcriptOptions.auto_highlights = true
     }
@@ -130,8 +128,21 @@ export async function transcribeWithAssemblyAI(audioInput: File | string, option
     throw new Error(completedTranscript.error || 'Transcription failed')
   }
 
+  // Debug logging to understand the response structure
+  console.log('Transcript response keys:', Object.keys(completedTranscript))
+  console.log('Has utterances?', !!completedTranscript.utterances)
+  console.log('Has words?', !!completedTranscript.words)
+  
   // Map utterances to our format, including word-level data
   console.log('Processing utterances:', completedTranscript.utterances?.length || 0)
+  if (completedTranscript.utterances && completedTranscript.utterances.length > 0) {
+    console.log('First utterance:', {
+      speaker: completedTranscript.utterances[0].speaker,
+      text: completedTranscript.utterances[0].text?.substring(0, 50) + '...',
+      hasWords: !!completedTranscript.utterances[0].words
+    })
+  }
+  
   const utterances: TranscriptSegment[] = completedTranscript.utterances?.map((utt: any) => ({
     speaker: `Speaker ${utt.speaker}`,
     text: utt.text,
