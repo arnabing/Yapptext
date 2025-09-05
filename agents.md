@@ -39,8 +39,9 @@ yapptext/
 1. **Audio Upload**: Drag-and-drop or click to select audio files
 2. **File Validation**: MP3, WAV, M4A, WebM, MP4 (max 25MB)
 3. **Transcription Models**:
-   - **Best Model** (default): Highest accuracy for complex audio
-   - **Nano Model**: 3x faster, cost-effective option
+   - **Universal Model** (default): Supports speaker diarization, high accuracy
+   - **Nano Model**: 3x faster but NO speaker detection support
+   - **Note**: Only 'universal' and 'slam-1' models support speaker labels
 4. **Speaker Diarization**: Identifies and labels different speakers
 5. **Smart Formatting**: iMessage-style conversation layout
 6. **Audio Intelligence**:
@@ -53,6 +54,7 @@ yapptext/
 10. **Rate Limiting**: 20 minutes of audio per day per IP
 11. **Privacy**: No file storage, memory-only processing
 12. **Copy to Clipboard**: One-click transcript copying
+13. **Vercel Blob Storage**: For large file uploads (>4.5MB)
 
 ## Environment Variables
 ```env
@@ -72,11 +74,12 @@ Transcribes audio files using AssemblyAI with speaker detection.
 **Request:**
 - Method: POST
 - Body: FormData with:
-  - 'audio': File (required)
-  - 'useNanoModel': string ('true'/'false')
+  - 'audioUrl': string (Vercel Blob URL) OR
+  - 'audio': File (fallback for small files)
+  - 'enableSpeakerLabels': string ('true'/'false', default 'true')
   - 'enableSentiment': string ('true'/'false')
   - 'enableKeyPhrases': string ('true'/'false')
-- Max size: 25MB
+- Max size: 2GB (via Vercel Blob), 4.5MB (direct upload)
 
 **Response:**
 ```json
@@ -193,8 +196,8 @@ Update accepted types in:
 5. Deploy
 
 ### Cost Considerations
-- AssemblyAI Best Model: $0.37/hour (~$0.006 per minute)
-- AssemblyAI Nano Model: $0.12/hour (~$0.002 per minute)
+- AssemblyAI Universal Model: ~$0.37/hour (~$0.006 per minute)
+- AssemblyAI Nano Model: ~$0.12/hour (~$0.002 per minute) - NO speaker detection
 - OpenAI Translation: ~$0.002 per 1,000 tokens
 - Daily limit of 20 min/user:
   - Best Model: max $0.12/user/day
@@ -259,8 +262,11 @@ curl http://localhost:3000/api/check-limit
 - The app is optimized for mobile devices
 - Confetti animations trigger on successful transcription
 - Console logging is extensive for debugging
-- Fast Mode toggle uses AssemblyAI's Nano model
-- Sentiment and key phrases are enabled by default
+- Model selection is automatic: 'universal' when speaker detection needed, 'nano' for speed
+- Speaker diarization only works with 'universal' and 'slam-1' models, NOT 'nano'
+- Large files (>4.5MB) are uploaded to Vercel Blob storage first
+- Word-level highlighting syncs with audio playback
+- Audio controls have keyboard shortcuts (space, arrow keys)
 
 ## License
 MIT - See LICENSE file

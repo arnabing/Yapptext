@@ -55,6 +55,7 @@ export async function transcribeWithAssemblyAI(audioInput: File | string, option
   useNanoModel?: boolean
   enableSentiment?: boolean
   enableKeyPhrases?: boolean
+  enableSpeakerLabels?: boolean
   isUrl?: boolean
 }): Promise<{
   text: string
@@ -75,11 +76,18 @@ export async function transcribeWithAssemblyAI(audioInput: File | string, option
   try {
     const startTime = Date.now()
     
-    // Prepare transcription options - using the format that was working
+    // Determine if we need speaker labels (default true for backward compatibility)
+    const needsSpeakerLabels = options?.enableSpeakerLabels !== false
+    
+    // Choose optimal model: nano is 3x faster but doesn't support speaker diarization
+    // Only universal and slam-1 support speaker labels
+    const speechModel = needsSpeakerLabels ? 'universal' : 'nano'
+    
+    // Prepare transcription options
     let transcriptOptions: any = {
-      speaker_labels: true,
-      speech_model: 'nano', // 3x faster
-      language_detection: true, // Re-enable language detection for better speaker separation
+      speaker_labels: needsSpeakerLabels,
+      speech_model: speechModel,
+      language_detection: true,
       format_text: true,
       punctuate: true,
       // Don't specify language_code when using language_detection
@@ -99,8 +107,8 @@ export async function transcribeWithAssemblyAI(audioInput: File | string, option
     }
     
     console.log('Starting AssemblyAI transcription with options:')
-    console.log('- Model: nano (fast)')
-    console.log('- speaker_labels: true')
+    console.log(`- Model: ${speechModel}${speechModel === 'nano' ? ' (3x faster, no speaker detection)' : ' (supports speaker diarization)'}`)
+    console.log(`- speaker_labels: ${needsSpeakerLabels}`)
     console.log('- language_detection: true')
     console.log('- sentiment_analysis:', options?.enableSentiment || false)
     console.log('- auto_highlights:', options?.enableKeyPhrases || false)

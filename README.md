@@ -10,7 +10,7 @@ A powerful, privacy-focused audio transcription web app with automatic speaker d
 - 🌍 **99 language support** with automatic detection
 - 💬 **Translation** - Translate transcripts to any language
 - ⏱️ **Word-level timestamps** - Synchronized highlighting during playback
-- 🚀 **Fast Mode (Nano)** - 3x faster transcription with slight accuracy tradeoff
+- 🚀 **Smart Model Selection** - Automatically uses Universal for speaker detection or Nano (3x faster) when possible
 - 🎭 **Sentiment Analysis** - Analyze emotional tone of conversations
 - 🔑 **Key Phrases** - Automatic extraction of important concepts
 - 🎪 **Sample Audio** - Built-in demos for quick testing
@@ -92,23 +92,24 @@ const DAILY_LIMIT_MINUTES = 20 // Change this value
 ```
 
 ### File Size Limit
-Edit the validation in `app/page.tsx` and `app/api/transcribe/route.ts`:
-```typescript
-if (selectedFile.size > 25 * 1024 * 1024) // 25MB limit
-```
+- **Small files (<4.5MB)**: Direct upload to API
+- **Large files (up to 2GB)**: Automatically uploaded to Vercel Blob storage
+- Edit limits in `app/page.tsx` and `app/api/transcribe/route.ts`
 
 ## API Usage & Pricing
 
 ### AssemblyAI (Transcription)
-- **Best Model (Default)**:
-  - **Cost**: $0.37 per hour (~$0.006 per minute)
-  - **Use for**: High accuracy, complex audio, multiple speakers
-- **Nano Model (Fast Mode)**:
-  - **Cost**: $0.12 per hour (~$0.002 per minute)  
-  - **Use for**: Quick transcriptions, cost efficiency
-  - **Speed**: 3x faster than Best model
-- **Free Credits**: $50 on signup (135 hours with Best, 400+ hours with Nano)
-- **Features included**: Speaker detection, sentiment analysis, key phrases extraction
+- **Universal Model (Default when speaker detection needed)**:
+  - **Cost**: ~$0.37 per hour (~$0.006 per minute)
+  - **Use for**: Multiple speakers, high accuracy
+  - **Features**: Speaker diarization, all audio intelligence features
+- **Nano Model (Auto-selected when possible)**:
+  - **Cost**: ~$0.12 per hour (~$0.002 per minute)  
+  - **Use for**: Single speaker, quick transcriptions
+  - **Speed**: 3x faster than Universal
+  - **Limitation**: NO speaker detection support
+- **Free Credits**: $50 on signup (135 hours with Universal, 400+ hours with Nano)
+- **Note**: Only Universal and Slam-1 models support speaker labels
 
 ### OpenAI (Translation)
 - **Cost**: ~$0.002 per 1,000 tokens (roughly 750 words)
@@ -133,12 +134,14 @@ With the default 20-minute daily limit per user:
 - ✅ 99 language support with auto-detection
 - ✅ Translation to any language
 - ✅ Word-level timestamps with synchronized highlighting
-- ✅ Sentiment analysis (enabled by default)
-- ✅ Key phrases extraction (enabled by default)
-- ✅ Fast Mode toggle (Nano model for 3x speed)
+- ✅ Sentiment analysis (optional)
+- ✅ Key phrases extraction (optional)
+- ✅ Smart model selection (Universal for speakers, Nano for speed)
 - ✅ Sample audio for testing
 - ✅ Improved audio controls with seek buttons
 - ✅ Success animations with confetti
+- ✅ Vercel Blob storage for large files (>4.5MB)
+- ✅ Keyboard shortcuts for audio controls (space, arrows)
 
 ## Future Enhancements
 

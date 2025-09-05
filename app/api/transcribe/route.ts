@@ -36,14 +36,14 @@ export async function POST(request: NextRequest) {
     const audioUrl = formData.get('audioUrl') as string
     const audioFile = formData.get('audio') as File
     
-    const useNanoModel = true // Always use nano model (3x faster)
+    const enableSpeakerLabels = formData.get('enableSpeakerLabels') !== 'false' // Default true
     const enableSentiment = formData.get('enableSentiment') === 'true'
     const enableKeyPhrases = formData.get('enableKeyPhrases') === 'true'
     
     console.log('Form data parsed')
     console.log('Audio URL:', audioUrl ? 'present' : 'missing')
     console.log('Audio file:', audioFile ? 'present' : 'missing')
-    console.log('Options:', { useNanoModel, enableSentiment, enableKeyPhrases })
+    console.log('Options:', { enableSpeakerLabels, enableSentiment, enableKeyPhrases })
     
     if (!audioUrl && !audioFile) {
       console.error('No audio URL or file in form data')
@@ -114,7 +114,7 @@ export async function POST(request: NextRequest) {
     // Pass either URL or file to AssemblyAI
     const audioInput = audioUrl || audioFile
     const { text, utterances, chapters, duration, allWords, sentimentAnalysis, keyPhrases } = await transcribeWithAssemblyAI(audioInput, {
-      useNanoModel,
+      enableSpeakerLabels,
       enableSentiment,
       enableKeyPhrases,
       isUrl: !!audioUrl

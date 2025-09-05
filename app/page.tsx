@@ -242,7 +242,7 @@ export default function Home() {
       formData.append("audioUrl", blob.url);
       formData.append("fileName", file.name);
       formData.append("fileSize", file.size.toString());
-      formData.append("useNanoModel", "true"); // Always use nano model (3x faster)
+      formData.append("enableSpeakerLabels", "true"); // Enable speaker detection (uses universal model)
       formData.append("enableSentiment", "false"); // Disabled for speed
       formData.append("enableKeyPhrases", "false"); // Disabled for speed
 
