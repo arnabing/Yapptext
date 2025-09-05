@@ -45,17 +45,18 @@ export function TranscriptView({
   words = []
 }: TranscriptViewProps) {
   const scrollRef = useRef<HTMLDivElement>(null)
-  const activeRef = useRef<HTMLDivElement>(null)
+  const activeWordRef = useRef<HTMLSpanElement>(null)
   
   
   useEffect(() => {
-    if (activeRef.current && scrollRef.current) {
-      const element = activeRef.current
+    if (activeWordRef.current && scrollRef.current) {
+      const element = activeWordRef.current
       const container = scrollRef.current
       const elementRect = element.getBoundingClientRect()
       const containerRect = container.getBoundingClientRect()
       
-      if (elementRect.top < containerRect.top || elementRect.bottom > containerRect.bottom) {
+      // Only scroll if the active word is outside the viewport
+      if (elementRect.top < containerRect.top + 100 || elementRect.bottom > containerRect.bottom - 100) {
         element.scrollIntoView({ behavior: 'smooth', block: 'center' })
       }
     }
@@ -65,7 +66,7 @@ export function TranscriptView({
   if (!utterances || utterances.length === 0) {
     return (
       <ScrollArea className="h-full">
-        <div className="p-4 md:p-6 max-w-4xl mx-auto pb-32">
+        <div className="p-4 md:p-6 max-w-4xl mx-auto pb-44">
           <p className="text-sm md:text-base leading-relaxed whitespace-pre-wrap break-words">{fullText}</p>
         </div>
       </ScrollArea>
@@ -126,7 +127,7 @@ export function TranscriptView({
 
   return (
     <ScrollArea className="h-full" ref={scrollRef}>
-      <div className="p-4 md:p-6 space-y-3 max-w-4xl mx-auto pb-32">
+      <div className="p-4 md:p-6 space-y-3 max-w-4xl mx-auto pb-44">
         {/* Chapters section removed for better performance */}
         
         {/* Transcript segments - Standardized iMessage style for all */}
@@ -146,7 +147,6 @@ export function TranscriptView({
           return (
             <div 
               key={groupIndex}
-              ref={isActive ? activeRef : null}
               className={`flex ${!isMainSpeaker ? 'justify-end' : 'justify-start'} mb-4`}
             >
               <div className={`max-w-[85%] md:max-w-[70%] space-y-1`}>
@@ -171,6 +171,7 @@ export function TranscriptView({
                             return (
                               <span
                                 key={wordIndex}
+                                ref={isCurrentWord ? activeWordRef : null}
                                 className={cn(
                                   "transition-colors duration-200",
                                   isCurrentWord && (!isMainSpeaker 

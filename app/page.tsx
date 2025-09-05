@@ -242,9 +242,9 @@ export default function Home() {
       formData.append("audioUrl", blob.url);
       formData.append("fileName", file.name);
       formData.append("fileSize", file.size.toString());
-      formData.append("enableSpeakerLabels", "true"); // Enable speaker detection (uses universal model)
-      formData.append("enableSentiment", "false"); // Disabled for speed
-      formData.append("enableKeyPhrases", "false"); // Disabled for speed
+      formData.append("useNanoModel", "true"); // Always use nano model (3x faster)
+      formData.append("enableSentiment", "true");
+      formData.append("enableKeyPhrases", "true");
 
       // Use XMLHttpRequest for processing progress
       const xhr = new XMLHttpRequest();
@@ -495,7 +495,7 @@ export default function Home() {
               YappText
             </h1>
             <p className="text-base md:text-lg text-muted-foreground">
-              Audio file to text in seconds
+              Audio to text in seconds
             </p>
           </div>
         </div>

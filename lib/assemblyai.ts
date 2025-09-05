@@ -52,10 +52,9 @@ export interface TranscriptionResult {
 }
 
 export async function transcribeWithAssemblyAI(audioInput: File | string, options?: {
-  useNanoModel?: boolean
+  turboMode?: boolean
   enableSentiment?: boolean
   enableKeyPhrases?: boolean
-  enableSpeakerLabels?: boolean
   isUrl?: boolean
 }): Promise<{
   text: string
@@ -76,21 +75,19 @@ export async function transcribeWithAssemblyAI(audioInput: File | string, option
   try {
     const startTime = Date.now()
     
-    // Determine if we need speaker labels (default true for backward compatibility)
-    const needsSpeakerLabels = options?.enableSpeakerLabels !== false
-    
-    // Choose optimal model: nano is 3x faster but doesn't support speaker diarization
-    // Only universal and slam-1 support speaker labels
-    const speechModel = needsSpeakerLabels ? 'universal' : 'nano'
+    // Turbo mode uses nano (3x faster) but no speaker detection
+    // Default is universal model with speaker detection
+    const turboMode = options?.turboMode || false
+    const speechModel = turboMode ? 'nano' : 'universal'
+    const speakerLabels = !turboMode // Speaker labels only work with universal/slam-1
     
     // Prepare transcription options
     let transcriptOptions: any = {
-      speaker_labels: needsSpeakerLabels,
+      speaker_labels: speakerLabels,
       speech_model: speechModel,
-      language_detection: true,
+      language_code: 'en', // Specify English for better speaker separation
       format_text: true,
       punctuate: true,
-      // Don't specify language_code when using language_detection
     }
     
     // Handle URL vs File input - SDK expects 'audio' for BOTH URLs and buffers
@@ -107,9 +104,9 @@ export async function transcribeWithAssemblyAI(audioInput: File | string, option
     }
     
     console.log('Starting AssemblyAI transcription with options:')
-    console.log(`- Model: ${speechModel}${speechModel === 'nano' ? ' (3x faster, no speaker detection)' : ' (supports speaker diarization)'}`)
-    console.log(`- speaker_labels: ${needsSpeakerLabels}`)
-    console.log('- language_detection: true')
+    console.log(`- Model: ${speechModel}${turboMode ? ' (Turbo: 3x faster, single speaker)' : ' (Standard: multi-speaker detection)'}`)
+    console.log(`- speaker_labels: ${speakerLabels}`)
+    console.log('- language_code: en')
     console.log('- sentiment_analysis:', options?.enableSentiment || false)
     console.log('- auto_highlights:', options?.enableKeyPhrases || false)
     
