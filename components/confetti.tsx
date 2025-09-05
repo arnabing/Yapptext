@@ -79,60 +79,45 @@ export function Confetti({ trigger = false, options }: { trigger?: boolean; opti
 // Pre-built animation styles
 export const confettiPresets = {
   success: () => {
-    const scalar = 2
+    const scalar = 1.5
     const checkmark = confetti.shapeFromText({ text: '✅', scalar })
     const speech = confetti.shapeFromText({ text: '💬', scalar })
     
-    const end = Date.now() + 2 * 1000 // 2 seconds
+    const end = Date.now() + 0.8 * 1000 // 0.8 seconds (much shorter)
     const colors = ['#10b981', '#3b82f6', '#8b5cf6', '#ec4899']
 
     const frame = () => {
       if (Date.now() > end) return
 
-      // Left side - checkmarks
+      // Left side - checkmarks (reduced particles)
       confetti({
-        particleCount: 2,
+        particleCount: 1,
         angle: 60,
-        spread: 55,
-        startVelocity: 45,
+        spread: 45,
+        startVelocity: 35,
         origin: { x: 0, y: 0.6 },
         shapes: [checkmark],
         scalar,
         colors: colors,
-        ticks: 200,
-        gravity: 0.8,
+        ticks: 150,
+        gravity: 0.9,
         decay: 0.94,
       })
       
-      // Right side - speech bubbles
+      // Right side - speech bubbles (reduced particles)
       confetti({
-        particleCount: 2,
+        particleCount: 1,
         angle: 120,
-        spread: 55,
-        startVelocity: 45,
+        spread: 45,
+        startVelocity: 35,
         origin: { x: 1, y: 0.6 },
         shapes: [speech],
         scalar,
         colors: colors,
-        ticks: 200,
-        gravity: 0.8,
+        ticks: 150,
+        gravity: 0.9,
         decay: 0.94,
       })
-      
-      // Add some small colored circles for extra flair
-      if (Math.random() > 0.7) {
-        confetti({
-          particleCount: 3,
-          angle: 90,
-          spread: 45,
-          startVelocity: 30,
-          origin: { x: 0.5, y: 0.7 },
-          shapes: ['circle'],
-          scalar: 0.7,
-          colors: colors,
-          ticks: 100,
-        })
-      }
 
       requestAnimationFrame(frame)
     }

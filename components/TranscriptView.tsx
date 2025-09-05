@@ -66,7 +66,7 @@ export function TranscriptView({
   if (!utterances || utterances.length === 0) {
     return (
       <ScrollArea className="h-full">
-        <div className="p-4 md:p-6 max-w-4xl mx-auto pb-44">
+        <div className="p-4 md:p-6 max-w-4xl mx-auto pb-52">
           <p className="text-sm md:text-base leading-relaxed whitespace-pre-wrap break-words">{fullText}</p>
         </div>
       </ScrollArea>
@@ -127,7 +127,7 @@ export function TranscriptView({
 
   return (
     <ScrollArea className="h-full" ref={scrollRef}>
-      <div className="p-4 md:p-6 space-y-3 max-w-4xl mx-auto pb-44">
+      <div className="p-4 md:p-6 space-y-3 max-w-4xl mx-auto pb-52">
         {/* Chapters section removed for better performance */}
         
         {/* Transcript segments - Standardized iMessage style for all */}
@@ -202,6 +202,8 @@ export function TranscriptView({
             </div>
           )
         })}
+        {/* Spacer for audio player - ensures content isn't covered on desktop */}
+        <div className="h-52" aria-hidden="true" />
       </div>
     </ScrollArea>
   )

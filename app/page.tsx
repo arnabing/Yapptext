@@ -5,6 +5,8 @@ import { upload } from '@vercel/blob/client';
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Switch } from "@/components/ui/switch";
+import { Label } from "@/components/ui/label";
 import {
   Upload,
   Copy,
@@ -48,7 +50,7 @@ export default function Home() {
   const [currentLanguage, setCurrentLanguage] = useState("original");
   const [audioDuration, setAudioDuration] = useState(0); // in seconds
   const [estimatedTime, setEstimatedTime] = useState(0); // in seconds
-  // Nano model is now default - no toggle needed
+  const [turboMode, setTurboMode] = useState(false); // Turbo mode for single speaker
 
   const fileInputRef = useRef<HTMLInputElement>(null);
   const processingTimerRef = useRef<NodeJS.Timeout | null>(null);
@@ -242,9 +244,9 @@ export default function Home() {
       formData.append("audioUrl", blob.url);
       formData.append("fileName", file.name);
       formData.append("fileSize", file.size.toString());
-      formData.append("useNanoModel", "true"); // Always use nano model (3x faster)
-      formData.append("enableSentiment", "true");
-      formData.append("enableKeyPhrases", "true");
+      formData.append("turboMode", turboMode.toString()); // Send turbo mode setting
+      formData.append("enableSentiment", "false"); // Disabled for speed
+      formData.append("enableKeyPhrases", "false"); // Disabled for speed
 
       // Use XMLHttpRequest for processing progress
       const xhr = new XMLHttpRequest();
@@ -695,6 +697,19 @@ export default function Home() {
                           </p>
                         </div>
                       </div>
+                      
+                      {/* Turbo Mode Toggle */}
+                      <div className="flex items-center space-x-2 mb-4">
+                        <Switch
+                          id="turbo-mode"
+                          checked={turboMode}
+                          onCheckedChange={setTurboMode}
+                        />
+                        <Label htmlFor="turbo-mode" className="text-sm text-muted-foreground font-normal cursor-pointer">
+                          Turbo (single speaker only)
+                        </Label>
+                      </div>
+                      
                       <div className="flex gap-3">
                         <Button onClick={processFile} className="flex-1">
                           Transcribe
