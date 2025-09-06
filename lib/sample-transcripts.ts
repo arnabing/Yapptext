@@ -1,5 +1,5 @@
 // Auto-generated sample transcript data
-// Generated on: 2025-09-04T16:51:58.573Z
+// Generated on: 2025-09-06T19:11:39.009Z
 
 export interface SampleTranscript {
   name: string
@@ -60,10372 +60,10036 @@ export const SAMPLE_TRANSCRIPTS: Record<string, SampleTranscript> = {
     "description": "MLK's historic speech",
     "duration": "17 min",
     "transcript": {
-      "text": "I have the pleasure to present to you Dr. Martin Luther King Geior. I am happy to join with you today in what will go down in history as a greatest demonstration for freedom in the history of our nation. Five score years ago, a great American in whose symbolic shadow we stand today signed the Emancipation Proclamation. This momentous decree came as a great beacon light of hope to millions of Negro slaves who had been seared in the flames of withering injustice. It came as a joyous daybreak to end the long night of their captivity. But 100 years later, the Negro still is not free. 100 years later, the life of the Negro is still sadly crippled by the manacles of segregation and the chains of discrimination. 100 years later, the Negro lives on a lonely island of poverty. I have a dream that one day this nation will rise up and live out the true meaning of its creed. We hold these truths to be self. Evident that all men are created equal. I have a dream that one day on the red hills to joy. Sons. Of former slaves and the sons of former slave owners will be able to sit down together at the table of brotherhood. I have a dream that one day even the state of Mississippi, a state sweltering with the heat of injustice, sweltering with the heat of oppression, will be transformed into an oasis of freedom and justice. I have a dream my four little children will one day live in a nation where they will not be judged by the color of their skin but by the content of their character. I have a dream. I have a dream that one day down in Alabama with its vicious races with its governor having his lips dripping with the words of interposition and nullification, one day, right now in Alabama, little black boys and black girls will be able to join hands with little white boys and white girls as sisters and brothers. I have a dream today. I have a dream that one day every valley shall be exalted and every hill and mountains shall be made low. The rough places will be made plain and the crooked places will be made straight. And the glory of the Lord shall be revealed and all flesh shall see it together. This is our hope. This is the faith that I go back to the Southt with. With this faith we will be able to hew out of the mountain of despair a stone of hope. With this faith we will be able to transform the jangling discords of our nation into a beautiful symphony of brotherhood. With this faith we will be able to work together, to pray together, to struggle together, to go to jail together, to stand up for freedom together, knowing that we will be free one day if be la this will be the day with all of God's children Be able to sing with new meaning. My country tears of thee Sweet land of liberty of the I sing Land where my fathers died Land of the pilgrim'pride from every mountainside let freedom ring. And if America is to be a great nation, this must become true. And so let freedom reign from the prodigious hilltops of New Hampshire. Let freedom reign from the mighty mountains of New York. Let freedom ring from the heightening alleghenies of Pennsylvania. Let freedom ring from the snow capped Rockies of Colorado. Let freedom ring from the curvaceous slopes of California. But not only that. Let freedom ring from Stone Mountain of Georgia. Let freedom ring from Lookout Mountain of Tennessee. Let freedom ring from every hill and molehil of Mississippi. From every mountainside that freedom rain and wind we when we allow freedom rings when we let it ring from every village and every hamlet, from every state and every city, we will be able to speed up that day when all of go'children black men and white men, Jews and Gentiles, Protestants and Catholics will be able to join hands and sing in the words of the old Negro spiritual. Free at last, Free at last. Thank God Almighty, we fear.",
+      "text": "I have the pleasure to present to you Dr. Martin Luther King Geior. I am happy to join with you today in what will go down in history as a greatest demonstration for freedom in the history of our nation. Five score years ago, a great American in whose symbolic shadow we stand today signed the Emancipation Proclamation. This momentous decree came as a great beacon light of hope to millions of Negro slaves who had been seared in the flames of withering injustice. It came as a joyous daybreak to end the long night of their captivity. But 100 years later, the Negro still is not free. 100 years later, the life of the Negro is still sadly crippled by the manacles of segregation and the chains of discrimination. 100 years later, the Negro lives on a lonely island of poverty. I have a dream that one day this nation will rise up and live out the true meaning of its creed. We hold these truths to be self evident that all men are created equal. I have a dream that one day on the red hills to joy sons of former slaves and the sons of former slave owners will be able to sit down together at the table of brotherhood. I have a dream that one day even the state of Mississippi, a state sweltering with the heat of injustice, sweltering with the heat of oppression, will be transformed into an oasis of freedom and justice. I have a dream my four little children will one day live in a nation where they will not be judged by the color of their skin but by the content of their character. I have a dream. I have a dream that one day down in Alabama with its vicious races with its governor having his lips dripping with the words of interposition and nullification, one day, right now in Alabama, little black boys and black girls will be able to join hands with little white boys and white girls as sisters and brothers. I have a dream today. I have a dream that one day every valley shall be exalted and every hill and mountains shall be made low. The rough places will be made plain and the crooked places will be made straight. And the glory of the Lord shall be revealed and all flesh shall see it together. This is our hope. This is the faith that I go back to the Southt with. With this faith we will be able to hew out of the mountain of despair a stone of hope. With this faith we will be able to transform the jangling discords of our nation into a beautiful symphony of brotherhood. With this faith we will be able to work together, to pray together, to struggle together, to go to jail together, to stand up for freedom together, knowing that we will be free one day if be la this will be the day with all of God's children Be able to sing with new meaning. My country tears of thee Sweet land of liberty of the I sing Land where my fathers died Land of the pilgrim'pride from every mountainside let freedom ring. And if America is to be a great nation, this must become true. And so let freedom reign from the prodigious hilltops of New Hampshire. Let freedom reign from the mighty mountains of New York. Let freedom ring from the heightening alleghenies of Pennsylvania. Let freedom ring from the snow capped Rockies of Colorado. Let freedom ring from the curvaceous slopes of California. But not only that. Let freedom ring from Stone Mountain of Georgia. Let freedom ring from Lookout Mountain of Tennessee. Let freedom ring from every hill and molehil of Mississippi. From every mountainside that freedom rain and wind we when we allow freedom rings when we let it ring from every village and every hamlet, from every state and every city, we will be able to speed up that day when all of go'children black men and white men, Jews and Gentiles, Protestants and Catholics will be able to join hands and sing in the words of the old Negro spiritual. Free at last, Free at last. Thank God Almighty, we fear.",
       "words": 715,
       "utterances": [
         {
-          "speaker": "Speaker A",
-          "text": "I have the pleasure to present to you Dr. Martin Luther King Geior. I am happy to join with you today in what will go down in history as a greatest demonstration for freedom in the history of our nation. Five score years ago, a great American in whose symbolic shadow we stand today signed the Emancipation Proclamation. This momentous decree came as a great beacon light of hope to millions of Negro slaves who had been seared in the flames of withering injustice. It came as a joyous daybreak to end the long night of their captivity. But 100 years later, the Negro still is not free. 100 years later, the life of the Negro is still sadly crippled by the manacles of segregation and the chains of discrimination. 100 years later, the Negro lives on a lonely island of poverty.",
-          "start": 335,
-          "end": 113935,
-          "confidence": 0.9718068,
+          "speaker": "MLK",
+          "text": "I have the pleasure to present to you Dr. Martin Luther King Geior. I am happy to join with you today in what will go down in history as a greatest demonstration for freedom in the history of our nation. Five score years ago, a great American in whose symbolic shadow we stand today signed the Emancipation Proclamation. This momentous decree came as a great beacon light of hope to millions of Negro slaves who had been seared in the flames of withering injustice. It came as a joyous daybreak to end the long night of their captivity. But 100 years later, the Negro still is not free. 100 years later, the life of the Negro is still sadly crippled by the manacles of segregation and the chains of discrimination. 100 years later, the Negro lives on a lonely island of poverty. I have a dream that one day this nation will rise up and live out the true meaning of its creed. We hold these truths to be self evident that all men are created equal. I have a dream that one day on the red hills to joy sons of former slaves and the sons of former slave owners will be able to sit down together at the table of brotherhood. I have a dream that one day even the state of Mississippi, a state sweltering with the heat of injustice, sweltering with the heat of oppression, will be transformed into an oasis of freedom and justice. I have a dream my four little children will one day live in a nation where they will not be judged by the color of their skin but by the content of their character. I have a dream. I have a dream that one day down in Alabama with its vicious races with its governor having his lips dripping with the words of interposition and nullification, one day, right now in Alabama, little black boys and black girls will be able to join hands with little white boys and white girls as sisters and brothers. I have a dream today. I have a dream that one day every valley shall be exalted and every hill and mountains shall be made low. The rough places will be made plain and the crooked places will be made straight. And the glory of the Lord shall be revealed and all flesh shall see it together. This is our hope. This is the faith that I go back to the Southt with. With this faith we will be able to hew out of the mountain of despair a stone of hope. With this faith we will be able to transform the jangling discords of our nation into a beautiful symphony of brotherhood. With this faith we will be able to work together, to pray together, to struggle together, to go to jail together, to stand up for freedom together, knowing that we will be free one day if be la this will be the day with all of God's children Be able to sing with new meaning. My country tears of thee Sweet land of liberty of the I sing Land where my fathers died Land of the pilgrim'pride from every mountainside let freedom ring. And if America is to be a great nation, this must become true. And so let freedom reign from the prodigious hilltops of New Hampshire. Let freedom reign from the mighty mountains of New York. Let freedom ring from the heightening alleghenies of Pennsylvania. Let freedom ring from the snow capped Rockies of Colorado. Let freedom ring from the curvaceous slopes of California. But not only that. Let freedom ring from Stone Mountain of Georgia. Let freedom ring from Lookout Mountain of Tennessee. Let freedom ring from every hill and molehil of Mississippi. From every mountainside that freedom rain and wind we when we allow freedom rings when we let it ring from every village and every hamlet, from every state and every city, we will be able to speed up that day when all of go'children black men and white men, Jews and Gentiles, Protestants and Catholics will be able to join hands and sing in the words of the old Negro spiritual. Free at last, Free at last. Thank God Almighty, we fear.",
+          "start": 0,
+          "end": 407,
+          "confidence": 0.94329184,
           "words": [
             {
               "text": "I",
               "start": 335,
               "end": 447,
               "confidence": 0.99493,
-              "speaker": "Speaker A"
+              "speaker": "MLK"
             },
             {
               "text": "have",
               "start": 471,
               "end": 679,
               "confidence": 0.99141,
-              "speaker": "Speaker A"
+              "speaker": "MLK"
             },
             {
               "text": "the",
               "start": 727,
               "end": 911,
               "confidence": 0.99595,
-              "speaker": "Speaker A"
+              "speaker": "MLK"
             },
             {
               "text": "pleasure",
               "start": 943,
               "end": 1231,
               "confidence": 0.99899,
-              "speaker": "Speaker A"
+              "speaker": "MLK"
             },
             {
               "text": "to",
               "start": 1263,
               "end": 1407,
               "confidence": 0.99877,
-              "speaker": "Speaker A"
+              "speaker": "MLK"
             },
             {
               "text": "present",
               "start": 1431,
               "end": 1687,
               "confidence": 0.99994,
-              "speaker": "Speaker A"
+              "speaker": "MLK"
             },
             {
               "text": "to",
               "start": 1751,
               "end": 1927,
               "confidence": 0.99581,
-              "speaker": "Speaker A"
+              "speaker": "MLK"
             },
             {
               "text": "you",
               "start": 1951,
               "end": 2495,
               "confidence": 0.99201,
-              "speaker": "Speaker A"
+              "speaker": "MLK"
             },
             {
               "text": "Dr.",
               "start": 2655,
               "end": 3135,
               "confidence": 0.99424,
-              "speaker": "Speaker A"
+              "speaker": "MLK"
             },
             {
               "text": "Martin",
               "start": 3175,
               "end": 3511,
               "confidence": 0.99324,
-              "speaker": "Speaker A"
+              "speaker": "MLK"
             },
             {
               "text": "Luther",
               "start": 3543,
               "end": 3895,
               "confidence": 0.98408,
-              "speaker": "Speaker A"
+              "speaker": "MLK"
             },
             {
               "text": "King",
               "start": 3935,
               "end": 4327,
               "confidence": 0.97978,
-              "speaker": "Speaker A"
+              "speaker": "MLK"
             },
             {
               "text": "Geior.",
               "start": 4431,
               "end": 5195,
               "confidence": 0.16533,
-              "speaker": "Speaker A"
+              "speaker": "MLK"
             },
             {
               "text": "I",
               "start": 13055,
               "end": 13343,
               "confidence": 0.97169,
-              "speaker": "Speaker A"
+              "speaker": "MLK"
             },
             {
               "text": "am",
               "start": 13359,
               "end": 13631,
               "confidence": 0.97997,
-              "speaker": "Speaker A"
+              "speaker": "MLK"
             },
             {
               "text": "happy",
               "start": 13703,
               "end": 14375,
               "confidence": 0.99979,
-              "speaker": "Speaker A"
+              "speaker": "MLK"
             },
             {
               "text": "to",
               "start": 14495,
               "end": 14823,
               "confidence": 0.99963,
-              "speaker": "Speaker A"
+              "speaker": "MLK"
             },
             {
               "text": "join",
               "start": 14879,
               "end": 15263,
               "confidence": 0.92285,
-              "speaker": "Speaker A"
+              "speaker": "MLK"
             },
             {
               "text": "with",
               "start": 15359,
               "end": 15591,
               "confidence": 0.99872,
-              "speaker": "Speaker A"
+              "speaker": "MLK"
             },
             {
               "text": "you",
               "start": 15623,
               "end": 15911,
               "confidence": 0.99945,
-              "speaker": "Speaker A"
+              "speaker": "MLK"
             },
             {
               "text": "today",
               "start": 15983,
               "end": 16595,
               "confidence": 0.99643,
-              "speaker": "Speaker A"
+              "speaker": "MLK"
             },
             {
               "text": "in",
               "start": 18615,
               "end": 19215,
               "confidence": 0.99721,
-              "speaker": "Speaker A"
+              "speaker": "MLK"
             },
             {
               "text": "what",
               "start": 19335,
               "end": 19639,
               "confidence": 0.99958,
-              "speaker": "Speaker A"
+              "speaker": "MLK"
             },
             {
               "text": "will",
               "start": 19687,
               "end": 19943,
               "confidence": 0.99792,
-              "speaker": "Speaker A"
+              "speaker": "MLK"
             },
             {
               "text": "go",
               "start": 19999,
               "end": 20215,
               "confidence": 0.99904,
-              "speaker": "Speaker A"
+              "speaker": "MLK"
             },
             {
               "text": "down",
               "start": 20255,
               "end": 20695,
               "confidence": 0.9975,
-              "speaker": "Speaker A"
+              "speaker": "MLK"
             },
             {
               "text": "in",
               "start": 20815,
               "end": 21311,
               "confidence": 0.99914,
-              "speaker": "Speaker A"
+              "speaker": "MLK"
             },
             {
               "text": "history",
               "start": 21423,
               "end": 22075,
               "confidence": 0.99963,
-              "speaker": "Speaker A"
+              "speaker": "MLK"
             },
             {
               "text": "as",
               "start": 23295,
               "end": 23679,
               "confidence": 0.99113,
-              "speaker": "Speaker A"
+              "speaker": "MLK"
             },
             {
               "text": "a",
               "start": 23727,
               "end": 23911,
               "confidence": 0.68528,
-              "speaker": "Speaker A"
+              "speaker": "MLK"
             },
             {
               "text": "greatest",
               "start": 23943,
               "end": 24335,
               "confidence": 0.99535,
-              "speaker": "Speaker A"
+              "speaker": "MLK"
             },
             {
               "text": "demonstration",
               "start": 24415,
               "end": 25439,
               "confidence": 0.89513,
-              "speaker": "Speaker A"
+              "speaker": "MLK"
             },
             {
               "text": "for",
               "start": 25607,
               "end": 26031,
               "confidence": 0.99104,
-              "speaker": "Speaker A"
+              "speaker": "MLK"
             },
             {
               "text": "freedom",
               "start": 26103,
               "end": 26599,
               "confidence": 0.99837,
-              "speaker": "Speaker A"
+              "speaker": "MLK"
             },
             {
               "text": "in",
               "start": 26687,
               "end": 26959,
               "confidence": 0.99808,
-              "speaker": "Speaker A"
+              "speaker": "MLK"
             },
             {
               "text": "the",
               "start": 27007,
               "end": 27383,
               "confidence": 0.99856,
-              "speaker": "Speaker A"
+              "speaker": "MLK"
             },
             {
               "text": "history",
               "start": 27479,
               "end": 27783,
               "confidence": 0.99936,
-              "speaker": "Speaker A"
+              "speaker": "MLK"
             },
             {
               "text": "of",
               "start": 27839,
               "end": 28031,
               "confidence": 0.99828,
-              "speaker": "Speaker A"
+              "speaker": "MLK"
             },
             {
               "text": "our",
               "start": 28063,
               "end": 28279,
               "confidence": 0.99837,
-              "speaker": "Speaker A"
+              "speaker": "MLK"
             },
             {
               "text": "nation.",
               "start": 28327,
               "end": 28915,
               "confidence": 0.99828,
-              "speaker": "Speaker A"
+              "speaker": "MLK"
             },
             {
               "text": "Five",
               "start": 37845,
               "end": 38517,
               "confidence": 0.99257,
-              "speaker": "Speaker A"
+              "speaker": "MLK"
             },
             {
               "text": "score",
               "start": 38661,
               "end": 39325,
               "confidence": 0.98546,
-              "speaker": "Speaker A"
+              "speaker": "MLK"
             },
             {
               "text": "years",
               "start": 39485,
               "end": 39949,
               "confidence": 0.99753,
-              "speaker": "Speaker A"
+              "speaker": "MLK"
             },
             {
               "text": "ago,",
               "start": 40037,
               "end": 40665,
               "confidence": 0.99187,
-              "speaker": "Speaker A"
+              "speaker": "MLK"
             },
             {
               "text": "a",
               "start": 43125,
               "end": 43437,
               "confidence": 0.99749,
-              "speaker": "Speaker A"
+              "speaker": "MLK"
             },
             {
               "text": "great",
               "start": 43461,
               "end": 43789,
               "confidence": 0.99844,
-              "speaker": "Speaker A"
+              "speaker": "MLK"
             },
             {
               "text": "American",
               "start": 43877,
               "end": 44173,
               "confidence": 0.99903,
-              "speaker": "Speaker A"
+              "speaker": "MLK"
             },
             {
               "text": "in",
               "start": 44229,
               "end": 44421,
               "confidence": 0.99868,
-              "speaker": "Speaker A"
+              "speaker": "MLK"
             },
             {
               "text": "whose",
               "start": 44453,
               "end": 44853,
               "confidence": 0.57125,
-              "speaker": "Speaker A"
+              "speaker": "MLK"
             },
             {
               "text": "symbolic",
               "start": 44949,
               "end": 45981,
               "confidence": 0.89029,
-              "speaker": "Speaker A"
+              "speaker": "MLK"
             },
             {
               "text": "shadow",
               "start": 46173,
               "end": 46621,
               "confidence": 0.97593,
-              "speaker": "Speaker A"
+              "speaker": "MLK"
             },
             {
               "text": "we",
               "start": 46653,
               "end": 46917,
               "confidence": 0.9971,
-              "speaker": "Speaker A"
+              "speaker": "MLK"
             },
             {
               "text": "stand",
               "start": 46981,
               "end": 47397,
               "confidence": 0.99956,
-              "speaker": "Speaker A"
+              "speaker": "MLK"
             },
             {
               "text": "today",
               "start": 47501,
               "end": 48145,
               "confidence": 0.99629,
-              "speaker": "Speaker A"
+              "speaker": "MLK"
             },
             {
               "text": "signed",
               "start": 49685,
               "end": 50485,
               "confidence": 0.96433,
-              "speaker": "Speaker A"
+              "speaker": "MLK"
             },
             {
               "text": "the",
               "start": 50645,
               "end": 51037,
               "confidence": 0.99485,
-              "speaker": "Speaker A"
+              "speaker": "MLK"
             },
             {
               "text": "Emancipation",
               "start": 51101,
               "end": 52205,
               "confidence": 0.77539,
-              "speaker": "Speaker A"
+              "speaker": "MLK"
             },
             {
               "text": "Proclamation.",
               "start": 52325,
               "end": 53505,
               "confidence": 0.60211,
-              "speaker": "Speaker A"
+              "speaker": "MLK"
             },
             {
               "text": "This",
               "start": 55405,
               "end": 55813,
               "confidence": 0.99878,
-              "speaker": "Speaker A"
+              "speaker": "MLK"
             },
             {
               "text": "momentous",
               "start": 55869,
               "end": 56413,
               "confidence": 0.99762,
-              "speaker": "Speaker A"
+              "speaker": "MLK"
             },
             {
               "text": "decree",
               "start": 56469,
               "end": 56965,
               "confidence": 0.99913,
-              "speaker": "Speaker A"
+              "speaker": "MLK"
             },
             {
               "text": "came",
               "start": 57045,
               "end": 57665,
               "confidence": 0.99489,
-              "speaker": "Speaker A"
+              "speaker": "MLK"
             },
             {
               "text": "as",
               "start": 59315,
               "end": 59675,
               "confidence": 0.9611,
-              "speaker": "Speaker A"
+              "speaker": "MLK"
             },
             {
               "text": "a",
               "start": 59715,
               "end": 59867,
               "confidence": 0.83217,
-              "speaker": "Speaker A"
+              "speaker": "MLK"
             },
             {
               "text": "great",
               "start": 59891,
               "end": 60123,
               "confidence": 0.9037,
-              "speaker": "Speaker A"
+              "speaker": "MLK"
             },
             {
               "text": "beacon",
               "start": 60179,
               "end": 60555,
               "confidence": 0.98204,
-              "speaker": "Speaker A"
+              "speaker": "MLK"
             },
             {
               "text": "light",
               "start": 60595,
               "end": 60795,
               "confidence": 0.99714,
-              "speaker": "Speaker A"
+              "speaker": "MLK"
             },
             {
               "text": "of",
               "start": 60835,
               "end": 61011,
               "confidence": 0.98975,
-              "speaker": "Speaker A"
+              "speaker": "MLK"
             },
             {
               "text": "hope",
               "start": 61043,
               "end": 61307,
               "confidence": 0.99779,
-              "speaker": "Speaker A"
+              "speaker": "MLK"
             },
             {
               "text": "to",
               "start": 61371,
               "end": 61571,
               "confidence": 0.99429,
-              "speaker": "Speaker A"
+              "speaker": "MLK"
             },
             {
               "text": "millions",
               "start": 61603,
               "end": 62203,
               "confidence": 0.99317,
-              "speaker": "Speaker A"
+              "speaker": "MLK"
             },
             {
               "text": "of",
               "start": 62299,
               "end": 62531,
               "confidence": 0.99904,
-              "speaker": "Speaker A"
+              "speaker": "MLK"
             },
             {
               "text": "Negro",
               "start": 62563,
               "end": 63059,
               "confidence": 0.99816,
-              "speaker": "Speaker A"
+              "speaker": "MLK"
             },
             {
               "text": "slaves",
               "start": 63147,
               "end": 63815,
               "confidence": 0.98377,
-              "speaker": "Speaker A"
+              "speaker": "MLK"
             },
             {
               "text": "who",
               "start": 64995,
               "end": 65355,
               "confidence": 0.99388,
-              "speaker": "Speaker A"
+              "speaker": "MLK"
             },
             {
               "text": "had",
               "start": 65395,
               "end": 65595,
               "confidence": 0.99192,
-              "speaker": "Speaker A"
+              "speaker": "MLK"
             },
             {
               "text": "been",
               "start": 65635,
               "end": 65955,
               "confidence": 0.99681,
-              "speaker": "Speaker A"
+              "speaker": "MLK"
             },
             {
               "text": "seared",
               "start": 66035,
               "end": 66395,
               "confidence": 0.99153,
-              "speaker": "Speaker A"
+              "speaker": "MLK"
             },
             {
               "text": "in",
               "start": 66475,
               "end": 66715,
               "confidence": 0.99599,
-              "speaker": "Speaker A"
+              "speaker": "MLK"
             },
             {
               "text": "the",
               "start": 66755,
               "end": 66955,
               "confidence": 0.99595,
-              "speaker": "Speaker A"
+              "speaker": "MLK"
             },
             {
               "text": "flames",
               "start": 66995,
               "end": 67507,
               "confidence": 0.99166,
-              "speaker": "Speaker A"
+              "speaker": "MLK"
             },
             {
               "text": "of",
               "start": 67651,
               "end": 67955,
               "confidence": 0.99827,
-              "speaker": "Speaker A"
+              "speaker": "MLK"
             },
             {
               "text": "withering",
               "start": 67995,
               "end": 68555,
               "confidence": 0.99888,
-              "speaker": "Speaker A"
+              "speaker": "MLK"
             },
             {
               "text": "injustice.",
               "start": 68635,
               "end": 69695,
               "confidence": 0.99466,
-              "speaker": "Speaker A"
+              "speaker": "MLK"
             },
             {
               "text": "It",
               "start": 71355,
               "end": 71739,
               "confidence": 0.98507,
-              "speaker": "Speaker A"
+              "speaker": "MLK"
             },
             {
               "text": "came",
               "start": 71787,
               "end": 72067,
               "confidence": 0.99722,
-              "speaker": "Speaker A"
+              "speaker": "MLK"
             },
             {
               "text": "as",
               "start": 72131,
               "end": 72355,
               "confidence": 0.99628,
-              "speaker": "Speaker A"
+              "speaker": "MLK"
             },
             {
               "text": "a",
               "start": 72395,
               "end": 72571,
               "confidence": 0.99588,
-              "speaker": "Speaker A"
+              "speaker": "MLK"
             },
             {
               "text": "joyous",
               "start": 72603,
               "end": 73051,
               "confidence": 0.99827,
-              "speaker": "Speaker A"
+              "speaker": "MLK"
             },
             {
               "text": "daybreak",
               "start": 73123,
               "end": 74055,
               "confidence": 0.93086,
-              "speaker": "Speaker A"
+              "speaker": "MLK"
             },
             {
               "text": "to",
               "start": 75795,
               "end": 76131,
               "confidence": 0.98978,
-              "speaker": "Speaker A"
+              "speaker": "MLK"
             },
             {
               "text": "end",
               "start": 76163,
               "end": 76499,
               "confidence": 0.99702,
-              "speaker": "Speaker A"
+              "speaker": "MLK"
             },
             {
               "text": "the",
               "start": 76587,
               "end": 76835,
               "confidence": 0.99596,
-              "speaker": "Speaker A"
+              "speaker": "MLK"
             },
             {
               "text": "long",
               "start": 76875,
               "end": 77267,
               "confidence": 0.98519,
-              "speaker": "Speaker A"
+              "speaker": "MLK"
             },
             {
               "text": "night",
               "start": 77371,
               "end": 77899,
               "confidence": 0.9985,
-              "speaker": "Speaker A"
+              "speaker": "MLK"
             },
             {
               "text": "of",
               "start": 78027,
               "end": 78291,
               "confidence": 0.99301,
-              "speaker": "Speaker A"
+              "speaker": "MLK"
             },
             {
               "text": "their",
               "start": 78323,
               "end": 78659,
               "confidence": 0.99071,
-              "speaker": "Speaker A"
+              "speaker": "MLK"
             },
             {
               "text": "captivity.",
               "start": 78747,
               "end": 79695,
               "confidence": 0.58084,
-              "speaker": "Speaker A"
+              "speaker": "MLK"
             },
             {
               "text": "But",
               "start": 81835,
               "end": 82267,
               "confidence": 0.99537,
-              "speaker": "Speaker A"
+              "speaker": "MLK"
             },
             {
               "text": "100",
               "start": 82331,
               "end": 83171,
               "confidence": 0.99845,
-              "speaker": "Speaker A"
+              "speaker": "MLK"
             },
             {
               "text": "years",
               "start": 83283,
               "end": 83867,
               "confidence": 0.99813,
-              "speaker": "Speaker A"
+              "speaker": "MLK"
             },
             {
               "text": "later,",
               "start": 84011,
               "end": 84695,
               "confidence": 0.99808,
-              "speaker": "Speaker A"
+              "speaker": "MLK"
             },
             {
               "text": "the",
               "start": 86795,
               "end": 87155,
               "confidence": 0.99417,
-              "speaker": "Speaker A"
+              "speaker": "MLK"
             },
             {
               "text": "Negro",
               "start": 87195,
               "end": 87931,
               "confidence": 0.99746,
-              "speaker": "Speaker A"
+              "speaker": "MLK"
             },
             {
               "text": "still",
               "start": 88083,
               "end": 88775,
               "confidence": 0.99623,
-              "speaker": "Speaker A"
+              "speaker": "MLK"
             },
             {
               "text": "is",
               "start": 89635,
               "end": 90019,
               "confidence": 0.99749,
-              "speaker": "Speaker A"
+              "speaker": "MLK"
             },
             {
               "text": "not",
               "start": 90067,
               "end": 90347,
               "confidence": 0.99871,
-              "speaker": "Speaker A"
+              "speaker": "MLK"
             },
             {
               "text": "free.",
               "start": 90411,
               "end": 91015,
               "confidence": 0.9986,
-              "speaker": "Speaker A"
+              "speaker": "MLK"
             },
             {
               "text": "100",
               "start": 92755,
               "end": 93395,
               "confidence": 0.99792,
-              "speaker": "Speaker A"
+              "speaker": "MLK"
             },
             {
               "text": "years",
               "start": 93435,
               "end": 93827,
               "confidence": 0.9973,
-              "speaker": "Speaker A"
+              "speaker": "MLK"
             },
             {
               "text": "later,",
               "start": 93931,
               "end": 94575,
               "confidence": 0.99852,
-              "speaker": "Speaker A"
+              "speaker": "MLK"
             },
             {
               "text": "the",
               "start": 96355,
               "end": 96691,
               "confidence": 0.99859,
-              "speaker": "Speaker A"
+              "speaker": "MLK"
             },
             {
               "text": "life",
               "start": 96723,
               "end": 96915,
               "confidence": 0.99458,
-              "speaker": "Speaker A"
+              "speaker": "MLK"
             },
             {
               "text": "of",
               "start": 96955,
               "end": 97083,
               "confidence": 0.99634,
-              "speaker": "Speaker A"
+              "speaker": "MLK"
             },
             {
               "text": "the",
               "start": 97099,
               "end": 97227,
               "confidence": 0.99511,
-              "speaker": "Speaker A"
+              "speaker": "MLK"
             },
             {
               "text": "Negro",
               "start": 97251,
               "end": 97571,
               "confidence": 0.99728,
-              "speaker": "Speaker A"
+              "speaker": "MLK"
             },
             {
               "text": "is",
               "start": 97603,
               "end": 97915,
               "confidence": 0.98381,
-              "speaker": "Speaker A"
+              "speaker": "MLK"
             },
             {
               "text": "still",
               "start": 97995,
               "end": 98595,
               "confidence": 0.99574,
-              "speaker": "Speaker A"
+              "speaker": "MLK"
             },
             {
               "text": "sadly",
               "start": 98755,
               "end": 99491,
               "confidence": 0.99667,
-              "speaker": "Speaker A"
+              "speaker": "MLK"
             },
             {
               "text": "crippled",
               "start": 99563,
               "end": 100059,
               "confidence": 0.99579,
-              "speaker": "Speaker A"
+              "speaker": "MLK"
             },
             {
               "text": "by",
               "start": 100147,
               "end": 100443,
               "confidence": 0.99856,
-              "speaker": "Speaker A"
+              "speaker": "MLK"
             },
             {
               "text": "the",
               "start": 100499,
               "end": 100715,
               "confidence": 0.99879,
-              "speaker": "Speaker A"
+              "speaker": "MLK"
             },
             {
               "text": "manacles",
               "start": 100755,
               "end": 101339,
               "confidence": 0.95526,
-              "speaker": "Speaker A"
+              "speaker": "MLK"
             },
             {
               "text": "of",
               "start": 101427,
               "end": 101699,
               "confidence": 0.99838,
-              "speaker": "Speaker A"
+              "speaker": "MLK"
             },
             {
               "text": "segregation",
               "start": 101747,
               "end": 102655,
               "confidence": 0.9802,
-              "speaker": "Speaker A"
+              "speaker": "MLK"
             },
             {
               "text": "and",
               "start": 103755,
               "end": 104115,
               "confidence": 0.9981,
-              "speaker": "Speaker A"
+              "speaker": "MLK"
             },
             {
               "text": "the",
               "start": 104155,
               "end": 104355,
               "confidence": 0.99498,
-              "speaker": "Speaker A"
+              "speaker": "MLK"
             },
             {
               "text": "chains",
               "start": 104395,
               "end": 104883,
               "confidence": 0.99398,
-              "speaker": "Speaker A"
+              "speaker": "MLK"
             },
             {
               "text": "of",
               "start": 105019,
               "end": 105291,
               "confidence": 0.99918,
-              "speaker": "Speaker A"
+              "speaker": "MLK"
             },
             {
               "text": "discrimination.",
               "start": 105323,
               "end": 106335,
               "confidence": 0.98352,
-              "speaker": "Speaker A"
+              "speaker": "MLK"
             },
             {
               "text": "100",
               "start": 106995,
               "end": 107699,
               "confidence": 0.99791,
-              "speaker": "Speaker A"
+              "speaker": "MLK"
             },
             {
               "text": "years",
               "start": 107747,
               "end": 108123,
               "confidence": 0.99904,
-              "speaker": "Speaker A"
+              "speaker": "MLK"
             },
             {
               "text": "later,",
               "start": 108219,
               "end": 108855,
               "confidence": 0.99533,
-              "speaker": "Speaker A"
+              "speaker": "MLK"
             },
             {
               "text": "the",
               "start": 110155,
               "end": 110491,
               "confidence": 0.99073,
-              "speaker": "Speaker A"
+              "speaker": "MLK"
             },
             {
               "text": "Negro",
               "start": 110523,
               "end": 110923,
               "confidence": 0.99802,
-              "speaker": "Speaker A"
+              "speaker": "MLK"
             },
             {
               "text": "lives",
               "start": 110979,
               "end": 111291,
               "confidence": 0.99603,
-              "speaker": "Speaker A"
+              "speaker": "MLK"
             },
             {
               "text": "on",
               "start": 111363,
               "end": 111595,
               "confidence": 0.99948,
-              "speaker": "Speaker A"
+              "speaker": "MLK"
             },
             {
               "text": "a",
               "start": 111635,
               "end": 111787,
               "confidence": 0.99794,
-              "speaker": "Speaker A"
+              "speaker": "MLK"
             },
             {
               "text": "lonely",
               "start": 111811,
               "end": 112219,
               "confidence": 0.99876,
-              "speaker": "Speaker A"
+              "speaker": "MLK"
             },
             {
               "text": "island",
               "start": 112267,
               "end": 112819,
               "confidence": 0.99783,
-              "speaker": "Speaker A"
+              "speaker": "MLK"
             },
             {
               "text": "of",
               "start": 112907,
               "end": 113131,
               "confidence": 0.99351,
-              "speaker": "Speaker A"
+              "speaker": "MLK"
             },
             {
               "text": "poverty.",
               "start": 113163,
               "end": 113935,
               "confidence": 0.98559,
-              "speaker": "Speaker A"
-            }
-          ]
-        },
-        {
-          "speaker": "Speaker B",
-          "text": "I have a dream that one day this nation will rise up and live out the true meaning of its creed. We hold these truths to be self.",
-          "start": 114355,
-          "end": 129183,
-          "confidence": 0.9723075,
-          "words": [
+              "speaker": "MLK"
+            },
             {
               "text": "I",
               "start": 114355,
               "end": 114667,
               "confidence": 0.99589,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "have",
               "start": 114691,
               "end": 114851,
               "confidence": 0.99633,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "a",
               "start": 114883,
               "end": 115051,
               "confidence": 0.99756,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "dream",
               "start": 115083,
               "end": 115695,
               "confidence": 0.91705,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "that",
               "start": 116815,
               "end": 117175,
               "confidence": 0.84013,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "one",
               "start": 117215,
               "end": 117415,
               "confidence": 0.99453,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "day",
               "start": 117455,
               "end": 118035,
               "confidence": 0.99622,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "this",
               "start": 119495,
               "end": 119927,
               "confidence": 0.99744,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "nation",
               "start": 119991,
               "end": 120455,
               "confidence": 0.99962,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "will",
               "start": 120575,
               "end": 120999,
               "confidence": 0.99909,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "rise",
               "start": 121087,
               "end": 121479,
               "confidence": 0.99423,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "up",
               "start": 121567,
               "end": 122195,
               "confidence": 0.99346,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "and",
               "start": 123175,
               "end": 123511,
               "confidence": 0.93114,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "live",
               "start": 123543,
               "end": 123735,
               "confidence": 0.99641,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "out",
               "start": 123775,
               "end": 123999,
               "confidence": 0.99337,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "the",
               "start": 124047,
               "end": 124255,
               "confidence": 0.99673,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "true",
               "start": 124295,
               "end": 124495,
               "confidence": 0.99911,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "meaning",
               "start": 124535,
               "end": 124831,
               "confidence": 0.99813,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "of",
               "start": 124863,
               "end": 124983,
               "confidence": 0.99843,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "its",
               "start": 124999,
               "end": 125223,
               "confidence": 0.99065,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "creed.",
               "start": 125279,
               "end": 125875,
               "confidence": 0.92107,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "We",
               "start": 126855,
               "end": 127239,
               "confidence": 0.97374,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "hold",
               "start": 127287,
               "end": 127543,
               "confidence": 0.90796,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "these",
               "start": 127599,
               "end": 127935,
               "confidence": 0.99507,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "truths",
               "start": 128015,
               "end": 128359,
               "confidence": 0.80672,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "to",
               "start": 128407,
               "end": 128567,
               "confidence": 0.99845,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "be",
               "start": 128591,
               "end": 128823,
               "confidence": 0.99809,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
-              "text": "self.",
+              "text": "self",
               "start": 128879,
               "end": 129183,
               "confidence": 0.99799,
-              "speaker": "Speaker B"
-            }
-          ]
-        },
-        {
-          "speaker": "Speaker A",
-          "text": "Evident that all men are created equal.",
-          "start": 129239,
-          "end": 132835,
-          "confidence": 0.9294143,
-          "words": [
+              "speaker": "MLK"
+            },
             {
-              "text": "Evident",
+              "text": "evident",
               "start": 129239,
               "end": 130111,
               "confidence": 0.99556,
-              "speaker": "Speaker A"
+              "speaker": "MLK"
             },
             {
               "text": "that",
               "start": 130303,
               "end": 130751,
               "confidence": 0.99743,
-              "speaker": "Speaker A"
+              "speaker": "MLK"
             },
             {
               "text": "all",
               "start": 130823,
               "end": 131151,
               "confidence": 0.9997,
-              "speaker": "Speaker A"
+              "speaker": "MLK"
             },
             {
               "text": "men",
               "start": 131223,
               "end": 131479,
               "confidence": 0.99759,
-              "speaker": "Speaker A"
+              "speaker": "MLK"
             },
             {
               "text": "are",
               "start": 131527,
               "end": 131759,
               "confidence": 0.99463,
-              "speaker": "Speaker A"
+              "speaker": "MLK"
             },
             {
               "text": "created",
               "start": 131807,
               "end": 132151,
               "confidence": 0.99715,
-              "speaker": "Speaker A"
+              "speaker": "MLK"
             },
             {
               "text": "equal.",
               "start": 132183,
               "end": 132835,
               "confidence": 0.52384,
-              "speaker": "Speaker A"
-            }
-          ]
-        },
-        {
-          "speaker": "Speaker B",
-          "text": "I have a dream that one day on the red hills to joy.",
-          "start": 141895,
-          "end": 147845,
-          "confidence": 0.8460954,
-          "words": [
+              "speaker": "MLK"
+            },
             {
               "text": "I",
               "start": 141895,
               "end": 142231,
               "confidence": 0.99591,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "have",
               "start": 142263,
               "end": 142407,
               "confidence": 0.99636,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "a",
               "start": 142431,
               "end": 142591,
               "confidence": 0.99721,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "dream",
               "start": 142623,
               "end": 143235,
               "confidence": 0.98619,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "that",
               "start": 144905,
               "end": 145265,
               "confidence": 0.80785,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "one",
               "start": 145305,
               "end": 145481,
               "confidence": 0.99642,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "day",
               "start": 145513,
               "end": 145729,
               "confidence": 0.99736,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "on",
               "start": 145777,
               "end": 146033,
               "confidence": 0.99476,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "the",
               "start": 146089,
               "end": 146281,
               "confidence": 0.99163,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "red",
               "start": 146313,
               "end": 146553,
               "confidence": 0.99749,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "hills",
               "start": 146609,
               "end": 146993,
               "confidence": 0.44383,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "to",
               "start": 147049,
               "end": 147241,
               "confidence": 0.56068,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
-              "text": "joy.",
+              "text": "joy",
               "start": 147273,
               "end": 147845,
               "confidence": 0.23355,
-              "speaker": "Speaker B"
-            }
-          ]
-        },
-        {
-          "speaker": "Speaker A",
-          "text": "Sons.",
-          "start": 149545,
-          "end": 150017,
-          "confidence": 0.99411,
-          "words": [
+              "speaker": "MLK"
+            },
             {
-              "text": "Sons.",
+              "text": "sons",
               "start": 149545,
               "end": 150017,
               "confidence": 0.99411,
-              "speaker": "Speaker A"
-            }
-          ]
-        },
-        {
-          "speaker": "Speaker B",
-          "text": "Of former slaves and the sons of former slave owners will be able to sit down together at the table of brotherhood. I have a dream that one day even the state of Mississippi, a state sweltering with the heat of injustice, sweltering with the heat of oppression, will be transformed into an oasis of freedom and justice. I have a dream my four little children will one day live in a nation where they will not be judged by the color of their skin but by the content of their character. I have a dream. I have a dream that one day down in Alabama with its vicious races with its governor having his lips dripping with the words of interposition and nullification, one day, right now in Alabama, little black boys and black girls will be able to join hands with little white boys and white girls as sisters and brothers. I have a dream today. I have a dream that one day every valley shall be exalted and every hill and mountains shall be made low. The rough places will be made plain and the crooked places will be made straight. And the glory of the Lord shall be revealed and all flesh shall see it together. This is our hope. This is the faith that I go back to the Southt with. With this faith we will be able to hew out of the mountain of despair a stone of hope. With this faith we will be able to transform the jangling discords of our nation into a beautiful symphony of brotherhood. With this faith we will be able to work together, to pray together, to struggle together, to go to jail together, to stand up for freedom together, knowing that we will be free one day if be la this will be the day with all of God's children Be able to sing with new meaning. My country tears of thee Sweet land of liberty of the I sing Land where my fathers died Land of the pilgrim'pride from every mountainside let freedom ring. And if America is to be a great nation, this must become true. And so let freedom reign from the prodigious hilltops of New Hampshire. Let freedom reign from the mighty mountains of New York. Let freedom ring from the heightening alleghenies of Pennsylvania. Let freedom ring from the snow capped Rockies of Colorado. Let freedom ring from the curvaceous slopes of California. But not only that. Let freedom ring from Stone Mountain of Georgia. Let freedom ring from Lookout Mountain of Tennessee. Let freedom ring from every hill and molehil of Mississippi. From every mountainside that freedom rain and wind we when we allow freedom rings when we let it ring from every village and every hamlet, from every state and every city, we will be able to speed up that day when all of go'children black men and white men, Jews and Gentiles, Protestants and Catholics will be able to join hands and sing in the words of the old Negro spiritual. Free at last, Free at last. Thank God Almighty, we fear.",
-          "start": 150081,
-          "end": 405735,
-          "confidence": 0.9365138,
-          "words": [
+              "speaker": "MLK"
+            },
             {
-              "text": "Of",
+              "text": "of",
               "start": 150081,
               "end": 150449,
               "confidence": 0.98702,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "former",
               "start": 150537,
               "end": 150833,
               "confidence": 0.99834,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "slaves",
               "start": 150889,
               "end": 151257,
               "confidence": 0.99499,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "and",
               "start": 151321,
               "end": 151497,
               "confidence": 0.99088,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "the",
               "start": 151521,
               "end": 151729,
               "confidence": 0.94684,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "sons",
               "start": 151777,
               "end": 152113,
               "confidence": 0.99064,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "of",
               "start": 152169,
               "end": 152529,
               "confidence": 0.45272,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "former",
               "start": 152617,
               "end": 152889,
               "confidence": 0.94134,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "slave",
               "start": 152937,
               "end": 153169,
               "confidence": 0.99879,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "owners",
               "start": 153217,
               "end": 153965,
               "confidence": 0.96233,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "will",
               "start": 154545,
               "end": 155049,
               "confidence": 0.97569,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "be",
               "start": 155137,
               "end": 155361,
               "confidence": 0.98994,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "able",
               "start": 155393,
               "end": 155825,
               "confidence": 0.99683,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "to",
               "start": 155945,
               "end": 156225,
               "confidence": 0.99733,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "sit",
               "start": 156265,
               "end": 156441,
               "confidence": 0.99192,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "down",
               "start": 156473,
               "end": 156929,
               "confidence": 0.99849,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "together",
               "start": 157057,
               "end": 157345,
               "confidence": 0.99603,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "at",
               "start": 157385,
               "end": 157537,
               "confidence": 0.98924,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "the",
               "start": 157561,
               "end": 157721,
               "confidence": 0.99714,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "table",
               "start": 157753,
               "end": 157969,
               "confidence": 0.99858,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "of",
               "start": 158017,
               "end": 158201,
               "confidence": 0.99641,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "brotherhood.",
               "start": 158233,
               "end": 158993,
               "confidence": 0.97499,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "I",
               "start": 159129,
               "end": 159401,
               "confidence": 0.99667,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "have",
               "start": 159433,
               "end": 159601,
               "confidence": 0.99818,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "a",
               "start": 159633,
               "end": 159777,
               "confidence": 0.99812,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "dream",
               "start": 159801,
               "end": 160405,
               "confidence": 0.98788,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "that",
               "start": 161265,
               "end": 161601,
               "confidence": 0.7138,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "one",
               "start": 161633,
               "end": 161825,
               "confidence": 0.99742,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "day",
               "start": 161865,
               "end": 162445,
               "confidence": 0.9972,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "even",
               "start": 164385,
               "end": 164745,
               "confidence": 0.99118,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "the",
               "start": 164785,
               "end": 165009,
               "confidence": 0.99842,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "state",
               "start": 165057,
               "end": 165217,
               "confidence": 0.9988,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "of",
               "start": 165241,
               "end": 165401,
               "confidence": 0.99871,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "Mississippi,",
               "start": 165433,
               "end": 166161,
               "confidence": 0.99539,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "a",
               "start": 166193,
               "end": 166433,
               "confidence": 0.97175,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "state",
               "start": 166489,
               "end": 167113,
               "confidence": 0.96808,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "sweltering",
               "start": 167289,
               "end": 168241,
               "confidence": 0.98881,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "with",
               "start": 168353,
               "end": 168673,
               "confidence": 0.99788,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "the",
               "start": 168729,
               "end": 169209,
               "confidence": 0.95159,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "heat",
               "start": 169337,
               "end": 169601,
               "confidence": 0.7008,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "of",
               "start": 169633,
               "end": 170205,
               "confidence": 0.64518,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "injustice,",
               "start": 170735,
               "end": 171955,
               "confidence": 0.94244,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "sweltering",
               "start": 173375,
               "end": 174167,
               "confidence": 0.97603,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "with",
               "start": 174231,
               "end": 174431,
               "confidence": 0.99808,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "the",
               "start": 174463,
               "end": 174607,
               "confidence": 0.99773,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "heat",
               "start": 174631,
               "end": 174791,
               "confidence": 0.99364,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "of",
               "start": 174823,
               "end": 174967,
               "confidence": 0.99775,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "oppression,",
               "start": 174991,
               "end": 175835,
               "confidence": 0.9963,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "will",
               "start": 176335,
               "end": 176671,
               "confidence": 0.77331,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "be",
               "start": 176703,
               "end": 176967,
               "confidence": 0.98294,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "transformed",
               "start": 177031,
               "end": 177967,
               "confidence": 0.9969,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "into",
               "start": 178071,
               "end": 178287,
               "confidence": 0.998,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "an",
               "start": 178311,
               "end": 178447,
               "confidence": 0.82268,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "oasis",
               "start": 178471,
               "end": 179095,
               "confidence": 0.6747,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "of",
               "start": 179175,
               "end": 179631,
               "confidence": 0.96534,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "freedom",
               "start": 179743,
               "end": 180087,
               "confidence": 0.99667,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "and",
               "start": 180111,
               "end": 180295,
               "confidence": 0.99341,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "justice.",
               "start": 180335,
               "end": 180783,
               "confidence": 0.95946,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "I",
               "start": 180839,
               "end": 181031,
               "confidence": 0.99817,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "have",
               "start": 181063,
               "end": 181231,
               "confidence": 0.99712,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "a",
               "start": 181263,
               "end": 181431,
               "confidence": 0.99576,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "dream",
               "start": 181463,
               "end": 182075,
               "confidence": 0.9585,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "my",
               "start": 185335,
               "end": 185935,
               "confidence": 0.99322,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "four",
               "start": 186055,
               "end": 186335,
               "confidence": 0.77368,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "little",
               "start": 186375,
               "end": 186815,
               "confidence": 0.99222,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "children",
               "start": 186935,
               "end": 187595,
               "confidence": 0.99615,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "will",
               "start": 188895,
               "end": 189231,
               "confidence": 0.97169,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "one",
               "start": 189263,
               "end": 189431,
               "confidence": 0.99791,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "day",
               "start": 189463,
               "end": 189655,
               "confidence": 0.99828,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "live",
               "start": 189695,
               "end": 189871,
               "confidence": 0.99706,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "in",
               "start": 189903,
               "end": 190023,
               "confidence": 0.99936,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "a",
               "start": 190039,
               "end": 190167,
               "confidence": 0.99812,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "nation",
               "start": 190191,
               "end": 190615,
               "confidence": 0.99955,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "where",
               "start": 190735,
               "end": 190991,
               "confidence": 0.99433,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "they",
               "start": 191023,
               "end": 191215,
               "confidence": 0.99799,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "will",
               "start": 191255,
               "end": 191431,
               "confidence": 0.99557,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "not",
               "start": 191463,
               "end": 191631,
               "confidence": 0.99734,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "be",
               "start": 191663,
               "end": 191855,
               "confidence": 0.99888,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "judged",
               "start": 191895,
               "end": 192223,
               "confidence": 0.99619,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "by",
               "start": 192279,
               "end": 192495,
               "confidence": 0.99823,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "the",
               "start": 192535,
               "end": 192711,
               "confidence": 0.99838,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "color",
               "start": 192743,
               "end": 193007,
               "confidence": 0.87233,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "of",
               "start": 193031,
               "end": 193167,
               "confidence": 0.99077,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "their",
               "start": 193191,
               "end": 193447,
               "confidence": 0.99402,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "skin",
               "start": 193511,
               "end": 193831,
               "confidence": 0.99799,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "but",
               "start": 193903,
               "end": 194111,
               "confidence": 0.99606,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "by",
               "start": 194143,
               "end": 194287,
               "confidence": 0.99512,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "the",
               "start": 194311,
               "end": 194639,
               "confidence": 0.99647,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "content",
               "start": 194727,
               "end": 194927,
               "confidence": 0.99919,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "of",
               "start": 194951,
               "end": 195087,
               "confidence": 0.99799,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "their",
               "start": 195111,
               "end": 195343,
               "confidence": 0.90051,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "character.",
               "start": 195399,
               "end": 196047,
               "confidence": 0.97352,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "I",
               "start": 196151,
               "end": 196415,
               "confidence": 0.99405,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "have",
               "start": 196455,
               "end": 196631,
               "confidence": 0.99376,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "a",
               "start": 196663,
               "end": 196807,
               "confidence": 0.99047,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "dream.",
               "start": 196831,
               "end": 197435,
               "confidence": 0.95951,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "I",
               "start": 203885,
               "end": 204293,
               "confidence": 0.98626,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "have",
               "start": 204349,
               "end": 204565,
               "confidence": 0.99287,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "a",
               "start": 204605,
               "end": 204805,
               "confidence": 0.99477,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "dream",
               "start": 204845,
               "end": 205277,
               "confidence": 0.99228,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "that",
               "start": 205381,
               "end": 205645,
               "confidence": 0.99662,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "one",
               "start": 205685,
               "end": 205909,
               "confidence": 0.99764,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "day",
               "start": 205957,
               "end": 206545,
               "confidence": 0.99892,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "down",
               "start": 208045,
               "end": 208785,
               "confidence": 0.95075,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "in",
               "start": 210045,
               "end": 210381,
               "confidence": 0.99619,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "Alabama",
               "start": 210413,
               "end": 211269,
               "confidence": 0.96781,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "with",
               "start": 211437,
               "end": 211741,
               "confidence": 0.99755,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "its",
               "start": 211773,
               "end": 212085,
               "confidence": 0.97269,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "vicious",
               "start": 212165,
               "end": 212597,
               "confidence": 0.99154,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "races",
               "start": 212661,
               "end": 213385,
               "confidence": 0.97736,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "with",
               "start": 214245,
               "end": 214557,
               "confidence": 0.99675,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "its",
               "start": 214581,
               "end": 214837,
               "confidence": 0.98082,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "governor",
               "start": 214901,
               "end": 215745,
               "confidence": 0.9968,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "having",
               "start": 216045,
               "end": 216525,
               "confidence": 0.99197,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "his",
               "start": 216605,
               "end": 216941,
               "confidence": 0.99715,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "lips",
               "start": 217013,
               "end": 217357,
               "confidence": 0.98825,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "dripping",
               "start": 217421,
               "end": 217765,
               "confidence": 0.96561,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "with",
               "start": 217805,
               "end": 217933,
               "confidence": 0.99779,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "the",
               "start": 217949,
               "end": 218077,
               "confidence": 0.98724,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "words",
               "start": 218101,
               "end": 218373,
               "confidence": 0.98254,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "of",
               "start": 218429,
               "end": 218669,
               "confidence": 0.99717,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "interposition",
               "start": 218717,
               "end": 219221,
               "confidence": 0.91536,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "and",
               "start": 219293,
               "end": 219453,
               "confidence": 0.99799,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "nullification,",
               "start": 219469,
               "end": 220465,
               "confidence": 0.91424,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "one",
               "start": 221085,
               "end": 221445,
               "confidence": 0.99683,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "day,",
               "start": 221485,
               "end": 221709,
               "confidence": 0.99608,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "right",
               "start": 221757,
               "end": 221989,
               "confidence": 0.98557,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "now",
               "start": 222037,
               "end": 222293,
               "confidence": 0.96043,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "in",
               "start": 222349,
               "end": 222541,
               "confidence": 0.99664,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "Alabama,",
               "start": 222573,
               "end": 223197,
               "confidence": 0.99844,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "little",
               "start": 223301,
               "end": 223661,
               "confidence": 0.99528,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "black",
               "start": 223733,
               "end": 224037,
               "confidence": 0.99793,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "boys",
               "start": 224101,
               "end": 224373,
               "confidence": 0.99622,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "and",
               "start": 224429,
               "end": 224645,
               "confidence": 0.99315,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "black",
               "start": 224685,
               "end": 224981,
               "confidence": 0.99453,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "girls",
               "start": 225053,
               "end": 225669,
               "confidence": 0.77187,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "will",
               "start": 225797,
               "end": 226061,
               "confidence": 0.99259,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "be",
               "start": 226093,
               "end": 226237,
               "confidence": 0.99872,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "able",
               "start": 226261,
               "end": 226469,
               "confidence": 0.99843,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "to",
               "start": 226517,
               "end": 226701,
               "confidence": 0.99706,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "join",
               "start": 226733,
               "end": 226997,
               "confidence": 0.9885,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "hands",
               "start": 227061,
               "end": 227365,
               "confidence": 0.98575,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "with",
               "start": 227405,
               "end": 227557,
               "confidence": 0.95246,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "little",
               "start": 227581,
               "end": 227813,
               "confidence": 0.99337,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "white",
               "start": 227869,
               "end": 228109,
               "confidence": 0.99882,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "boys",
               "start": 228157,
               "end": 228389,
               "confidence": 0.99632,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "and",
               "start": 228437,
               "end": 228645,
               "confidence": 0.99524,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "white",
               "start": 228685,
               "end": 228933,
               "confidence": 0.99283,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "girls",
               "start": 228989,
               "end": 229477,
               "confidence": 0.53585,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "as",
               "start": 229581,
               "end": 229845,
               "confidence": 0.93193,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "sisters",
               "start": 229885,
               "end": 230261,
               "confidence": 0.98283,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "and",
               "start": 230293,
               "end": 230461,
               "confidence": 0.99403,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "brothers.",
               "start": 230493,
               "end": 230789,
               "confidence": 0.96708,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "I",
               "start": 230837,
               "end": 231021,
               "confidence": 0.97797,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "have",
               "start": 231053,
               "end": 231197,
               "confidence": 0.98108,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "a",
               "start": 231221,
               "end": 231381,
               "confidence": 0.98887,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "dream",
               "start": 231413,
               "end": 231837,
               "confidence": 0.9516,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "today.",
               "start": 231941,
               "end": 232585,
               "confidence": 0.88255,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "I",
               "start": 240115,
               "end": 240499,
               "confidence": 0.98652,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "have",
               "start": 240547,
               "end": 240755,
               "confidence": 0.99489,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "a",
               "start": 240795,
               "end": 240995,
               "confidence": 0.99105,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "dream",
               "start": 241035,
               "end": 241395,
               "confidence": 0.99046,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "that",
               "start": 241475,
               "end": 241715,
               "confidence": 0.99629,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "one",
               "start": 241755,
               "end": 241979,
               "confidence": 0.99607,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "day",
               "start": 242027,
               "end": 242307,
               "confidence": 0.99767,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "every",
               "start": 242371,
               "end": 242619,
               "confidence": 0.99316,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "valley",
               "start": 242667,
               "end": 243219,
               "confidence": 0.99822,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "shall",
               "start": 243307,
               "end": 243579,
               "confidence": 0.99338,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "be",
               "start": 243627,
               "end": 243835,
               "confidence": 0.9982,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "exalted",
               "start": 243875,
               "end": 244735,
               "confidence": 0.95515,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "and",
               "start": 245075,
               "end": 245435,
               "confidence": 0.598,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "every",
               "start": 245475,
               "end": 245675,
               "confidence": 0.9959,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "hill",
               "start": 245715,
               "end": 245891,
               "confidence": 0.99732,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "and",
               "start": 245923,
               "end": 246115,
               "confidence": 0.89985,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "mountains",
               "start": 246155,
               "end": 246595,
               "confidence": 0.67223,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "shall",
               "start": 246635,
               "end": 246811,
               "confidence": 0.98846,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "be",
               "start": 246843,
               "end": 247011,
               "confidence": 0.99668,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "made",
               "start": 247043,
               "end": 247283,
               "confidence": 0.99374,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "low.",
               "start": 247339,
               "end": 247579,
               "confidence": 0.91715,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "The",
               "start": 247627,
               "end": 247787,
               "confidence": 0.9934,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "rough",
               "start": 247811,
               "end": 248059,
               "confidence": 0.99674,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "places",
               "start": 248107,
               "end": 248499,
               "confidence": 0.98694,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "will",
               "start": 248547,
               "end": 248707,
               "confidence": 0.98787,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "be",
               "start": 248731,
               "end": 248891,
               "confidence": 0.99764,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "made",
               "start": 248923,
               "end": 249187,
               "confidence": 0.99516,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "plain",
               "start": 249251,
               "end": 249787,
               "confidence": 0.99082,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "and",
               "start": 249931,
               "end": 250211,
               "confidence": 0.9921,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "the",
               "start": 250243,
               "end": 250411,
               "confidence": 0.99748,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "crooked",
               "start": 250443,
               "end": 250819,
               "confidence": 0.99793,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "places",
               "start": 250867,
               "end": 251219,
               "confidence": 0.98401,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "will",
               "start": 251267,
               "end": 251427,
               "confidence": 0.98833,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "be",
               "start": 251451,
               "end": 251611,
               "confidence": 0.99819,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "made",
               "start": 251643,
               "end": 251883,
               "confidence": 0.99851,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "straight.",
               "start": 251939,
               "end": 252379,
               "confidence": 0.75846,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "And",
               "start": 252467,
               "end": 252667,
               "confidence": 0.9891,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "the",
               "start": 252691,
               "end": 252827,
               "confidence": 0.985,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "glory",
               "start": 252851,
               "end": 252987,
               "confidence": 0.33122,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "of",
               "start": 253011,
               "end": 253123,
               "confidence": 0.97706,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "the",
               "start": 253139,
               "end": 253267,
               "confidence": 0.99463,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "Lord",
               "start": 253291,
               "end": 253555,
               "confidence": 0.95642,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "shall",
               "start": 253595,
               "end": 253795,
               "confidence": 0.99014,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "be",
               "start": 253835,
               "end": 254011,
               "confidence": 0.99469,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "revealed",
               "start": 254043,
               "end": 254411,
               "confidence": 0.39238,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "and",
               "start": 254443,
               "end": 254635,
               "confidence": 0.9114,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "all",
               "start": 254675,
               "end": 255019,
               "confidence": 0.96325,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "flesh",
               "start": 255107,
               "end": 255691,
               "confidence": 0.97878,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "shall",
               "start": 255843,
               "end": 256227,
               "confidence": 0.98943,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "see",
               "start": 256291,
               "end": 256443,
               "confidence": 0.92423,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "it",
               "start": 256459,
               "end": 256707,
               "confidence": 0.95762,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "together.",
               "start": 256771,
               "end": 257375,
               "confidence": 0.98756,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "This",
               "start": 257715,
               "end": 258027,
               "confidence": 0.99273,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "is",
               "start": 258051,
               "end": 258235,
               "confidence": 0.99265,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "our",
               "start": 258275,
               "end": 258499,
               "confidence": 0.98673,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "hope.",
               "start": 258547,
               "end": 259135,
               "confidence": 0.94649,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "This",
               "start": 259755,
               "end": 260091,
               "confidence": 0.99331,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "is",
               "start": 260123,
               "end": 260387,
               "confidence": 0.99428,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "the",
               "start": 260451,
               "end": 260675,
               "confidence": 0.69982,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "faith",
               "start": 260715,
               "end": 260979,
               "confidence": 0.77707,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "that",
               "start": 261027,
               "end": 261211,
               "confidence": 0.91357,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "I",
               "start": 261243,
               "end": 261483,
               "confidence": 0.99448,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "go",
               "start": 261539,
               "end": 261755,
               "confidence": 0.96619,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "back",
               "start": 261795,
               "end": 262019,
               "confidence": 0.99499,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "to",
               "start": 262067,
               "end": 262227,
               "confidence": 0.9921,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "the",
               "start": 262251,
               "end": 262411,
               "confidence": 0.9341,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "Southt",
               "start": 262443,
               "end": 262739,
               "confidence": 0.29502,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "with.",
               "start": 262787,
               "end": 263375,
               "confidence": 0.95633,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "With",
               "start": 263755,
               "end": 264091,
               "confidence": 0.97892,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "this",
               "start": 264123,
               "end": 264339,
               "confidence": 0.98043,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "faith",
               "start": 264387,
               "end": 265015,
               "confidence": 0.55516,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "we",
               "start": 265595,
               "end": 265931,
               "confidence": 0.89634,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "will",
               "start": 265963,
               "end": 266083,
               "confidence": 0.87798,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "be",
               "start": 266099,
               "end": 266437,
               "confidence": 0.71084,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "able",
               "start": 266531,
               "end": 266809,
               "confidence": 0.90271,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "to",
               "start": 266857,
               "end": 267041,
               "confidence": 0.97615,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "hew",
               "start": 267073,
               "end": 267217,
               "confidence": 0.87823,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "out",
               "start": 267241,
               "end": 267401,
               "confidence": 0.99265,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "of",
               "start": 267433,
               "end": 267577,
               "confidence": 0.99276,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "the",
               "start": 267601,
               "end": 267761,
               "confidence": 0.99719,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "mountain",
               "start": 267793,
               "end": 268145,
               "confidence": 0.99308,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "of",
               "start": 268185,
               "end": 268481,
               "confidence": 0.93375,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "despair",
               "start": 268553,
               "end": 269073,
               "confidence": 0.89778,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "a",
               "start": 269209,
               "end": 269529,
               "confidence": 0.97191,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "stone",
               "start": 269577,
               "end": 269833,
               "confidence": 0.99192,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "of",
               "start": 269889,
               "end": 270057,
               "confidence": 0.98189,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "hope.",
               "start": 270081,
               "end": 270645,
               "confidence": 0.94269,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "With",
               "start": 271185,
               "end": 271497,
               "confidence": 0.99667,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "this",
               "start": 271521,
               "end": 271753,
               "confidence": 0.99797,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "faith",
               "start": 271809,
               "end": 272445,
               "confidence": 0.93526,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "we",
               "start": 273025,
               "end": 273361,
               "confidence": 0.99665,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "will",
               "start": 273393,
               "end": 273561,
               "confidence": 0.99618,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "be",
               "start": 273593,
               "end": 273761,
               "confidence": 0.99555,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "able",
               "start": 273793,
               "end": 274033,
               "confidence": 0.99726,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "to",
               "start": 274089,
               "end": 274329,
               "confidence": 0.99826,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "transform",
               "start": 274377,
               "end": 275001,
               "confidence": 0.99912,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "the",
               "start": 275073,
               "end": 275281,
               "confidence": 0.9992,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "jangling",
               "start": 275313,
               "end": 275777,
               "confidence": 0.98714,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "discords",
               "start": 275841,
               "end": 276409,
               "confidence": 0.51463,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "of",
               "start": 276457,
               "end": 276617,
               "confidence": 0.9975,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "our",
               "start": 276641,
               "end": 276825,
               "confidence": 0.99879,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "nation",
               "start": 276865,
               "end": 277445,
               "confidence": 0.99927,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "into",
               "start": 277745,
               "end": 278033,
               "confidence": 0.99855,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "a",
               "start": 278049,
               "end": 278177,
               "confidence": 0.9917,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "beautiful",
               "start": 278201,
               "end": 278793,
               "confidence": 0.99667,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "symphony",
               "start": 278889,
               "end": 279329,
               "confidence": 0.98734,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "of",
               "start": 279377,
               "end": 279585,
               "confidence": 0.58844,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "brotherhood.",
               "start": 279625,
               "end": 280425,
               "confidence": 0.99313,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "With",
               "start": 280585,
               "end": 280881,
               "confidence": 0.99558,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "this",
               "start": 280913,
               "end": 281153,
               "confidence": 0.99735,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "faith",
               "start": 281209,
               "end": 281845,
               "confidence": 0.94157,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "we",
               "start": 282185,
               "end": 282545,
               "confidence": 0.99787,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "will",
               "start": 282585,
               "end": 282785,
               "confidence": 0.99375,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "be",
               "start": 282825,
               "end": 283001,
               "confidence": 0.99858,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "able",
               "start": 283033,
               "end": 283273,
               "confidence": 0.99838,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "to",
               "start": 283329,
               "end": 283521,
               "confidence": 0.99679,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "work",
               "start": 283553,
               "end": 283841,
               "confidence": 0.99889,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "together,",
               "start": 283913,
               "end": 284217,
               "confidence": 0.99827,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "to",
               "start": 284281,
               "end": 284505,
               "confidence": 0.99525,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "pray",
               "start": 284545,
               "end": 284817,
               "confidence": 0.99837,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "together,",
               "start": 284881,
               "end": 285273,
               "confidence": 0.99765,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "to",
               "start": 285369,
               "end": 285649,
               "confidence": 0.9973,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "struggle",
               "start": 285697,
               "end": 286185,
               "confidence": 0.99916,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "together,",
               "start": 286265,
               "end": 286673,
               "confidence": 0.99746,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "to",
               "start": 286769,
               "end": 287001,
               "confidence": 0.9929,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "go",
               "start": 287033,
               "end": 287177,
               "confidence": 0.9982,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "to",
               "start": 287201,
               "end": 287385,
               "confidence": 0.99676,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "jail",
               "start": 287425,
               "end": 287817,
               "confidence": 0.99761,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "together,",
               "start": 287921,
               "end": 288377,
               "confidence": 0.99672,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "to",
               "start": 288481,
               "end": 288769,
               "confidence": 0.99448,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "stand",
               "start": 288817,
               "end": 289001,
               "confidence": 0.99976,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "up",
               "start": 289033,
               "end": 289225,
               "confidence": 0.99385,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "for",
               "start": 289265,
               "end": 289465,
               "confidence": 0.99773,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "freedom",
               "start": 289505,
               "end": 289921,
               "confidence": 0.99907,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "together,",
               "start": 289993,
               "end": 290609,
               "confidence": 0.99552,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "knowing",
               "start": 290777,
               "end": 291305,
               "confidence": 0.99726,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "that",
               "start": 291385,
               "end": 291649,
               "confidence": 0.99595,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "we",
               "start": 291697,
               "end": 291881,
               "confidence": 0.99831,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "will",
               "start": 291913,
               "end": 292345,
               "confidence": 0.99664,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "be",
               "start": 292465,
               "end": 292769,
               "confidence": 0.99147,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "free",
               "start": 292817,
               "end": 293049,
               "confidence": 0.99942,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "one",
               "start": 293097,
               "end": 293305,
               "confidence": 0.99633,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "day",
               "start": 293345,
               "end": 293925,
               "confidence": 0.99737,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "if",
               "start": 295265,
               "end": 295865,
               "confidence": 0.24795,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "be",
               "start": 295985,
               "end": 296313,
               "confidence": 0.63193,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "la",
               "start": 296369,
               "end": 296965,
               "confidence": 0.54929,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "this",
               "start": 298695,
               "end": 299079,
               "confidence": 0.99088,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "will",
               "start": 299127,
               "end": 299311,
               "confidence": 0.99131,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "be",
               "start": 299343,
               "end": 299511,
               "confidence": 0.99573,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "the",
               "start": 299543,
               "end": 299687,
               "confidence": 0.99472,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "day",
               "start": 299711,
               "end": 299919,
               "confidence": 0.99816,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "with",
               "start": 299967,
               "end": 300175,
               "confidence": 0.55279,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "all",
               "start": 300215,
               "end": 300415,
               "confidence": 0.99601,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "of",
               "start": 300455,
               "end": 300655,
               "confidence": 0.92079,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "God's",
               "start": 300695,
               "end": 301175,
               "confidence": 0.79496,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "children",
               "start": 301255,
               "end": 301875,
               "confidence": 0.99543,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "Be",
               "start": 302615,
               "end": 302951,
               "confidence": 0.995,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "able",
               "start": 302983,
               "end": 303295,
               "confidence": 0.99798,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "to",
               "start": 303375,
               "end": 303615,
               "confidence": 0.99826,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "sing",
               "start": 303655,
               "end": 303903,
               "confidence": 0.99917,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "with",
               "start": 303959,
               "end": 304175,
               "confidence": 0.9985,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "new",
               "start": 304215,
               "end": 304415,
               "confidence": 0.99375,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "meaning.",
               "start": 304455,
               "end": 305159,
               "confidence": 0.89301,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "My",
               "start": 305327,
               "end": 305775,
               "confidence": 0.99489,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "country",
               "start": 305855,
               "end": 306095,
               "confidence": 0.99634,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "tears",
               "start": 306135,
               "end": 306383,
               "confidence": 0.5878,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "of",
               "start": 306439,
               "end": 306607,
               "confidence": 0.76617,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "thee",
               "start": 306631,
               "end": 307195,
               "confidence": 0.44576,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "Sweet",
               "start": 307935,
               "end": 308359,
               "confidence": 0.96148,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "land",
               "start": 308407,
               "end": 308687,
               "confidence": 0.9109,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "of",
               "start": 308751,
               "end": 308975,
               "confidence": 0.98997,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "liberty",
               "start": 309015,
               "end": 309503,
               "confidence": 0.99054,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "of",
               "start": 309559,
               "end": 309751,
               "confidence": 0.91956,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "the",
               "start": 309783,
               "end": 309927,
               "confidence": 0.43879,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "I",
               "start": 309951,
               "end": 310159,
               "confidence": 0.20778,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "sing",
               "start": 310207,
               "end": 310795,
               "confidence": 0.6327,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "Land",
               "start": 311455,
               "end": 311887,
               "confidence": 0.90862,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "where",
               "start": 311951,
               "end": 312175,
               "confidence": 0.98693,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "my",
               "start": 312215,
               "end": 312439,
               "confidence": 0.99858,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "fathers",
               "start": 312487,
               "end": 312983,
               "confidence": 0.61425,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "died",
               "start": 313039,
               "end": 313375,
               "confidence": 0.87253,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "Land",
               "start": 313455,
               "end": 313719,
               "confidence": 0.92926,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "of",
               "start": 313767,
               "end": 313927,
               "confidence": 0.6959,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "the",
               "start": 313951,
               "end": 314135,
               "confidence": 0.98024,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "pilgrim'pride",
               "start": 314175,
               "end": 315475,
               "confidence": 0.58189,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "from",
               "start": 316055,
               "end": 316511,
               "confidence": 0.99618,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "every",
               "start": 316583,
               "end": 317007,
               "confidence": 0.99881,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "mountainside",
               "start": 317111,
               "end": 318275,
               "confidence": 0.79654,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "let",
               "start": 318975,
               "end": 319359,
               "confidence": 0.99582,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "freedom",
               "start": 319407,
               "end": 319735,
               "confidence": 0.99906,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "ring.",
               "start": 319775,
               "end": 319999,
               "confidence": 0.98285,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "And",
               "start": 320047,
               "end": 320159,
               "confidence": 0.81012,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "if",
               "start": 320167,
               "end": 320431,
               "confidence": 0.77766,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "America",
               "start": 320503,
               "end": 320719,
               "confidence": 0.97564,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "is",
               "start": 320727,
               "end": 320871,
               "confidence": 0.79805,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "to",
               "start": 320903,
               "end": 321023,
               "confidence": 0.9972,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "be",
               "start": 321039,
               "end": 321143,
               "confidence": 0.9995,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "a",
               "start": 321159,
               "end": 321311,
               "confidence": 0.99876,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "great",
               "start": 321343,
               "end": 321535,
               "confidence": 0.99959,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "nation,",
               "start": 321575,
               "end": 322155,
               "confidence": 0.99689,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "this",
               "start": 322575,
               "end": 322983,
               "confidence": 0.99717,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "must",
               "start": 323039,
               "end": 323399,
               "confidence": 0.99884,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "become",
               "start": 323487,
               "end": 323759,
               "confidence": 0.98262,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "true.",
               "start": 323807,
               "end": 324395,
               "confidence": 0.98013,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "And",
               "start": 324715,
               "end": 325051,
               "confidence": 0.71275,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "so",
               "start": 325083,
               "end": 325275,
               "confidence": 0.99508,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "let",
               "start": 325315,
               "end": 325539,
               "confidence": 0.99786,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "freedom",
               "start": 325587,
               "end": 325915,
               "confidence": 0.99825,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "reign",
               "start": 325955,
               "end": 326535,
               "confidence": 0.91525,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "from",
               "start": 327235,
               "end": 327595,
               "confidence": 0.9902,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "the",
               "start": 327635,
               "end": 327811,
               "confidence": 0.99743,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "prodigious",
               "start": 327843,
               "end": 328275,
               "confidence": 0.99954,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "hilltops",
               "start": 328315,
               "end": 328875,
               "confidence": 0.72555,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "of",
               "start": 328915,
               "end": 329067,
               "confidence": 0.99802,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "New",
               "start": 329091,
               "end": 329227,
               "confidence": 0.99947,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "Hampshire.",
               "start": 329251,
               "end": 330015,
               "confidence": 0.58762,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "Let",
               "start": 330355,
               "end": 330715,
               "confidence": 0.9986,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "freedom",
               "start": 330755,
               "end": 331075,
               "confidence": 0.99874,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "reign",
               "start": 331115,
               "end": 331695,
               "confidence": 0.96264,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "from",
               "start": 332395,
               "end": 332731,
               "confidence": 0.99596,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "the",
               "start": 332763,
               "end": 332907,
               "confidence": 0.9984,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "mighty",
               "start": 332931,
               "end": 333235,
               "confidence": 0.99807,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "mountains",
               "start": 333275,
               "end": 333763,
               "confidence": 0.97852,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "of",
               "start": 333819,
               "end": 334011,
               "confidence": 0.98852,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "New",
               "start": 334043,
               "end": 334187,
               "confidence": 0.99913,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "York.",
               "start": 334211,
               "end": 334775,
               "confidence": 0.99822,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "Let",
               "start": 335595,
               "end": 336003,
               "confidence": 0.99842,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "freedom",
               "start": 336059,
               "end": 336395,
               "confidence": 0.9996,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "ring",
               "start": 336435,
               "end": 336755,
               "confidence": 0.51063,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "from",
               "start": 336835,
               "end": 337051,
               "confidence": 0.99906,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "the",
               "start": 337083,
               "end": 337227,
               "confidence": 0.99728,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "heightening",
               "start": 337251,
               "end": 337611,
               "confidence": 0.98316,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "alleghenies",
               "start": 337643,
               "end": 338259,
               "confidence": 0.95399,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "of",
               "start": 338307,
               "end": 338467,
               "confidence": 0.99606,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "Pennsylvania.",
               "start": 338491,
               "end": 339655,
               "confidence": 0.9828,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "Let",
               "start": 340235,
               "end": 340595,
               "confidence": 0.99887,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "freedom",
               "start": 340635,
               "end": 340979,
               "confidence": 0.99763,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "ring",
               "start": 341027,
               "end": 341283,
               "confidence": 0.98462,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "from",
               "start": 341339,
               "end": 341531,
               "confidence": 0.99755,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "the",
               "start": 341563,
               "end": 341707,
               "confidence": 0.99672,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "snow",
               "start": 341731,
               "end": 341939,
               "confidence": 0.99547,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "capped",
               "start": 341987,
               "end": 342211,
               "confidence": 0.62412,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "Rockies",
               "start": 342243,
               "end": 342619,
               "confidence": 0.90533,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "of",
               "start": 342667,
               "end": 342875,
               "confidence": 0.99069,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "Colorado.",
               "start": 342915,
               "end": 343935,
               "confidence": 0.99337,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "Let",
               "start": 344835,
               "end": 345219,
               "confidence": 0.9987,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "freedom",
               "start": 345267,
               "end": 345595,
               "confidence": 0.99948,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "ring",
               "start": 345635,
               "end": 346003,
               "confidence": 0.97346,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "from",
               "start": 346099,
               "end": 346331,
               "confidence": 0.99751,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "the",
               "start": 346363,
               "end": 346531,
               "confidence": 0.99747,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "curvaceous",
               "start": 346563,
               "end": 347147,
               "confidence": 0.51372,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "slopes",
               "start": 347211,
               "end": 347515,
               "confidence": 0.99522,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "of",
               "start": 347555,
               "end": 347779,
               "confidence": 0.99821,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "California.",
               "start": 347827,
               "end": 348867,
               "confidence": 0.99915,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "But",
               "start": 349051,
               "end": 349371,
               "confidence": 0.97916,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "not",
               "start": 349403,
               "end": 349691,
               "confidence": 0.99918,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "only",
               "start": 349763,
               "end": 349947,
               "confidence": 0.99563,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "that.",
               "start": 349971,
               "end": 350535,
               "confidence": 0.99779,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "Let",
               "start": 351265,
               "end": 351649,
               "confidence": 0.99456,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "freedom",
               "start": 351697,
               "end": 352089,
               "confidence": 0.99631,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "ring",
               "start": 352137,
               "end": 352537,
               "confidence": 0.96021,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "from",
               "start": 352641,
               "end": 353097,
               "confidence": 0.99736,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "Stone",
               "start": 353201,
               "end": 353561,
               "confidence": 0.98915,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "Mountain",
               "start": 353633,
               "end": 354001,
               "confidence": 0.98879,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "of",
               "start": 354033,
               "end": 354225,
               "confidence": 0.9925,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "Georgia.",
               "start": 354265,
               "end": 355005,
               "confidence": 0.97334,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "Let",
               "start": 356065,
               "end": 356449,
               "confidence": 0.99323,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "freedom",
               "start": 356497,
               "end": 356849,
               "confidence": 0.997,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "ring",
               "start": 356897,
               "end": 357297,
               "confidence": 0.94333,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "from",
               "start": 357401,
               "end": 357929,
               "confidence": 0.99049,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "Lookout",
               "start": 358057,
               "end": 358601,
               "confidence": 0.90082,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "Mountain",
               "start": 358673,
               "end": 359041,
               "confidence": 0.99525,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "of",
               "start": 359073,
               "end": 359241,
               "confidence": 0.99344,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "Tennessee.",
               "start": 359273,
               "end": 360125,
               "confidence": 0.99389,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "Let",
               "start": 360785,
               "end": 361193,
               "confidence": 0.98873,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "freedom",
               "start": 361249,
               "end": 361657,
               "confidence": 0.99913,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "ring",
               "start": 361721,
               "end": 362065,
               "confidence": 0.9557,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "from",
               "start": 362145,
               "end": 362457,
               "confidence": 0.99757,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "every",
               "start": 362521,
               "end": 362841,
               "confidence": 0.99511,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "hill",
               "start": 362913,
               "end": 363505,
               "confidence": 0.99755,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "and",
               "start": 363665,
               "end": 364009,
               "confidence": 0.99354,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "molehil",
               "start": 364057,
               "end": 364609,
               "confidence": 0.32018,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "of",
               "start": 364657,
               "end": 364817,
               "confidence": 0.95943,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "Mississippi.",
               "start": 364841,
               "end": 365937,
               "confidence": 0.98761,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "From",
               "start": 366081,
               "end": 366553,
               "confidence": 0.98615,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "every",
               "start": 366649,
               "end": 366953,
               "confidence": 0.99764,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "mountainside",
               "start": 367009,
               "end": 368085,
               "confidence": 0.82623,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "that",
               "start": 368785,
               "end": 369169,
               "confidence": 0.80834,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "freedom",
               "start": 369217,
               "end": 369569,
               "confidence": 0.67023,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "rain",
               "start": 369617,
               "end": 369889,
               "confidence": 0.42167,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "and",
               "start": 369937,
               "end": 370145,
               "confidence": 0.67713,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "wind",
               "start": 370185,
               "end": 370361,
               "confidence": 0.41829,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "we",
               "start": 370393,
               "end": 370965,
               "confidence": 0.23775,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "when",
               "start": 374265,
               "end": 374625,
               "confidence": 0.95663,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "we",
               "start": 374665,
               "end": 374913,
               "confidence": 0.983,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "allow",
               "start": 374969,
               "end": 375257,
               "confidence": 0.97459,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "freedom",
               "start": 375321,
               "end": 375689,
               "confidence": 0.93352,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "rings",
               "start": 375737,
               "end": 376325,
               "confidence": 0.67498,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "when",
               "start": 377705,
               "end": 378065,
               "confidence": 0.9877,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "we",
               "start": 378105,
               "end": 378281,
               "confidence": 0.99595,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "let",
               "start": 378313,
               "end": 378457,
               "confidence": 0.99886,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "it",
               "start": 378481,
               "end": 378689,
               "confidence": 0.99606,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "ring",
               "start": 378737,
               "end": 379089,
               "confidence": 0.90787,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "from",
               "start": 379177,
               "end": 379449,
               "confidence": 0.9966,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "every",
               "start": 379497,
               "end": 379681,
               "confidence": 0.99829,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "village",
               "start": 379713,
               "end": 380057,
               "confidence": 0.59178,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "and",
               "start": 380081,
               "end": 380265,
               "confidence": 0.80598,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "every",
               "start": 380305,
               "end": 380529,
               "confidence": 0.9833,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "hamlet,",
               "start": 380577,
               "end": 381227,
               "confidence": 0.9956,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "from",
               "start": 381361,
               "end": 381727,
               "confidence": 0.9804,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "every",
               "start": 381791,
               "end": 382159,
               "confidence": 0.99836,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "state",
               "start": 382247,
               "end": 382759,
               "confidence": 0.99976,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "and",
               "start": 382887,
               "end": 383199,
               "confidence": 0.77975,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "every",
               "start": 383247,
               "end": 383503,
               "confidence": 0.99771,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "city,",
               "start": 383559,
               "end": 384155,
               "confidence": 0.99848,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "we",
               "start": 385015,
               "end": 385375,
               "confidence": 0.99813,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "will",
               "start": 385415,
               "end": 385615,
               "confidence": 0.99739,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "be",
               "start": 385655,
               "end": 385831,
               "confidence": 0.99883,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "able",
               "start": 385863,
               "end": 386175,
               "confidence": 0.9985,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "to",
               "start": 386255,
               "end": 386567,
               "confidence": 0.99865,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "speed",
               "start": 386631,
               "end": 386879,
               "confidence": 0.99963,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "up",
               "start": 386927,
               "end": 387159,
               "confidence": 0.99784,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "that",
               "start": 387207,
               "end": 387439,
               "confidence": 0.99808,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "day",
               "start": 387487,
               "end": 387911,
               "confidence": 0.99754,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "when",
               "start": 388023,
               "end": 388343,
               "confidence": 0.88465,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "all",
               "start": 388399,
               "end": 388663,
               "confidence": 0.99818,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "of",
               "start": 388719,
               "end": 388935,
               "confidence": 0.60064,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "go'children",
               "start": 388975,
               "end": 389999,
               "confidence": 0.16252,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "black",
               "start": 390087,
               "end": 390407,
               "confidence": 0.99518,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "men",
               "start": 390471,
               "end": 390719,
               "confidence": 0.99701,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "and",
               "start": 390767,
               "end": 390999,
               "confidence": 0.99565,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "white",
               "start": 391047,
               "end": 391303,
               "confidence": 0.99621,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "men,",
               "start": 391359,
               "end": 391887,
               "confidence": 0.98896,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "Jews",
               "start": 392031,
               "end": 392447,
               "confidence": 0.98812,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "and",
               "start": 392511,
               "end": 392783,
               "confidence": 0.99691,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "Gentiles,",
               "start": 392839,
               "end": 393535,
               "confidence": 0.96498,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "Protestants",
               "start": 393655,
               "end": 394263,
               "confidence": 0.99542,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "and",
               "start": 394319,
               "end": 394583,
               "confidence": 0.94459,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "Catholics",
               "start": 394639,
               "end": 395295,
               "confidence": 0.60934,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "will",
               "start": 395415,
               "end": 395671,
               "confidence": 0.97405,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "be",
               "start": 395703,
               "end": 395847,
               "confidence": 0.99742,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "able",
               "start": 395871,
               "end": 396079,
               "confidence": 0.99719,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "to",
               "start": 396127,
               "end": 396335,
               "confidence": 0.99795,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "join",
               "start": 396375,
               "end": 396695,
               "confidence": 0.99396,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "hands",
               "start": 396775,
               "end": 397455,
               "confidence": 0.99176,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "and",
               "start": 397615,
               "end": 397935,
               "confidence": 0.99473,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "sing",
               "start": 397975,
               "end": 398151,
               "confidence": 0.99766,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "in",
               "start": 398183,
               "end": 398327,
               "confidence": 0.88936,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "the",
               "start": 398351,
               "end": 398511,
               "confidence": 0.99357,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "words",
               "start": 398543,
               "end": 398799,
               "confidence": 0.98775,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "of",
               "start": 398847,
               "end": 399031,
               "confidence": 0.99757,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "the",
               "start": 399063,
               "end": 399207,
               "confidence": 0.99318,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "old",
               "start": 399231,
               "end": 399439,
               "confidence": 0.80677,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "Negro",
               "start": 399487,
               "end": 399935,
               "confidence": 0.98722,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "spiritual.",
               "start": 400015,
               "end": 400735,
               "confidence": 0.87511,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "Free",
               "start": 400855,
               "end": 401111,
               "confidence": 0.99133,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "at",
               "start": 401143,
               "end": 401359,
               "confidence": 0.99428,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "last,",
               "start": 401407,
               "end": 402047,
               "confidence": 0.98855,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "Free",
               "start": 402231,
               "end": 402527,
               "confidence": 0.99513,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "at",
               "start": 402551,
               "end": 402759,
               "confidence": 0.99662,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "last.",
               "start": 402807,
               "end": 403423,
               "confidence": 0.99631,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "Thank",
               "start": 403599,
               "end": 404071,
               "confidence": 0.94601,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "God",
               "start": 404143,
               "end": 404351,
               "confidence": 0.81314,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "Almighty,",
               "start": 404383,
               "end": 405111,
               "confidence": 0.94978,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "we",
               "start": 405223,
               "end": 405567,
               "confidence": 0.28069,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             },
             {
               "text": "fear.",
               "start": 405631,
               "end": 405735,
               "confidence": 0.18363,
-              "speaker": "Speaker B"
+              "speaker": "MLK"
             }
           ]
         }
       ],
-      "chapters": [
-        {
-          "headline": "Five score years ago, a great American signed the Emancipation Proclamation",
-          "summary": "Five score years ago, a great American signed the Emancipation Proclamation. 100 years later, the life of the Negro is still crippled by the manacles of segregation. Dr. Martin Luther King Geior: I have a dream that one day this nation will live out the true meaning of its creed.",
-          "start": 335,
-          "end": 405735,
-          "gist": "Dr. Martin Luther King, Jr."
-        }
-      ],
+      "chapters": [],
       "allWords": [
         {
           "text": "I",
           "start": 335,
           "end": 447,
           "confidence": 0.99493,
-          "speaker": "Speaker A"
+          "speaker": "MLK"
         },
         {
           "text": "have",
           "start": 471,
           "end": 679,
           "confidence": 0.99141,
-          "speaker": "Speaker A"
+          "speaker": "MLK"
         },
         {
           "text": "the",
           "start": 727,
           "end": 911,
           "confidence": 0.99595,
-          "speaker": "Speaker A"
+          "speaker": "MLK"
         },
         {
           "text": "pleasure",
           "start": 943,
           "end": 1231,
           "confidence": 0.99899,
-          "speaker": "Speaker A"
+          "speaker": "MLK"
         },
         {
           "text": "to",
           "start": 1263,
           "end": 1407,
           "confidence": 0.99877,
-          "speaker": "Speaker A"
+          "speaker": "MLK"
         },
         {
           "text": "present",
           "start": 1431,
           "end": 1687,
           "confidence": 0.99994,
-          "speaker": "Speaker A"
+          "speaker": "MLK"
         },
         {
           "text": "to",
           "start": 1751,
           "end": 1927,
           "confidence": 0.99581,
-          "speaker": "Speaker A"
+          "speaker": "MLK"
         },
         {
           "text": "you",
           "start": 1951,
           "end": 2495,
           "confidence": 0.99201,
-          "speaker": "Speaker A"
+          "speaker": "MLK"
         },
         {
           "text": "Dr.",
           "start": 2655,
           "end": 3135,
           "confidence": 0.99424,
-          "speaker": "Speaker A"
+          "speaker": "MLK"
         },
         {
           "text": "Martin",
           "start": 3175,
           "end": 3511,
           "confidence": 0.99324,
-          "speaker": "Speaker A"
+          "speaker": "MLK"
         },
         {
           "text": "Luther",
           "start": 3543,
           "end": 3895,
           "confidence": 0.98408,
-          "speaker": "Speaker A"
+          "speaker": "MLK"
         },
         {
           "text": "King",
           "start": 3935,
           "end": 4327,
           "confidence": 0.97978,
-          "speaker": "Speaker A"
+          "speaker": "MLK"
         },
         {
           "text": "Geior.",
           "start": 4431,
           "end": 5195,
           "confidence": 0.16533,
-          "speaker": "Speaker A"
+          "speaker": "MLK"
         },
         {
           "text": "I",
           "start": 13055,
           "end": 13343,
           "confidence": 0.97169,
-          "speaker": "Speaker A"
+          "speaker": "MLK"
         },
         {
           "text": "am",
           "start": 13359,
           "end": 13631,
           "confidence": 0.97997,
-          "speaker": "Speaker A"
+          "speaker": "MLK"
         },
         {
           "text": "happy",
           "start": 13703,
           "end": 14375,
           "confidence": 0.99979,
-          "speaker": "Speaker A"
+          "speaker": "MLK"
         },
         {
           "text": "to",
           "start": 14495,
           "end": 14823,
           "confidence": 0.99963,
-          "speaker": "Speaker A"
+          "speaker": "MLK"
         },
         {
           "text": "join",
           "start": 14879,
           "end": 15263,
           "confidence": 0.92285,
-          "speaker": "Speaker A"
+          "speaker": "MLK"
         },
         {
           "text": "with",
           "start": 15359,
           "end": 15591,
           "confidence": 0.99872,
-          "speaker": "Speaker A"
+          "speaker": "MLK"
         },
         {
           "text": "you",
           "start": 15623,
           "end": 15911,
           "confidence": 0.99945,
-          "speaker": "Speaker A"
+          "speaker": "MLK"
         },
         {
           "text": "today",
           "start": 15983,
           "end": 16595,
           "confidence": 0.99643,
-          "speaker": "Speaker A"
+          "speaker": "MLK"
         },
         {
           "text": "in",
           "start": 18615,
           "end": 19215,
           "confidence": 0.99721,
-          "speaker": "Speaker A"
+          "speaker": "MLK"
         },
         {
           "text": "what",
           "start": 19335,
           "end": 19639,
           "confidence": 0.99958,
-          "speaker": "Speaker A"
+          "speaker": "MLK"
         },
         {
           "text": "will",
           "start": 19687,
           "end": 19943,
           "confidence": 0.99792,
-          "speaker": "Speaker A"
+          "speaker": "MLK"
         },
         {
           "text": "go",
           "start": 19999,
           "end": 20215,
           "confidence": 0.99904,
-          "speaker": "Speaker A"
+          "speaker": "MLK"
         },
         {
           "text": "down",
           "start": 20255,
           "end": 20695,
           "confidence": 0.9975,
-          "speaker": "Speaker A"
+          "speaker": "MLK"
         },
         {
           "text": "in",
           "start": 20815,
           "end": 21311,
           "confidence": 0.99914,
-          "speaker": "Speaker A"
+          "speaker": "MLK"
         },
         {
           "text": "history",
           "start": 21423,
           "end": 22075,
           "confidence": 0.99963,
-          "speaker": "Speaker A"
+          "speaker": "MLK"
         },
         {
           "text": "as",
           "start": 23295,
           "end": 23679,
           "confidence": 0.99113,
-          "speaker": "Speaker A"
+          "speaker": "MLK"
         },
         {
           "text": "a",
           "start": 23727,
           "end": 23911,
           "confidence": 0.68528,
-          "speaker": "Speaker A"
+          "speaker": "MLK"
         },
         {
           "text": "greatest",
           "start": 23943,
           "end": 24335,
           "confidence": 0.99535,
-          "speaker": "Speaker A"
+          "speaker": "MLK"
         },
         {
           "text": "demonstration",
           "start": 24415,
           "end": 25439,
           "confidence": 0.89513,
-          "speaker": "Speaker A"
+          "speaker": "MLK"
         },
         {
           "text": "for",
           "start": 25607,
           "end": 26031,
           "confidence": 0.99104,
-          "speaker": "Speaker A"
+          "speaker": "MLK"
         },
         {
           "text": "freedom",
           "start": 26103,
           "end": 26599,
           "confidence": 0.99837,
-          "speaker": "Speaker A"
+          "speaker": "MLK"
         },
         {
           "text": "in",
           "start": 26687,
           "end": 26959,
           "confidence": 0.99808,
-          "speaker": "Speaker A"
+          "speaker": "MLK"
         },
         {
           "text": "the",
           "start": 27007,
           "end": 27383,
           "confidence": 0.99856,
-          "speaker": "Speaker A"
+          "speaker": "MLK"
         },
         {
           "text": "history",
           "start": 27479,
           "end": 27783,
           "confidence": 0.99936,
-          "speaker": "Speaker A"
+          "speaker": "MLK"
         },
         {
           "text": "of",
           "start": 27839,
           "end": 28031,
           "confidence": 0.99828,
-          "speaker": "Speaker A"
+          "speaker": "MLK"
         },
         {
           "text": "our",
           "start": 28063,
           "end": 28279,
           "confidence": 0.99837,
-          "speaker": "Speaker A"
+          "speaker": "MLK"
         },
         {
           "text": "nation.",
           "start": 28327,
           "end": 28915,
           "confidence": 0.99828,
-          "speaker": "Speaker A"
+          "speaker": "MLK"
         },
         {
           "text": "Five",
           "start": 37845,
           "end": 38517,
           "confidence": 0.99257,
-          "speaker": "Speaker A"
+          "speaker": "MLK"
         },
         {
           "text": "score",
           "start": 38661,
           "end": 39325,
           "confidence": 0.98546,
-          "speaker": "Speaker A"
+          "speaker": "MLK"
         },
         {
           "text": "years",
           "start": 39485,
           "end": 39949,
           "confidence": 0.99753,
-          "speaker": "Speaker A"
+          "speaker": "MLK"
         },
         {
           "text": "ago,",
           "start": 40037,
           "end": 40665,
           "confidence": 0.99187,
-          "speaker": "Speaker A"
+          "speaker": "MLK"
         },
         {
           "text": "a",
           "start": 43125,
           "end": 43437,
           "confidence": 0.99749,
-          "speaker": "Speaker A"
+          "speaker": "MLK"
         },
         {
           "text": "great",
           "start": 43461,
           "end": 43789,
           "confidence": 0.99844,
-          "speaker": "Speaker A"
+          "speaker": "MLK"
         },
         {
           "text": "American",
           "start": 43877,
           "end": 44173,
           "confidence": 0.99903,
-          "speaker": "Speaker A"
+          "speaker": "MLK"
         },
         {
           "text": "in",
           "start": 44229,
           "end": 44421,
           "confidence": 0.99868,
-          "speaker": "Speaker A"
+          "speaker": "MLK"
         },
         {
           "text": "whose",
           "start": 44453,
           "end": 44853,
           "confidence": 0.57125,
-          "speaker": "Speaker A"
+          "speaker": "MLK"
         },
         {
           "text": "symbolic",
           "start": 44949,
           "end": 45981,
           "confidence": 0.89029,
-          "speaker": "Speaker A"
+          "speaker": "MLK"
         },
         {
           "text": "shadow",
           "start": 46173,
           "end": 46621,
           "confidence": 0.97593,
-          "speaker": "Speaker A"
+          "speaker": "MLK"
         },
         {
           "text": "we",
           "start": 46653,
           "end": 46917,
           "confidence": 0.9971,
-          "speaker": "Speaker A"
+          "speaker": "MLK"
         },
         {
           "text": "stand",
           "start": 46981,
           "end": 47397,
           "confidence": 0.99956,
-          "speaker": "Speaker A"
+          "speaker": "MLK"
         },
         {
           "text": "today",
           "start": 47501,
           "end": 48145,
           "confidence": 0.99629,
-          "speaker": "Speaker A"
+          "speaker": "MLK"
         },
         {
           "text": "signed",
           "start": 49685,
           "end": 50485,
           "confidence": 0.96433,
-          "speaker": "Speaker A"
+          "speaker": "MLK"
         },
         {
           "text": "the",
           "start": 50645,
           "end": 51037,
           "confidence": 0.99485,
-          "speaker": "Speaker A"
+          "speaker": "MLK"
         },
         {
           "text": "Emancipation",
           "start": 51101,
           "end": 52205,
           "confidence": 0.77539,
-          "speaker": "Speaker A"
+          "speaker": "MLK"
         },
         {
           "text": "Proclamation.",
           "start": 52325,
           "end": 53505,
           "confidence": 0.60211,
-          "speaker": "Speaker A"
+          "speaker": "MLK"
         },
         {
           "text": "This",
           "start": 55405,
           "end": 55813,
           "confidence": 0.99878,
-          "speaker": "Speaker A"
+          "speaker": "MLK"
         },
         {
           "text": "momentous",
           "start": 55869,
           "end": 56413,
           "confidence": 0.99762,
-          "speaker": "Speaker A"
+          "speaker": "MLK"
         },
         {
           "text": "decree",
           "start": 56469,
           "end": 56965,
           "confidence": 0.99913,
-          "speaker": "Speaker A"
+          "speaker": "MLK"
         },
         {
           "text": "came",
           "start": 57045,
           "end": 57665,
           "confidence": 0.99489,
-          "speaker": "Speaker A"
+          "speaker": "MLK"
         },
         {
           "text": "as",
           "start": 59315,
           "end": 59675,
           "confidence": 0.9611,
-          "speaker": "Speaker A"
+          "speaker": "MLK"
         },
         {
           "text": "a",
           "start": 59715,
           "end": 59867,
           "confidence": 0.83217,
-          "speaker": "Speaker A"
+          "speaker": "MLK"
         },
         {
           "text": "great",
           "start": 59891,
           "end": 60123,
           "confidence": 0.9037,
-          "speaker": "Speaker A"
+          "speaker": "MLK"
         },
         {
           "text": "beacon",
           "start": 60179,
           "end": 60555,
           "confidence": 0.98204,
-          "speaker": "Speaker A"
+          "speaker": "MLK"
         },
         {
           "text": "light",
           "start": 60595,
           "end": 60795,
           "confidence": 0.99714,
-          "speaker": "Speaker A"
+          "speaker": "MLK"
         },
         {
           "text": "of",
           "start": 60835,
           "end": 61011,
           "confidence": 0.98975,
-          "speaker": "Speaker A"
+          "speaker": "MLK"
         },
         {
           "text": "hope",
           "start": 61043,
           "end": 61307,
           "confidence": 0.99779,
-          "speaker": "Speaker A"
+          "speaker": "MLK"
         },
         {
           "text": "to",
           "start": 61371,
           "end": 61571,
           "confidence": 0.99429,
-          "speaker": "Speaker A"
+          "speaker": "MLK"
         },
         {
           "text": "millions",
           "start": 61603,
           "end": 62203,
           "confidence": 0.99317,
-          "speaker": "Speaker A"
+          "speaker": "MLK"
         },
         {
           "text": "of",
           "start": 62299,
           "end": 62531,
           "confidence": 0.99904,
-          "speaker": "Speaker A"
+          "speaker": "MLK"
         },
         {
           "text": "Negro",
           "start": 62563,
           "end": 63059,
           "confidence": 0.99816,
-          "speaker": "Speaker A"
+          "speaker": "MLK"
         },
         {
           "text": "slaves",
           "start": 63147,
           "end": 63815,
           "confidence": 0.98377,
-          "speaker": "Speaker A"
+          "speaker": "MLK"
         },
         {
           "text": "who",
           "start": 64995,
           "end": 65355,
           "confidence": 0.99388,
-          "speaker": "Speaker A"
+          "speaker": "MLK"
         },
         {
           "text": "had",
           "start": 65395,
           "end": 65595,
           "confidence": 0.99192,
-          "speaker": "Speaker A"
+          "speaker": "MLK"
         },
         {
           "text": "been",
           "start": 65635,
           "end": 65955,
           "confidence": 0.99681,
-          "speaker": "Speaker A"
+          "speaker": "MLK"
         },
         {
           "text": "seared",
           "start": 66035,
           "end": 66395,
           "confidence": 0.99153,
-          "speaker": "Speaker A"
+          "speaker": "MLK"
         },
         {
           "text": "in",
           "start": 66475,
           "end": 66715,
           "confidence": 0.99599,
-          "speaker": "Speaker A"
+          "speaker": "MLK"
         },
         {
           "text": "the",
           "start": 66755,
           "end": 66955,
           "confidence": 0.99595,
-          "speaker": "Speaker A"
+          "speaker": "MLK"
         },
         {
           "text": "flames",
           "start": 66995,
           "end": 67507,
           "confidence": 0.99166,
-          "speaker": "Speaker A"
+          "speaker": "MLK"
         },
         {
           "text": "of",
           "start": 67651,
           "end": 67955,
           "confidence": 0.99827,
-          "speaker": "Speaker A"
+          "speaker": "MLK"
         },
         {
           "text": "withering",
           "start": 67995,
           "end": 68555,
           "confidence": 0.99888,
-          "speaker": "Speaker A"
+          "speaker": "MLK"
         },
         {
           "text": "injustice.",
           "start": 68635,
           "end": 69695,
           "confidence": 0.99466,
-          "speaker": "Speaker A"
+          "speaker": "MLK"
         },
         {
           "text": "It",
           "start": 71355,
           "end": 71739,
           "confidence": 0.98507,
-          "speaker": "Speaker A"
+          "speaker": "MLK"
         },
         {
           "text": "came",
           "start": 71787,
           "end": 72067,
           "confidence": 0.99722,
-          "speaker": "Speaker A"
+          "speaker": "MLK"
         },
         {
           "text": "as",
           "start": 72131,
           "end": 72355,
           "confidence": 0.99628,
-          "speaker": "Speaker A"
+          "speaker": "MLK"
         },
         {
           "text": "a",
           "start": 72395,
           "end": 72571,
           "confidence": 0.99588,
-          "speaker": "Speaker A"
+          "speaker": "MLK"
         },
         {
           "text": "joyous",
           "start": 72603,
           "end": 73051,
           "confidence": 0.99827,
-          "speaker": "Speaker A"
+          "speaker": "MLK"
         },
         {
           "text": "daybreak",
           "start": 73123,
           "end": 74055,
           "confidence": 0.93086,
-          "speaker": "Speaker A"
+          "speaker": "MLK"
         },
         {
           "text": "to",
           "start": 75795,
           "end": 76131,
           "confidence": 0.98978,
-          "speaker": "Speaker A"
+          "speaker": "MLK"
         },
         {
           "text": "end",
           "start": 76163,
           "end": 76499,
           "confidence": 0.99702,
-          "speaker": "Speaker A"
+          "speaker": "MLK"
         },
         {
           "text": "the",
           "start": 76587,
           "end": 76835,
           "confidence": 0.99596,
-          "speaker": "Speaker A"
+          "speaker": "MLK"
         },
         {
           "text": "long",
           "start": 76875,
           "end": 77267,
           "confidence": 0.98519,
-          "speaker": "Speaker A"
+          "speaker": "MLK"
         },
         {
           "text": "night",
           "start": 77371,
           "end": 77899,
           "confidence": 0.9985,
-          "speaker": "Speaker A"
+          "speaker": "MLK"
         },
         {
           "text": "of",
           "start": 78027,
           "end": 78291,
           "confidence": 0.99301,
-          "speaker": "Speaker A"
+          "speaker": "MLK"
         },
         {
           "text": "their",
           "start": 78323,
           "end": 78659,
           "confidence": 0.99071,
-          "speaker": "Speaker A"
+          "speaker": "MLK"
         },
         {
           "text": "captivity.",
           "start": 78747,
           "end": 79695,
           "confidence": 0.58084,
-          "speaker": "Speaker A"
+          "speaker": "MLK"
         },
         {
           "text": "But",
           "start": 81835,
           "end": 82267,
           "confidence": 0.99537,
-          "speaker": "Speaker A"
+          "speaker": "MLK"
         },
         {
           "text": "100",
           "start": 82331,
           "end": 83171,
           "confidence": 0.99845,
-          "speaker": "Speaker A"
+          "speaker": "MLK"
         },
         {
           "text": "years",
           "start": 83283,
           "end": 83867,
           "confidence": 0.99813,
-          "speaker": "Speaker A"
+          "speaker": "MLK"
         },
         {
           "text": "later,",
           "start": 84011,
           "end": 84695,
           "confidence": 0.99808,
-          "speaker": "Speaker A"
+          "speaker": "MLK"
         },
         {
           "text": "the",
           "start": 86795,
           "end": 87155,
           "confidence": 0.99417,
-          "speaker": "Speaker A"
+          "speaker": "MLK"
         },
         {
           "text": "Negro",
           "start": 87195,
           "end": 87931,
           "confidence": 0.99746,
-          "speaker": "Speaker A"
+          "speaker": "MLK"
         },
         {
           "text": "still",
           "start": 88083,
           "end": 88775,
           "confidence": 0.99623,
-          "speaker": "Speaker A"
+          "speaker": "MLK"
         },
         {
           "text": "is",
           "start": 89635,
           "end": 90019,
           "confidence": 0.99749,
-          "speaker": "Speaker A"
+          "speaker": "MLK"
         },
         {
           "text": "not",
           "start": 90067,
           "end": 90347,
           "confidence": 0.99871,
-          "speaker": "Speaker A"
+          "speaker": "MLK"
         },
         {
           "text": "free.",
           "start": 90411,
           "end": 91015,
           "confidence": 0.9986,
-          "speaker": "Speaker A"
+          "speaker": "MLK"
         },
         {
           "text": "100",
           "start": 92755,
           "end": 93395,
           "confidence": 0.99792,
-          "speaker": "Speaker A"
+          "speaker": "MLK"
         },
         {
           "text": "years",
           "start": 93435,
           "end": 93827,
           "confidence": 0.9973,
-          "speaker": "Speaker A"
+          "speaker": "MLK"
         },
         {
           "text": "later,",
           "start": 93931,
           "end": 94575,
           "confidence": 0.99852,
-          "speaker": "Speaker A"
+          "speaker": "MLK"
         },
         {
           "text": "the",
           "start": 96355,
           "end": 96691,
           "confidence": 0.99859,
-          "speaker": "Speaker A"
+          "speaker": "MLK"
         },
         {
           "text": "life",
           "start": 96723,
           "end": 96915,
           "confidence": 0.99458,
-          "speaker": "Speaker A"
+          "speaker": "MLK"
         },
         {
           "text": "of",
           "start": 96955,
           "end": 97083,
           "confidence": 0.99634,
-          "speaker": "Speaker A"
+          "speaker": "MLK"
         },
         {
           "text": "the",
           "start": 97099,
           "end": 97227,
           "confidence": 0.99511,
-          "speaker": "Speaker A"
+          "speaker": "MLK"
         },
         {
           "text": "Negro",
           "start": 97251,
           "end": 97571,
           "confidence": 0.99728,
-          "speaker": "Speaker A"
+          "speaker": "MLK"
         },
         {
           "text": "is",
           "start": 97603,
           "end": 97915,
           "confidence": 0.98381,
-          "speaker": "Speaker A"
+          "speaker": "MLK"
         },
         {
           "text": "still",
           "start": 97995,
           "end": 98595,
           "confidence": 0.99574,
-          "speaker": "Speaker A"
+          "speaker": "MLK"
         },
         {
           "text": "sadly",
           "start": 98755,
           "end": 99491,
           "confidence": 0.99667,
-          "speaker": "Speaker A"
+          "speaker": "MLK"
         },
         {
           "text": "crippled",
           "start": 99563,
           "end": 100059,
           "confidence": 0.99579,
-          "speaker": "Speaker A"
+          "speaker": "MLK"
         },
         {
           "text": "by",
           "start": 100147,
           "end": 100443,
           "confidence": 0.99856,
-          "speaker": "Speaker A"
+          "speaker": "MLK"
         },
         {
           "text": "the",
           "start": 100499,
           "end": 100715,
           "confidence": 0.99879,
-          "speaker": "Speaker A"
+          "speaker": "MLK"
         },
         {
           "text": "manacles",
           "start": 100755,
           "end": 101339,
           "confidence": 0.95526,
-          "speaker": "Speaker A"
+          "speaker": "MLK"
         },
         {
           "text": "of",
           "start": 101427,
           "end": 101699,
           "confidence": 0.99838,
-          "speaker": "Speaker A"
+          "speaker": "MLK"
         },
         {
           "text": "segregation",
           "start": 101747,
           "end": 102655,
           "confidence": 0.9802,
-          "speaker": "Speaker A"
+          "speaker": "MLK"
         },
         {
           "text": "and",
           "start": 103755,
           "end": 104115,
           "confidence": 0.9981,
-          "speaker": "Speaker A"
+          "speaker": "MLK"
         },
         {
           "text": "the",
           "start": 104155,
           "end": 104355,
           "confidence": 0.99498,
-          "speaker": "Speaker A"
+          "speaker": "MLK"
         },
         {
           "text": "chains",
           "start": 104395,
           "end": 104883,
           "confidence": 0.99398,
-          "speaker": "Speaker A"
+          "speaker": "MLK"
         },
         {
           "text": "of",
           "start": 105019,
           "end": 105291,
           "confidence": 0.99918,
-          "speaker": "Speaker A"
+          "speaker": "MLK"
         },
         {
           "text": "discrimination.",
           "start": 105323,
           "end": 106335,
           "confidence": 0.98352,
-          "speaker": "Speaker A"
+          "speaker": "MLK"
         },
         {
           "text": "100",
           "start": 106995,
           "end": 107699,
           "confidence": 0.99791,
-          "speaker": "Speaker A"
+          "speaker": "MLK"
         },
         {
           "text": "years",
           "start": 107747,
           "end": 108123,
           "confidence": 0.99904,
-          "speaker": "Speaker A"
+          "speaker": "MLK"
         },
         {
           "text": "later,",
           "start": 108219,
           "end": 108855,
           "confidence": 0.99533,
-          "speaker": "Speaker A"
+          "speaker": "MLK"
         },
         {
           "text": "the",
           "start": 110155,
           "end": 110491,
           "confidence": 0.99073,
-          "speaker": "Speaker A"
+          "speaker": "MLK"
         },
         {
           "text": "Negro",
           "start": 110523,
           "end": 110923,
           "confidence": 0.99802,
-          "speaker": "Speaker A"
+          "speaker": "MLK"
         },
         {
           "text": "lives",
           "start": 110979,
           "end": 111291,
           "confidence": 0.99603,
-          "speaker": "Speaker A"
+          "speaker": "MLK"
         },
         {
           "text": "on",
           "start": 111363,
           "end": 111595,
           "confidence": 0.99948,
-          "speaker": "Speaker A"
+          "speaker": "MLK"
         },
         {
           "text": "a",
           "start": 111635,
           "end": 111787,
           "confidence": 0.99794,
-          "speaker": "Speaker A"
+          "speaker": "MLK"
         },
         {
           "text": "lonely",
           "start": 111811,
           "end": 112219,
           "confidence": 0.99876,
-          "speaker": "Speaker A"
+          "speaker": "MLK"
         },
         {
           "text": "island",
           "start": 112267,
           "end": 112819,
           "confidence": 0.99783,
-          "speaker": "Speaker A"
+          "speaker": "MLK"
         },
         {
           "text": "of",
           "start": 112907,
           "end": 113131,
           "confidence": 0.99351,
-          "speaker": "Speaker A"
+          "speaker": "MLK"
         },
         {
           "text": "poverty.",
           "start": 113163,
           "end": 113935,
           "confidence": 0.98559,
-          "speaker": "Speaker A"
+          "speaker": "MLK"
         },
         {
           "text": "I",
           "start": 114355,
           "end": 114667,
           "confidence": 0.99589,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "have",
           "start": 114691,
           "end": 114851,
           "confidence": 0.99633,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "a",
           "start": 114883,
           "end": 115051,
           "confidence": 0.99756,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "dream",
           "start": 115083,
           "end": 115695,
           "confidence": 0.91705,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "that",
           "start": 116815,
           "end": 117175,
           "confidence": 0.84013,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "one",
           "start": 117215,
           "end": 117415,
           "confidence": 0.99453,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "day",
           "start": 117455,
           "end": 118035,
           "confidence": 0.99622,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "this",
           "start": 119495,
           "end": 119927,
           "confidence": 0.99744,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "nation",
           "start": 119991,
           "end": 120455,
           "confidence": 0.99962,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "will",
           "start": 120575,
           "end": 120999,
           "confidence": 0.99909,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "rise",
           "start": 121087,
           "end": 121479,
           "confidence": 0.99423,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "up",
           "start": 121567,
           "end": 122195,
           "confidence": 0.99346,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "and",
           "start": 123175,
           "end": 123511,
           "confidence": 0.93114,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "live",
           "start": 123543,
           "end": 123735,
           "confidence": 0.99641,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "out",
           "start": 123775,
           "end": 123999,
           "confidence": 0.99337,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "the",
           "start": 124047,
           "end": 124255,
           "confidence": 0.99673,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "true",
           "start": 124295,
           "end": 124495,
           "confidence": 0.99911,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "meaning",
           "start": 124535,
           "end": 124831,
           "confidence": 0.99813,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "of",
           "start": 124863,
           "end": 124983,
           "confidence": 0.99843,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "its",
           "start": 124999,
           "end": 125223,
           "confidence": 0.99065,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "creed.",
           "start": 125279,
           "end": 125875,
           "confidence": 0.92107,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "We",
           "start": 126855,
           "end": 127239,
           "confidence": 0.97374,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "hold",
           "start": 127287,
           "end": 127543,
           "confidence": 0.90796,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "these",
           "start": 127599,
           "end": 127935,
           "confidence": 0.99507,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "truths",
           "start": 128015,
           "end": 128359,
           "confidence": 0.80672,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "to",
           "start": 128407,
           "end": 128567,
           "confidence": 0.99845,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "be",
           "start": 128591,
           "end": 128823,
           "confidence": 0.99809,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
-          "text": "self.",
+          "text": "self",
           "start": 128879,
           "end": 129183,
           "confidence": 0.99799,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
-          "text": "Evident",
+          "text": "evident",
           "start": 129239,
           "end": 130111,
           "confidence": 0.99556,
-          "speaker": "Speaker A"
+          "speaker": "MLK"
         },
         {
           "text": "that",
           "start": 130303,
           "end": 130751,
           "confidence": 0.99743,
-          "speaker": "Speaker A"
+          "speaker": "MLK"
         },
         {
           "text": "all",
           "start": 130823,
           "end": 131151,
           "confidence": 0.9997,
-          "speaker": "Speaker A"
+          "speaker": "MLK"
         },
         {
           "text": "men",
           "start": 131223,
           "end": 131479,
           "confidence": 0.99759,
-          "speaker": "Speaker A"
+          "speaker": "MLK"
         },
         {
           "text": "are",
           "start": 131527,
           "end": 131759,
           "confidence": 0.99463,
-          "speaker": "Speaker A"
+          "speaker": "MLK"
         },
         {
           "text": "created",
           "start": 131807,
           "end": 132151,
           "confidence": 0.99715,
-          "speaker": "Speaker A"
+          "speaker": "MLK"
         },
         {
           "text": "equal.",
           "start": 132183,
           "end": 132835,
           "confidence": 0.52384,
-          "speaker": "Speaker A"
+          "speaker": "MLK"
         },
         {
           "text": "I",
           "start": 141895,
           "end": 142231,
           "confidence": 0.99591,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "have",
           "start": 142263,
           "end": 142407,
           "confidence": 0.99636,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "a",
           "start": 142431,
           "end": 142591,
           "confidence": 0.99721,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "dream",
           "start": 142623,
           "end": 143235,
           "confidence": 0.98619,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "that",
           "start": 144905,
           "end": 145265,
           "confidence": 0.80785,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "one",
           "start": 145305,
           "end": 145481,
           "confidence": 0.99642,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "day",
           "start": 145513,
           "end": 145729,
           "confidence": 0.99736,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "on",
           "start": 145777,
           "end": 146033,
           "confidence": 0.99476,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "the",
           "start": 146089,
           "end": 146281,
           "confidence": 0.99163,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "red",
           "start": 146313,
           "end": 146553,
           "confidence": 0.99749,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "hills",
           "start": 146609,
           "end": 146993,
           "confidence": 0.44383,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "to",
           "start": 147049,
           "end": 147241,
           "confidence": 0.56068,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
-          "text": "joy.",
+          "text": "joy",
           "start": 147273,
           "end": 147845,
           "confidence": 0.23355,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
-          "text": "Sons.",
+          "text": "sons",
           "start": 149545,
           "end": 150017,
           "confidence": 0.99411,
-          "speaker": "Speaker A"
+          "speaker": "MLK"
         },
         {
-          "text": "Of",
+          "text": "of",
           "start": 150081,
           "end": 150449,
           "confidence": 0.98702,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "former",
           "start": 150537,
           "end": 150833,
           "confidence": 0.99834,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "slaves",
           "start": 150889,
           "end": 151257,
           "confidence": 0.99499,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "and",
           "start": 151321,
           "end": 151497,
           "confidence": 0.99088,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "the",
           "start": 151521,
           "end": 151729,
           "confidence": 0.94684,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "sons",
           "start": 151777,
           "end": 152113,
           "confidence": 0.99064,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "of",
           "start": 152169,
           "end": 152529,
           "confidence": 0.45272,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "former",
           "start": 152617,
           "end": 152889,
           "confidence": 0.94134,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "slave",
           "start": 152937,
           "end": 153169,
           "confidence": 0.99879,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "owners",
           "start": 153217,
           "end": 153965,
           "confidence": 0.96233,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "will",
           "start": 154545,
           "end": 155049,
           "confidence": 0.97569,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "be",
           "start": 155137,
           "end": 155361,
           "confidence": 0.98994,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "able",
           "start": 155393,
           "end": 155825,
           "confidence": 0.99683,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "to",
           "start": 155945,
           "end": 156225,
           "confidence": 0.99733,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "sit",
           "start": 156265,
           "end": 156441,
           "confidence": 0.99192,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "down",
           "start": 156473,
           "end": 156929,
           "confidence": 0.99849,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "together",
           "start": 157057,
           "end": 157345,
           "confidence": 0.99603,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "at",
           "start": 157385,
           "end": 157537,
           "confidence": 0.98924,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "the",
           "start": 157561,
           "end": 157721,
           "confidence": 0.99714,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "table",
           "start": 157753,
           "end": 157969,
           "confidence": 0.99858,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "of",
           "start": 158017,
           "end": 158201,
           "confidence": 0.99641,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "brotherhood.",
           "start": 158233,
           "end": 158993,
           "confidence": 0.97499,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "I",
           "start": 159129,
           "end": 159401,
           "confidence": 0.99667,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "have",
           "start": 159433,
           "end": 159601,
           "confidence": 0.99818,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "a",
           "start": 159633,
           "end": 159777,
           "confidence": 0.99812,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "dream",
           "start": 159801,
           "end": 160405,
           "confidence": 0.98788,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "that",
           "start": 161265,
           "end": 161601,
           "confidence": 0.7138,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "one",
           "start": 161633,
           "end": 161825,
           "confidence": 0.99742,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "day",
           "start": 161865,
           "end": 162445,
           "confidence": 0.9972,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "even",
           "start": 164385,
           "end": 164745,
           "confidence": 0.99118,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "the",
           "start": 164785,
           "end": 165009,
           "confidence": 0.99842,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "state",
           "start": 165057,
           "end": 165217,
           "confidence": 0.9988,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "of",
           "start": 165241,
           "end": 165401,
           "confidence": 0.99871,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "Mississippi,",
           "start": 165433,
           "end": 166161,
           "confidence": 0.99539,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "a",
           "start": 166193,
           "end": 166433,
           "confidence": 0.97175,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "state",
           "start": 166489,
           "end": 167113,
           "confidence": 0.96808,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "sweltering",
           "start": 167289,
           "end": 168241,
           "confidence": 0.98881,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "with",
           "start": 168353,
           "end": 168673,
           "confidence": 0.99788,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "the",
           "start": 168729,
           "end": 169209,
           "confidence": 0.95159,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "heat",
           "start": 169337,
           "end": 169601,
           "confidence": 0.7008,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "of",
           "start": 169633,
           "end": 170205,
           "confidence": 0.64518,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "injustice,",
           "start": 170735,
           "end": 171955,
           "confidence": 0.94244,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "sweltering",
           "start": 173375,
           "end": 174167,
           "confidence": 0.97603,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "with",
           "start": 174231,
           "end": 174431,
           "confidence": 0.99808,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "the",
           "start": 174463,
           "end": 174607,
           "confidence": 0.99773,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "heat",
           "start": 174631,
           "end": 174791,
           "confidence": 0.99364,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "of",
           "start": 174823,
           "end": 174967,
           "confidence": 0.99775,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "oppression,",
           "start": 174991,
           "end": 175835,
           "confidence": 0.9963,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "will",
           "start": 176335,
           "end": 176671,
           "confidence": 0.77331,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "be",
           "start": 176703,
           "end": 176967,
           "confidence": 0.98294,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "transformed",
           "start": 177031,
           "end": 177967,
           "confidence": 0.9969,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "into",
           "start": 178071,
           "end": 178287,
           "confidence": 0.998,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "an",
           "start": 178311,
           "end": 178447,
           "confidence": 0.82268,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "oasis",
           "start": 178471,
           "end": 179095,
           "confidence": 0.6747,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "of",
           "start": 179175,
           "end": 179631,
           "confidence": 0.96534,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "freedom",
           "start": 179743,
           "end": 180087,
           "confidence": 0.99667,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "and",
           "start": 180111,
           "end": 180295,
           "confidence": 0.99341,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "justice.",
           "start": 180335,
           "end": 180783,
           "confidence": 0.95946,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "I",
           "start": 180839,
           "end": 181031,
           "confidence": 0.99817,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "have",
           "start": 181063,
           "end": 181231,
           "confidence": 0.99712,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "a",
           "start": 181263,
           "end": 181431,
           "confidence": 0.99576,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "dream",
           "start": 181463,
           "end": 182075,
           "confidence": 0.9585,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "my",
           "start": 185335,
           "end": 185935,
           "confidence": 0.99322,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "four",
           "start": 186055,
           "end": 186335,
           "confidence": 0.77368,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "little",
           "start": 186375,
           "end": 186815,
           "confidence": 0.99222,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "children",
           "start": 186935,
           "end": 187595,
           "confidence": 0.99615,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "will",
           "start": 188895,
           "end": 189231,
           "confidence": 0.97169,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "one",
           "start": 189263,
           "end": 189431,
           "confidence": 0.99791,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "day",
           "start": 189463,
           "end": 189655,
           "confidence": 0.99828,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "live",
           "start": 189695,
           "end": 189871,
           "confidence": 0.99706,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "in",
           "start": 189903,
           "end": 190023,
           "confidence": 0.99936,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "a",
           "start": 190039,
           "end": 190167,
           "confidence": 0.99812,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "nation",
           "start": 190191,
           "end": 190615,
           "confidence": 0.99955,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "where",
           "start": 190735,
           "end": 190991,
           "confidence": 0.99433,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "they",
           "start": 191023,
           "end": 191215,
           "confidence": 0.99799,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "will",
           "start": 191255,
           "end": 191431,
           "confidence": 0.99557,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "not",
           "start": 191463,
           "end": 191631,
           "confidence": 0.99734,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "be",
           "start": 191663,
           "end": 191855,
           "confidence": 0.99888,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "judged",
           "start": 191895,
           "end": 192223,
           "confidence": 0.99619,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "by",
           "start": 192279,
           "end": 192495,
           "confidence": 0.99823,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "the",
           "start": 192535,
           "end": 192711,
           "confidence": 0.99838,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "color",
           "start": 192743,
           "end": 193007,
           "confidence": 0.87233,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "of",
           "start": 193031,
           "end": 193167,
           "confidence": 0.99077,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "their",
           "start": 193191,
           "end": 193447,
           "confidence": 0.99402,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "skin",
           "start": 193511,
           "end": 193831,
           "confidence": 0.99799,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "but",
           "start": 193903,
           "end": 194111,
           "confidence": 0.99606,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "by",
           "start": 194143,
           "end": 194287,
           "confidence": 0.99512,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "the",
           "start": 194311,
           "end": 194639,
           "confidence": 0.99647,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "content",
           "start": 194727,
           "end": 194927,
           "confidence": 0.99919,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "of",
           "start": 194951,
           "end": 195087,
           "confidence": 0.99799,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "their",
           "start": 195111,
           "end": 195343,
           "confidence": 0.90051,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "character.",
           "start": 195399,
           "end": 196047,
           "confidence": 0.97352,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "I",
           "start": 196151,
           "end": 196415,
           "confidence": 0.99405,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "have",
           "start": 196455,
           "end": 196631,
           "confidence": 0.99376,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "a",
           "start": 196663,
           "end": 196807,
           "confidence": 0.99047,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "dream.",
           "start": 196831,
           "end": 197435,
           "confidence": 0.95951,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "I",
           "start": 203885,
           "end": 204293,
           "confidence": 0.98626,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "have",
           "start": 204349,
           "end": 204565,
           "confidence": 0.99287,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "a",
           "start": 204605,
           "end": 204805,
           "confidence": 0.99477,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "dream",
           "start": 204845,
           "end": 205277,
           "confidence": 0.99228,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "that",
           "start": 205381,
           "end": 205645,
           "confidence": 0.99662,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "one",
           "start": 205685,
           "end": 205909,
           "confidence": 0.99764,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "day",
           "start": 205957,
           "end": 206545,
           "confidence": 0.99892,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "down",
           "start": 208045,
           "end": 208785,
           "confidence": 0.95075,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "in",
           "start": 210045,
           "end": 210381,
           "confidence": 0.99619,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "Alabama",
           "start": 210413,
           "end": 211269,
           "confidence": 0.96781,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "with",
           "start": 211437,
           "end": 211741,
           "confidence": 0.99755,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "its",
           "start": 211773,
           "end": 212085,
           "confidence": 0.97269,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "vicious",
           "start": 212165,
           "end": 212597,
           "confidence": 0.99154,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "races",
           "start": 212661,
           "end": 213385,
           "confidence": 0.97736,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "with",
           "start": 214245,
           "end": 214557,
           "confidence": 0.99675,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "its",
           "start": 214581,
           "end": 214837,
           "confidence": 0.98082,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "governor",
           "start": 214901,
           "end": 215745,
           "confidence": 0.9968,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "having",
           "start": 216045,
           "end": 216525,
           "confidence": 0.99197,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "his",
           "start": 216605,
           "end": 216941,
           "confidence": 0.99715,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "lips",
           "start": 217013,
           "end": 217357,
           "confidence": 0.98825,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "dripping",
           "start": 217421,
           "end": 217765,
           "confidence": 0.96561,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "with",
           "start": 217805,
           "end": 217933,
           "confidence": 0.99779,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "the",
           "start": 217949,
           "end": 218077,
           "confidence": 0.98724,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "words",
           "start": 218101,
           "end": 218373,
           "confidence": 0.98254,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "of",
           "start": 218429,
           "end": 218669,
           "confidence": 0.99717,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "interposition",
           "start": 218717,
           "end": 219221,
           "confidence": 0.91536,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "and",
           "start": 219293,
           "end": 219453,
           "confidence": 0.99799,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "nullification,",
           "start": 219469,
           "end": 220465,
           "confidence": 0.91424,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "one",
           "start": 221085,
           "end": 221445,
           "confidence": 0.99683,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "day,",
           "start": 221485,
           "end": 221709,
           "confidence": 0.99608,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "right",
           "start": 221757,
           "end": 221989,
           "confidence": 0.98557,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "now",
           "start": 222037,
           "end": 222293,
           "confidence": 0.96043,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "in",
           "start": 222349,
           "end": 222541,
           "confidence": 0.99664,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "Alabama,",
           "start": 222573,
           "end": 223197,
           "confidence": 0.99844,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "little",
           "start": 223301,
           "end": 223661,
           "confidence": 0.99528,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "black",
           "start": 223733,
           "end": 224037,
           "confidence": 0.99793,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "boys",
           "start": 224101,
           "end": 224373,
           "confidence": 0.99622,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "and",
           "start": 224429,
           "end": 224645,
           "confidence": 0.99315,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "black",
           "start": 224685,
           "end": 224981,
           "confidence": 0.99453,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "girls",
           "start": 225053,
           "end": 225669,
           "confidence": 0.77187,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "will",
           "start": 225797,
           "end": 226061,
           "confidence": 0.99259,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "be",
           "start": 226093,
           "end": 226237,
           "confidence": 0.99872,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "able",
           "start": 226261,
           "end": 226469,
           "confidence": 0.99843,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "to",
           "start": 226517,
           "end": 226701,
           "confidence": 0.99706,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "join",
           "start": 226733,
           "end": 226997,
           "confidence": 0.9885,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "hands",
           "start": 227061,
           "end": 227365,
           "confidence": 0.98575,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "with",
           "start": 227405,
           "end": 227557,
           "confidence": 0.95246,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "little",
           "start": 227581,
           "end": 227813,
           "confidence": 0.99337,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "white",
           "start": 227869,
           "end": 228109,
           "confidence": 0.99882,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "boys",
           "start": 228157,
           "end": 228389,
           "confidence": 0.99632,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "and",
           "start": 228437,
           "end": 228645,
           "confidence": 0.99524,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "white",
           "start": 228685,
           "end": 228933,
           "confidence": 0.99283,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "girls",
           "start": 228989,
           "end": 229477,
           "confidence": 0.53585,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "as",
           "start": 229581,
           "end": 229845,
           "confidence": 0.93193,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "sisters",
           "start": 229885,
           "end": 230261,
           "confidence": 0.98283,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "and",
           "start": 230293,
           "end": 230461,
           "confidence": 0.99403,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "brothers.",
           "start": 230493,
           "end": 230789,
           "confidence": 0.96708,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "I",
           "start": 230837,
           "end": 231021,
           "confidence": 0.97797,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "have",
           "start": 231053,
           "end": 231197,
           "confidence": 0.98108,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "a",
           "start": 231221,
           "end": 231381,
           "confidence": 0.98887,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "dream",
           "start": 231413,
           "end": 231837,
           "confidence": 0.9516,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "today.",
           "start": 231941,
           "end": 232585,
           "confidence": 0.88255,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "I",
           "start": 240115,
           "end": 240499,
           "confidence": 0.98652,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "have",
           "start": 240547,
           "end": 240755,
           "confidence": 0.99489,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "a",
           "start": 240795,
           "end": 240995,
           "confidence": 0.99105,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "dream",
           "start": 241035,
           "end": 241395,
           "confidence": 0.99046,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "that",
           "start": 241475,
           "end": 241715,
           "confidence": 0.99629,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "one",
           "start": 241755,
           "end": 241979,
           "confidence": 0.99607,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "day",
           "start": 242027,
           "end": 242307,
           "confidence": 0.99767,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "every",
           "start": 242371,
           "end": 242619,
           "confidence": 0.99316,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "valley",
           "start": 242667,
           "end": 243219,
           "confidence": 0.99822,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "shall",
           "start": 243307,
           "end": 243579,
           "confidence": 0.99338,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "be",
           "start": 243627,
           "end": 243835,
           "confidence": 0.9982,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "exalted",
           "start": 243875,
           "end": 244735,
           "confidence": 0.95515,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "and",
           "start": 245075,
           "end": 245435,
           "confidence": 0.598,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "every",
           "start": 245475,
           "end": 245675,
           "confidence": 0.9959,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "hill",
           "start": 245715,
           "end": 245891,
           "confidence": 0.99732,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "and",
           "start": 245923,
           "end": 246115,
           "confidence": 0.89985,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "mountains",
           "start": 246155,
           "end": 246595,
           "confidence": 0.67223,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "shall",
           "start": 246635,
           "end": 246811,
           "confidence": 0.98846,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "be",
           "start": 246843,
           "end": 247011,
           "confidence": 0.99668,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "made",
           "start": 247043,
           "end": 247283,
           "confidence": 0.99374,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "low.",
           "start": 247339,
           "end": 247579,
           "confidence": 0.91715,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "The",
           "start": 247627,
           "end": 247787,
           "confidence": 0.9934,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "rough",
           "start": 247811,
           "end": 248059,
           "confidence": 0.99674,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "places",
           "start": 248107,
           "end": 248499,
           "confidence": 0.98694,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "will",
           "start": 248547,
           "end": 248707,
           "confidence": 0.98787,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "be",
           "start": 248731,
           "end": 248891,
           "confidence": 0.99764,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "made",
           "start": 248923,
           "end": 249187,
           "confidence": 0.99516,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "plain",
           "start": 249251,
           "end": 249787,
           "confidence": 0.99082,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "and",
           "start": 249931,
           "end": 250211,
           "confidence": 0.9921,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "the",
           "start": 250243,
           "end": 250411,
           "confidence": 0.99748,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "crooked",
           "start": 250443,
           "end": 250819,
           "confidence": 0.99793,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "places",
           "start": 250867,
           "end": 251219,
           "confidence": 0.98401,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "will",
           "start": 251267,
           "end": 251427,
           "confidence": 0.98833,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "be",
           "start": 251451,
           "end": 251611,
           "confidence": 0.99819,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "made",
           "start": 251643,
           "end": 251883,
           "confidence": 0.99851,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "straight.",
           "start": 251939,
           "end": 252379,
           "confidence": 0.75846,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "And",
           "start": 252467,
           "end": 252667,
           "confidence": 0.9891,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "the",
           "start": 252691,
           "end": 252827,
           "confidence": 0.985,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "glory",
           "start": 252851,
           "end": 252987,
           "confidence": 0.33122,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "of",
           "start": 253011,
           "end": 253123,
           "confidence": 0.97706,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "the",
           "start": 253139,
           "end": 253267,
           "confidence": 0.99463,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "Lord",
           "start": 253291,
           "end": 253555,
           "confidence": 0.95642,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "shall",
           "start": 253595,
           "end": 253795,
           "confidence": 0.99014,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "be",
           "start": 253835,
           "end": 254011,
           "confidence": 0.99469,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "revealed",
           "start": 254043,
           "end": 254411,
           "confidence": 0.39238,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "and",
           "start": 254443,
           "end": 254635,
           "confidence": 0.9114,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "all",
           "start": 254675,
           "end": 255019,
           "confidence": 0.96325,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "flesh",
           "start": 255107,
           "end": 255691,
           "confidence": 0.97878,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "shall",
           "start": 255843,
           "end": 256227,
           "confidence": 0.98943,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "see",
           "start": 256291,
           "end": 256443,
           "confidence": 0.92423,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "it",
           "start": 256459,
           "end": 256707,
           "confidence": 0.95762,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "together.",
           "start": 256771,
           "end": 257375,
           "confidence": 0.98756,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "This",
           "start": 257715,
           "end": 258027,
           "confidence": 0.99273,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "is",
           "start": 258051,
           "end": 258235,
           "confidence": 0.99265,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "our",
           "start": 258275,
           "end": 258499,
           "confidence": 0.98673,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "hope.",
           "start": 258547,
           "end": 259135,
           "confidence": 0.94649,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "This",
           "start": 259755,
           "end": 260091,
           "confidence": 0.99331,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "is",
           "start": 260123,
           "end": 260387,
           "confidence": 0.99428,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "the",
           "start": 260451,
           "end": 260675,
           "confidence": 0.69982,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "faith",
           "start": 260715,
           "end": 260979,
           "confidence": 0.77707,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "that",
           "start": 261027,
           "end": 261211,
           "confidence": 0.91357,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "I",
           "start": 261243,
           "end": 261483,
           "confidence": 0.99448,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "go",
           "start": 261539,
           "end": 261755,
           "confidence": 0.96619,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "back",
           "start": 261795,
           "end": 262019,
           "confidence": 0.99499,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "to",
           "start": 262067,
           "end": 262227,
           "confidence": 0.9921,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "the",
           "start": 262251,
           "end": 262411,
           "confidence": 0.9341,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "Southt",
           "start": 262443,
           "end": 262739,
           "confidence": 0.29502,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "with.",
           "start": 262787,
           "end": 263375,
           "confidence": 0.95633,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "With",
           "start": 263755,
           "end": 264091,
           "confidence": 0.97892,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "this",
           "start": 264123,
           "end": 264339,
           "confidence": 0.98043,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "faith",
           "start": 264387,
           "end": 265015,
           "confidence": 0.55516,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "we",
           "start": 265595,
           "end": 265931,
           "confidence": 0.89634,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "will",
           "start": 265963,
           "end": 266083,
           "confidence": 0.87798,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "be",
           "start": 266099,
           "end": 266437,
           "confidence": 0.71084,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "able",
           "start": 266531,
           "end": 266809,
           "confidence": 0.90271,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "to",
           "start": 266857,
           "end": 267041,
           "confidence": 0.97615,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "hew",
           "start": 267073,
           "end": 267217,
           "confidence": 0.87823,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "out",
           "start": 267241,
           "end": 267401,
           "confidence": 0.99265,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "of",
           "start": 267433,
           "end": 267577,
           "confidence": 0.99276,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "the",
           "start": 267601,
           "end": 267761,
           "confidence": 0.99719,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "mountain",
           "start": 267793,
           "end": 268145,
           "confidence": 0.99308,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "of",
           "start": 268185,
           "end": 268481,
           "confidence": 0.93375,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "despair",
           "start": 268553,
           "end": 269073,
           "confidence": 0.89778,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "a",
           "start": 269209,
           "end": 269529,
           "confidence": 0.97191,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "stone",
           "start": 269577,
           "end": 269833,
           "confidence": 0.99192,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "of",
           "start": 269889,
           "end": 270057,
           "confidence": 0.98189,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "hope.",
           "start": 270081,
           "end": 270645,
           "confidence": 0.94269,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "With",
           "start": 271185,
           "end": 271497,
           "confidence": 0.99667,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "this",
           "start": 271521,
           "end": 271753,
           "confidence": 0.99797,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "faith",
           "start": 271809,
           "end": 272445,
           "confidence": 0.93526,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "we",
           "start": 273025,
           "end": 273361,
           "confidence": 0.99665,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "will",
           "start": 273393,
           "end": 273561,
           "confidence": 0.99618,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "be",
           "start": 273593,
           "end": 273761,
           "confidence": 0.99555,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "able",
           "start": 273793,
           "end": 274033,
           "confidence": 0.99726,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "to",
           "start": 274089,
           "end": 274329,
           "confidence": 0.99826,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "transform",
           "start": 274377,
           "end": 275001,
           "confidence": 0.99912,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "the",
           "start": 275073,
           "end": 275281,
           "confidence": 0.9992,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "jangling",
           "start": 275313,
           "end": 275777,
           "confidence": 0.98714,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "discords",
           "start": 275841,
           "end": 276409,
           "confidence": 0.51463,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "of",
           "start": 276457,
           "end": 276617,
           "confidence": 0.9975,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "our",
           "start": 276641,
           "end": 276825,
           "confidence": 0.99879,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "nation",
           "start": 276865,
           "end": 277445,
           "confidence": 0.99927,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "into",
           "start": 277745,
           "end": 278033,
           "confidence": 0.99855,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "a",
           "start": 278049,
           "end": 278177,
           "confidence": 0.9917,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "beautiful",
           "start": 278201,
           "end": 278793,
           "confidence": 0.99667,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "symphony",
           "start": 278889,
           "end": 279329,
           "confidence": 0.98734,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "of",
           "start": 279377,
           "end": 279585,
           "confidence": 0.58844,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "brotherhood.",
           "start": 279625,
           "end": 280425,
           "confidence": 0.99313,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "With",
           "start": 280585,
           "end": 280881,
           "confidence": 0.99558,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "this",
           "start": 280913,
           "end": 281153,
           "confidence": 0.99735,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "faith",
           "start": 281209,
           "end": 281845,
           "confidence": 0.94157,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "we",
           "start": 282185,
           "end": 282545,
           "confidence": 0.99787,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "will",
           "start": 282585,
           "end": 282785,
           "confidence": 0.99375,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "be",
           "start": 282825,
           "end": 283001,
           "confidence": 0.99858,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "able",
           "start": 283033,
           "end": 283273,
           "confidence": 0.99838,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "to",
           "start": 283329,
           "end": 283521,
           "confidence": 0.99679,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "work",
           "start": 283553,
           "end": 283841,
           "confidence": 0.99889,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "together,",
           "start": 283913,
           "end": 284217,
           "confidence": 0.99827,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "to",
           "start": 284281,
           "end": 284505,
           "confidence": 0.99525,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "pray",
           "start": 284545,
           "end": 284817,
           "confidence": 0.99837,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "together,",
           "start": 284881,
           "end": 285273,
           "confidence": 0.99765,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "to",
           "start": 285369,
           "end": 285649,
           "confidence": 0.9973,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "struggle",
           "start": 285697,
           "end": 286185,
           "confidence": 0.99916,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "together,",
           "start": 286265,
           "end": 286673,
           "confidence": 0.99746,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "to",
           "start": 286769,
           "end": 287001,
           "confidence": 0.9929,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "go",
           "start": 287033,
           "end": 287177,
           "confidence": 0.9982,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "to",
           "start": 287201,
           "end": 287385,
           "confidence": 0.99676,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "jail",
           "start": 287425,
           "end": 287817,
           "confidence": 0.99761,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "together,",
           "start": 287921,
           "end": 288377,
           "confidence": 0.99672,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "to",
           "start": 288481,
           "end": 288769,
           "confidence": 0.99448,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "stand",
           "start": 288817,
           "end": 289001,
           "confidence": 0.99976,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "up",
           "start": 289033,
           "end": 289225,
           "confidence": 0.99385,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "for",
           "start": 289265,
           "end": 289465,
           "confidence": 0.99773,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "freedom",
           "start": 289505,
           "end": 289921,
           "confidence": 0.99907,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "together,",
           "start": 289993,
           "end": 290609,
           "confidence": 0.99552,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "knowing",
           "start": 290777,
           "end": 291305,
           "confidence": 0.99726,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "that",
           "start": 291385,
           "end": 291649,
           "confidence": 0.99595,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "we",
           "start": 291697,
           "end": 291881,
           "confidence": 0.99831,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "will",
           "start": 291913,
           "end": 292345,
           "confidence": 0.99664,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "be",
           "start": 292465,
           "end": 292769,
           "confidence": 0.99147,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "free",
           "start": 292817,
           "end": 293049,
           "confidence": 0.99942,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "one",
           "start": 293097,
           "end": 293305,
           "confidence": 0.99633,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "day",
           "start": 293345,
           "end": 293925,
           "confidence": 0.99737,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "if",
           "start": 295265,
           "end": 295865,
           "confidence": 0.24795,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "be",
           "start": 295985,
           "end": 296313,
           "confidence": 0.63193,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "la",
           "start": 296369,
           "end": 296965,
           "confidence": 0.54929,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "this",
           "start": 298695,
           "end": 299079,
           "confidence": 0.99088,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "will",
           "start": 299127,
           "end": 299311,
           "confidence": 0.99131,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "be",
           "start": 299343,
           "end": 299511,
           "confidence": 0.99573,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "the",
           "start": 299543,
           "end": 299687,
           "confidence": 0.99472,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "day",
           "start": 299711,
           "end": 299919,
           "confidence": 0.99816,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "with",
           "start": 299967,
           "end": 300175,
           "confidence": 0.55279,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "all",
           "start": 300215,
           "end": 300415,
           "confidence": 0.99601,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "of",
           "start": 300455,
           "end": 300655,
           "confidence": 0.92079,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "God's",
           "start": 300695,
           "end": 301175,
           "confidence": 0.79496,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "children",
           "start": 301255,
           "end": 301875,
           "confidence": 0.99543,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "Be",
           "start": 302615,
           "end": 302951,
           "confidence": 0.995,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "able",
           "start": 302983,
           "end": 303295,
           "confidence": 0.99798,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "to",
           "start": 303375,
           "end": 303615,
           "confidence": 0.99826,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "sing",
           "start": 303655,
           "end": 303903,
           "confidence": 0.99917,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "with",
           "start": 303959,
           "end": 304175,
           "confidence": 0.9985,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "new",
           "start": 304215,
           "end": 304415,
           "confidence": 0.99375,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "meaning.",
           "start": 304455,
           "end": 305159,
           "confidence": 0.89301,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "My",
           "start": 305327,
           "end": 305775,
           "confidence": 0.99489,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "country",
           "start": 305855,
           "end": 306095,
           "confidence": 0.99634,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "tears",
           "start": 306135,
           "end": 306383,
           "confidence": 0.5878,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "of",
           "start": 306439,
           "end": 306607,
           "confidence": 0.76617,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "thee",
           "start": 306631,
           "end": 307195,
           "confidence": 0.44576,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "Sweet",
           "start": 307935,
           "end": 308359,
           "confidence": 0.96148,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "land",
           "start": 308407,
           "end": 308687,
           "confidence": 0.9109,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "of",
           "start": 308751,
           "end": 308975,
           "confidence": 0.98997,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "liberty",
           "start": 309015,
           "end": 309503,
           "confidence": 0.99054,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "of",
           "start": 309559,
           "end": 309751,
           "confidence": 0.91956,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "the",
           "start": 309783,
           "end": 309927,
           "confidence": 0.43879,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "I",
           "start": 309951,
           "end": 310159,
           "confidence": 0.20778,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "sing",
           "start": 310207,
           "end": 310795,
           "confidence": 0.6327,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "Land",
           "start": 311455,
           "end": 311887,
           "confidence": 0.90862,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "where",
           "start": 311951,
           "end": 312175,
           "confidence": 0.98693,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "my",
           "start": 312215,
           "end": 312439,
           "confidence": 0.99858,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "fathers",
           "start": 312487,
           "end": 312983,
           "confidence": 0.61425,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "died",
           "start": 313039,
           "end": 313375,
           "confidence": 0.87253,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "Land",
           "start": 313455,
           "end": 313719,
           "confidence": 0.92926,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "of",
           "start": 313767,
           "end": 313927,
           "confidence": 0.6959,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "the",
           "start": 313951,
           "end": 314135,
           "confidence": 0.98024,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "pilgrim'pride",
           "start": 314175,
           "end": 315475,
           "confidence": 0.58189,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "from",
           "start": 316055,
           "end": 316511,
           "confidence": 0.99618,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "every",
           "start": 316583,
           "end": 317007,
           "confidence": 0.99881,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "mountainside",
           "start": 317111,
           "end": 318275,
           "confidence": 0.79654,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "let",
           "start": 318975,
           "end": 319359,
           "confidence": 0.99582,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "freedom",
           "start": 319407,
           "end": 319735,
           "confidence": 0.99906,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "ring.",
           "start": 319775,
           "end": 319999,
           "confidence": 0.98285,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "And",
           "start": 320047,
           "end": 320159,
           "confidence": 0.81012,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "if",
           "start": 320167,
           "end": 320431,
           "confidence": 0.77766,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "America",
           "start": 320503,
           "end": 320719,
           "confidence": 0.97564,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "is",
           "start": 320727,
           "end": 320871,
           "confidence": 0.79805,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "to",
           "start": 320903,
           "end": 321023,
           "confidence": 0.9972,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "be",
           "start": 321039,
           "end": 321143,
           "confidence": 0.9995,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "a",
           "start": 321159,
           "end": 321311,
           "confidence": 0.99876,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "great",
           "start": 321343,
           "end": 321535,
           "confidence": 0.99959,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "nation,",
           "start": 321575,
           "end": 322155,
           "confidence": 0.99689,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "this",
           "start": 322575,
           "end": 322983,
           "confidence": 0.99717,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "must",
           "start": 323039,
           "end": 323399,
           "confidence": 0.99884,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "become",
           "start": 323487,
           "end": 323759,
           "confidence": 0.98262,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "true.",
           "start": 323807,
           "end": 324395,
           "confidence": 0.98013,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "And",
           "start": 324715,
           "end": 325051,
           "confidence": 0.71275,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "so",
           "start": 325083,
           "end": 325275,
           "confidence": 0.99508,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "let",
           "start": 325315,
           "end": 325539,
           "confidence": 0.99786,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "freedom",
           "start": 325587,
           "end": 325915,
           "confidence": 0.99825,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "reign",
           "start": 325955,
           "end": 326535,
           "confidence": 0.91525,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "from",
           "start": 327235,
           "end": 327595,
           "confidence": 0.9902,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "the",
           "start": 327635,
           "end": 327811,
           "confidence": 0.99743,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "prodigious",
           "start": 327843,
           "end": 328275,
           "confidence": 0.99954,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "hilltops",
           "start": 328315,
           "end": 328875,
           "confidence": 0.72555,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "of",
           "start": 328915,
           "end": 329067,
           "confidence": 0.99802,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "New",
           "start": 329091,
           "end": 329227,
           "confidence": 0.99947,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "Hampshire.",
           "start": 329251,
           "end": 330015,
           "confidence": 0.58762,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "Let",
           "start": 330355,
           "end": 330715,
           "confidence": 0.9986,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "freedom",
           "start": 330755,
           "end": 331075,
           "confidence": 0.99874,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "reign",
           "start": 331115,
           "end": 331695,
           "confidence": 0.96264,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "from",
           "start": 332395,
           "end": 332731,
           "confidence": 0.99596,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "the",
           "start": 332763,
           "end": 332907,
           "confidence": 0.9984,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "mighty",
           "start": 332931,
           "end": 333235,
           "confidence": 0.99807,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "mountains",
           "start": 333275,
           "end": 333763,
           "confidence": 0.97852,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "of",
           "start": 333819,
           "end": 334011,
           "confidence": 0.98852,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "New",
           "start": 334043,
           "end": 334187,
           "confidence": 0.99913,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "York.",
           "start": 334211,
           "end": 334775,
           "confidence": 0.99822,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "Let",
           "start": 335595,
           "end": 336003,
           "confidence": 0.99842,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "freedom",
           "start": 336059,
           "end": 336395,
           "confidence": 0.9996,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "ring",
           "start": 336435,
           "end": 336755,
           "confidence": 0.51063,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "from",
           "start": 336835,
           "end": 337051,
           "confidence": 0.99906,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "the",
           "start": 337083,
           "end": 337227,
           "confidence": 0.99728,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "heightening",
           "start": 337251,
           "end": 337611,
           "confidence": 0.98316,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "alleghenies",
           "start": 337643,
           "end": 338259,
           "confidence": 0.95399,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "of",
           "start": 338307,
           "end": 338467,
           "confidence": 0.99606,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "Pennsylvania.",
           "start": 338491,
           "end": 339655,
           "confidence": 0.9828,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "Let",
           "start": 340235,
           "end": 340595,
           "confidence": 0.99887,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "freedom",
           "start": 340635,
           "end": 340979,
           "confidence": 0.99763,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "ring",
           "start": 341027,
           "end": 341283,
           "confidence": 0.98462,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "from",
           "start": 341339,
           "end": 341531,
           "confidence": 0.99755,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "the",
           "start": 341563,
           "end": 341707,
           "confidence": 0.99672,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "snow",
           "start": 341731,
           "end": 341939,
           "confidence": 0.99547,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "capped",
           "start": 341987,
           "end": 342211,
           "confidence": 0.62412,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "Rockies",
           "start": 342243,
           "end": 342619,
           "confidence": 0.90533,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "of",
           "start": 342667,
           "end": 342875,
           "confidence": 0.99069,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "Colorado.",
           "start": 342915,
           "end": 343935,
           "confidence": 0.99337,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "Let",
           "start": 344835,
           "end": 345219,
           "confidence": 0.9987,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "freedom",
           "start": 345267,
           "end": 345595,
           "confidence": 0.99948,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "ring",
           "start": 345635,
           "end": 346003,
           "confidence": 0.97346,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "from",
           "start": 346099,
           "end": 346331,
           "confidence": 0.99751,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "the",
           "start": 346363,
           "end": 346531,
           "confidence": 0.99747,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "curvaceous",
           "start": 346563,
           "end": 347147,
           "confidence": 0.51372,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "slopes",
           "start": 347211,
           "end": 347515,
           "confidence": 0.99522,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "of",
           "start": 347555,
           "end": 347779,
           "confidence": 0.99821,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "California.",
           "start": 347827,
           "end": 348867,
           "confidence": 0.99915,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "But",
           "start": 349051,
           "end": 349371,
           "confidence": 0.97916,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "not",
           "start": 349403,
           "end": 349691,
           "confidence": 0.99918,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "only",
           "start": 349763,
           "end": 349947,
           "confidence": 0.99563,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "that.",
           "start": 349971,
           "end": 350535,
           "confidence": 0.99779,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "Let",
           "start": 351265,
           "end": 351649,
           "confidence": 0.99456,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "freedom",
           "start": 351697,
           "end": 352089,
           "confidence": 0.99631,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "ring",
           "start": 352137,
           "end": 352537,
           "confidence": 0.96021,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "from",
           "start": 352641,
           "end": 353097,
           "confidence": 0.99736,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "Stone",
           "start": 353201,
           "end": 353561,
           "confidence": 0.98915,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "Mountain",
           "start": 353633,
           "end": 354001,
           "confidence": 0.98879,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "of",
           "start": 354033,
           "end": 354225,
           "confidence": 0.9925,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "Georgia.",
           "start": 354265,
           "end": 355005,
           "confidence": 0.97334,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "Let",
           "start": 356065,
           "end": 356449,
           "confidence": 0.99323,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "freedom",
           "start": 356497,
           "end": 356849,
           "confidence": 0.997,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "ring",
           "start": 356897,
           "end": 357297,
           "confidence": 0.94333,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "from",
           "start": 357401,
           "end": 357929,
           "confidence": 0.99049,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "Lookout",
           "start": 358057,
           "end": 358601,
           "confidence": 0.90082,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "Mountain",
           "start": 358673,
           "end": 359041,
           "confidence": 0.99525,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "of",
           "start": 359073,
           "end": 359241,
           "confidence": 0.99344,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "Tennessee.",
           "start": 359273,
           "end": 360125,
           "confidence": 0.99389,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "Let",
           "start": 360785,
           "end": 361193,
           "confidence": 0.98873,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "freedom",
           "start": 361249,
           "end": 361657,
           "confidence": 0.99913,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "ring",
           "start": 361721,
           "end": 362065,
           "confidence": 0.9557,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "from",
           "start": 362145,
           "end": 362457,
           "confidence": 0.99757,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "every",
           "start": 362521,
           "end": 362841,
           "confidence": 0.99511,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "hill",
           "start": 362913,
           "end": 363505,
           "confidence": 0.99755,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "and",
           "start": 363665,
           "end": 364009,
           "confidence": 0.99354,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "molehil",
           "start": 364057,
           "end": 364609,
           "confidence": 0.32018,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "of",
           "start": 364657,
           "end": 364817,
           "confidence": 0.95943,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "Mississippi.",
           "start": 364841,
           "end": 365937,
           "confidence": 0.98761,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "From",
           "start": 366081,
           "end": 366553,
           "confidence": 0.98615,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "every",
           "start": 366649,
           "end": 366953,
           "confidence": 0.99764,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "mountainside",
           "start": 367009,
           "end": 368085,
           "confidence": 0.82623,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "that",
           "start": 368785,
           "end": 369169,
           "confidence": 0.80834,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "freedom",
           "start": 369217,
           "end": 369569,
           "confidence": 0.67023,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "rain",
           "start": 369617,
           "end": 369889,
           "confidence": 0.42167,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "and",
           "start": 369937,
           "end": 370145,
           "confidence": 0.67713,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "wind",
           "start": 370185,
           "end": 370361,
           "confidence": 0.41829,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "we",
           "start": 370393,
           "end": 370965,
           "confidence": 0.23775,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "when",
           "start": 374265,
           "end": 374625,
           "confidence": 0.95663,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "we",
           "start": 374665,
           "end": 374913,
           "confidence": 0.983,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "allow",
           "start": 374969,
           "end": 375257,
           "confidence": 0.97459,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "freedom",
           "start": 375321,
           "end": 375689,
           "confidence": 0.93352,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "rings",
           "start": 375737,
           "end": 376325,
           "confidence": 0.67498,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "when",
           "start": 377705,
           "end": 378065,
           "confidence": 0.9877,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "we",
           "start": 378105,
           "end": 378281,
           "confidence": 0.99595,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "let",
           "start": 378313,
           "end": 378457,
           "confidence": 0.99886,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "it",
           "start": 378481,
           "end": 378689,
           "confidence": 0.99606,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "ring",
           "start": 378737,
           "end": 379089,
           "confidence": 0.90787,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "from",
           "start": 379177,
           "end": 379449,
           "confidence": 0.9966,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "every",
           "start": 379497,
           "end": 379681,
           "confidence": 0.99829,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "village",
           "start": 379713,
           "end": 380057,
           "confidence": 0.59178,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "and",
           "start": 380081,
           "end": 380265,
           "confidence": 0.80598,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "every",
           "start": 380305,
           "end": 380529,
           "confidence": 0.9833,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "hamlet,",
           "start": 380577,
           "end": 381227,
           "confidence": 0.9956,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "from",
           "start": 381361,
           "end": 381727,
           "confidence": 0.9804,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "every",
           "start": 381791,
           "end": 382159,
           "confidence": 0.99836,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "state",
           "start": 382247,
           "end": 382759,
           "confidence": 0.99976,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "and",
           "start": 382887,
           "end": 383199,
           "confidence": 0.77975,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "every",
           "start": 383247,
           "end": 383503,
           "confidence": 0.99771,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "city,",
           "start": 383559,
           "end": 384155,
           "confidence": 0.99848,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "we",
           "start": 385015,
           "end": 385375,
           "confidence": 0.99813,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "will",
           "start": 385415,
           "end": 385615,
           "confidence": 0.99739,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "be",
           "start": 385655,
           "end": 385831,
           "confidence": 0.99883,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "able",
           "start": 385863,
           "end": 386175,
           "confidence": 0.9985,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "to",
           "start": 386255,
           "end": 386567,
           "confidence": 0.99865,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "speed",
           "start": 386631,
           "end": 386879,
           "confidence": 0.99963,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "up",
           "start": 386927,
           "end": 387159,
           "confidence": 0.99784,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "that",
           "start": 387207,
           "end": 387439,
           "confidence": 0.99808,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "day",
           "start": 387487,
           "end": 387911,
           "confidence": 0.99754,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "when",
           "start": 388023,
           "end": 388343,
           "confidence": 0.88465,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "all",
           "start": 388399,
           "end": 388663,
           "confidence": 0.99818,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "of",
           "start": 388719,
           "end": 388935,
           "confidence": 0.60064,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "go'children",
           "start": 388975,
           "end": 389999,
           "confidence": 0.16252,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "black",
           "start": 390087,
           "end": 390407,
           "confidence": 0.99518,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "men",
           "start": 390471,
           "end": 390719,
           "confidence": 0.99701,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "and",
           "start": 390767,
           "end": 390999,
           "confidence": 0.99565,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "white",
           "start": 391047,
           "end": 391303,
           "confidence": 0.99621,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "men,",
           "start": 391359,
           "end": 391887,
           "confidence": 0.98896,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "Jews",
           "start": 392031,
           "end": 392447,
           "confidence": 0.98812,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "and",
           "start": 392511,
           "end": 392783,
           "confidence": 0.99691,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "Gentiles,",
           "start": 392839,
           "end": 393535,
           "confidence": 0.96498,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "Protestants",
           "start": 393655,
           "end": 394263,
           "confidence": 0.99542,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "and",
           "start": 394319,
           "end": 394583,
           "confidence": 0.94459,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "Catholics",
           "start": 394639,
           "end": 395295,
           "confidence": 0.60934,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "will",
           "start": 395415,
           "end": 395671,
           "confidence": 0.97405,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "be",
           "start": 395703,
           "end": 395847,
           "confidence": 0.99742,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "able",
           "start": 395871,
           "end": 396079,
           "confidence": 0.99719,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "to",
           "start": 396127,
           "end": 396335,
           "confidence": 0.99795,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "join",
           "start": 396375,
           "end": 396695,
           "confidence": 0.99396,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "hands",
           "start": 396775,
           "end": 397455,
           "confidence": 0.99176,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "and",
           "start": 397615,
           "end": 397935,
           "confidence": 0.99473,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "sing",
           "start": 397975,
           "end": 398151,
           "confidence": 0.99766,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "in",
           "start": 398183,
           "end": 398327,
           "confidence": 0.88936,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "the",
           "start": 398351,
           "end": 398511,
           "confidence": 0.99357,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "words",
           "start": 398543,
           "end": 398799,
           "confidence": 0.98775,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "of",
           "start": 398847,
           "end": 399031,
           "confidence": 0.99757,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "the",
           "start": 399063,
           "end": 399207,
           "confidence": 0.99318,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "old",
           "start": 399231,
           "end": 399439,
           "confidence": 0.80677,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "Negro",
           "start": 399487,
           "end": 399935,
           "confidence": 0.98722,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "spiritual.",
           "start": 400015,
           "end": 400735,
           "confidence": 0.87511,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "Free",
           "start": 400855,
           "end": 401111,
           "confidence": 0.99133,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "at",
           "start": 401143,
           "end": 401359,
           "confidence": 0.99428,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "last,",
           "start": 401407,
           "end": 402047,
           "confidence": 0.98855,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "Free",
           "start": 402231,
           "end": 402527,
           "confidence": 0.99513,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "at",
           "start": 402551,
           "end": 402759,
           "confidence": 0.99662,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "last.",
           "start": 402807,
           "end": 403423,
           "confidence": 0.99631,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "Thank",
           "start": 403599,
           "end": 404071,
           "confidence": 0.94601,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "God",
           "start": 404143,
           "end": 404351,
           "confidence": 0.81314,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "Almighty,",
           "start": 404383,
           "end": 405111,
           "confidence": 0.94978,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "we",
           "start": 405223,
           "end": 405567,
           "confidence": 0.28069,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         },
         {
           "text": "fear.",
           "start": 405631,
           "end": 405735,
           "confidence": 0.18363,
-          "speaker": "Speaker B"
+          "speaker": "MLK"
         }
       ],
-      "sentimentAnalysis": [
-        {
-          "text": "I have the pleasure to present to you Dr. Martin Luther King Geior.",
-          "sentiment": "POSITIVE",
-          "confidence": 0.9152705,
-          "start": 335,
-          "end": 5195
-        },
-        {
-          "text": "I am happy to join with you today in what will go down in history as a greatest demonstration for freedom in the history of our nation.",
-          "sentiment": "POSITIVE",
-          "confidence": 0.9838473,
-          "start": 13055,
-          "end": 28915
-        },
-        {
-          "text": "Five score years ago, a great American in whose symbolic shadow we stand today signed the Emancipation Proclamation.",
-          "sentiment": "POSITIVE",
-          "confidence": 0.66094536,
-          "start": 37845,
-          "end": 53505
-        },
-        {
-          "text": "This momentous decree came as a great beacon light of hope to millions of Negro slaves who had been seared in the flames of withering injustice.",
-          "sentiment": "POSITIVE",
-          "confidence": 0.4682762,
-          "start": 55405,
-          "end": 69695
-        },
-        {
-          "text": "It came as a joyous daybreak to end the long night of their captivity.",
-          "sentiment": "POSITIVE",
-          "confidence": 0.7162505,
-          "start": 71355,
-          "end": 79695
-        },
-        {
-          "text": "But 100 years later, the Negro still is not free.",
-          "sentiment": "NEGATIVE",
-          "confidence": 0.6438096,
-          "start": 81835,
-          "end": 91015
-        },
-        {
-          "text": "100 years later, the life of the Negro is still sadly crippled by the manacles of segregation and the chains of discrimination.",
-          "sentiment": "NEGATIVE",
-          "confidence": 0.9332607,
-          "start": 92755,
-          "end": 106335
-        },
-        {
-          "text": "100 years later, the Negro lives on a lonely island of poverty.",
-          "sentiment": "NEGATIVE",
-          "confidence": 0.79551995,
-          "start": 106995,
-          "end": 113935
-        },
-        {
-          "text": "I have a dream that one day this nation will rise up and live out the true meaning of its creed.",
-          "sentiment": "POSITIVE",
-          "confidence": 0.8801915,
-          "start": 114355,
-          "end": 125875
-        },
-        {
-          "text": "We hold these truths to be self evident that all men are created equal.",
-          "sentiment": "NEUTRAL",
-          "confidence": 0.6166327,
-          "start": 126855,
-          "end": 132835
-        },
-        {
-          "text": "I have a dream that one day on the red hills to joy sons of former slaves and the sons of former slave owners will be able to sit down together at the table of brotherhood.",
-          "sentiment": "NEUTRAL",
-          "confidence": 0.6665821,
-          "start": 141895,
-          "end": 158993
-        },
-        {
-          "text": "I have a dream that one day even the state of Mississippi, a state sweltering with the heat of injustice, sweltering with the heat of oppression, will be transformed into an oasis of freedom and justice.",
-          "sentiment": "NEUTRAL",
-          "confidence": 0.51599497,
-          "start": 159129,
-          "end": 180783
-        },
-        {
-          "text": "I have a dream my four little children will one day live in a nation where they will not be judged by the color of their skin but by the content of their character.",
-          "sentiment": "POSITIVE",
-          "confidence": 0.7958613,
-          "start": 180839,
-          "end": 196047
-        },
-        {
-          "text": "I have a dream.",
-          "sentiment": "NEUTRAL",
-          "confidence": 0.7178309,
-          "start": 196151,
-          "end": 197435
-        },
-        {
-          "text": "I have a dream that one day down in Alabama with its vicious races with its governor having his lips dripping with the words of interposition and nullification, one day, right now in Alabama, little black boys and black girls will be able to join hands with little white boys and white girls as sisters and brothers.",
-          "sentiment": "NEUTRAL",
-          "confidence": 0.5485573,
-          "start": 203885,
-          "end": 230789
-        },
-        {
-          "text": "I have a dream today.",
-          "sentiment": "NEUTRAL",
-          "confidence": 0.6382484,
-          "start": 230837,
-          "end": 232585
-        },
-        {
-          "text": "I have a dream that one day every valley shall be exalted and every hill and mountains shall be made low.",
-          "sentiment": "POSITIVE",
-          "confidence": 0.63409674,
-          "start": 240115,
-          "end": 247579
-        },
-        {
-          "text": "The rough places will be made plain and the crooked places will be made straight.",
-          "sentiment": "NEUTRAL",
-          "confidence": 0.7731044,
-          "start": 247627,
-          "end": 252379
-        },
-        {
-          "text": "And the glory of the Lord shall be revealed and all flesh shall see it together.",
-          "sentiment": "POSITIVE",
-          "confidence": 0.85263574,
-          "start": 252467,
-          "end": 257375
-        },
-        {
-          "text": "This is our hope.",
-          "sentiment": "POSITIVE",
-          "confidence": 0.8108842,
-          "start": 257715,
-          "end": 259135
-        },
-        {
-          "text": "This is the faith that I go back to the Southt with.",
-          "sentiment": "NEUTRAL",
-          "confidence": 0.5983915,
-          "start": 259755,
-          "end": 263375
-        },
-        {
-          "text": "With this faith we will be able to hew out of the mountain of despair a stone of hope.",
-          "sentiment": "POSITIVE",
-          "confidence": 0.7376261,
-          "start": 263755,
-          "end": 270645
-        },
-        {
-          "text": "With this faith we will be able to transform the jangling discords of our nation into a beautiful symphony of brotherhood.",
-          "sentiment": "POSITIVE",
-          "confidence": 0.91984385,
-          "start": 271185,
-          "end": 280425
-        },
-        {
-          "text": "With this faith we will be able to work together, to pray together, to struggle together, to go to jail together, to stand up for freedom together, knowing that we will be free one day if be la this will be the day with all of God's children Be able to sing with new meaning.",
-          "sentiment": "POSITIVE",
-          "confidence": 0.893523,
-          "start": 280585,
-          "end": 305159
-        },
-        {
-          "text": "My country tears of thee Sweet land of liberty of the I sing Land where my fathers died Land of the pilgrim'pride from every mountainside let freedom ring.",
-          "sentiment": "NEUTRAL",
-          "confidence": 0.6848151,
-          "start": 305327,
-          "end": 319999
-        },
-        {
-          "text": "And if America is to be a great nation, this must become true.",
-          "sentiment": "POSITIVE",
-          "confidence": 0.72144216,
-          "start": 320047,
-          "end": 324395
-        },
-        {
-          "text": "And so let freedom reign from the prodigious hilltops of New Hampshire.",
-          "sentiment": "POSITIVE",
-          "confidence": 0.5052658,
-          "start": 324715,
-          "end": 330015
-        },
-        {
-          "text": "Let freedom reign from the mighty mountains of New York.",
-          "sentiment": "POSITIVE",
-          "confidence": 0.5810068,
-          "start": 330355,
-          "end": 334775
-        },
-        {
-          "text": "Let freedom ring from the heightening alleghenies of Pennsylvania.",
-          "sentiment": "NEUTRAL",
-          "confidence": 0.68559384,
-          "start": 335595,
-          "end": 339655
-        },
-        {
-          "text": "Let freedom ring from the snow capped Rockies of Colorado.",
-          "sentiment": "NEUTRAL",
-          "confidence": 0.5546874,
-          "start": 340235,
-          "end": 343935
-        },
-        {
-          "text": "Let freedom ring from the curvaceous slopes of California.",
-          "sentiment": "NEUTRAL",
-          "confidence": 0.70926505,
-          "start": 344835,
-          "end": 348867
-        },
-        {
-          "text": "But not only that.",
-          "sentiment": "NEUTRAL",
-          "confidence": 0.67865616,
-          "start": 349051,
-          "end": 350535
-        },
-        {
-          "text": "Let freedom ring from Stone Mountain of Georgia.",
-          "sentiment": "NEUTRAL",
-          "confidence": 0.7108022,
-          "start": 351265,
-          "end": 355005
-        },
-        {
-          "text": "Let freedom ring from Lookout Mountain of Tennessee.",
-          "sentiment": "NEUTRAL",
-          "confidence": 0.5847969,
-          "start": 356065,
-          "end": 360125
-        },
-        {
-          "text": "Let freedom ring from every hill and molehil of Mississippi.",
-          "sentiment": "NEUTRAL",
-          "confidence": 0.64130324,
-          "start": 360785,
-          "end": 365937
-        },
-        {
-          "text": "From every mountainside that freedom rain and wind we when we allow freedom rings when we let it ring from every village and every hamlet, from every state and every city, we will be able to speed up that day when all of go'children black men and white men, Jews and Gentiles, Protestants and Catholics will be able to join hands and sing in the words of the old Negro spiritual.",
-          "sentiment": "NEUTRAL",
-          "confidence": 0.54296666,
-          "start": 366081,
-          "end": 400735
-        },
-        {
-          "text": "Free at last, Free at last.",
-          "sentiment": "POSITIVE",
-          "confidence": 0.70241344,
-          "start": 400855,
-          "end": 403423
-        },
-        {
-          "text": "Thank God Almighty, we fear.",
-          "sentiment": "POSITIVE",
-          "confidence": 0.56746536,
-          "start": 403599,
-          "end": 405735
-        }
-      ],
-      "keyPhrases": [
-        "freedom rings",
-        "little white boys",
-        "little black boys",
-        "white men",
-        "go'children black men",
-        "Dr. Martin Luther King Geior",
-        "white girls",
-        "Martin Luther King Geior",
-        "black girls",
-        "thee Sweet land",
-        "former slave owners",
-        "Negro slaves",
-        "former slaves",
-        "God Almighty",
-        "New Hampshire"
-      ],
+      "sentimentAnalysis": [],
+      "keyPhrases": [],
       "duration": 0,
-      "language": "en",
+      "language": "en_us",
       "confidence": 0.94329184
     }
   },
