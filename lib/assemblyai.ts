@@ -153,19 +153,52 @@ export async function transcribeWithAssemblyAI(audioInput: File | string, option
     console.log('Unique speakers found:', Array.from(speakers))
   }
   
-  const utterances: TranscriptSegment[] = completedTranscript.utterances?.map((utt: any) => ({
-    speaker: `Speaker ${utt.speaker}`,
-    text: utt.text,
-    start: utt.start,
-    end: utt.end,
-    words: utt.words?.map((w: any) => ({
-      text: w.text,
-      start: w.start,
-      end: w.end,
-      confidence: w.confidence,
-      speaker: `Speaker ${utt.speaker}`
-    }))
-  })) || []
+  // In Turbo mode (single speaker), combine all utterances into one
+  let utterances: TranscriptSegment[] = []
+  
+  if (turboMode && completedTranscript.utterances && completedTranscript.utterances.length > 0) {
+    // Combine all utterances into a single segment for single speaker mode
+    const allText = completedTranscript.utterances.map((utt: any) => utt.text).join(' ')
+    const allWords: any[] = []
+    
+    // Collect all words from all utterances
+    completedTranscript.utterances.forEach((utt: any) => {
+      if (utt.words) {
+        utt.words.forEach((w: any) => {
+          allWords.push({
+            text: w.text,
+            start: w.start,
+            end: w.end,
+            confidence: w.confidence,
+            speaker: 'Speaker'
+          })
+        })
+      }
+    })
+    
+    utterances = [{
+      speaker: 'Speaker',
+      text: allText,
+      start: completedTranscript.utterances[0].start,
+      end: completedTranscript.utterances[completedTranscript.utterances.length - 1].end,
+      words: allWords
+    }]
+  } else {
+    // Multi-speaker mode - keep utterances separate
+    utterances = completedTranscript.utterances?.map((utt: any) => ({
+      speaker: `Speaker ${utt.speaker}`,
+      text: utt.text,
+      start: utt.start,
+      end: utt.end,
+      words: utt.words?.map((w: any) => ({
+        text: w.text,
+        start: w.start,
+        end: w.end,
+        confidence: w.confidence,
+        speaker: `Speaker ${utt.speaker}`
+      }))
+    })) || []
+  }
   
   // Collect all words for word-level highlighting
   console.log('Total words in transcript:', completedTranscript.words?.length || 0)
