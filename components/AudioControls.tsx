@@ -35,14 +35,22 @@ export function AudioControls({ audioUrl, onTimeUpdate, className = '', fileName
       setIsPlaying(false)
     }
 
+    // Seeked event ensures sync after seeking completes
+    const handleSeeked = () => {
+      setCurrentTime(audio.currentTime)
+      onTimeUpdate?.(audio.currentTime)
+    }
+
     audio.addEventListener('timeupdate', handleTimeUpdate)
     audio.addEventListener('loadedmetadata', handleLoadedMetadata)
     audio.addEventListener('ended', handleEnded)
+    audio.addEventListener('seeked', handleSeeked)
 
     return () => {
       audio.removeEventListener('timeupdate', handleTimeUpdate)
       audio.removeEventListener('loadedmetadata', handleLoadedMetadata)
       audio.removeEventListener('ended', handleEnded)
+      audio.removeEventListener('seeked', handleSeeked)
     }
   }, [onTimeUpdate])
   
@@ -90,12 +98,16 @@ export function AudioControls({ audioUrl, onTimeUpdate, className = '', fileName
     
     audio.currentTime = value[0]
     setCurrentTime(value[0])
+    onTimeUpdate?.(value[0]) // Immediate update for instant feedback
   }
 
   const skipBackward = () => {
     const audio = audioRef.current
     if (!audio) return
-    audio.currentTime = Math.max(0, audio.currentTime - 10)
+    const newTime = Math.max(0, audio.currentTime - 10)
+    audio.currentTime = newTime
+    setCurrentTime(newTime)
+    onTimeUpdate?.(newTime) // Immediate update for instant feedback
     
     // Visual feedback
     const btn = document.getElementById('skip-back-btn')
@@ -108,7 +120,10 @@ export function AudioControls({ audioUrl, onTimeUpdate, className = '', fileName
   const skipForward = () => {
     const audio = audioRef.current
     if (!audio) return
-    audio.currentTime = Math.min(duration, audio.currentTime + 10)
+    const newTime = Math.min(duration, audio.currentTime + 10)
+    audio.currentTime = newTime
+    setCurrentTime(newTime)
+    onTimeUpdate?.(newTime) // Immediate update for instant feedback
     
     // Visual feedback
     const btn = document.getElementById('skip-forward-btn')
