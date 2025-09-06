@@ -63,6 +63,11 @@ async function generateIHaveADream() {
       return
     }
 
+    // Get the actual end time from the last word
+    const lastWordEnd = transcript.words && transcript.words.length > 0 
+      ? transcript.words[transcript.words.length - 1].end 
+      : transcript.audio_duration || 0
+    
     // Create single speaker format
     const transcriptData = {
       name: sample.name,
@@ -78,7 +83,7 @@ async function generateIHaveADream() {
           speaker: 'MLK',
           text: transcript.text || '',
           start: 0,
-          end: transcript.audio_duration || 0,
+          end: lastWordEnd, // Use the last word's end time
           confidence: transcript.confidence || 0.95,
           words: transcript.words?.map(w => ({
             text: w.text,
