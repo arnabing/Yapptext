@@ -5,6 +5,11 @@ import { ScrollArea } from '@/components/ui/scroll-area'
 import { Card } from '@/components/ui/card'
 import { cn } from '@/lib/utils'
 
+// AssemblyAI timestamps have 200-500ms accuracy tolerance per their documentation
+// This offset compensates for timestamps that tend to be ahead of actual audio
+// Adjust if needed based on your audio source (300ms is middle of their accuracy range)
+const TIMESTAMP_SYNC_OFFSET = 300 // milliseconds
+
 interface Word {
   text: string
   start: number
@@ -167,7 +172,9 @@ export function TranscriptView({
                       <p key={segIndex} className="text-sm leading-relaxed break-words">
                         {segment.words && segment.words.length > 0 ? (
                           segment.words.map((word, wordIndex) => {
-                            const isCurrentWord = currentTime >= word.start && currentTime <= word.end
+                            // Apply sync offset to compensate for AssemblyAI timestamp accuracy
+                            const syncedTime = currentTime + TIMESTAMP_SYNC_OFFSET
+                            const isCurrentWord = syncedTime >= word.start && syncedTime <= word.end
                             return (
                               <span
                                 key={wordIndex}
