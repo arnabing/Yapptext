@@ -5,8 +5,8 @@ import { upload } from '@vercel/blob/client';
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import {
   Upload,
   Copy,
@@ -50,7 +50,7 @@ export default function Home() {
   const [currentLanguage, setCurrentLanguage] = useState("original");
   const [audioDuration, setAudioDuration] = useState(0); // in seconds
   const [estimatedTime, setEstimatedTime] = useState(0); // in seconds
-  const [turboMode, setTurboMode] = useState(false); // Turbo mode for single speaker
+  const [transcriptionMode, setTranscriptionMode] = useState<'turbo' | 'standard' | 'reasoning'>('standard'); // Transcription mode
 
   const fileInputRef = useRef<HTMLInputElement>(null);
   const processingTimerRef = useRef<NodeJS.Timeout | null>(null);
@@ -244,7 +244,7 @@ export default function Home() {
       formData.append("audioUrl", blob.url);
       formData.append("fileName", file.name);
       formData.append("fileSize", file.size.toString());
-      formData.append("turboMode", turboMode.toString()); // Send turbo mode setting
+      formData.append("transcriptionMode", transcriptionMode); // Send transcription mode
       formData.append("enableSentiment", "false"); // Disabled for speed
       formData.append("enableKeyPhrases", "false"); // Disabled for speed
 
@@ -698,16 +698,29 @@ export default function Home() {
                         </div>
                       </div>
                       
-                      {/* Turbo Mode Toggle */}
-                      <div className="flex items-center space-x-2 mb-4">
-                        <Switch
-                          id="turbo-mode"
-                          checked={turboMode}
-                          onCheckedChange={setTurboMode}
-                        />
-                        <Label htmlFor="turbo-mode" className="text-sm text-muted-foreground font-normal cursor-pointer">
-                          Turbo (single speaker only)
-                        </Label>
+                      {/* Transcription Mode Selection */}
+                      <div className="mb-4">
+                        <Label className="text-sm font-medium mb-3 block">Mode</Label>
+                        <RadioGroup value={transcriptionMode} onValueChange={(value) => setTranscriptionMode(value as 'turbo' | 'standard' | 'reasoning')}>
+                          <div className="flex items-center space-x-2 mb-2">
+                            <RadioGroupItem value="turbo" id="turbo" />
+                            <Label htmlFor="turbo" className="text-sm font-normal cursor-pointer">
+                              Turbo: Single speaker, 3x faster
+                            </Label>
+                          </div>
+                          <div className="flex items-center space-x-2 mb-2">
+                            <RadioGroupItem value="standard" id="standard" />
+                            <Label htmlFor="standard" className="text-sm font-normal cursor-pointer">
+                              Standard: Multi-speaker, high accuracy
+                            </Label>
+                          </div>
+                          <div className="flex items-center space-x-2">
+                            <RadioGroupItem value="reasoning" id="reasoning" />
+                            <Label htmlFor="reasoning" className="text-sm font-normal cursor-pointer">
+                              Reasoning: Multiple LLMs, human level ✨
+                            </Label>
+                          </div>
+                        </RadioGroup>
                       </div>
                       
                       <div className="flex gap-3">

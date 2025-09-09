@@ -56,6 +56,9 @@ export async function transcribeWithAssemblyAI(audioInput: File | string, option
   enableSentiment?: boolean
   enableKeyPhrases?: boolean
   isUrl?: boolean
+  wordBoost?: string[]
+  boostParam?: 'low' | 'default' | 'high'
+  customSpelling?: Record<string, string>
 }): Promise<{
   text: string
   utterances: TranscriptSegment[]
@@ -64,6 +67,10 @@ export async function transcribeWithAssemblyAI(audioInput: File | string, option
   allWords: Word[]
   sentimentAnalysis?: any
   keyPhrases?: string[]
+  confidenceMetrics?: {
+    averageConfidence: number
+    lowConfidenceWords: Array<{word: string, confidence: number, timestamp: number}>
+  }
 }> {
   console.log('transcribeWithAssemblyAI called')
   console.log('API Key in function:', !!process.env.ASSEMBLYAI_API_KEY)
@@ -76,10 +83,10 @@ export async function transcribeWithAssemblyAI(audioInput: File | string, option
     const startTime = Date.now()
     
     // Turbo mode uses nano (3x faster) but no speaker detection
-    // Default is universal model with speaker detection
+    // Default is best tier (Universal-2) for highest accuracy
     const turboMode = options?.turboMode || false
-    const speechModel = turboMode ? 'nano' : 'universal'
-    const speakerLabels = !turboMode // Speaker labels only work with universal/slam-1
+    const speechModel = turboMode ? 'nano' : 'best'
+    const speakerLabels = !turboMode // Speaker labels only work with best/universal models
     
     // Prepare transcription options
     let transcriptOptions: any = {
@@ -104,7 +111,7 @@ export async function transcribeWithAssemblyAI(audioInput: File | string, option
     }
     
     console.log('Starting AssemblyAI transcription with options:')
-    console.log(`- Model: ${speechModel}${turboMode ? ' (Turbo: 3x faster, single speaker)' : ' (Standard: multi-speaker detection)'}`)
+    console.log(`- Model: ${speechModel}${turboMode ? ' (Turbo: 3x faster, single speaker)' : ' (Best tier Universal-2: highest accuracy, multi-speaker detection)'}`)
     console.log(`- speaker_labels: ${speakerLabels}`)
     console.log('- language_code: en')
     console.log('- sentiment_analysis:', options?.enableSentiment || false)
@@ -234,6 +241,32 @@ export async function transcribeWithAssemblyAI(audioInput: File | string, option
     console.log('- Key phrases found:', keyPhrases.length)
     console.log(`- Processing took: ${uploadTime}ms`)
     
+    // Calculate confidence metrics
+    let confidenceMetrics = undefined
+    if (allWords.length > 0) {
+      const confidences = allWords.map(w => w.confidence).filter(c => c !== undefined)
+      const averageConfidence = confidences.length > 0 
+        ? confidences.reduce((a, b) => a + b, 0) / confidences.length 
+        : 0
+      
+      const lowConfidenceWords = allWords
+        .filter(w => w.confidence < 0.8)
+        .map(w => ({
+          word: w.text,
+          confidence: w.confidence,
+          timestamp: w.start
+        }))
+        .slice(0, 50) // Limit to first 50 for performance
+      
+      confidenceMetrics = {
+        averageConfidence,
+        lowConfidenceWords
+      }
+      
+      console.log('- Average confidence:', averageConfidence.toFixed(3))
+      console.log('- Low confidence words:', lowConfidenceWords.length)
+    }
+    
     return {
       text: completedTranscript.text || '',
       utterances,
@@ -241,7 +274,8 @@ export async function transcribeWithAssemblyAI(audioInput: File | string, option
       duration,
       allWords,
       sentimentAnalysis,
-      keyPhrases
+      keyPhrases,
+      confidenceMetrics
     }
   } catch (error) {
     console.error('AssemblyAI transcription error:', error)

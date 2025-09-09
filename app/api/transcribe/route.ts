@@ -36,13 +36,15 @@ export async function POST(request: NextRequest) {
     const audioUrl = formData.get('audioUrl') as string
     const audioFile = formData.get('audio') as File
     
-    const turboMode = formData.get('turboMode') === 'true' // Default false
+    const transcriptionMode = formData.get('transcriptionMode') as string || 'standard'
+    const turboMode = transcriptionMode === 'turbo' // For backward compatibility
     const enableSentiment = formData.get('enableSentiment') === 'true'
     const enableKeyPhrases = formData.get('enableKeyPhrases') === 'true'
     
     console.log('Form data parsed')
     console.log('Audio URL:', audioUrl ? 'present' : 'missing')
     console.log('Audio file:', audioFile ? 'present' : 'missing')
+    console.log('Transcription mode:', transcriptionMode)
     console.log('Options:', { turboMode, enableSentiment, enableKeyPhrases })
     
     if (!audioUrl && !audioFile) {
@@ -113,7 +115,7 @@ export async function POST(request: NextRequest) {
     
     // Pass either URL or file to AssemblyAI
     const audioInput = audioUrl || audioFile
-    const { text, utterances, chapters, duration, allWords, sentimentAnalysis, keyPhrases } = await transcribeWithAssemblyAI(audioInput, {
+    const assemblyResult = await transcribeWithAssemblyAI(audioInput, {
       turboMode,
       enableSentiment,
       enableKeyPhrases,
@@ -121,6 +123,38 @@ export async function POST(request: NextRequest) {
     })
     const transcriptionTime = Date.now() - startTime
     console.log(`Transcription completed in ${transcriptionTime}ms`)
+    
+    let { text, utterances, chapters, duration, allWords, sentimentAnalysis, keyPhrases, confidenceMetrics } = assemblyResult
+    
+    // If reasoning mode, enhance with Gemini
+    if (transcriptionMode === 'reasoning' && confidenceMetrics) {
+      console.log('Reasoning mode: Enhancing transcript with Gemini...')
+      try {
+        const enhanceResponse = await fetch(`${request.headers.get('origin')}/api/enhance-transcript`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            utterances,
+            confidenceMetrics,
+            allWords
+          })
+        })
+        
+        if (enhanceResponse.ok) {
+          const enhanced = await enhanceResponse.json()
+          if (enhanced.enhanced) {
+            console.log('Transcript enhanced successfully')
+            text = enhanced.text || text
+            utterances = enhanced.utterances || utterances
+          }
+        } else {
+          console.error('Enhancement failed, using original transcript')
+        }
+      } catch (error) {
+        console.error('Enhancement error:', error)
+        // Continue with original transcript if enhancement fails
+      }
+    }
     
     // Update usage
     const newUsage = await updateUsage(ip, duration)
