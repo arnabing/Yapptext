@@ -1,0 +1,407 @@
+{
+  "source": "public/samples/lil_wayne_deposition.mp3",
+  "createdAt": "2025-09-28T04:15:08.360Z",
+  "speakers": [
+    "Speaker A",
+    "Speaker B",
+    "Speaker C"
+  ],
+  "utterances": [
+    {
+      "speaker": "Speaker A",
+      "start": 1920,
+      "end": 4560,
+      "text": "Clearly, Lil Wayne answers to no one."
+    },
+    {
+      "speaker": "Speaker B",
+      "start": 6640,
+      "end": 11520,
+      "text": "Is that an interview that you actually gave with Katie Couric?"
+    },
+    {
+      "speaker": "Speaker A",
+      "start": 12480,
+      "end": 15040,
+      "text": "Is that an interview that I actually gave with Katie Couric?"
+    },
+    {
+      "speaker": "Speaker B",
+      "start": 15040,
+      "end": 15440,
+      "text": "Yeah."
+    },
+    {
+      "speaker": "Speaker A",
+      "start": 15440,
+      "end": 16399,
+      "text": "What's your name again?"
+    },
+    {
+      "speaker": "Speaker B",
+      "start": 18640,
+      "end": 23080,
+      "text": "Well, that's not the question."
+    },
+    {
+      "speaker": "Speaker A",
+      "start": 23080,
+      "end": 28180,
+      "text": "Pete Ross. That's a stupid ass question. You just saw me on there giving an interview with her."
+    },
+    {
+      "speaker": "Speaker B",
+      "start": 28180,
+      "end": 38020,
+      "text": "Okay, so that was you. Did you perform at the Virgin Mobile Music Fest in 2008 with Kanye West?"
+    },
+    {
+      "speaker": "Speaker A",
+      "start": 40500,
+      "end": 51140,
+      "text": "I don't know. But I know I did perform at this badass bitch birthday party recently. She was crazy stupid thick."
+    },
+    {
+      "speaker": "Speaker B",
+      "start": 51610,
+      "end": 59850,
+      "text": "Isn't it something that you would remember if your album the Carter 3 was the biggest selling album of the year in 2008?"
+    },
+    {
+      "speaker": "Speaker A",
+      "start": 61370,
+      "end": 64490,
+      "text": "Isn't it something that I would remember that?"
+    },
+    {
+      "speaker": "Speaker B",
+      "start": 64570,
+      "end": 65050,
+      "text": "Yes."
+    },
+    {
+      "speaker": "Speaker A",
+      "start": 66250,
+      "end": 84130,
+      "text": "Isn't that a personal opinion type question? That's why I got that. I mean, because I would be actually answering the question to. Isn't it something. That's my question. Isn't it something that you would remember? Isn't it something. That's the question I have to answer, your honor. Isn't it something."
+    },
+    {
+      "speaker": "Speaker C",
+      "start": 85570,
+      "end": 87010,
+      "text": "Do the best. Try to answer it."
+    },
+    {
+      "speaker": "Speaker A",
+      "start": 89330,
+      "end": 96370,
+      "text": "Yes. Something out of your ass. That's my answer. Yeah, it is something out of your ass."
+    },
+    {
+      "speaker": "Speaker B",
+      "start": 96610,
+      "end": 101090,
+      "text": "Have you ever hired a photographer to photograph an event?"
+    },
+    {
+      "speaker": "Speaker A",
+      "start": 102130,
+      "end": 111410,
+      "text": "Have I ever hired a photographer to photograph an event? Sorry, sir, no. I'm a superstar. People hire them their selves to photograph me. We don't hire them."
+    },
+    {
+      "speaker": "Speaker B",
+      "start": 112530,
+      "end": 115330,
+      "text": "How would you describe your image in the media?"
+    },
+    {
+      "speaker": "Speaker A",
+      "start": 116770,
+      "end": 119010,
+      "text": "How would I describe my image in the media?"
+    },
+    {
+      "speaker": "Speaker B",
+      "start": 119090,
+      "end": 119570,
+      "text": "Yes."
+    },
+    {
+      "speaker": "Speaker A",
+      "start": 119650,
+      "end": 121170,
+      "text": "I wouldn't describe it."
+    },
+    {
+      "speaker": "Speaker B",
+      "start": 123490,
+      "end": 125970,
+      "text": "Well. How would you describe it if you had to?"
+    },
+    {
+      "speaker": "Speaker A",
+      "start": 126050,
+      "end": 127090,
+      "text": "I don't have to."
+    },
+    {
+      "speaker": "Speaker B",
+      "start": 127170,
+      "end": 129970,
+      "text": "Well, what image are you portraying in the media?"
+    },
+    {
+      "speaker": "Speaker A",
+      "start": 130130,
+      "end": 135370,
+      "text": "I don't portray anything. I am who I am and you guys portray what you get. Well, who."
+    },
+    {
+      "speaker": "Speaker B",
+      "start": 135450,
+      "end": 136970,
+      "text": "Who are you? Who is the real."
+    },
+    {
+      "speaker": "Speaker A",
+      "start": 136970,
+      "end": 139690,
+      "text": "I'm Dwayne Michael Carter Jr. Okay."
+    },
+    {
+      "speaker": "Speaker B",
+      "start": 140010,
+      "end": 144330,
+      "text": "Do you like to portray yourself as."
+    },
+    {
+      "speaker": "Speaker A",
+      "start": 144490,
+      "end": 155850,
+      "text": "I just answered that and said that. I don't like to portray myself as nobody. Okay. I completely be Dwayne Michael Carter Jr. I don't portray myself as anything. An image is self described."
+    },
+    {
+      "speaker": "Speaker B",
+      "start": 155850,
+      "end": 157690,
+      "text": "Well, you have to wait till I'm done with the question."
+    },
+    {
+      "speaker": "Speaker A",
+      "start": 157690,
+      "end": 165160,
+      "text": "I don't have to wait till anything. Honestly, I. I mean, this guy right here may tell me that I have to wait, but personally, I don't have to do nothing."
+    },
+    {
+      "speaker": "Speaker C",
+      "start": 165960,
+      "end": 167080,
+      "text": "Go ahead, ask the question."
+    },
+    {
+      "speaker": "Speaker B",
+      "start": 167400,
+      "end": 169920,
+      "text": "Thank you, your honor. Do you like to."
+    },
+    {
+      "speaker": "Speaker A",
+      "start": 169920,
+      "end": 175640,
+      "text": "You know he can't save you. Right? In the real world. That guy right there. He can't save you in the real world. Just so you know."
+    },
+    {
+      "speaker": "Speaker B",
+      "start": 176120,
+      "end": 177960,
+      "text": "What does that mean?"
+    },
+    {
+      "speaker": "Speaker A",
+      "start": 178280,
+      "end": 179640,
+      "text": "I don't have to elaborate."
+    },
+    {
+      "speaker": "Speaker B",
+      "start": 181640,
+      "end": 188280,
+      "text": "Is that's your next question? Is that a threat against. Can you just ask your next question, please?"
+    },
+    {
+      "speaker": "Speaker A",
+      "start": 195810,
+      "end": 196850,
+      "text": "He can't save you."
+    },
+    {
+      "speaker": "Speaker B",
+      "start": 199170,
+      "end": 200290,
+      "text": "And what does that mean?"
+    },
+    {
+      "speaker": "Speaker A",
+      "start": 200530,
+      "end": 201810,
+      "text": "I was talking to myself."
+    },
+    {
+      "speaker": "Speaker B",
+      "start": 204770,
+      "end": 211970,
+      "text": "Do you recall that any criminal actions were pending against you at the end of 2008?"
+    },
+    {
+      "speaker": "Speaker A",
+      "start": 212850,
+      "end": 213890,
+      "text": "I don't recall any."
+    },
+    {
+      "speaker": "Speaker B",
+      "start": 214050,
+      "end": 221890,
+      "text": "Do you recall being at all concerned about any criminal actions that may have been pending against you at the end of 2008?"
+    },
+    {
+      "speaker": "Speaker A",
+      "start": 221970,
+      "end": 222770,
+      "text": "I don't recall."
+    },
+    {
+      "speaker": "Speaker B",
+      "start": 223490,
+      "end": 231170,
+      "text": "Do you recall that in the summer of 2007, you were arrested in New York City following a performance at the Beacon Theater?"
+    },
+    {
+      "speaker": "Speaker A",
+      "start": 231890,
+      "end": 232930,
+      "text": "I don't recall that."
+    },
+    {
+      "speaker": "Speaker B",
+      "start": 234450,
+      "end": 242930,
+      "text": "Do you recall that police in New York City discovered a .40 caliber pistol on you, on your person?"
+    },
+    {
+      "speaker": "Speaker A",
+      "start": 244300,
+      "end": 245420,
+      "text": "I don't recall that, neither."
+    },
+    {
+      "speaker": "Speaker B",
+      "start": 246700,
+      "end": 255100,
+      "text": "Do you recall that in late 2009, you pleaded guilty to attempted criminal possession of a weapon?"
+    },
+    {
+      "speaker": "Speaker A",
+      "start": 255500,
+      "end": 256860,
+      "text": "I don't recall that, neither."
+    },
+    {
+      "speaker": "Speaker B",
+      "start": 258860,
+      "end": 265100,
+      "text": "Did you serve any time in jail following the end of 2009?"
+    },
+    {
+      "speaker": "Speaker A",
+      "start": 265820,
+      "end": 266620,
+      "text": "I don't know."
+    },
+    {
+      "speaker": "Speaker B",
+      "start": 267260,
+      "end": 271740,
+      "text": "Didn't you serve about eight months at Rikers island in 2010?"
+    },
+    {
+      "speaker": "Speaker A",
+      "start": 271900,
+      "end": 272620,
+      "text": "I don't know."
+    },
+    {
+      "speaker": "Speaker B",
+      "start": 274100,
+      "end": 280740,
+      "text": "Do you remember being arrested in or about January 2008 near Yuma, Arizona?"
+    },
+    {
+      "speaker": "Speaker A",
+      "start": 281940,
+      "end": 283140,
+      "text": "No, I don't remember that."
+    },
+    {
+      "speaker": "Speaker B",
+      "start": 284180,
+      "end": 299860,
+      "text": "Do you remember being charged in early 2008 with possession of narcotics for sale, possession of dangerous drugs, misconduct involving weapons, and possession of drug paraphernalia?"
+    },
+    {
+      "speaker": "Speaker A",
+      "start": 300910,
+      "end": 301950,
+      "text": "No I don't recall that."
+    },
+    {
+      "speaker": "Speaker C",
+      "start": 302030,
+      "end": 304750,
+      "text": "Well, how much longer is this line of questioning going to go on?"
+    },
+    {
+      "speaker": "Speaker B",
+      "start": 304910,
+      "end": 306030,
+      "text": "Not much longer."
+    },
+    {
+      "speaker": "Speaker C",
+      "start": 306030,
+      "end": 306910,
+      "text": "All right, go ahead."
+    },
+    {
+      "speaker": "Speaker A",
+      "start": 306990,
+      "end": 307630,
+      "text": "I don't know."
+    },
+    {
+      "speaker": "Speaker B",
+      "start": 310750,
+      "end": 317950,
+      "text": "Didn't you win, I don't know the award for best rap album of the year in 2008 for the Carter 3?"
+    },
+    {
+      "speaker": "Speaker A",
+      "start": 318110,
+      "end": 318750,
+      "text": "I don't know."
+    },
+    {
+      "speaker": "Speaker C",
+      "start": 319070,
+      "end": 323710,
+      "text": "Mr. Carter, you have to wait until the attorney is finished asking the question, please."
+    },
+    {
+      "speaker": "Speaker A",
+      "start": 323870,
+      "end": 326190,
+      "text": "I'm sorry. That's my psychic. I'm sorry."
+    }
+  ]
+}

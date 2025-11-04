@@ -1,7 +1,160 @@
 # AI Agents Guide for YappText
 
 ## Overview
-YappText is an advanced audio transcription web app with automatic speaker detection, smart formatting, and translation capabilities. It uses AssemblyAI for transcription with speaker diarization and OpenAI for translation features. This guide helps AI agents understand and work with the codebase effectively.
+YappText is an advanced audio transcription web app that achieves human-level accuracy through multi-model ensemble transcription with context-aware reconciliation. It uses AssemblyAI for speaker diarization, Gemini for context analysis, OpenAI for validation, and GPT-4o-mini for intelligent reconciliation. This guide helps AI agents understand and work with the codebase effectively.
+
+## Current Implementation Status (Jan 2025)
+
+### ✅ What's Working
+- **Three-tier transcription system** implemented (Standard, Turbo, Reasoning modes)
+- **Parallel processing** with Promise.allSettled - all 3 models run simultaneously
+- **Vercel Blob storage** for all files to enable future history feature
+- **Pre-download optimization** - audio downloaded once and shared between models
+- **Context extraction** from Gemini successfully captured
+- **Comprehensive logging** throughout the pipeline for debugging
+
+### ⚠️ Known Issues
+1. **Reconciliation too conservative** - Only 53 char difference (8832 → 8885) on Homer Simpson test
+2. **Slow reconciliation** - Taking 32+ seconds with GPT-4o-mini
+3. **"Doh!" not preserved** - But might not be in source audio
+4. **Minimal visible improvement** - User sees nearly identical transcript to AssemblyAI alone
+5. **Total processing time** - 73 seconds (39s parallel + 32s reconciliation) is too slow
+
+## Detailed Architecture Diagram (Actual Implementation)
+
+```mermaid
+flowchart TB
+    subgraph "Client Layer"
+        A[Audio File] -->|Upload| B[File Validation]
+        B --> C["📤 Upload to Blob\nAll files (future history)"]
+        C --> D[Blob URL]
+        D --> RQ[Run (params: contextWindow, conf, glossary, expLabel)]
+    end
+
+    subgraph "Server Pipeline"
+        RQ --> PD["⬇️ Pre‑download once\nCreate shared Buffer/Base64"]
+        PD --> PAR[["🔄 Parallel Transcribe (Promise.allSettled)"]]
+
+        PAR --> AAI["🎯 AssemblyAI\n• utterances/speakers\n• word‑level confidence"]
+        PAR --> GEM["🧠 Gemini\n• transcript (no confidences)\n• context summary"]
+        PAR --> OAI["✅ OpenAI 4o‑transcribe\n• transcript\n• timestamps"]
+
+        %% Per‑audio glossary
+        AAI --> GLOS
+        GEM --> GLOS
+        OAI --> GLOS
+        subgraph GLOS["Per‑Audio Glossary Builder"]
+            GL1[From context: NER/keyphrases]
+            GL2[From transcripts: low‑conf words\n+ disagreements\n+ rare proper nouns]
+        end
+
+        GLOS --> BOOST["AAI Model Adaptation\n• word_boost (top 10–20 terms)\n• custom_spelling (safe)"]
+        BOOST -. improves next run .-> PAR
+
+        %% Segmentation & gating
+        AAI --> SEG["Per‑utterance segmentation\n(speaker‑aware)"]
+        GEM --> SEG
+        OAI --> SEG
+        SEG --> GATE{Gate per utterance}
+        GATE -->|easy: high conf| CWV
+        GATE -->|hard: low conf/low agree| SEL
+        GATE -->|interjection| MC
+
+        %% Methods
+        subgraph CWV["Confidence‑Weighted Voting"]
+            CW1[Anchor to AAI words]\nCW2[Weight by AAI confidences]\nCW3[Small boosts for glossary]
+        end
+
+        subgraph SEL["Selective LLM (edit‑only)"]
+            S1[Prev/Current/Next context]\nS2[Strict edit map + length floor]
+        end
+
+        subgraph MC["Micro‑check (optional)"]
+            M1[1–2s audio for utterance‑initial\ninterjections]\nM2[Confirm D'oh vs Don't]
+        end
+
+        CWV --> POST
+        SEL --> POST
+        MC --> POST
+
+        subgraph POST["Post‑processing + Guards"]
+            P1[Domain‑gated normalization\n(only low‑conf spans)]
+            P2[N‑gram de‑duplication]
+            P3[Length bound per utterance\n(≈85–115% of AAI)]
+        end
+
+        POST --> ASM["Speaker‑preserving assembly\n(AAI utterance skeleton)"]
+        ASM --> LOGS["Structured Logs (runId, expLabel, debug)"]
+    end
+
+    LOGS --> UI["UI: Full transcripts, speaker view, diffs, metrics"]
+
+    classDef box fill:#0b1217,stroke:#3a5,stroke-width:1px,color:#e6f0ff;
+    classDef accent fill:#13212b,stroke:#58a6ff,stroke-width:1px,color:#e6f0ff;
+    class AAI,GEM,OAI,SEG,GATE,CWV,SEL,MC,POST,ASM,LOGS,UI box;
+    class GLOS,BOOST accent;
+```
+
+## Current Reconciliation Approach & Issues
+
+### The Problem with Our Current Approach
+Our reconciliation is **too conservative** - it's barely making any changes:
+- **Input**: 3 transcripts totaling ~24,000 chars
+- **Output**: Only 53 chars different from AssemblyAI (0.6% change)
+- **Time**: 32 seconds for minimal improvement
+- **Result**: Users see no visible benefit from multi-model approach
+
+### Why It's Failing
+1. **GPT-4o-mini is too cautious** - Tends to default to the first source (AssemblyAI)
+2. **Prompt is too vague** - "Choose the best version" isn't specific enough
+3. **No voting mechanism** - Doesn't leverage when 2/3 models agree
+4. **Character-level matching** - Should be phrase or sentence-level
+5. **No confidence weighting** - All models treated equally despite different strengths
+
+### Performance Metrics from Real Tests
+```
+Homer Simpson Test (12.83MB):
+- AssemblyAI: 8,832 chars, 1,520 words, 6 speakers
+- Gemini: 7,281 chars (shorter, missing content)
+- OpenAI: 7,986 chars (middle ground)
+- Reconciled: 8,885 chars (only +53 chars improvement)
+- Total Time: 73 seconds (unacceptable for production)
+```
+
+## Proposed Improvements for Human-Level Performance
+
+### 1. **Smarter Reconciliation Algorithm**
+Instead of sending all transcripts to GPT, we should:
+- **Segment-based voting**: Break into sentences, use majority vote
+- **Confidence scoring**: Weight models by their historical accuracy
+- **Diff-based approach**: Only reconcile segments with disagreements
+- **Context injection**: Use Gemini's context more aggressively
+
+### 2. **Speed Optimizations**
+- **Streaming reconciliation**: Process segments as they complete
+- **Timeout limits**: Max 15s for reconciliation, fallback to voting
+- **Smaller chunks**: Split long transcripts into 1000-char segments
+- **Cache layer**: Store reconciliation results for identical inputs
+
+### 3. **Quality Improvements**
+- **Use GPT-4o instead of mini**: Better quality decisions
+- **Multi-pass reconciliation**: 
+  1. First pass: Fix obvious errors
+  2. Second pass: Resolve ambiguities using context
+  3. Third pass: Polish and format
+- **ROVER algorithm**: Implement proper word-level alignment
+- **Confidence thresholds**: Only reconcile when models disagree significantly
+
+### 4. **Alternative Approach: Weighted Ensemble**
+Instead of reconciliation, use weighted voting:
+```javascript
+// Pseudo-code for weighted ensemble
+const weights = {
+  assemblyai: 0.4,  // Best for speakers
+  gemini: 0.35,     // Best for context
+  openai: 0.25      // Validation
+};
+```
 
 ## Project Structure
 ```

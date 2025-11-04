@@ -2,6 +2,10 @@
 
 A powerful, privacy-focused audio transcription web app with automatic speaker detection, powered by AssemblyAI.
 
+## Project Goal
+
+Our goal is to get to human‑level transcription with AI by combining multiple ASR models and lightweight reconciliation, validated against human‑verified reference transcripts.
+
 ## Features
 
 - 🎵 Support for MP3, WAV, M4A, WebM, MP4 audio files
@@ -10,7 +14,10 @@ A powerful, privacy-focused audio transcription web app with automatic speaker d
 - 🌍 **99 language support** with automatic detection
 - 💬 **Translation** - Translate transcripts to any language
 - ⏱️ **Word-level timestamps** - Synchronized highlighting during playback
-- 🚀 **Smart Model Selection** - Automatically uses Universal for speaker detection or Nano (3x faster) when possible
+- 🧠 **Three Transcription Modes**:
+  - **Turbo**: 3x faster with Nano model for quick transcriptions
+  - **Standard**: Universal-2 model with speaker detection (default)
+  - **Reasoning**: Dual-model approach with AI reconciliation for maximum accuracy
 - 🎭 **Sentiment Analysis** - Analyze emotional tone of conversations
 - 🔑 **Key Phrases** - Automatic extraction of important concepts
 - 🎪 **Sample Audio** - Built-in demos for quick testing
@@ -45,11 +52,13 @@ A powerful, privacy-focused audio transcription web app with automatic speaker d
 4. Get your API keys:
    - **AssemblyAI**: Sign up at [AssemblyAI](https://www.assemblyai.com) for $50 free credits
    - **OpenAI** (for translation): Get from [OpenAI Platform](https://platform.openai.com/api-keys)
+   - **Gemini** (optional, for Reasoning mode): Get from [Google AI Studio](https://aistudio.google.com/apikey)
 
 5. Add to `.env.local`:
    ```env
    ASSEMBLYAI_API_KEY=your_assemblyai_key
    OPENAI_API_KEY=your_openai_key
+   GEMINI_API_KEY=your_gemini_key  # Optional, for Reasoning mode
    ```
 
 6. Run the development server:
@@ -98,20 +107,39 @@ const DAILY_LIMIT_MINUTES = 20 // Change this value
 
 ## API Usage & Pricing
 
-### AssemblyAI (Transcription)
-- **Universal Model (Default when speaker detection needed)**:
-  - **Cost**: ~$0.37 per hour (~$0.006 per minute)
-  - **Use for**: Multiple speakers, high accuracy
-  - **Features**: Speaker diarization, all audio intelligence features
-- **Nano Model (Auto-selected when possible)**:
-  - **Cost**: ~$0.12 per hour (~$0.002 per minute)  
-  - **Use for**: Single speaker, quick transcriptions
-  - **Speed**: 3x faster than Universal
-  - **Limitation**: NO speaker detection support
+### Transcription Modes
+
+#### Turbo Mode
+- **Model**: AssemblyAI Nano
+- **Cost**: ~$0.12 per hour (~$0.002 per minute)
+- **Speed**: 3x faster than Standard
+- **Use for**: Quick transcriptions, single speaker
+- **Limitation**: No speaker detection
+
+#### Standard Mode (Default)
+- **Model**: AssemblyAI Universal-2 (best tier)
+- **Cost**: ~$0.37 per hour (~$0.006 per minute)
+- **Features**: Speaker detection, high accuracy
+- **Use for**: Multiple speakers, conversations
+
+#### Reasoning Mode (Maximum Accuracy)
+- **Models**: AssemblyAI Universal-2 + Gemini 2.5 Flash
+- **Cost**: ~$0.37/hour (AssemblyAI) + minimal Gemini costs
+- **Features**: Dual-model transcription with AI reconciliation
+- **Use for**: Critical accuracy needs, complex audio
+- **Benefit**: Near-human transcription accuracy (97%+)
+
+### API Providers
+
+**AssemblyAI**:
 - **Free Credits**: $50 on signup (135 hours with Universal, 400+ hours with Nano)
 - **Note**: Only Universal and Slam-1 models support speaker labels
 
-### OpenAI (Translation)
+**Gemini (for Reasoning mode)**:
+- **Free Tier**: 1 million tokens/month free
+- **Cost after free tier**: $0.075 per 1M input tokens
+
+**OpenAI (Translation)**:
 - **Cost**: ~$0.002 per 1,000 tokens (roughly 750 words)
 - **Used for**: Text translation to other languages
 
@@ -151,6 +179,50 @@ With the default 20-minute daily limit per user:
 - [ ] Batch processing for multiple files
 - [ ] Real-time transcription
 - [ ] Custom vocabulary and terminology
+
+## Testing & Evaluation (Proof that the system works)
+
+- Goal: objectively measure ensemble quality vs single models and pick a winner per run using simple gates + WER.
+
+- Proof page
+  - UI: `http://localhost:3000/test-transcription`
+  - Source: `app/test-transcription/page.tsx`
+  - Includes:
+    - Static Compare: paste/upload any transcript (or JSON with `utterances[].text`) and compare directly to a chosen reference without running models. Shows gates (D’oh FP/FN=0, idioms intact, length bounds 0.85–1.15), local WER, and highlights a Static Winner.
+    - Live Run: executes models/strategies once and compares outputs to the selected reference. Shows Metrics vs Reference, local WER, and highlights a Winner among gate‑passers.
+
+- Reference assets (gold set)
+  - Homer (short) audio: `public/samples/homer short.mp3`
+  - Lil Wayne audio: `public/samples/lil_wayne_deposition.mp3`
+  - Homer (short) gold transcript: `public/samples/homer_short.draft.json`
+  - Lil Wayne gold transcript: `public/samples/lil_wayne_deposition.draft.json`
+
+- Test API routes
+  - Homer test: `GET /api/test-homer` (supports `short=1&contextWindow=1&glossary=1&confThreshold=0.85&expLabel=...&debug=1`)
+    - Source: `app/api/test-homer/route.ts`
+  - Benchmark (Pulp Fiction): `GET /api/benchmark-transcribe`
+    - Source: `app/api/benchmark-transcribe/route.ts`
+  - Draft generators (create/update gold references):
+    - Homer short: `GET /api/draft-homer-short?speakers=N&save=1`
+      - `app/api/draft-homer-short/route.ts`
+    - Lil Wayne: `GET /api/draft-lil-wayne?speakers=N&save=1`
+      - `app/api/draft-lil-wayne/route.ts`
+
+- Reconciliation strategies
+  - Core logic and post‑processing (idiom freeze, interjection gating, n‑gram de‑dup): `lib/reconcile-strategies.ts`
+  - Voting helpers: `lib/reconcile-voting.ts`
+
+- What “best” means (simple and clear)
+  - Gates (must pass):
+    - D’oh FP=0 and FN=0 (or high F1 for ambiguous audio)
+    - Idioms preserved (e.g., “don’t panic”)
+    - Length bounds within 0.85–1.15 of reference
+  - Among passers: pick lowest WER vs reference; tie‑break with fewer duplicate n‑grams, better proper‑noun hits, and faster time.
+
+- Quick replicate
+  - Open the proof page → select reference (e.g., Homer (short))
+  - Live: click Run Test to generate outputs and see the Winner
+  - Static: paste/upload a transcript and see Static Winner (no model run)
 
 ## License
 

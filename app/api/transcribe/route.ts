@@ -1,6 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { transcribeWithAssemblyAI, estimateAudioDuration } from '@/lib/assemblyai'
 import { checkRateLimit, updateUsage } from '@/lib/rate-limit'
+import { transcribeAudioWithGemini, transcribeAudioWithGeminiFromUrl, reconcileTranscriptsWithSpeakers } from '@/lib/gemini'
+import { transcribeWithOpenAI, transcribeWithOpenAIFromUrl, fileToBuffer } from '@/lib/openai-transcribe'
+import { simpleReconcile, TranscriptSource } from '@/lib/reconcile'
 
 export const maxDuration = 60 // Maximum function duration: 60 seconds
 
@@ -108,52 +111,325 @@ export async function POST(request: NextRequest) {
     console.log('- ASSEMBLYAI_API_KEY exists:', !!process.env.ASSEMBLYAI_API_KEY)
     console.log('- ASSEMBLYAI_API_KEY length:', process.env.ASSEMBLYAI_API_KEY?.length)
     console.log('- ASSEMBLYAI_API_KEY prefix:', process.env.ASSEMBLYAI_API_KEY?.substring(0, 10))
+    console.log('- GEMINI_API_KEY exists:', !!process.env.GEMINI_API_KEY)
+    console.log('- GEMINI_API_KEY length:', process.env.GEMINI_API_KEY?.length)
+    console.log('- GEMINI_API_KEY prefix:', process.env.GEMINI_API_KEY?.substring(0, 10))
 
-    // Transcribe the audio with AssemblyAI
-    console.log('Starting transcription with AssemblyAI...')
-    const startTime = Date.now()
+    // Determine MIME type for reasoning mode
+    let mimeType = 'audio/mp3'
+    if (audioFile) {
+      // Fix MIME type - if it's octet-stream, detect from filename
+      if (audioFile.type === 'application/octet-stream' || !audioFile.type) {
+        const ext = audioFile.name.split('.').pop()?.toLowerCase()
+        mimeType = ext === 'mp3' ? 'audio/mpeg' : 
+                   ext === 'wav' ? 'audio/wav' :
+                   ext === 'm4a' ? 'audio/m4a' :
+                   ext === 'webm' ? 'audio/webm' : 'audio/mpeg'
+      } else {
+        mimeType = audioFile.type
+      }
+    }
     
-    // Pass either URL or file to AssemblyAI
-    const audioInput = audioUrl || audioFile
-    const assemblyResult = await transcribeWithAssemblyAI(audioInput, {
-      turboMode,
-      enableSentiment,
-      enableKeyPhrases,
-      isUrl: !!audioUrl
-    })
+    const startTime = Date.now()
+    let assemblyResult
+    let geminiResult = null
+    let openaiResult = null
+    
+    // Debug logging for reasoning mode condition
+    console.log('Checking reasoning mode conditions:')
+    console.log('- transcriptionMode:', transcriptionMode)
+    console.log('- transcriptionMode === "reasoning":', transcriptionMode === 'reasoning')
+    console.log('- process.env.GEMINI_API_KEY exists:', !!process.env.GEMINI_API_KEY)
+    console.log('- process.env.OPENAI_API_KEY exists:', !!process.env.OPENAI_API_KEY)
+    
+    // Run transcriptions in parallel for reasoning mode
+    if (transcriptionMode === 'reasoning') {
+      console.log('Reasoning mode: Running multi-model transcription...')
+      console.log('- Has URL:', !!audioUrl)
+      console.log('- Has File:', !!audioFile)
+      
+      // Prepare promises array based on available API keys
+      const transcriptionPromises = []
+      const transcriptionLabels = []
+      
+      // For efficiency, download audio ONCE if we have a URL and need it for multiple models
+      let audioBuffer: Buffer | null = null
+      let audioBase64: string | null = null
+      
+      if (audioUrl && (process.env.GEMINI_API_KEY || process.env.OPENAI_API_KEY)) {
+        console.log('Downloading audio once for Gemini/OpenAI...')
+        const downloadStart = Date.now()
+        try {
+          const response = await fetch(audioUrl)
+          if (!response.ok) {
+            throw new Error(`Failed to fetch audio: ${response.statusText}`)
+          }
+          const arrayBuffer = await response.arrayBuffer()
+          audioBuffer = Buffer.from(arrayBuffer)
+          audioBase64 = audioBuffer.toString('base64')
+          console.log(`✓ Audio downloaded in ${Date.now() - downloadStart}ms, size: ${(audioBuffer.length / 1024 / 1024).toFixed(2)}MB`)
+        } catch (error) {
+          console.error('ERROR: Failed to download audio from Blob:', error)
+          // If download fails, we cannot proceed with Gemini/OpenAI
+          // But AssemblyAI can still work with the URL
+          console.log('⚠️  Gemini and OpenAI will be skipped due to download failure')
+        }
+      }
+      
+      // Always include AssemblyAI (supports URLs directly)
+      transcriptionPromises.push(
+        transcribeWithAssemblyAI(audioUrl || audioFile, {
+          turboMode: false, // Always use best model in reasoning mode
+          enableSentiment,
+          enableKeyPhrases,
+          isUrl: !!audioUrl
+        })
+      )
+      transcriptionLabels.push('AssemblyAI')
+      
+      // Add Gemini if API key exists AND we have audio data
+      if (process.env.GEMINI_API_KEY) {
+        if (audioBase64) {
+          // Use pre-downloaded base64
+          transcriptionPromises.push(
+            transcribeAudioWithGemini(audioBase64, mimeType)
+          )
+          transcriptionLabels.push('Gemini')
+        } else if (audioFile) {
+          // Direct file upload (no URL case)
+          const buffer = await audioFile.arrayBuffer()
+          const base64 = Buffer.from(buffer).toString('base64')
+          transcriptionPromises.push(
+            transcribeAudioWithGemini(base64, mimeType)
+          )
+          transcriptionLabels.push('Gemini')
+        } else {
+          console.log('⚠️  Skipping Gemini: No audio data available')
+        }
+      }
+      
+      // Add OpenAI gpt-4o-transcribe if API key exists AND we have audio data
+      if (process.env.OPENAI_API_KEY) {
+        if (audioBuffer) {
+          // Use pre-downloaded buffer
+          transcriptionPromises.push(
+            transcribeWithOpenAI(audioBuffer, {
+              model: 'gpt-4o-transcribe',
+              responseFormat: 'json',
+              temperature: 0.0
+            })
+          )
+          transcriptionLabels.push('OpenAI-GPT4o')
+        } else if (audioFile) {
+          // Direct file upload (no URL case)
+          const buffer = await fileToBuffer(audioFile)
+          transcriptionPromises.push(
+            transcribeWithOpenAI(buffer, {
+              model: 'gpt-4o-transcribe',
+              responseFormat: 'json',
+              temperature: 0.0
+            })
+          )
+          transcriptionLabels.push('OpenAI-GPT4o')
+        } else {
+          console.log('⚠️  Skipping OpenAI: No audio data available')
+        }
+      }
+      
+      console.log(`Running ${transcriptionPromises.length} models in parallel:`, transcriptionLabels)
+      console.log('=== STARTING PARALLEL TRANSCRIPTION ===')
+      console.log('Models to run:', transcriptionLabels.join(', '))
+      console.log('Start time:', new Date().toISOString())
+      
+      const parallelStartTime = Date.now()
+      const results = await Promise.allSettled(transcriptionPromises)
+      const parallelEndTime = Date.now()
+      
+      console.log('=== PARALLEL TRANSCRIPTION COMPLETE ===')
+      console.log(`- Parallel execution time: ${parallelEndTime - parallelStartTime}ms (${((parallelEndTime - parallelStartTime)/1000).toFixed(1)}s)`)
+      console.log(`- Total models run: ${results.length}`)
+      console.log(`- Successful: ${results.filter(r => r.status === 'fulfilled').length}`)
+      console.log(`- Failed: ${results.filter(r => r.status === 'rejected').length}`)
+      
+      // Process results with detailed timing
+      const modelTimings: Record<string, number> = {}
+      results.forEach((result, index) => {
+        const label = transcriptionLabels[index]
+        console.log(`=== PROCESSING ${label} RESULT ===`)
+        console.log('- Status:', result.status)
+        
+        if (result.status === 'fulfilled') {
+          console.log('- Value keys:', Object.keys(result.value))
+          console.log('- Has text:', !!result.value.text)
+          console.log('- Text length:', result.value.text?.length || 0)
+          
+          if (label === 'AssemblyAI') {
+            assemblyResult = result.value
+            console.log('- AssemblyAI utterances:', assemblyResult.utterances?.length || 0)
+            console.log('- AssemblyAI speakers:', assemblyResult.utterances ? new Set(assemblyResult.utterances.map((u: any) => u.speaker)).size : 0)
+            if (assemblyResult.processingTime) {
+              modelTimings['AssemblyAI'] = assemblyResult.processingTime
+            }
+          } else if (label === 'Gemini') {
+            geminiResult = result.value
+            console.log('- Gemini processing time:', geminiResult.processingTime, 'ms')
+            console.log('- Gemini has context:', !!geminiResult.context)
+            if (geminiResult.processingTime) {
+              modelTimings['Gemini'] = geminiResult.processingTime
+            }
+          } else if (label === 'OpenAI-GPT4o') {
+            openaiResult = result.value
+            console.log('- OpenAI processing time:', openaiResult.processingTime, 'ms')
+            if (openaiResult.words) {
+              console.log('- OpenAI word timestamps:', openaiResult.words.length)
+            }
+            if (openaiResult.processingTime) {
+              modelTimings['OpenAI'] = openaiResult.processingTime
+            }
+          } else {
+            console.log('- UNMATCHED LABEL:', label)
+          }
+        } else {
+          console.log('- Error:', result.reason?.message)
+          console.log('- Error type:', result.reason?.constructor?.name)
+          modelTimings[label] = -1 // Mark as failed
+        }
+      })
+      
+      // Log timing breakdown
+      console.log('=== TIMING BREAKDOWN ===')
+      console.log('- Total parallel time:', parallelEndTime - parallelStartTime, 'ms')
+      Object.entries(modelTimings).forEach(([model, time]) => {
+        if (time === -1) {
+          console.log(`- ${model}: FAILED`)
+        } else {
+          console.log(`- ${model}: ${time}ms`)
+        }
+      })
+      
+      // Ensure we have at least AssemblyAI result
+      if (!assemblyResult) {
+        throw new Error('AssemblyAI transcription failed - cannot proceed')
+      }
+    } else {
+      // Standard or Turbo mode: Just use AssemblyAI
+      console.log(`Starting transcription with AssemblyAI (${transcriptionMode} mode)...`)
+      assemblyResult = await transcribeWithAssemblyAI(audioUrl || audioFile, {
+        turboMode,
+        enableSentiment,
+        enableKeyPhrases,
+        isUrl: !!audioUrl
+      })
+    }
+    
     const transcriptionTime = Date.now() - startTime
-    console.log(`Transcription completed in ${transcriptionTime}ms`)
     
     let { text, utterances, chapters, duration, allWords, sentimentAnalysis, keyPhrases, confidenceMetrics } = assemblyResult
     
-    // If reasoning mode, enhance with Gemini
-    if (transcriptionMode === 'reasoning' && confidenceMetrics) {
-      console.log('Reasoning mode: Enhancing transcript with Gemini...')
-      try {
-        const enhanceResponse = await fetch(`${request.headers.get('origin')}/api/enhance-transcript`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            utterances,
-            confidenceMetrics,
-            allWords
-          })
+    // Reconcile multiple transcripts if we have them
+    if (transcriptionMode === 'reasoning') {
+      // Prepare transcript sources for reconciliation
+      const transcriptSources: TranscriptSource[] = []
+      
+      // Always include AssemblyAI
+      transcriptSources.push({
+        name: 'AssemblyAI',
+        text: assemblyResult.text,
+        words: allWords
+      })
+      
+      // Add Gemini if available
+      if (geminiResult && geminiResult.text) {
+        transcriptSources.push({
+          name: 'Gemini',
+          text: geminiResult.text,
+          context: geminiResult.context  // Pass context for reconciliation
         })
-        
-        if (enhanceResponse.ok) {
-          const enhanced = await enhanceResponse.json()
-          if (enhanced.enhanced) {
-            console.log('Transcript enhanced successfully')
-            text = enhanced.text || text
-            utterances = enhanced.utterances || utterances
-          }
-        } else {
-          console.error('Enhancement failed, using original transcript')
-        }
-      } catch (error) {
-        console.error('Enhancement error:', error)
-        // Continue with original transcript if enhancement fails
       }
+      
+      // Add OpenAI if available
+      if (openaiResult && openaiResult.text) {
+        transcriptSources.push({
+          name: 'OpenAI-GPT4o',  // Fixed label to match what reconciliation expects
+          text: openaiResult.text,
+          words: openaiResult.words
+        })
+      }
+      
+      console.log('=== BEFORE RECONCILIATION ===')
+      console.log('- assemblyResult exists:', !!assemblyResult)
+      console.log('- geminiResult exists:', !!geminiResult)
+      console.log('- openaiResult exists:', !!openaiResult)
+      console.log('- assemblyResult.text length:', assemblyResult?.text?.length || 0)
+      console.log('- geminiResult.text length:', geminiResult?.text?.length || 0)
+      console.log('- openaiResult.text length:', openaiResult?.text?.length || 0)
+      console.log('- transcriptSources length:', transcriptSources.length)
+      transcriptSources.forEach((source, i) => {
+        console.log(`- Source ${i}: ${source.name} (${source.text?.length || 0} chars)`)
+      })
+      
+      console.log(`Reasoning mode: Reconciling ${transcriptSources.length} transcripts...`)
+      console.log('- Sources:', transcriptSources.map(s => s.name))
+      
+      if (transcriptSources.length > 1) {
+        try {
+          console.log('Starting reconciliation...')
+          const reconcileStart = Date.now()
+          
+          // Use the new reconciliation function
+          const reconciliationResult = await simpleReconcile(transcriptSources, {
+            preserveSpeakers: true,
+            assemblyUtterances: utterances
+          })
+          
+          const reconcileTime = Date.now() - reconcileStart
+          
+          // Update the results with reconciled data
+          text = reconciliationResult.text
+          if (reconciliationResult.utterances) {
+            utterances = reconciliationResult.utterances
+          }
+          
+          console.log('=== RECONCILIATION COMPLETE ===')
+          console.log('- Reconciliation time:', reconcileTime, 'ms')
+          console.log('- Method used:', reconciliationResult.method)
+          console.log('- Sources used:', reconciliationResult.sourcesUsed)
+          console.log('- Original AssemblyAI:', assemblyResult.text.length, 'chars')
+          if (geminiResult) console.log('- Original Gemini:', geminiResult.text.length, 'chars')
+          if (openaiResult) console.log('- Original OpenAI:', openaiResult.text.length, 'chars')
+          console.log('- Reconciled result:', text.length, 'chars')
+          console.log('- Speakers preserved:', utterances?.length || 0, 'utterances')
+          
+          // Check for specific content preservation
+          const hasDoh = text.toLowerCase().includes('doh') || text.toLowerCase().includes("d'oh");
+          console.log('- Contains "Doh!":', hasDoh)
+          
+          if (reconciliationResult.improvementMetrics) {
+            console.log('- Improvement metrics:', reconciliationResult.improvementMetrics)
+          }
+        } catch (error) {
+          console.error('Reconciliation failed, using AssemblyAI transcript:', error)
+          // Fall back to AssemblyAI transcript if reconciliation fails
+        }
+      } else {
+        console.log('Only one transcript available, skipping reconciliation')
+      }
+    }
+    
+    // Final performance summary
+    console.log('=== FINAL PERFORMANCE SUMMARY ===')
+    console.log(`Total API time: ${transcriptionTime}ms (${(transcriptionTime/1000).toFixed(1)}s)`)
+    console.log('Mode:', transcriptionMode)
+    if (transcriptionMode === 'reasoning') {
+      console.log('Models used:')
+      console.log('  - AssemblyAI: ✓')
+      if (geminiResult) console.log('  - Gemini: ✓')
+      if (openaiResult) console.log('  - OpenAI: ✓')
+      console.log('Reconciliation applied:', text !== assemblyResult.text ? 'Yes (text changed)' : 'No (same as AssemblyAI)')
+      
+      // Check for specific content preservation
+      const finalHasDoh = text.toLowerCase().includes('doh') || text.toLowerCase().includes("d'oh");
+      console.log('Final transcript contains "Doh!":', finalHasDoh)
     }
     
     // Update usage

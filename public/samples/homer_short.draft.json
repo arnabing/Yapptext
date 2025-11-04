@@ -1,0 +1,58 @@
+{
+  "source": "public/samples/homer short.mp3",
+  "createdAt": "2025-09-28T03:20:12.442Z",
+  "speakers": [
+    "Speaker A",
+    "Speaker B"
+  ],
+  "utterances": [
+    {
+      "speaker": "Speaker A",
+      "start": 2240,
+      "end": 8400,
+      "text": "Who the devil are you? Don't panic. Just come up with a good story. My name is Mr. Burns. D'oh!"
+    },
+    {
+      "speaker": "Speaker B",
+      "start": 9040,
+      "end": 13040,
+      "text": "Dad may have gained a little weight, but he's not some kind of food crazed maniac."
+    },
+    {
+      "speaker": "Speaker A",
+      "start": 14720,
+      "end": 16000,
+      "text": "Oh, the trash berry."
+    },
+    {
+      "speaker": "Speaker B",
+      "start": 18640,
+      "end": 19040,
+      "text": "No."
+    },
+    {
+      "speaker": "Speaker A",
+      "start": 21120,
+      "end": 99060,
+      "text": "Just take the money and get out. What? Oh Apu I would never. Or would I? I've already gone this far. I wonder what my life would be like if I robbed the Kwik E Mart. I'll do it. I'll rob the Kwik E Mart. All right, put your... d'oh! Simpson. Here are your Messages. You have 30 minutes to move your car. You have 10 minutes. Your car has been impounded. Your car has been crushed into a cube. You have 30 minutes to move your cube. Y'ello . Mr. Burns office. Is it about my cube? It's Mr. Smither. Just a minute. Don't hang up. Y'ello. You'll have to speak up. I'm wearing a towel. Oh, no. I'm sweating like Roger Ebert. Murphy, you you are elf uncontrollably. I think a wee num. Yoho. Rengejo. Ew. Slimy. Uh oh. Moving. Aha. Aw. $20. I wanted a peanut. $20 can buy many peanuts. Explain how money can be exchanged for goods and services."
+    },
+    {
+      "speaker": "Speaker B",
+      "start": 99460,
+      "end": 100180,
+      "text": "Woohoo."
+    },
+    {
+      "speaker": "Speaker A",
+      "start": 100420,
+      "end": 162420,
+      "text": "I know you can read my thoughts, boy. Meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow. Now, when I say, hello, Mr. Thompson, and on your foot, you smile and nod. No problem. Hello, Mr. Thompson. I think he's talking to you. He had to take the babysitter home. Then I noticed she was sitting on her sweet can. I grab her sweet can. Oh, just thinking about her can. I just wish I had her sweet, sweet, sweet can. So, Mr. Simpson, you admit you grabbed her can. What do you have to say in your defense? Mr. Simpson, your silence will only incriminate you further. No, Mr. Simpson, don't take your anger out on me. Get back. Get back. Mr. Simpson, no! Dramatization may not have happened. Hey, if you don't like it, go to Russia. Just a minute. Hello."
+    },
+    {
+      "speaker": "Speaker B",
+      "start": 162580,
+      "end": 166600,
+      "text": "Your son was trespassing on my property and destroyed a very valuable stone."
+    }
+  ]
+}

@@ -24,6 +24,7 @@ import { LanguageSelector } from "@/components/LanguageSelector";
 import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
 import { getSampleTranscript } from "@/lib/sample-transcripts";
+import { formatTranscriptAsPlainText, formatTranscriptAsHTML } from "@/lib/format-transcript";
 
 type AppState = "idle" | "file-selected" | "processing" | "complete" | "error";
 
@@ -444,16 +445,84 @@ export default function Home() {
 
   const copyToClipboard = async () => {
     try {
-      await navigator.clipboard.writeText(transcript);
-      const button = document.getElementById("copy-button");
-      if (button) {
-        button.textContent = "Copied!";
-        setTimeout(() => {
-          button.textContent = "Copy";
-        }, 2000);
+      const plainText = utterances && utterances.length > 0
+        ? formatTranscriptAsPlainText(utterances, transcript)
+        : transcript;
+
+      const htmlText = utterances && utterances.length > 0
+        ? formatTranscriptAsHTML(utterances, transcript)
+        : `<div>${transcript.replace(/\n/g, '<br>')}</div>`;
+
+      let copySuccess = false;
+
+      // Try modern API with both HTML and plain text formats
+      if (navigator.clipboard?.write && window.isSecureContext) {
+        try {
+          const htmlBlob = new Blob([htmlText], { type: 'text/html' });
+          const plainBlob = new Blob([plainText], { type: 'text/plain' });
+
+          await navigator.clipboard.write([
+            new ClipboardItem({
+              'text/html': htmlBlob,
+              'text/plain': plainBlob
+            })
+          ]);
+          copySuccess = true;
+        } catch (e) {
+          console.log('ClipboardItem API failed, falling back to writeText:', e);
+        }
+      }
+
+      // Fallback to writeText for plain text only
+      if (!copySuccess && navigator.clipboard?.writeText) {
+        try {
+          await navigator.clipboard.writeText(plainText);
+          copySuccess = true;
+        } catch (e) {
+          console.log('writeText failed, falling back to execCommand:', e);
+        }
+      }
+
+      // Legacy fallback for older browsers or non-HTTPS
+      if (!copySuccess) {
+        const textarea = document.createElement('textarea');
+        textarea.value = plainText;
+        textarea.style.position = 'fixed';
+        textarea.style.left = '-999999px';
+        textarea.style.top = '0';
+        document.body.appendChild(textarea);
+        textarea.select();
+        try {
+          document.execCommand('copy');
+          copySuccess = true;
+        } catch (e) {
+          console.error('All copy methods failed:', e);
+          toast({
+            title: "Copy failed",
+            description: "Please try selecting and copying the text manually",
+            variant: "destructive",
+          });
+        } finally {
+          textarea.remove();
+        }
+      }
+
+      if (copySuccess) {
+        const button = document.getElementById("copy-button");
+        if (button) {
+          button.textContent = "Copied!";
+          setTimeout(() => {
+            button.textContent = "Copy";
+          }, 2000);
+        }
       }
     } catch (err) {
       console.error("Failed to copy:", err);
+      toast({
+        title: "Copy failed",
+        description: "Please try selecting and copying the text manually",
+        variant: "destructive",
+      });
     }
   };
 
