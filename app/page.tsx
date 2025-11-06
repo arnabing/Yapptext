@@ -6,6 +6,8 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import {
   Upload,
@@ -51,7 +53,9 @@ export default function Home() {
   const [currentLanguage, setCurrentLanguage] = useState("original");
   const [audioDuration, setAudioDuration] = useState(0); // in seconds
   const [estimatedTime, setEstimatedTime] = useState(0); // in seconds
-  const [transcriptionMode, setTranscriptionMode] = useState<'turbo' | 'standard' | 'reasoning'>('standard'); // Transcription mode
+  const [selectedModel, setSelectedModel] = useState<'universal' | 'slam-1'>('slam-1'); // Model selection
+  const [customVocabulary, setCustomVocabulary] = useState(""); // Custom vocabulary for Slam-1
+  const [showVocabulary, setShowVocabulary] = useState(false); // Show/hide custom vocabulary field
 
   const fileInputRef = useRef<HTMLInputElement>(null);
   const processingTimerRef = useRef<NodeJS.Timeout | null>(null);
@@ -245,7 +249,10 @@ export default function Home() {
       formData.append("audioUrl", blob.url);
       formData.append("fileName", file.name);
       formData.append("fileSize", file.size.toString());
-      formData.append("transcriptionMode", transcriptionMode); // Send transcription mode
+      formData.append("model", selectedModel); // Send model selection
+      if (customVocabulary && customVocabulary.trim()) {
+        formData.append("customVocabulary", customVocabulary.trim());
+      }
       formData.append("enableSentiment", "false"); // Disabled for speed
       formData.append("enableKeyPhrases", "false"); // Disabled for speed
 
@@ -767,30 +774,51 @@ export default function Home() {
                         </div>
                       </div>
                       
-                      {/* Transcription Mode Selection */}
+                      {/* Model Selection */}
                       <div className="mb-4">
-                        <Label className="text-sm font-medium mb-3 block">Mode</Label>
-                        <RadioGroup value={transcriptionMode} onValueChange={(value) => setTranscriptionMode(value as 'turbo' | 'standard' | 'reasoning')}>
+                        <Label className="text-sm font-medium mb-3 block">Model</Label>
+                        <RadioGroup value={selectedModel} onValueChange={(value) => setSelectedModel(value as 'universal' | 'slam-1')}>
                           <div className="flex items-center space-x-2 mb-2">
-                            <RadioGroupItem value="turbo" id="turbo" />
-                            <Label htmlFor="turbo" className="text-sm font-normal cursor-pointer">
-                              Turbo: Single speaker, 3x faster
-                            </Label>
-                          </div>
-                          <div className="flex items-center space-x-2 mb-2">
-                            <RadioGroupItem value="standard" id="standard" />
-                            <Label htmlFor="standard" className="text-sm font-normal cursor-pointer">
-                              Standard: Multi-speaker, high accuracy
+                            <RadioGroupItem value="slam-1" id="slam-1" />
+                            <Label htmlFor="slam-1" className="text-sm font-normal cursor-pointer">
+                              Accurate (Slam-1): Best accuracy, speaker detection
                             </Label>
                           </div>
                           <div className="flex items-center space-x-2">
-                            <RadioGroupItem value="reasoning" id="reasoning" />
-                            <Label htmlFor="reasoning" className="text-sm font-normal cursor-pointer">
-                              Reasoning: Multiple LLMs, human level ✨
+                            <RadioGroupItem value="universal" id="universal" />
+                            <Label htmlFor="universal" className="text-sm font-normal cursor-pointer">
+                              Fast (Universal): Faster processing, multi-language
                             </Label>
                           </div>
                         </RadioGroup>
                       </div>
+
+                      {/* Custom Vocabulary (Slam-1 only) */}
+                      {selectedModel === 'slam-1' && (
+                        <div className="mb-4">
+                          <button
+                            type="button"
+                            onClick={() => setShowVocabulary(!showVocabulary)}
+                            className="text-sm font-medium mb-2 flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors"
+                          >
+                            <Plus className={`h-4 w-4 transition-transform ${showVocabulary ? 'rotate-45' : ''}`} />
+                            Custom Vocabulary (Optional)
+                          </button>
+                          {showVocabulary && (
+                            <div className="space-y-2">
+                              <Textarea
+                                value={customVocabulary}
+                                onChange={(e) => setCustomVocabulary(e.target.value)}
+                                placeholder="YappText, AssemblyAI, Slam-1, speaker diarization..."
+                                className="text-sm min-h-[80px]"
+                              />
+                              <p className="text-xs text-muted-foreground">
+                                Add custom terms (comma-separated) to improve accuracy for names, brands, or technical terms. Max 1000 terms.
+                              </p>
+                            </div>
+                          )}
+                        </div>
+                      )}
                       
                       <div className="flex gap-3">
                         <Button onClick={processFile} className="flex-1">

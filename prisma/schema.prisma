@@ -1,0 +1,53 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id               String   @id @default(cuid())
+  clerkId          String   @unique
+  email            String   @unique
+  stripeCustomerId String?  @unique
+
+  // Subscription details
+  subscriptionId     String?
+  subscriptionTier   String?  // "turbo" | "standard" | "reasoning"
+  subscriptionStatus String?  // "active" | "trialing" | "canceled" | "past_due"
+
+  // Trial details
+  trialEndsAt      DateTime?
+  currentPeriodEnd DateTime?
+
+  // Relations
+  usageLogs        UsageLog[]
+
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  @@index([clerkId])
+  @@index([email])
+  @@index([stripeCustomerId])
+}
+
+model UsageLog {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  minutes   Int      // Minutes of audio transcribed
+  mode      String   // "turbo" | "standard" | "reasoning"
+
+  createdAt DateTime @default(now())
+
+  @@index([userId, createdAt])
+}
