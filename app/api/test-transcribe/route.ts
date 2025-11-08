@@ -72,18 +72,18 @@ export async function POST(request: NextRequest) {
     if (process.env.ASSEMBLYAI_API_KEY) {
       transcriptionTasks.push(
         transcribeWithAssemblyAI(audioUrl || audioFile, {
-          turboMode: false,
+          model: 'universal',
           enableSentiment: false,
           enableKeyPhrases: false,
           isUrl: !!audioUrl
         })
       )
       taskLabels.push('AssemblyAI-Universal')
-      
-      // Also test AssemblyAI Nano (Turbo)
+
+      // Also test AssemblyAI Nano (Fast & Cheap)
       transcriptionTasks.push(
         transcribeWithAssemblyAI(audioUrl || audioFile, {
-          turboMode: true,
+          model: 'nano',
           enableSentiment: false,
           enableKeyPhrases: false,
           isUrl: !!audioUrl

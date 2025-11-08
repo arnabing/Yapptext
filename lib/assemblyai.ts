@@ -52,15 +52,10 @@ export interface TranscriptionResult {
 }
 
 export async function transcribeWithAssemblyAI(audioInput: File | string, options?: {
-  model?: 'universal' | 'slam-1'  // Default: 'slam-1' (best accuracy)
-  customTerms?: string[]  // Custom vocabulary for Slam-1 (up to 1000 terms)
+  model?: 'nano' | 'universal'  // Default: 'universal' (standard quality)
   enableSentiment?: boolean
   enableKeyPhrases?: boolean
   isUrl?: boolean
-  wordBoost?: string[]  // Deprecated: use customTerms instead
-  boostParam?: 'low' | 'default' | 'high'
-  customSpelling?: Record<string, string>
-  prompt?: string  // Deprecated: use customTerms instead
   speakersExpected?: number
 }): Promise<{
   text: string
@@ -78,8 +73,7 @@ export async function transcribeWithAssemblyAI(audioInput: File | string, option
   console.log('=== ASSEMBLYAI TRANSCRIPTION START ===')
   console.log('- Input type:', typeof audioInput)
   console.log('- Is URL:', options?.isUrl || false)
-  console.log('- Model:', options?.model || 'slam-1')
-  console.log('- Custom terms:', options?.customTerms?.length || 0)
+  console.log('- Model:', options?.model || 'universal')
   console.log('- API key exists:', !!process.env.ASSEMBLYAI_API_KEY)
   console.log('- API key length:', process.env.ASSEMBLYAI_API_KEY?.length)
   console.log('- API key first chars:', process.env.ASSEMBLYAI_API_KEY?.substring(0, 8) + '...')
@@ -91,14 +85,14 @@ export async function transcribeWithAssemblyAI(audioInput: File | string, option
   try {
     const startTime = Date.now()
 
-    // Select model: slam-1 (best accuracy) or universal (fastest)
+    // Select model: universal (standard) or nano (fastest/cheapest)
     // Both support speaker labels and multi-speaker detection
-    const selectedModel = options?.model || 'slam-1'
+    const selectedModel = options?.model || 'universal'
 
     // Prepare transcription options
     let transcriptOptions: any = {
       speaker_labels: true,  // Both models support speaker detection
-      speech_models: [selectedModel],  // New API: speech_models array
+      speech_model: selectedModel,  // Correct parameter: singular string, not array
       language_code: 'en',
       format_text: true,
       punctuate: true,
@@ -118,26 +112,13 @@ export async function transcribeWithAssemblyAI(audioInput: File | string, option
     }
     
     console.log('Starting AssemblyAI transcription with options:')
-    console.log(`- Model: ${selectedModel}${selectedModel === 'universal' ? ' (Fast, multi-language)' : ' (Best accuracy, custom vocabulary)'}`)
+    console.log(`- Model: ${selectedModel}${selectedModel === 'universal' ? ' (Standard quality, multi-language)' : ' (Fast & cheap)'}`)
     console.log('- speaker_labels: true')
     console.log('- language_code: en')
     console.log('- sentiment_analysis:', options?.enableSentiment || false)
     console.log('- auto_highlights:', options?.enableKeyPhrases || false)
     if (options?.speakersExpected) {
       console.log('- speakers_expected:', options.speakersExpected)
-    }
-
-    // Add custom vocabulary for Slam-1 model (up to 1000 terms)
-    if (selectedModel === 'slam-1' && options?.customTerms && options.customTerms.length > 0) {
-      // Filter and validate terms (5-50 characters, max 1000 terms)
-      const validTerms = options.customTerms
-        .filter(term => term.length >= 5 && term.length <= 50)
-        .slice(0, 1000)
-
-      if (validTerms.length > 0) {
-        transcriptOptions.keyterms_prompt = validTerms
-        console.log(`- Custom vocabulary: ${validTerms.length} terms added`)
-      }
     }
 
     // Add optional features if requested
@@ -149,33 +130,11 @@ export async function transcribeWithAssemblyAI(audioInput: File | string, option
       transcriptOptions.auto_highlights = true
     }
 
-    // Apply model adaptation (word boost) if provided - DEPRECATED, use customTerms
-    if (options?.wordBoost && options.wordBoost.length > 0) {
-      transcriptOptions.word_boost = options.wordBoost
-      if (options?.boostParam) {
-        transcriptOptions.boost_param = options.boostParam
-      }
-    }
-
-    // Apply custom spelling normalization if provided
-    if (options?.customSpelling && Object.keys(options.customSpelling).length > 0) {
-      transcriptOptions.custom_spelling = Object.entries(options.customSpelling).map(([from, to]) => ({
-        from: [from],
-        to
-      }))
-    }
-
     // Hint expected number of speakers if provided (diarization hint)
     if (options?.speakersExpected && Number.isFinite(options.speakersExpected)) {
       transcriptOptions.speakers_expected = options.speakersExpected
     }
 
-    // Deprecated: prompt parameter (use customTerms instead for Slam-1)
-    // Note: Slam-1 and Universal don't support 'prompt' - use keyterms_prompt instead
-    if (options?.prompt && options.prompt.trim().length > 0) {
-      console.warn('Warning: prompt parameter is deprecated. Use customTerms for Slam-1 model.')
-    }
-    
     const client = getClient()
     // transcribe() already polls until completed - no need for waitUntilReady
     const completedTranscript = await client.transcripts.transcribe(transcriptOptions)

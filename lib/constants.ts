@@ -16,8 +16,8 @@ export type PricingTier = typeof PRICING_TIERS[keyof typeof PRICING_TIERS]
  * Users can choose model regardless of tier
  */
 export const TRANSCRIPTION_MODELS = {
-  UNIVERSAL: 'universal',  // Fast, multi-language
-  SLAM1: 'slam-1',         // Best accuracy, English only, custom vocabulary
+  NANO: 'nano',           // Fastest, cheapest - good for drafts
+  UNIVERSAL: 'universal',  // Standard quality, multi-language
 } as const
 
 export type TranscriptionModel = typeof TRANSCRIPTION_MODELS[keyof typeof TRANSCRIPTION_MODELS]
@@ -46,27 +46,27 @@ export const USAGE_LIMITS = {
     minutesPerMonth: 20,
     filesPerSession: 1,
     allowDownload: true,  // Downloads now allowed for everyone
-    defaultModel: TRANSCRIPTION_MODELS.SLAM1,  // Give best quality to fall in love
+    defaultModel: TRANSCRIPTION_MODELS.UNIVERSAL,  // Standard quality for new users
     speakerDetection: true,
-    customVocabulary: true,
+    customVocabulary: false,  // Removed with slam-1
     trackingMethod: 'ip', // Track by IP address
   },
   [PRICING_TIERS.FREE]: {
     minutesPerMonth: 60,
     filesPerSession: -1, // Unlimited files (within minute limit)
     allowDownload: true,
-    defaultModel: TRANSCRIPTION_MODELS.SLAM1,
+    defaultModel: TRANSCRIPTION_MODELS.UNIVERSAL,
     speakerDetection: true,
-    customVocabulary: true,
+    customVocabulary: false,  // Removed with slam-1
     trackingMethod: 'user', // Track by user ID
   },
   [PRICING_TIERS.PRO]: {
     minutesPerMonth: 500,  // NOT unlimited - prevents abuse
     filesPerSession: -1,   // Unlimited files
     allowDownload: true,
-    defaultModel: TRANSCRIPTION_MODELS.SLAM1,
+    defaultModel: TRANSCRIPTION_MODELS.UNIVERSAL,
     speakerDetection: true,
-    customVocabulary: true,
+    customVocabulary: false,  // Removed with slam-1
     trackingMethod: 'user',
   },
 } as const
@@ -79,7 +79,7 @@ export const USAGE_LIMITS = {
 export const REVERSE_TRIAL = {
   durationDays: 7,
   minutesAllowed: 200,
-  model: TRANSCRIPTION_MODELS.SLAM1,
+  model: TRANSCRIPTION_MODELS.UNIVERSAL,
   requiresCreditCard: false,
   tierAfterTrial: PRICING_TIERS.FREE, // Downgrade to free tier after trial
 } as const
@@ -95,9 +95,8 @@ export const TIER_FEATURES = {
     features: [
       '1 free transcript',
       'Up to 20 minutes',
-      'Best accuracy (Slam-1)',
       'Speaker detection',
-      'Custom vocabulary',
+      'Choose Nano or Universal model',
       'Download transcripts',
     ],
     cta: 'Sign up for more',
@@ -108,11 +107,9 @@ export const TIER_FEATURES = {
     features: [
       '60 minutes per month',
       'Unlimited files',
-      'Best accuracy (Slam-1)',
       'Speaker detection',
-      'Custom vocabulary',
+      'Choose Nano or Universal model',
       'Download transcripts',
-      'Choose speed vs accuracy',
     ],
     cta: 'Current plan',
     badge: null,
@@ -124,11 +121,9 @@ export const TIER_FEATURES = {
     features: [
       '500 minutes per month',
       'Unlimited files',
-      'Best accuracy (Slam-1)',
       'Speaker detection',
-      'Custom vocabulary',
+      'Choose Nano or Universal model',
       'Download transcripts',
-      'Choose speed vs accuracy',
       'Priority support',
       'API access (coming soon)',
     ],

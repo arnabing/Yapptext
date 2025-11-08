@@ -43,9 +43,8 @@ export async function POST(request: NextRequest) {
     const audioUrl = formData.get('audioUrl') as string
     const audioFile = formData.get('audio') as File
 
-    // Get model selection and custom vocabulary
-    const selectedModel = (formData.get('model') as string) || TRANSCRIPTION_MODELS.SLAM1
-    const customVocabulary = formData.get('customVocabulary') as string
+    // Get model selection
+    const selectedModel = (formData.get('model') as string) || TRANSCRIPTION_MODELS.UNIVERSAL
     const enableSentiment = formData.get('enableSentiment') === 'true'
     const enableKeyPhrases = formData.get('enableKeyPhrases') === 'true'
 
@@ -53,7 +52,6 @@ export async function POST(request: NextRequest) {
     console.log('Audio URL:', audioUrl ? 'present' : 'missing')
     console.log('Audio file:', audioFile ? 'present' : 'missing')
     console.log('Model:', selectedModel)
-    console.log('Custom vocabulary:', customVocabulary ? `${customVocabulary.split(',').length} terms` : 'none')
     console.log('Options:', { enableSentiment, enableKeyPhrases })
 
     if (!audioUrl && !audioFile) {
@@ -123,21 +121,10 @@ export async function POST(request: NextRequest) {
 
     const startTime = Date.now()
 
-    // Parse custom vocabulary into array
-    let customTerms: string[] | undefined = undefined
-    if (customVocabulary && customVocabulary.trim()) {
-      customTerms = customVocabulary
-        .split(',')
-        .map(term => term.trim())
-        .filter(term => term.length > 0)
-      console.log(`Custom vocabulary: ${customTerms.length} terms`)
-    }
-
     // Single model transcription - no reconciliation
     console.log(`Starting ${selectedModel} transcription...`)
     const result = await transcribeWithAssemblyAI(audioUrl || audioFile, {
-      model: selectedModel as 'universal' | 'slam-1',
-      customTerms,
+      model: selectedModel as 'nano' | 'universal',
       enableSentiment,
       enableKeyPhrases,
       isUrl: !!audioUrl
@@ -178,8 +165,7 @@ export async function POST(request: NextRequest) {
       keyPhrases: result.keyPhrases,
       confidenceMetrics: result.confidenceMetrics,
       processingTime,
-      model: selectedModel,
-      customTermsUsed: customTerms?.length || 0
+      model: selectedModel
     })
   } catch (error: any) {
     console.error('=== TRANSCRIPTION ERROR ===')
