@@ -26,6 +26,8 @@ import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
 import { getSampleTranscript } from "@/lib/sample-transcripts";
 import { formatTranscriptAsPlainText, formatTranscriptAsHTML } from "@/lib/format-transcript";
+import { PaywallModal } from "@/components/billing/PaywallModal";
+import { ReverseTrialPopup } from "@/components/billing/ReverseTrialPopup";
 
 type AppState = "idle" | "file-selected" | "processing" | "complete" | "error";
 
@@ -53,6 +55,9 @@ export default function Home() {
   const [audioDuration, setAudioDuration] = useState(0); // in seconds
   const [estimatedTime, setEstimatedTime] = useState(0); // in seconds
   const [selectedModel, setSelectedModel] = useState<'nano' | 'universal'>('universal'); // Model selection
+  const [showPaywall, setShowPaywall] = useState(false); // Paywall modal state
+  const [showReverseTrial, setShowReverseTrial] = useState(false); // Reverse trial popup state
+  const [remainingMinutes, setRemainingMinutes] = useState<number | null>(null); // User's remaining minutes
 
   const fileInputRef = useRef<HTMLInputElement>(null);
   const processingTimerRef = useRef<NodeJS.Timeout | null>(null);
@@ -88,6 +93,7 @@ export default function Home() {
       .then((res) => res.json())
       .then((data) => {
         setMinutesUsed(data.minutesUsed || 0);
+        setRemainingMinutes(data.remainingMinutes);
       })
       .catch(console.error);
   }, []);
@@ -267,6 +273,16 @@ export default function Home() {
           } else {
             try {
               const errorData = JSON.parse(xhr.responseText);
+              // Check for usage limit or auth errors (status 429)
+              if (xhr.status === 429) {
+                if (errorData.requiresAuth) {
+                  // Anonymous user hit their limit - need to sign up
+                  setShowPaywall(true);
+                } else if (errorData.requiresUpgrade) {
+                  // Authenticated user hit their tier limit - show paywall
+                  setShowPaywall(true);
+                }
+              }
               reject(
                 new Error(
                   errorData.error || `Request failed with status ${xhr.status}`,
@@ -569,6 +585,14 @@ export default function Home() {
             <p className="text-base md:text-lg text-muted-foreground">
               Audio to text in seconds
             </p>
+            {remainingMinutes !== null && (
+              <div className="mt-3 flex items-center justify-center gap-2">
+                <Badge variant={remainingMinutes < 10 ? "destructive" : "secondary"} className="text-sm">
+                  <Clock className="h-3 w-3 mr-1" />
+                  {remainingMinutes} minutes remaining
+                </Badge>
+              </div>
+            )}
           </div>
         </div>
       )}
@@ -942,6 +966,22 @@ export default function Home() {
           />
         </div>
       )}
+
+      {/* Paywall Modal */}
+      <PaywallModal
+        open={showPaywall}
+        onOpenChange={setShowPaywall}
+        onClose={() => {
+          // When user closes paywall without upgrading, show reverse trial offer
+          setShowReverseTrial(true);
+        }}
+      />
+
+      {/* Reverse Trial Popup */}
+      <ReverseTrialPopup
+        open={showReverseTrial}
+        onOpenChange={setShowReverseTrial}
+      />
     </div>
   );
 }
