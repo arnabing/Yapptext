@@ -194,7 +194,7 @@ yapptext/
 3. **Transcription Models**:
    - **Universal Model** (default): Supports speaker diarization, high accuracy
    - **Nano Model**: 3x faster but NO speaker detection support
-   - **Note**: Only 'universal' and 'slam-1' models support speaker labels
+   - **Note**: Only 'universal' and 'best' models support speaker labels
 4. **Speaker Diarization**: Identifies and labels different speakers
 5. **Smart Formatting**: iMessage-style conversation layout
 6. **Audio Intelligence**:
@@ -416,7 +416,7 @@ curl http://localhost:3000/api/check-limit
 - Confetti animations trigger on successful transcription
 - Console logging is extensive for debugging
 - Model selection is automatic: 'universal' when speaker detection needed, 'nano' for speed
-- Speaker diarization only works with 'universal' and 'slam-1' models, NOT 'nano'
+- Speaker diarization only works with 'universal' and 'best' models, NOT 'nano'
 - Large files (>4.5MB) are uploaded to Vercel Blob storage first
 - Word-level highlighting syncs with audio playback
 - Audio controls have keyboard shortcuts (space, arrow keys)
