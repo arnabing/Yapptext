@@ -12,7 +12,7 @@ const isPublicRoute = createRouteMatcher([
 
 // Define which routes require authentication
 const isProtectedRoute = createRouteMatcher([
-  '/dashboard(.*)',
+  '/transcripts(.*)',
   '/settings(.*)',
   '/billing(.*)',
 ])
