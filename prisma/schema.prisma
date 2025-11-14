@@ -30,6 +30,7 @@ model User {
 
   // Relations
   usageLogs        UsageLog[]
+  transcripts      Transcript[]
 
   createdAt        DateTime @default(now())
   updatedAt        DateTime @updatedAt
@@ -50,4 +51,24 @@ model UsageLog {
   createdAt DateTime @default(now())
 
   @@index([userId, createdAt])
+}
+
+model Transcript {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  title      String
+  text       String   @db.Text
+  fileName   String
+  duration   Int      // seconds
+  audioUrl   String?  // URL to the audio file
+  utterances Json?    // Speaker segments
+  chapters   Json?    // Chapter markers
+  words      Json?    // Word-level timestamps
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId, createdAt(sort: Desc)])
 }

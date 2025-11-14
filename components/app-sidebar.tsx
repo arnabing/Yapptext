@@ -2,17 +2,21 @@
 
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
-import { usePathname } from 'next/navigation'
+import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { useUser, useClerk } from '@clerk/nextjs'
 import {
-  Home,
   FileText,
-  Settings,
   CreditCard,
   LogOut,
   ChevronDown,
   Crown,
   User as UserIcon,
+  Plus,
+  Settings,
+  MoreHorizontal,
+  Download,
+  Pencil,
+  Trash2,
 } from 'lucide-react'
 import {
   Sidebar,
@@ -20,12 +24,15 @@ import {
   SidebarFooter,
   SidebarGroup,
   SidebarGroupContent,
+  SidebarGroupLabel,
   SidebarHeader,
   SidebarMenu,
+  SidebarMenuAction,
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarSeparator,
 } from '@/components/ui/sidebar'
+import { ScrollArea } from '@/components/ui/scroll-area'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -45,26 +52,17 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { PaywallModal } from '@/components/billing/PaywallModal'
 import { USAGE_LIMITS, PRICING_TIERS } from '@/lib/constants'
 
-const navItems = [
-  {
-    title: 'Home',
-    href: '/',
-    icon: Home,
-  },
-  {
-    title: 'Transcripts',
-    href: '/transcripts',
-    icon: FileText,
-  },
-  {
-    title: 'Settings',
-    href: '/settings',
-    icon: Settings,
-  },
-]
+type Transcript = {
+  id: string
+  title: string
+  createdAt: string
+  duration: number
+}
 
 export function AppSidebar() {
   const pathname = usePathname()
+  const router = useRouter()
+  const searchParams = useSearchParams()
   const { user, isSignedIn } = useUser()
   const { signOut } = useClerk()
   const [usageData, setUsageData] = useState<{
@@ -74,28 +72,41 @@ export function AppSidebar() {
   } | null>(null)
   const [showPaywall, setShowPaywall] = useState(false)
   const [isUsageOpen, setIsUsageOpen] = useState(true)
+  const [transcripts, setTranscripts] = useState<Transcript[]>([])
+  const [renamingId, setRenamingId] = useState<string | null>(null)
+  const [newTitle, setNewTitle] = useState('')
 
   // Determine user tier (for now, everyone is free - will add Stripe integration later)
   const userTier = isSignedIn ? PRICING_TIERS.FREE : PRICING_TIERS.ANONYMOUS
   const isPro = userTier === PRICING_TIERS.PRO
   const limit = USAGE_LIMITS[userTier].minutesPerMonth
 
-  // Fetch usage data
+  // Fetch usage data and transcripts
   useEffect(() => {
-    const fetchUsage = async () => {
+    const fetchData = async () => {
       try {
-        const response = await fetch('/api/check-limit')
-        if (response.ok) {
-          const data = await response.json()
-          setUsageData(data)
+        // Fetch usage data
+        const usageResponse = await fetch('/api/check-limit')
+        if (usageResponse.ok) {
+          const usageData = await usageResponse.json()
+          setUsageData(usageData)
+        }
+
+        // Fetch transcripts if signed in
+        if (isSignedIn) {
+          const transcriptsResponse = await fetch('/api/transcripts')
+          if (transcriptsResponse.ok) {
+            const data = await transcriptsResponse.json()
+            setTranscripts(data.transcripts || [])
+          }
         }
       } catch (error) {
-        console.error('Failed to fetch usage:', error)
+        console.error('Failed to fetch data:', error)
       }
     }
 
-    fetchUsage()
-  }, [])
+    fetchData()
+  }, [isSignedIn, searchParams])
 
   const handleManageBilling = async () => {
     try {
@@ -113,48 +124,157 @@ export function AppSidebar() {
     }
   }
 
+  const handleRename = async (id: string, currentTitle: string) => {
+    setRenamingId(id)
+    setNewTitle(currentTitle)
+  }
+
+  const handleRenameSubmit = async (id: string) => {
+    if (!newTitle.trim()) return
+
+    try {
+      const response = await fetch(`/api/transcripts/${id}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ title: newTitle.trim() }),
+      })
+
+      if (response.ok) {
+        // Update local state
+        setTranscripts(transcripts.map(t =>
+          t.id === id ? { ...t, title: newTitle.trim() } : t
+        ))
+        setRenamingId(null)
+      }
+    } catch (error) {
+      console.error('Failed to rename transcript:', error)
+    }
+  }
+
+  const handleDelete = async (id: string) => {
+    if (!confirm('Are you sure you want to delete this transcript?')) return
+
+    try {
+      const response = await fetch(`/api/transcripts/${id}`, {
+        method: 'DELETE',
+      })
+
+      if (response.ok) {
+        // Update local state
+        setTranscripts(transcripts.filter(t => t.id !== id))
+
+        // If currently viewing this transcript, navigate to home
+        if (searchParams?.get('transcriptId') === id) {
+          router.push('/')
+        }
+      }
+    } catch (error) {
+      console.error('Failed to delete transcript:', error)
+    }
+  }
+
+  const handleDownload = async (id: string, title: string) => {
+    try {
+      const response = await fetch(`/api/transcripts/${id}`)
+      if (response.ok) {
+        const data = await response.json()
+        const blob = new Blob([data.text], { type: 'text/plain' })
+        const url = URL.createObjectURL(blob)
+        const a = document.createElement('a')
+        a.href = url
+        a.download = `${title}.txt`
+        document.body.appendChild(a)
+        a.click()
+        document.body.removeChild(a)
+        URL.revokeObjectURL(url)
+      }
+    } catch (error) {
+      console.error('Failed to download transcript:', error)
+    }
+  }
+
   const minutesUsed = usageData?.minutesUsed ?? 0
   const usagePercent = (minutesUsed / limit) * 100
 
   return (
     <>
       <Sidebar collapsible="offcanvas">
-        <SidebarHeader className="border-b border-sidebar-border">
-          <div className="flex items-center gap-2 px-2 py-2">
-            <div className="flex h-8 w-8 items-center justify-center rounded-md bg-primary text-primary-foreground">
-              <span className="text-sm font-bold">Y</span>
-            </div>
-            <span className="text-lg font-semibold">YappText</span>
-          </div>
+        <SidebarHeader className="border-b border-sidebar-border p-4">
+          <Button
+            onClick={() => router.push('/')}
+            className="w-full"
+            variant="outline"
+          >
+            <Plus className="h-4 w-4 mr-2" />
+            New transcription
+          </Button>
         </SidebarHeader>
 
-        <SidebarContent>
-          {/* Navigation */}
-          <SidebarGroup>
-            <SidebarGroupContent>
-              <SidebarMenu>
-                {navItems.map((item) => {
-                  const isActive = pathname === item.href
-                  return (
-                    <SidebarMenuItem key={item.href}>
-                      <SidebarMenuButton asChild isActive={isActive}>
-                        <Link href={item.href}>
-                          <item.icon />
-                          <span>{item.title}</span>
-                        </Link>
-                      </SidebarMenuButton>
-                    </SidebarMenuItem>
-                  )
-                })}
-              </SidebarMenu>
-            </SidebarGroupContent>
-          </SidebarGroup>
+        <SidebarContent className="flex flex-col">
+          {/* Transcripts List */}
+          {isSignedIn && transcripts.length > 0 && (
+            <SidebarGroup className="flex-1 overflow-hidden">
+              <SidebarGroupLabel className="px-4 text-xs text-muted-foreground">
+                Transcripts
+              </SidebarGroupLabel>
+              <SidebarGroupContent className="flex-1 overflow-hidden">
+                <ScrollArea className="h-full">
+                  <SidebarMenu>
+                    {transcripts.map((transcript) => {
+                      const isActive = searchParams?.get('transcriptId') === transcript.id
+                      return (
+                        <SidebarMenuItem key={transcript.id}>
+                          <SidebarMenuButton asChild isActive={isActive}>
+                            <Link href={`/?transcriptId=${transcript.id}`}>
+                              <FileText />
+                              <span>{transcript.title}</span>
+                            </Link>
+                          </SidebarMenuButton>
 
-          <SidebarSeparator />
+                          <DropdownMenu>
+                            <DropdownMenuTrigger asChild>
+                              <SidebarMenuAction showOnHover>
+                                <MoreHorizontal />
+                                <span className="sr-only">More</span>
+                              </SidebarMenuAction>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent
+                              className="w-56 rounded-lg"
+                              side="right"
+                              align="start"
+                            >
+                              <DropdownMenuItem onClick={() => handleRename(transcript.id, transcript.title)}>
+                                <Pencil className="text-muted-foreground" />
+                                <span>Rename</span>
+                              </DropdownMenuItem>
+                              <DropdownMenuItem onClick={() => handleDownload(transcript.id, transcript.title)}>
+                                <Download className="text-muted-foreground" />
+                                <span>Download</span>
+                              </DropdownMenuItem>
+                              <DropdownMenuSeparator />
+                              <DropdownMenuItem
+                                onClick={() => handleDelete(transcript.id)}
+                                className="text-destructive focus:text-destructive"
+                              >
+                                <Trash2 className="text-muted-foreground" />
+                                <span>Delete</span>
+                              </DropdownMenuItem>
+                            </DropdownMenuContent>
+                          </DropdownMenu>
+                        </SidebarMenuItem>
+                      )
+                    })}
+                  </SidebarMenu>
+                </ScrollArea>
+              </SidebarGroupContent>
+            </SidebarGroup>
+          )}
+
+          {isSignedIn && transcripts.length > 0 && <SidebarSeparator />}
 
           {/* Usage Quota */}
           {isSignedIn && (
-            <SidebarGroup>
+            <SidebarGroup className="flex-none mt-auto">
               <Collapsible open={isUsageOpen} onOpenChange={setIsUsageOpen}>
                 <CollapsibleTrigger className="flex w-full items-center justify-between px-4 py-2 text-sm font-medium hover:bg-sidebar-accent rounded-md">
                   <span>Usage</span>
@@ -181,7 +301,7 @@ export function AppSidebar() {
 
           {/* Upgrade CTA */}
           {!isPro && (
-            <SidebarGroup>
+            <SidebarGroup className="flex-none">
               <SidebarGroupContent className="px-2">
                 <Button
                   onClick={() => setShowPaywall(true)}

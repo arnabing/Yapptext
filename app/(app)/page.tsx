@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect, ChangeEvent, DragEvent } from "react";
+import { useSearchParams, useRouter } from "next/navigation";
 import { upload } from '@vercel/blob/client';
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -50,6 +51,10 @@ type AppState = "idle" | "file-selected" | "processing" | "complete" | "error";
 export default function Home() {
   const { toast } = useToast();
   const { setHeaderActions } = useHeader();
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  const transcriptId = searchParams?.get('transcriptId');
+
   const [state, setState] = useState<AppState>("idle");
   const [file, setFile] = useState<File | null>(null);
   const [transcript, setTranscript] = useState("");
@@ -115,6 +120,51 @@ export default function Home() {
       })
       .catch(console.error);
   }, []);
+
+  // Load saved transcript when transcriptId changes
+  useEffect(() => {
+    if (transcriptId) {
+      loadSavedTranscript(transcriptId);
+    } else {
+      // Reset to idle state for new transcription
+      reset();
+    }
+  }, [transcriptId]);
+
+  const loadSavedTranscript = async (id: string) => {
+    setState("processing");
+    setStatusMessage("Loading transcript...");
+
+    try {
+      const response = await fetch(`/api/transcripts/${id}`);
+      if (response.ok) {
+        const data = await response.json();
+
+        // Populate all state with saved data
+        setTranscript(data.text);
+        setOriginalTranscript(data.text);
+        setUtterances(data.utterances || []);
+        setOriginalUtterances(data.utterances || []);
+        setChapters(data.chapters || []);
+        setAllWords(data.words || []);
+        setAudioUrl(data.audioUrl || '');
+        setAudioDuration(data.duration);
+
+        // Create a File object for display purposes
+        const mockFile = new File([], data.fileName, { type: 'audio/mpeg' });
+        setFile(mockFile);
+
+        setState("complete");
+      } else {
+        setError('Transcript not found');
+        setState('error');
+      }
+    } catch (error) {
+      console.error('Failed to load transcript:', error);
+      setError('Failed to load transcript');
+      setState('error');
+    }
+  };
 
   // Register header actions when transcript is ready
   useEffect(() => {
@@ -200,7 +250,7 @@ export default function Home() {
 
               <DropdownMenuSeparator />
 
-              <DropdownMenuItem onClick={reset}>
+              <DropdownMenuItem onClick={() => router.push('/')}>
                 <Plus className="h-4 w-4 mr-2" />
                 New transcription
               </DropdownMenuItem>
@@ -359,6 +409,13 @@ export default function Home() {
       });
 
       console.log('File uploaded to blob:', blob.url);
+
+      // Store the permanent Vercel Blob URL
+      const permanentBlobUrl = blob.url;
+
+      // Update audioUrl with the permanent Vercel Blob URL
+      setAudioUrl(permanentBlobUrl);
+
       setProgress(40);
       setStatusMessage("Processing audio with AI...");
 
@@ -471,6 +528,36 @@ export default function Home() {
       setAllWords(data.allWords || []);
       setMinutesUsed(data.minutesUsed || minutesUsed + data.duration);
       setState("complete");
+
+      // Save transcript to database
+      try {
+        const title = data.text.slice(0, 50) + (data.text.length > 50 ? '...' : '');
+        const response = await fetch('/api/transcripts', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            title,
+            text: data.text,
+            fileName: file.name,
+            duration: Math.floor(audioDuration),
+            audioUrl: permanentBlobUrl,
+            utterances: data.utterances || [],
+            chapters: data.chapters || [],
+            words: data.allWords || [],
+          }),
+        });
+
+        if (response.ok) {
+          const savedTranscript = await response.json();
+          // Navigate to the saved transcript to update sidebar and URL
+          router.push(`/?transcriptId=${savedTranscript.id}`);
+        }
+      } catch (error) {
+        console.error('Failed to save transcript:', error);
+        // Don't show error to user - this is a background operation
+      }
 
       // Show success toast
       const speakerCount =
@@ -965,6 +1052,15 @@ export default function Home() {
         {/* Full-screen Transcript Display */}
         {transcript && state === "complete" && (
           <div className="flex-1 flex flex-col overflow-hidden">
+            {/* Audio not available notice */}
+            {!audioUrl && transcriptId && (
+              <div className="flex-none bg-muted/50 border-b px-4 py-2">
+                <p className="text-xs text-muted-foreground text-center">
+                  Audio playback not available for this transcript
+                </p>
+              </div>
+            )}
+
             {/* Transcript Content - Scrollable with gradient background */}
             <div className="flex-1 overflow-hidden bg-gradient-to-b from-gray-50 to-white dark:from-gray-950 dark:to-gray-900">
               <TranscriptView
