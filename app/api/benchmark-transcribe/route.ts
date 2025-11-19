@@ -146,10 +146,10 @@ export async function GET(request: NextRequest) {
         console.log('- Time:', gptTime, 'ms')
         console.log('- Word count:', gptWordCount)
         console.log('- Character count:', gptReconciliationResult.text.length)
-        
-        gptReconciliationResult.wordCount = gptWordCount
-        gptReconciliationResult.first300Chars = gptReconciliationResult.text.substring(0, 300)
-        gptReconciliationResult.processingTime = gptTime
+
+        ;(gptReconciliationResult as any).wordCount = gptWordCount
+        ;(gptReconciliationResult as any).first300Chars = gptReconciliationResult.text.substring(0, 300)
+        ;(gptReconciliationResult as any).processingTime = gptTime
       } catch (error) {
         console.error('❌ GPT Reconciliation failed:', error)
       }
@@ -167,10 +167,10 @@ export async function GET(request: NextRequest) {
         console.log('- Time:', votingTime, 'ms')
         console.log('- Word count:', votingWordCount)
         console.log('- Character count:', votingReconciliationResult.text.length)
-        
-        votingReconciliationResult.wordCount = votingWordCount
-        votingReconciliationResult.first300Chars = votingReconciliationResult.text.substring(0, 300)
-        votingReconciliationResult.processingTime = votingTime
+
+        ;(votingReconciliationResult as any).wordCount = votingWordCount
+        ;(votingReconciliationResult as any).first300Chars = votingReconciliationResult.text.substring(0, 300)
+        ;(votingReconciliationResult as any).processingTime = votingTime
       } catch (error) {
         console.error('❌ Voting Reconciliation failed:', error)
       }
