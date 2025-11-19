@@ -266,8 +266,8 @@ export async function getUserUsageSummary(userId: string) {
     minutesLimit: limits.minutesPerMonth,
     periodStart: currentUsage.periodStart,
     periodEnd: currentUsage.periodEnd,
-    isUnlimited: limits.minutesPerMonth === -1,
-    mode: limits.mode,
+    isUnlimited: false, // No tiers have unlimited minutes
+    mode: limits.defaultModel,
     canDownload: limits.allowDownload,
     isInTrial: user?.trialEndsAt ? user.trialEndsAt > new Date() : false,
     trialEndsAt: user?.trialEndsAt,
