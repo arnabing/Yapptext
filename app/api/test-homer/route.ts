@@ -109,7 +109,7 @@ export async function GET(request: NextRequest) {
 
       transcriptionTasks.push(
         transcribeWithAssemblyAI(file, {
-          turboMode: false,
+          model: "universal",
           enableSentiment: false,
           enableKeyPhrases: false,
           wordBoost: boostList,

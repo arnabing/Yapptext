@@ -21,7 +21,7 @@ export async function GET(request: NextRequest) {
 
     // Transcribe with speaker labels
     const result = await transcribeWithAssemblyAI(file, {
-      turboMode: false,
+      model: "universal",
       enableSentiment: false,
       enableKeyPhrases: false,
       speakersExpected: Number.isFinite(speakersExpected) && speakersExpected > 0 ? speakersExpected : undefined
