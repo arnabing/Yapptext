@@ -86,7 +86,7 @@ export function PaywallModal({
         <div className="grid md:grid-cols-2 gap-6 py-6">
           {tiers.map((tier) => {
             const Icon = tier.icon
-            const isPopular = tier.badge === 'Most Popular'
+            const isPopular = tier.badge === 'Best Value'
 
             return (
               <Card
