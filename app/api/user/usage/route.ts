@@ -20,7 +20,7 @@ export async function GET() {
       // User signed in but not in DB yet - return zero usage
       return NextResponse.json({
         minutesUsed: 0,
-        minutesLimit: USAGE_LIMITS.FREE.minutesPerMonth,
+        minutesLimit: USAGE_LIMITS[PRICING_TIERS.FREE].minutesPerMonth,
         percentUsed: 0,
         tier: PRICING_TIERS.FREE
       })
