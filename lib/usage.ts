@@ -116,15 +116,6 @@ export async function canUserTranscribe(
   const tier = await getUserTier(userId)
   const limits = USAGE_LIMITS[tier]
 
-  // Unlimited tiers
-  if (limits.minutesPerMonth === -1) {
-    return {
-      allowed: true,
-      tier,
-      minutesRemaining: -1, // Unlimited
-    }
-  }
-
   // Check current usage against limit
   const currentUsage = await getCurrentUsage(userId)
   const minutesRemaining = limits.minutesPerMonth - currentUsage.minutesUsed
