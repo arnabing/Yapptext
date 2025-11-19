@@ -227,7 +227,7 @@ export async function isEligibleForReverseTrial(userId: string): Promise<boolean
  * Get transcription mode for user's tier
  */
 export function getModeForTier(tier: PricingTier): TranscriptionMode {
-  return USAGE_LIMITS[tier].mode
+  return USAGE_LIMITS[tier].defaultModel
 }
 
 /**
