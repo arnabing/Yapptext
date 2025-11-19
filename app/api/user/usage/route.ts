@@ -1,6 +1,6 @@
 import { auth } from '@clerk/nextjs/server'
 import { NextResponse } from 'next/server'
-import { prisma } from '@/lib/prisma'
+import { db } from '@/lib/db'
 import { USAGE_LIMITS, PRICING_TIERS } from '@/lib/constants'
 
 export async function GET() {
@@ -12,7 +12,7 @@ export async function GET() {
     }
 
     // Get user from database
-    const user = await prisma.user.findUnique({
+    const user = await db.user.findUnique({
       where: { clerkId: userId }
     })
 
@@ -31,7 +31,7 @@ export async function GET() {
     const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1)
     startOfMonth.setHours(0, 0, 0, 0)
 
-    const monthlyUsage = await prisma.usageLog.aggregate({
+    const monthlyUsage = await db.usageLog.aggregate({
       where: {
         userId: user.id,
         createdAt: { gte: startOfMonth }
