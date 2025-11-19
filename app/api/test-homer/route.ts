@@ -111,11 +111,7 @@ export async function GET(request: NextRequest) {
         transcribeWithAssemblyAI(file, {
           model: "universal",
           enableSentiment: false,
-          enableKeyPhrases: false,
-          wordBoost: boostList,
-          boostParam: 'high',
-          customSpelling: spellingMap,
-          prompt
+          enableKeyPhrases: false
         })
       )
       taskLabels.push('AssemblyAI')
