@@ -69,11 +69,10 @@ export function AppSidebar() {
   const [transcripts, setTranscripts] = useState<Transcript[]>([])
   const [renamingId, setRenamingId] = useState<string | null>(null)
   const [newTitle, setNewTitle] = useState('')
+  const [userTier, setUserTier] = useState<string>(isSignedIn ? PRICING_TIERS.FREE : PRICING_TIERS.ANONYMOUS)
 
-  // Determine user tier
-  const userTier = isSignedIn ? PRICING_TIERS.FREE : PRICING_TIERS.ANONYMOUS
   const isPro = userTier === PRICING_TIERS.PRO
-  const limit = USAGE_LIMITS[userTier].minutesPerMonth
+  const limit = USAGE_LIMITS[userTier as keyof typeof USAGE_LIMITS]?.minutesPerMonth || 20
 
   // Fetch usage data and transcripts
   useEffect(() => {
@@ -84,6 +83,7 @@ export function AppSidebar() {
           const usageResponse = await fetch('/api/user/usage')
           if (usageResponse.ok) {
             const data = await usageResponse.json()
+            setUserTier(data.tier || PRICING_TIERS.FREE)
             setUsageData({
               minutesUsed: data.minutesUsed,
               remaining: data.minutesLimit - data.minutesUsed,
