@@ -140,9 +140,9 @@ export function AudioControls({ audioUrl, onTimeUpdate, className = '', fileName
   }
 
   return (
-    <div className={`fixed bottom-0 left-0 right-0 z-50 ${className}`}>
+    <div className={`fixed bottom-0 left-0 right-0 z-40 ${className}`}>
       <audio ref={audioRef} src={audioUrl} />
-      
+
       <div className="bg-background/80 backdrop-blur border-t">
         <div className="container max-w-5xl mx-auto px-4 py-4">
           {/* File name display */}

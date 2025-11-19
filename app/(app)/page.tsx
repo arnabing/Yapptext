@@ -6,6 +6,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import {
   Upload,
@@ -15,6 +16,11 @@ import {
   Clock,
   PlayCircle,
   Plus,
+  MoreVertical,
+  Share,
+  Languages,
+  Check,
+  Loader2,
 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { confettiPresets } from "@/components/confetti";
@@ -23,13 +29,27 @@ import { AudioControls } from "@/components/AudioControls";
 import { LanguageSelector } from "@/components/LanguageSelector";
 import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuSub,
+  DropdownMenuSubContent,
+  DropdownMenuSubTrigger,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { getSampleTranscript } from "@/lib/sample-transcripts";
 import { formatTranscriptAsPlainText, formatTranscriptAsHTML } from "@/lib/format-transcript";
+import { PaywallModal } from "@/components/billing/PaywallModal";
+import { ReverseTrialPopup } from "@/components/billing/ReverseTrialPopup";
+import { useHeader } from "@/lib/header-context";
 
 type AppState = "idle" | "file-selected" | "processing" | "complete" | "error";
 
 export default function Home() {
   const { toast } = useToast();
+  const { setHeaderActions } = useHeader();
   const [state, setState] = useState<AppState>("idle");
   const [file, setFile] = useState<File | null>(null);
   const [transcript, setTranscript] = useState("");
@@ -51,7 +71,11 @@ export default function Home() {
   const [currentLanguage, setCurrentLanguage] = useState("original");
   const [audioDuration, setAudioDuration] = useState(0); // in seconds
   const [estimatedTime, setEstimatedTime] = useState(0); // in seconds
-  const [transcriptionMode, setTranscriptionMode] = useState<'turbo' | 'standard' | 'reasoning'>('standard'); // Transcription mode
+  const [selectedModel, setSelectedModel] = useState<'nano' | 'universal'>('universal'); // Model selection
+  const [showPaywall, setShowPaywall] = useState(false); // Paywall modal state
+  const [showReverseTrial, setShowReverseTrial] = useState(false); // Reverse trial popup state
+  const [remainingMinutes, setRemainingMinutes] = useState<number | null>(null); // User's remaining minutes
+  const [copied, setCopied] = useState(false); // Copy button feedback state
 
   const fileInputRef = useRef<HTMLInputElement>(null);
   const processingTimerRef = useRef<NodeJS.Timeout | null>(null);
@@ -87,9 +111,107 @@ export default function Home() {
       .then((res) => res.json())
       .then((data) => {
         setMinutesUsed(data.minutesUsed || 0);
+        setRemainingMinutes(data.remainingMinutes);
       })
       .catch(console.error);
   }, []);
+
+  // Register header actions when transcript is ready
+  useEffect(() => {
+    if (transcript && state === "complete") {
+      setHeaderActions(
+        <>
+          <Button
+            size="sm"
+            variant="outline"
+            onClick={copyToClipboard}
+            aria-label="Copy transcript"
+          >
+            {copied ? (
+              <>
+                <Check className="h-4 w-4 sm:mr-2" />
+                <span className="hidden sm:inline">Copied</span>
+              </>
+            ) : (
+              <>
+                <Copy className="h-4 w-4 sm:mr-2" />
+                <span className="hidden sm:inline">Copy</span>
+              </>
+            )}
+          </Button>
+
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button
+                size="sm"
+                variant="outline"
+                aria-label="More options"
+              >
+                <MoreVertical className="h-4 w-4" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end" className="w-48">
+              <DropdownMenuSub>
+                <DropdownMenuSubTrigger disabled={isTranslating}>
+                  {isTranslating ? (
+                    <>
+                      <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                      Translating...
+                    </>
+                  ) : (
+                    <>
+                      <Languages className="h-4 w-4 mr-2" />
+                      Translate
+                    </>
+                  )}
+                </DropdownMenuSubTrigger>
+                <DropdownMenuSubContent>
+                  {[
+                    { value: 'original', label: 'Original', flag: '🔄' },
+                    { value: 'spanish', label: 'Spanish', flag: '🇪🇸' },
+                    { value: 'french', label: 'French', flag: '🇫🇷' },
+                    { value: 'german', label: 'German', flag: '🇩🇪' },
+                    { value: 'italian', label: 'Italian', flag: '🇮🇹' },
+                    { value: 'portuguese', label: 'Portuguese', flag: '🇵🇹' },
+                    { value: 'dutch', label: 'Dutch', flag: '🇳🇱' },
+                    { value: 'russian', label: 'Russian', flag: '🇷🇺' },
+                    { value: 'japanese', label: 'Japanese', flag: '🇯🇵' },
+                    { value: 'chinese', label: 'Chinese', flag: '🇨🇳' },
+                    { value: 'korean', label: 'Korean', flag: '🇰🇷' },
+                    { value: 'arabic', label: 'Arabic', flag: '🇸🇦' },
+                    { value: 'hindi', label: 'Hindi', flag: '🇮🇳' },
+                  ].map((language) => (
+                    <DropdownMenuItem
+                      key={language.value}
+                      onClick={() => handleTranslate(language.value)}
+                    >
+                      {currentLanguage === language.value && (
+                        <Check className="h-4 w-4 mr-2" />
+                      )}
+                      {currentLanguage !== language.value && (
+                        <span className="h-4 w-4 mr-2" />
+                      )}
+                      <span className="mr-2">{language.flag}</span>
+                      {language.label}
+                    </DropdownMenuItem>
+                  ))}
+                </DropdownMenuSubContent>
+              </DropdownMenuSub>
+
+              <DropdownMenuSeparator />
+
+              <DropdownMenuItem onClick={reset}>
+                <Plus className="h-4 w-4 mr-2" />
+                New transcription
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </>
+      );
+    } else {
+      setHeaderActions(null);
+    }
+  }, [transcript, state, isTranslating, currentLanguage, copied]);
 
   const handleDragOver = (e: DragEvent<HTMLDivElement>) => {
     e.preventDefault();
@@ -245,7 +367,7 @@ export default function Home() {
       formData.append("audioUrl", blob.url);
       formData.append("fileName", file.name);
       formData.append("fileSize", file.size.toString());
-      formData.append("transcriptionMode", transcriptionMode); // Send transcription mode
+      formData.append("model", selectedModel); // Send model selection
       formData.append("enableSentiment", "false"); // Disabled for speed
       formData.append("enableKeyPhrases", "false"); // Disabled for speed
 
@@ -266,6 +388,16 @@ export default function Home() {
           } else {
             try {
               const errorData = JSON.parse(xhr.responseText);
+              // Check for usage limit or auth errors (status 429)
+              if (xhr.status === 429) {
+                if (errorData.requiresAuth) {
+                  // Anonymous user hit their limit - need to sign up
+                  setShowPaywall(true);
+                } else if (errorData.requiresUpgrade) {
+                  // Authenticated user hit their tier limit - show paywall
+                  setShowPaywall(true);
+                }
+              }
               reject(
                 new Error(
                   errorData.error || `Request failed with status ${xhr.status}`,
@@ -508,13 +640,10 @@ export default function Home() {
       }
 
       if (copySuccess) {
-        const button = document.getElementById("copy-button");
-        if (button) {
-          button.textContent = "Copied!";
-          setTimeout(() => {
-            button.textContent = "Copy";
-          }, 2000);
-        }
+        setCopied(true);
+        setTimeout(() => {
+          setCopied(false);
+        }, 2000);
       }
     } catch (err) {
       console.error("Failed to copy:", err);
@@ -557,21 +686,7 @@ export default function Home() {
   };
 
   return (
-    <div className="h-screen overflow-hidden bg-background flex flex-col">
-      {/* Header - Fixed height, always visible */}
-      {state !== "complete" && (
-        <div className="flex-none py-6 px-4">
-          <div className="text-center max-w-4xl mx-auto">
-            <h1 className="text-4xl md:text-5xl font-bold mb-2 bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent" style={{fontFamily: '"Sixtyfour Convergence Variable", sans-serif'}}>
-              YappText
-            </h1>
-            <p className="text-base md:text-lg text-muted-foreground">
-              Audio to text in seconds
-            </p>
-          </div>
-        </div>
-      )}
-
+    <div className="min-h-screen overflow-hidden bg-background flex flex-col">
       {/* Main Content Area - Flex to fill remaining space */}
       <div className="flex-1 overflow-hidden flex flex-col">
         {/* Centered content for non-transcript states */}
@@ -767,26 +882,20 @@ export default function Home() {
                         </div>
                       </div>
                       
-                      {/* Transcription Mode Selection */}
+                      {/* Model Selection */}
                       <div className="mb-4">
-                        <Label className="text-sm font-medium mb-3 block">Mode</Label>
-                        <RadioGroup value={transcriptionMode} onValueChange={(value) => setTranscriptionMode(value as 'turbo' | 'standard' | 'reasoning')}>
+                        <Label className="text-sm font-medium mb-3 block">Model</Label>
+                        <RadioGroup value={selectedModel} onValueChange={(value) => setSelectedModel(value as 'nano' | 'universal')}>
                           <div className="flex items-center space-x-2 mb-2">
-                            <RadioGroupItem value="turbo" id="turbo" />
-                            <Label htmlFor="turbo" className="text-sm font-normal cursor-pointer">
-                              Turbo: Single speaker, 3x faster
-                            </Label>
-                          </div>
-                          <div className="flex items-center space-x-2 mb-2">
-                            <RadioGroupItem value="standard" id="standard" />
-                            <Label htmlFor="standard" className="text-sm font-normal cursor-pointer">
-                              Standard: Multi-speaker, high accuracy
+                            <RadioGroupItem value="universal" id="universal" />
+                            <Label htmlFor="universal" className="text-sm font-normal cursor-pointer">
+                              Standard (Universal): Balanced quality, multi-language
                             </Label>
                           </div>
                           <div className="flex items-center space-x-2">
-                            <RadioGroupItem value="reasoning" id="reasoning" />
-                            <Label htmlFor="reasoning" className="text-sm font-normal cursor-pointer">
-                              Reasoning: Multiple LLMs, human level ✨
+                            <RadioGroupItem value="nano" id="nano" />
+                            <Label htmlFor="nano" className="text-sm font-normal cursor-pointer">
+                              Fast (Nano): 3x cheaper, good for drafts
                             </Label>
                           </div>
                         </RadioGroup>
@@ -848,28 +957,6 @@ export default function Home() {
                   </Alert>
                 )}
 
-                {/* Usage Indicator */}
-                <div className="space-y-2">
-                  <div className="flex justify-between text-sm">
-                    <span className="text-muted-foreground">Daily usage</span>
-                    <span>
-                      {minutesUsed}/{dailyLimit} minutes
-                    </span>
-                  </div>
-                  <div className="w-full bg-secondary rounded-full h-2">
-                    <div
-                      className="bg-primary h-2 rounded-full transition-all duration-300"
-                      style={{
-                        width: `${Math.min((minutesUsed / dailyLimit) * 100, 100)}%`,
-                      }}
-                    />
-                  </div>
-                  {minutesUsed >= dailyLimit && (
-                    <p className="text-xs text-destructive">
-                      Daily limit reached. Try again tomorrow.
-                    </p>
-                  )}
-                </div>
               </CardContent>
             </Card>
           </div>
@@ -877,9 +964,9 @@ export default function Home() {
 
         {/* Full-screen Transcript Display */}
         {transcript && state === "complete" && (
-          <div className="flex-1 flex flex-col overflow-hidden relative">
-            {/* Transcript Content - Scrollable with gradient background and padding for fixed header */}
-            <div className="flex-1 overflow-hidden bg-gradient-to-b from-gray-50 to-white dark:from-gray-950 dark:to-gray-900 pt-14">
+          <div className="flex-1 flex flex-col overflow-hidden">
+            {/* Transcript Content - Scrollable with gradient background */}
+            <div className="flex-1 overflow-hidden bg-gradient-to-b from-gray-50 to-white dark:from-gray-950 dark:to-gray-900">
               <TranscriptView
                 key={`transcript-${currentLanguage}-${utterances.length}`}
                 utterances={utterances}
@@ -893,60 +980,31 @@ export default function Home() {
         )}
       </div>
 
-      {/* Fixed Top Bar - Glass Effect */}
-      {transcript && state === "complete" && (
-        <div className="fixed top-0 left-0 right-0 z-50">
-          <div className="bg-background/80 backdrop-blur border-b">
-            <div className="flex justify-between items-center px-2 sm:px-3 md:px-6 py-3">
-              <button 
-                onClick={reset} 
-                className="text-sm sm:text-base md:text-lg font-bold bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent hover:opacity-80 transition-opacity cursor-pointer" 
-                style={{fontFamily: '"Sixtyfour Convergence Variable", sans-serif'}}
-                aria-label="Return to home"
-              >
-                YappText
-              </button>
-              <div className="flex gap-1 sm:gap-2">
-                <LanguageSelector
-                  onTranslate={handleTranslate}
-                  isTranslating={isTranslating}
-                />
-                <Button
-                  id="copy-button"
-                  size="sm"
-                  variant="outline"
-                  onClick={copyToClipboard}
-                  aria-label="Copy transcript"
-                >
-                  <Copy className="h-4 w-4 sm:mr-2" />
-                  <span className="hidden sm:inline">Copy</span>
-                </Button>
-                <Button
-                  size="sm"
-                  onClick={reset}
-                  title="New transcription"
-                  className="bg-black text-white hover:bg-black/90"
-                  aria-label="New transcription"
-                >
-                  <Plus className="h-4 w-4 sm:mr-1" />
-                  <span className="hidden sm:inline">New</span>
-                </Button>
-              </div>
-            </div>
-          </div>
-        </div>
+      {/* Audio Player at bottom */}
+      {transcript && state === "complete" && audioUrl && (
+        <AudioControls
+          audioUrl={audioUrl}
+          onTimeUpdate={setCurrentPlayTime}
+          fileName={file?.name}
+          className="sticky bottom-0 z-40"
+        />
       )}
 
-      {/* Fixed Audio Player at bottom */}
-      {transcript && state === "complete" && audioUrl && (
-        <div className="flex-none">
-          <AudioControls
-            audioUrl={audioUrl}
-            onTimeUpdate={setCurrentPlayTime}
-            fileName={file?.name}
-          />
-        </div>
-      )}
+      {/* Paywall Modal */}
+      <PaywallModal
+        open={showPaywall}
+        onOpenChange={setShowPaywall}
+        onClose={() => {
+          // When user closes paywall without upgrading, show reverse trial offer
+          setShowReverseTrial(true);
+        }}
+      />
+
+      {/* Reverse Trial Popup */}
+      <ReverseTrialPopup
+        open={showReverseTrial}
+        onOpenChange={setShowReverseTrial}
+      />
     </div>
   );
 }
