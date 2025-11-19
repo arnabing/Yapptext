@@ -1,4 +1,4 @@
-import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
+import { SidebarProvider, SidebarTrigger, SidebarInset } from "@/components/ui/sidebar"
 import { AppSidebar } from "@/components/app-sidebar"
 import { HeaderProvider } from "@/lib/header-context"
 import { HeaderActions } from "@/components/header-actions"
@@ -12,19 +12,16 @@ export default function AppLayout({
     <HeaderProvider>
       <SidebarProvider defaultOpen={false}>
         <AppSidebar />
-        <main className="flex w-full flex-1 flex-col">
-          <header className="sticky top-0 z-10 flex h-14 items-center gap-4 border-b bg-background px-4">
+        <SidebarInset>
+          <header className="flex h-14 shrink-0 items-center gap-2 border-b px-4">
             <SidebarTrigger />
-            <h1
-              className="text-lg font-bold bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent"
-              style={{fontFamily: '"Sixtyfour Convergence Variable", sans-serif'}}
-            >
-              YappText
-            </h1>
+            <div className="flex-1" />
             <HeaderActions />
           </header>
-          {children}
-        </main>
+          <div className="flex-1 overflow-auto pb-32 md:pb-36">
+            {children}
+          </div>
+        </SidebarInset>
       </SidebarProvider>
     </HeaderProvider>
   )

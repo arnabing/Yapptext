@@ -1,6 +1,8 @@
 "use client";
 
 import { useState, useRef, useEffect, ChangeEvent, DragEvent } from "react";
+import { useRouter } from "next/navigation";
+import { useUser } from '@clerk/nextjs';
 import { upload } from '@vercel/blob/client';
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -47,9 +49,12 @@ import { useHeader } from "@/lib/header-context";
 
 type AppState = "idle" | "file-selected" | "processing" | "complete" | "error";
 
-export default function Home() {
+export default function NewTranscript() {
   const { toast } = useToast();
   const { setHeaderActions } = useHeader();
+  const router = useRouter();
+  const { isSignedIn } = useUser();
+
   const [state, setState] = useState<AppState>("idle");
   const [file, setFile] = useState<File | null>(null);
   const [transcript, setTranscript] = useState("");
@@ -61,7 +66,6 @@ export default function Home() {
   const [isDragging, setIsDragging] = useState(false);
   const [processingTime, setProcessingTime] = useState(0);
   const [minutesUsed, setMinutesUsed] = useState(0);
-  const [dailyLimit] = useState(20);
   const [statusMessage, setStatusMessage] = useState("");
   const [audioUrl, setAudioUrl] = useState<string>("");
   const [currentPlayTime, setCurrentPlayTime] = useState(0);
@@ -71,7 +75,7 @@ export default function Home() {
   const [currentLanguage, setCurrentLanguage] = useState("original");
   const [audioDuration, setAudioDuration] = useState(0); // in seconds
   const [estimatedTime, setEstimatedTime] = useState(0); // in seconds
-  const [selectedModel, setSelectedModel] = useState<'nano' | 'universal'>('universal'); // Model selection
+  const [selectedModel, setSelectedModel] = useState<'turbo' | 'standard'>('standard'); // Model selection
   const [showPaywall, setShowPaywall] = useState(false); // Paywall modal state
   const [showReverseTrial, setShowReverseTrial] = useState(false); // Reverse trial popup state
   const [remainingMinutes, setRemainingMinutes] = useState<number | null>(null); // User's remaining minutes
@@ -200,7 +204,7 @@ export default function Home() {
 
               <DropdownMenuSeparator />
 
-              <DropdownMenuItem onClick={reset}>
+              <DropdownMenuItem onClick={() => router.push('/new')}>
                 <Plus className="h-4 w-4 mr-2" />
                 New transcription
               </DropdownMenuItem>
@@ -249,7 +253,8 @@ export default function Home() {
     const audio = new Audio(url);
     audio.addEventListener("loadedmetadata", () => {
       const duration = Math.round(audio.duration); // duration in seconds
-      
+      const durationMinutes = Math.ceil(duration / 60); // Convert to minutes, round up
+
       // Check duration (10 hours max for AssemblyAI)
       const maxDurationHours = 10;
       const maxDurationSeconds = maxDurationHours * 3600;
@@ -261,7 +266,20 @@ export default function Home() {
         setState("error");
         return;
       }
-      
+
+      // Check quota for authenticated users
+      if (isSignedIn && remainingMinutes !== null) {
+        if (durationMinutes > remainingMinutes) {
+          const minutesNeeded = durationMinutes - remainingMinutes;
+          setError(
+            `This ${durationMinutes}-minute file exceeds your remaining quota (${remainingMinutes} minutes left). You need ${minutesNeeded} more minutes.`
+          );
+          setState("error");
+          setShowPaywall(true); // Show upgrade modal
+          return;
+        }
+      }
+
       setAudioDuration(duration);
       // Estimate processing time: ~0.5 seconds per minute of audio (based on AssemblyAI benchmarks)
       const estimatedProcessingTime = Math.max(
@@ -321,12 +339,6 @@ export default function Home() {
     console.log("Audio duration:", audioDuration, "seconds");
     console.log("Estimated processing time:", estimatedTime, "seconds");
 
-    if (minutesUsed >= dailyLimit) {
-      setError("Daily limit reached. Please try again tomorrow.");
-      setState("error");
-      return;
-    }
-
     setState("processing");
     setProgress(0);
     setProcessingTime(0);
@@ -339,11 +351,11 @@ export default function Home() {
     try {
       // Step 1: Upload file to Vercel Blob for fast, direct upload
       setStatusMessage("Uploading audio to cloud storage...");
-      
+
       // Add timestamp to filename to ensure uniqueness
       const timestamp = Date.now();
       const uniqueFilename = `${timestamp}-${file.name}`;
-      
+
       const blob = await upload(uniqueFilename, file, {
         access: 'public',
         handleUploadUrl: '/api/upload',
@@ -359,6 +371,13 @@ export default function Home() {
       });
 
       console.log('File uploaded to blob:', blob.url);
+
+      // Store the permanent Vercel Blob URL
+      const permanentBlobUrl = blob.url;
+
+      // Update audioUrl with the permanent Vercel Blob URL
+      setAudioUrl(permanentBlobUrl);
+
       setProgress(40);
       setStatusMessage("Processing audio with AI...");
 
@@ -370,6 +389,13 @@ export default function Home() {
       formData.append("model", selectedModel); // Send model selection
       formData.append("enableSentiment", "false"); // Disabled for speed
       formData.append("enableKeyPhrases", "false"); // Disabled for speed
+
+      // Send duration from metadata for accurate quota checking
+      if (audioDuration) {
+        const durationMinutes = Math.ceil(audioDuration / 60);
+        formData.append("durationMinutes", durationMinutes.toString());
+        console.log(`Sending duration from metadata: ${durationMinutes} minutes (${audioDuration} seconds)`);
+      }
 
       // Use XMLHttpRequest for processing progress
       const xhr = new XMLHttpRequest();
@@ -472,6 +498,47 @@ export default function Home() {
       setMinutesUsed(data.minutesUsed || minutesUsed + data.duration);
       setState("complete");
 
+      // Save transcript to database
+      try {
+        // Generate title from filename instead of transcript text
+        const baseTitle = file?.name.replace(/\.[^/.]+$/, '') || 'Untitled'; // Remove extension
+        const title = baseTitle.length > 50 ? baseTitle.slice(0, 50) + '...' : baseTitle;
+        const response = await fetch('/api/transcripts', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            title,
+            text: data.text,
+            fileName: file.name,
+            duration: Math.floor(audioDuration),
+            audioUrl: permanentBlobUrl,
+            utterances: data.utterances || [],
+            chapters: data.chapters || [],
+            words: data.allWords || [],
+          }),
+        });
+
+        if (response.ok) {
+          const savedTranscript = await response.json();
+
+          // Check if this was a duplicate
+          if (savedTranscript.isDuplicate) {
+            toast({
+              title: "Duplicate file detected",
+              description: "This file was recently transcribed. Opening existing transcript.",
+            });
+          }
+
+          // Navigate to the saved transcript with new route structure
+          router.push(`/t/${savedTranscript.id}`);
+        }
+      } catch (error) {
+        console.error('Failed to save transcript:', error);
+        // Don't show error to user - this is a background operation
+      }
+
       // Show success toast
       const speakerCount =
         data.utterances?.length > 0
@@ -524,7 +591,7 @@ export default function Home() {
     }
 
     setIsTranslating(true);
-    
+
     try {
       const response = await fetch("/api/translate", {
         method: "POST",
@@ -550,7 +617,7 @@ export default function Home() {
         // Update all state together
         setTranscript(data.translatedText);
         setCurrentLanguage(targetLanguage);
-        
+
         // Use translated utterances if available, otherwise clear
         if (data.translatedUtterances && data.translatedUtterances.length > 0) {
           // Create new array to ensure React detects the change
@@ -686,12 +753,10 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen overflow-hidden bg-background flex flex-col">
-      {/* Main Content Area - Flex to fill remaining space */}
-      <div className="flex-1 overflow-hidden flex flex-col">
-        {/* Centered content for non-transcript states */}
-        {state !== "complete" && (
-          <div className="flex-1 flex items-center justify-center p-4">
+    <>
+      {/* Centered content for non-transcript states */}
+      {state !== "complete" && (
+        <div className="min-h-[calc(100vh-3.5rem)] flex items-center justify-center p-4">
             <Card className="w-full max-w-2xl">
               <CardContent className="p-6 space-y-6">
                 {/* Upload Zone - State-based rendering */}
@@ -715,7 +780,7 @@ export default function Home() {
                         <p className="text-sm text-muted-foreground mb-4">
                           or <span className="text-primary font-medium cursor-pointer">browse to upload</span>
                         </p>
-                        <Button 
+                        <Button
                           onClick={() => fileInputRef.current?.click()}
                           className="mt-4"
                         >
@@ -767,12 +832,12 @@ export default function Home() {
 
                                 // Create a File object for the sample to show filename
                                 const sampleFile = new File(
-                                  [], 
+                                  [],
                                   `${sample.name}.mp3`,
                                   { type: "audio/mpeg" }
                                 );
                                 setFile(sampleFile);
-                                
+
                                 // Set audio URL for playback
                                 setAudioUrl(sample.file);
                                 setAudioDuration(
@@ -881,26 +946,7 @@ export default function Home() {
                           </p>
                         </div>
                       </div>
-                      
-                      {/* Model Selection */}
-                      <div className="mb-4">
-                        <Label className="text-sm font-medium mb-3 block">Model</Label>
-                        <RadioGroup value={selectedModel} onValueChange={(value) => setSelectedModel(value as 'nano' | 'universal')}>
-                          <div className="flex items-center space-x-2 mb-2">
-                            <RadioGroupItem value="universal" id="universal" />
-                            <Label htmlFor="universal" className="text-sm font-normal cursor-pointer">
-                              Standard (Universal): Balanced quality, multi-language
-                            </Label>
-                          </div>
-                          <div className="flex items-center space-x-2">
-                            <RadioGroupItem value="nano" id="nano" />
-                            <Label htmlFor="nano" className="text-sm font-normal cursor-pointer">
-                              Fast (Nano): 3x cheaper, good for drafts
-                            </Label>
-                          </div>
-                        </RadioGroup>
-                      </div>
-                      
+
                       <div className="flex gap-3">
                         <Button onClick={processFile} className="flex-1">
                           Transcribe
@@ -959,35 +1005,31 @@ export default function Home() {
 
               </CardContent>
             </Card>
-          </div>
-        )}
+        </div>
+      )}
 
-        {/* Full-screen Transcript Display */}
-        {transcript && state === "complete" && (
-          <div className="flex-1 flex flex-col overflow-hidden">
-            {/* Transcript Content - Scrollable with gradient background */}
-            <div className="flex-1 overflow-hidden bg-gradient-to-b from-gray-50 to-white dark:from-gray-950 dark:to-gray-900">
-              <TranscriptView
-                key={`transcript-${currentLanguage}-${utterances.length}`}
-                utterances={utterances}
-                chapters={chapters}
-                fullText={transcript}
-                currentTime={currentPlayTime * 1000}
-                words={allWords}
-              />
-            </div>
-          </div>
-        )}
-      </div>
+      {/* Transcript Display */}
+      {transcript && state === "complete" && (
+        <>
+          <TranscriptView
+            key={`transcript-${currentLanguage}-${utterances.length}`}
+            utterances={utterances}
+            chapters={chapters}
+            fullText={transcript}
+            currentTime={currentPlayTime * 1000}
+            words={allWords}
+          />
 
-      {/* Audio Player at bottom */}
-      {transcript && state === "complete" && audioUrl && (
-        <AudioControls
-          audioUrl={audioUrl}
-          onTimeUpdate={setCurrentPlayTime}
-          fileName={file?.name}
-          className="sticky bottom-0 z-40"
-        />
+          {/* Audio Player at bottom */}
+          {audioUrl && (
+            <AudioControls
+              audioUrl={audioUrl}
+              onTimeUpdate={setCurrentPlayTime}
+              fileName={file?.name}
+              className="sticky bottom-0 z-40"
+            />
+          )}
+        </>
       )}
 
       {/* Paywall Modal */}
@@ -1005,6 +1047,6 @@ export default function Home() {
         open={showReverseTrial}
         onOpenChange={setShowReverseTrial}
       />
-    </div>
+    </>
   );
 }
