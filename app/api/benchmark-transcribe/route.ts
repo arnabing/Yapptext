@@ -33,7 +33,7 @@ export async function GET(request: NextRequest) {
     // AssemblyAI - Universal Model (best quality)
     if (process.env.ASSEMBLYAI_API_KEY) {
       console.log('\n📍 Starting AssemblyAI Universal...')
-      const file = new File([audioBuffer], 'lil_wayne_deposition.mp3', { type: 'audio/mpeg' })
+      const file = new File([audioBuffer as BlobPart], 'lil_wayne_deposition.mp3', { type: 'audio/mpeg' })
       transcriptionTasks.push(
         transcribeWithAssemblyAI(file, {
           turboMode: false,
