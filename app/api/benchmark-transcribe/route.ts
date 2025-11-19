@@ -36,7 +36,7 @@ export async function GET(request: NextRequest) {
       const file = new File([audioBuffer as BlobPart], 'lil_wayne_deposition.mp3', { type: 'audio/mpeg' })
       transcriptionTasks.push(
         transcribeWithAssemblyAI(file, {
-          turboMode: false,
+          model: "universal",
           enableSentiment: false,
           enableKeyPhrases: false
         })
