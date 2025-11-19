@@ -198,7 +198,7 @@ export async function startReverseTrial(userId: string) {
   return {
     trialEndsAt,
     minutesAllowed: REVERSE_TRIAL.minutesAllowed,
-    mode: REVERSE_TRIAL.mode,
+    model: REVERSE_TRIAL.model,
   }
 }
 
