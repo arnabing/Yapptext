@@ -28,7 +28,7 @@ export async function getUserTier(userId: string): Promise<PricingTier> {
 
   // Check if user is in reverse trial
   if (user.trialEndsAt && user.trialEndsAt > new Date()) {
-    return PRICING_TIERS.REASONING // Reverse trial gets reasoning mode
+    return PRICING_TIERS.PRO // Reverse trial gets pro tier access
   }
 
   // Check if subscription is active
