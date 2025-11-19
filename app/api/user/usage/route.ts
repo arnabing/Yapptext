@@ -1,7 +1,7 @@
 import { auth } from '@clerk/nextjs/server'
 import { NextResponse } from 'next/server'
 import { db } from '@/lib/db'
-import { USAGE_LIMITS, PRICING_TIERS } from '@/lib/constants'
+import { USAGE_LIMITS, PRICING_TIERS, type PricingTier } from '@/lib/constants'
 
 export async function GET() {
   try {
@@ -40,7 +40,7 @@ export async function GET() {
     })
 
     const minutesUsed = monthlyUsage._sum.minutes || 0
-    const tier = user.subscriptionTier || PRICING_TIERS.FREE
+    const tier = (user.subscriptionTier || PRICING_TIERS.FREE) as PricingTier
     const limit = USAGE_LIMITS[tier].minutesPerMonth
 
     return NextResponse.json({
