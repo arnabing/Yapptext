@@ -179,12 +179,12 @@ export async function GET(request: NextRequest) {
       if (gptReconciliationResult && votingReconciliationResult) {
         console.log('\n📊 RECONCILIATION COMPARISON:')
         console.log('GPT-4o-mini:')
-        console.log('  - Time:', gptReconciliationResult.processingTime, 'ms')
+        console.log('  - Time:', (gptReconciliationResult as any).processingTime, 'ms')
         console.log('  - Chars:', gptReconciliationResult.text.length)
         console.log('  - Improvements:', gptReconciliationResult.improvementMetrics)
         console.log('Voting:')
-        console.log('  - Time:', votingReconciliationResult.processingTime, 'ms (', 
-          Math.round(votingReconciliationResult.processingTime * 100 / gptReconciliationResult.processingTime), '% of GPT time)')
+        console.log('  - Time:', (votingReconciliationResult as any).processingTime, 'ms (',
+          Math.round((votingReconciliationResult as any).processingTime * 100 / (gptReconciliationResult as any).processingTime), '% of GPT time)')
         console.log('  - Chars:', votingReconciliationResult.text.length)
         console.log('  - Improvements:', votingReconciliationResult.improvementMetrics)
       }
