@@ -158,7 +158,7 @@ export function AudioControls({ audioUrl, fileName, onTimeUpdate, className = ''
     <>
       <audio ref={audioRef} src={audioUrl} preload="metadata" />
 
-      <div className={`bg-white/20 dark:bg-black/30 backdrop-blur-3xl border-t border-white/20 dark:border-white/10 shadow-2xl relative ${className}`}>
+      <div className={`bg-white/30 dark:bg-black/40 backdrop-blur-md border-t border-white/20 dark:border-white/10 shadow-2xl relative ${className}`}>
         {/* Buffering indicator */}
         {isBuffering && (
           <div className="absolute inset-0 flex items-center justify-center bg-black/10 backdrop-blur-sm">
