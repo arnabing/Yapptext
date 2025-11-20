@@ -1049,9 +1049,9 @@ export function TranscriptionInterface() {
                                 </Badge>
                             </div>
                             <AudioControls
-                                url={audioUrl}
+                                audioUrl={audioUrl}
+                                fileName={audioFileName}
                                 onTimeUpdate={handleTimeUpdate}
-                                duration={audioDuration}
                             />
                         </div>
                     </div>
