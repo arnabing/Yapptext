@@ -146,7 +146,7 @@ export function AudioControls({ audioUrl, fileName, onTimeUpdate, className = ''
     <>
       <audio ref={audioRef} src={audioUrl} />
 
-      <div className={`bg-white/80 dark:bg-black/80 backdrop-blur-xl border-t border-white/20 dark:border-white/10 ${className}`}>
+      <div className={`bg-white/70 dark:bg-black/70 backdrop-blur-2xl border-t border-white/30 dark:border-white/20 shadow-lg ${className}`}>
         <div className="container max-w-5xl mx-auto px-4 py-4">
           {/* File name display */}
           {fileName && (

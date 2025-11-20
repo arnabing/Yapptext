@@ -384,7 +384,7 @@ export default function ViewTranscript() {
         currentTime={currentPlayTime * 1000}
         words={allWords}
       />
-      <div className="sticky bottom-0 shrink-0 bg-background">
+      <div className="sticky bottom-0 shrink-0">
         <AudioControls
           audioUrl={audioUrl}
           fileName={fileName}
