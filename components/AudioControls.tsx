@@ -3,7 +3,7 @@
 import { useState, useRef, useEffect } from 'react'
 import { Button } from '@/components/ui/button'
 import { Slider } from '@/components/ui/slider'
-import { Play, Pause, ChevronLeft, ChevronRight } from 'lucide-react'
+import { Play, Pause, Rewind, FastForward } from 'lucide-react'
 
 interface AudioControlsProps {
   audioUrl: string
@@ -146,7 +146,7 @@ export function AudioControls({ audioUrl, fileName, onTimeUpdate, className = ''
     <>
       <audio ref={audioRef} src={audioUrl} />
 
-      <div className={`bg-background/80 backdrop-blur border-t ${className}`}>
+      <div className={`bg-white/80 dark:bg-black/80 backdrop-blur-xl border-t border-white/20 dark:border-white/10 ${className}`}>
         <div className="container max-w-5xl mx-auto px-4 py-4">
           {/* File name display */}
           {fileName && (
@@ -154,68 +154,67 @@ export function AudioControls({ audioUrl, fileName, onTimeUpdate, className = ''
               {fileName}
             </div>
           )}
-          <div className="flex items-center gap-4">
-            {/* Play/Pause and Skip Controls */}
-            <div className="flex items-center gap-1">
-              <Button
-                id="skip-back-btn"
-                variant="ghost"
-                size="icon"
-                onClick={skipBackward}
-                className="h-9 w-9 transition-transform"
-                title="Skip back 10 seconds"
-              >
-                <ChevronLeft className="h-5 w-5" />
-              </Button>
 
-              <Button
-                variant="default"
-                size="icon"
-                onClick={togglePlayPause}
-                className="h-10 w-10 mx-1 shadow-md hover:shadow-lg transition-all"
-                title={isPlaying ? 'Pause' : 'Play'}
-              >
-                {isPlaying ? (
-                  <Pause className="h-5 w-5" />
-                ) : (
-                  <Play className="h-5 w-5 ml-0.5" />
-                )}
-              </Button>
-
-              <Button
-                id="skip-forward-btn"
-                variant="ghost"
-                size="icon"
-                onClick={skipForward}
-                className="h-9 w-9 transition-transform"
-                title="Skip forward 10 seconds"
-              >
-                <ChevronRight className="h-5 w-5" />
-              </Button>
-            </div>
-
-            {/* Current time */}
-            <span className="text-sm font-mono tabular-nums text-muted-foreground min-w-[3.5rem] text-center">
-              {formatTime(currentTime)}
-            </span>
-
-            {/* Timeline Slider */}
-            <div className="flex-1 flex items-center gap-3">
+          <div className="flex flex-col gap-2.5">
+            {/* Full-width slider */}
+            <div className="w-full">
               <Slider
                 value={[currentTime]}
                 max={duration || 100}
                 step={0.1}
                 onValueChange={handleSliderChange}
-                className="flex-1"
+                className="w-full"
                 aria-label="Seek audio"
               />
             </div>
 
-            {/* Duration */}
-            <span className="text-sm font-mono tabular-nums text-muted-foreground min-w-[3.5rem] text-center">
-              {formatTime(duration)}
-            </span>
+            {/* Times below slider */}
+            <div className="flex items-center justify-between -mt-1">
+              <span className="text-xs font-mono tabular-nums text-muted-foreground">
+                {formatTime(currentTime)}
+              </span>
+              <span className="text-xs font-mono tabular-nums text-muted-foreground">
+                {formatTime(duration)}
+              </span>
+            </div>
 
+            {/* Centered controls */}
+            <div className="flex items-center justify-center gap-2 pt-1">
+              <Button
+                id="skip-back-btn"
+                size="icon"
+                variant="ghost"
+                onClick={skipBackward}
+                className="h-9 w-9 transition-transform"
+                title="Skip back 10 seconds"
+              >
+                <Rewind className="h-5 w-5" />
+              </Button>
+
+              <Button
+                size="icon"
+                onClick={togglePlayPause}
+                className="h-11 w-11 mx-1 shadow-md hover:shadow-lg transition-all"
+                title={isPlaying ? 'Pause' : 'Play'}
+              >
+                {isPlaying ? (
+                  <Pause className="h-6 w-6" />
+                ) : (
+                  <Play className="h-6 w-6 ml-0.5" />
+                )}
+              </Button>
+
+              <Button
+                id="skip-forward-btn"
+                size="icon"
+                variant="ghost"
+                onClick={skipForward}
+                className="h-9 w-9 transition-transform"
+                title="Skip forward 10 seconds"
+              >
+                <FastForward className="h-5 w-5" />
+              </Button>
+            </div>
           </div>
         </div>
       </div>
