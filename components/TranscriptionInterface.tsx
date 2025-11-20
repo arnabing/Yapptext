@@ -925,7 +925,7 @@ export function TranscriptionInterface() {
                                                                     setUtterances(sampleTranscript.transcript.utterances);
                                                                     setOriginalUtterances(sampleTranscript.transcript.utterances);
                                                                     setChapters(sampleTranscript.transcript.chapters || []);
-                                                                    setAllWords(sampleTranscript.transcript.words);
+                                                                    setAllWords(sampleTranscript.transcript.allWords || []);
                                                                     setState("complete");
 
                                                                     toast({
