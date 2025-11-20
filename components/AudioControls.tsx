@@ -3,7 +3,7 @@
 import { useState, useRef, useEffect } from 'react'
 import { Button } from '@/components/ui/button'
 import { Slider } from '@/components/ui/slider'
-import { Play, Pause, Rewind, FastForward } from 'lucide-react'
+import { Play, Pause, Rewind, FastForward, Loader2 } from 'lucide-react'
 
 interface AudioControlsProps {
   audioUrl: string
@@ -17,12 +17,15 @@ export function AudioControls({ audioUrl, fileName, onTimeUpdate, className = ''
   const [isPlaying, setIsPlaying] = useState(false)
   const [currentTime, setCurrentTime] = useState(0)
   const [duration, setDuration] = useState(0)
+  const [isSeeking, setIsSeeking] = useState(false)
+  const [isBuffering, setIsBuffering] = useState(false)
 
   useEffect(() => {
     const audio = audioRef.current
     if (!audio) return
 
     const handleTimeUpdate = () => {
+      if (isSeeking) return // Don't update while user is seeking
       setCurrentTime(audio.currentTime)
       onTimeUpdate?.(audio.currentTime)
     }
@@ -35,24 +38,28 @@ export function AudioControls({ audioUrl, fileName, onTimeUpdate, className = ''
       setIsPlaying(false)
     }
 
-    // Seeked event ensures sync after seeking completes
-    const handleSeeked = () => {
-      setCurrentTime(audio.currentTime)
-      onTimeUpdate?.(audio.currentTime)
+    const handleWaiting = () => {
+      setIsBuffering(true)
+    }
+
+    const handleCanPlay = () => {
+      setIsBuffering(false)
     }
 
     audio.addEventListener('timeupdate', handleTimeUpdate)
     audio.addEventListener('loadedmetadata', handleLoadedMetadata)
     audio.addEventListener('ended', handleEnded)
-    audio.addEventListener('seeked', handleSeeked)
+    audio.addEventListener('waiting', handleWaiting)
+    audio.addEventListener('canplay', handleCanPlay)
 
     return () => {
       audio.removeEventListener('timeupdate', handleTimeUpdate)
       audio.removeEventListener('loadedmetadata', handleLoadedMetadata)
       audio.removeEventListener('ended', handleEnded)
-      audio.removeEventListener('seeked', handleSeeked)
+      audio.removeEventListener('waiting', handleWaiting)
+      audio.removeEventListener('canplay', handleCanPlay)
     }
-  }, [onTimeUpdate])
+  }, [onTimeUpdate, isSeeking])
 
   // Keyboard shortcuts
   useEffect(() => {
@@ -93,12 +100,17 @@ export function AudioControls({ audioUrl, fileName, onTimeUpdate, className = ''
   }
 
   const handleSliderChange = (value: number[]) => {
+    setIsSeeking(true)
+    setCurrentTime(value[0]) // Visual update only, no audio seek yet
+  }
+
+  const handleSliderCommit = (value: number[]) => {
     const audio = audioRef.current
     if (!audio) return
 
     audio.currentTime = value[0]
-    setCurrentTime(value[0])
-    onTimeUpdate?.(value[0]) // Immediate update for instant feedback
+    setIsSeeking(false) // Resume timeupdate events
+    // Note: onTimeUpdate will be called by timeupdate event once audio is ready
   }
 
   const skipBackward = () => {
@@ -144,10 +156,17 @@ export function AudioControls({ audioUrl, fileName, onTimeUpdate, className = ''
 
   return (
     <>
-      <audio ref={audioRef} src={audioUrl} />
+      <audio ref={audioRef} src={audioUrl} preload="metadata" />
 
-      <div className={`bg-white/70 dark:bg-black/70 backdrop-blur-2xl border-t border-white/30 dark:border-white/20 shadow-lg ${className}`}>
-        <div className="container max-w-5xl mx-auto px-4 py-4">
+      <div className={`bg-white/20 dark:bg-black/30 backdrop-blur-3xl border-t border-white/20 dark:border-white/10 shadow-2xl relative ${className}`}>
+        {/* Buffering indicator */}
+        {isBuffering && (
+          <div className="absolute inset-0 flex items-center justify-center bg-black/10 backdrop-blur-sm">
+            <Loader2 className="h-6 w-6 animate-spin text-red-500" />
+          </div>
+        )}
+
+        <div className="container max-w-5xl mx-auto px-4 py-6 pb-[calc(1.5rem+env(safe-area-inset-bottom))]">
           {/* File name display */}
           {fileName && (
             <div className="text-xs text-muted-foreground mb-2 text-center truncate">
@@ -163,6 +182,7 @@ export function AudioControls({ audioUrl, fileName, onTimeUpdate, className = ''
                 max={duration || 100}
                 step={0.1}
                 onValueChange={handleSliderChange}
+                onValueCommit={handleSliderCommit}
                 className="w-full"
                 aria-label="Seek audio"
               />
