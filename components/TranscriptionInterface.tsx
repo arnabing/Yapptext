@@ -1059,17 +1059,11 @@ export function TranscriptionInterface() {
                     {/* Transcript Content */}
                     <div className="max-w-4xl mx-auto pb-20">
                         <TranscriptView
-                            transcript={transcript}
+                            fullText={transcript}
                             utterances={utterances}
                             currentTime={currentPlayTime}
-                            onWordClick={(time) => {
-                                const audio = document.querySelector("audio");
-                                if (audio) {
-                                    audio.currentTime = time / 1000;
-                                    audio.play();
-                                }
-                            }}
                             chapters={chapters}
+                            words={allWords}
                         />
                     </div>
                 </div>
