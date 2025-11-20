@@ -1,3 +1,6 @@
+"use client";
+
+import { Suspense } from "react";
 import { TranscriptionInterface } from "@/components/TranscriptionInterface";
 
 export function Hero() {
@@ -33,7 +36,9 @@ export function Hero() {
                             <div className="w-3 h-3 rounded-full bg-green-500/20 border border-green-500/50" />
                         </div>
                         <div className="p-6 md:p-8 flex-1 flex flex-col justify-center">
-                            <TranscriptionInterface />
+                            <Suspense fallback={<div className="flex items-center justify-center min-h-[300px]"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-red-500"></div></div>}>
+                                <TranscriptionInterface />
+                            </Suspense>
                         </div>
                     </div>
                 </div>
