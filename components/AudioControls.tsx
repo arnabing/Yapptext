@@ -7,12 +7,12 @@ import { Play, Pause, ChevronLeft, ChevronRight } from 'lucide-react'
 
 interface AudioControlsProps {
   audioUrl: string
+  fileName?: string
   onTimeUpdate?: (time: number) => void
   className?: string
-  fileName?: string
 }
 
-export function AudioControls({ audioUrl, onTimeUpdate, className = '', fileName }: AudioControlsProps) {
+export function AudioControls({ audioUrl, fileName, onTimeUpdate, className = '' }: AudioControlsProps) {
   const audioRef = useRef<HTMLAudioElement>(null)
   const [isPlaying, setIsPlaying] = useState(false)
   const [currentTime, setCurrentTime] = useState(0)
@@ -53,13 +53,13 @@ export function AudioControls({ audioUrl, onTimeUpdate, className = '', fileName
       audio.removeEventListener('seeked', handleSeeked)
     }
   }, [onTimeUpdate])
-  
+
   // Keyboard shortcuts
   useEffect(() => {
     const handleKeyPress = (e: KeyboardEvent) => {
       // Ignore if user is typing in an input
       if (e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement) return
-      
+
       switch(e.key) {
         case ' ':
           e.preventDefault()
@@ -75,7 +75,7 @@ export function AudioControls({ audioUrl, onTimeUpdate, className = '', fileName
           break
       }
     }
-    
+
     window.addEventListener('keydown', handleKeyPress)
     return () => window.removeEventListener('keydown', handleKeyPress)
   }, [isPlaying])
@@ -95,7 +95,7 @@ export function AudioControls({ audioUrl, onTimeUpdate, className = '', fileName
   const handleSliderChange = (value: number[]) => {
     const audio = audioRef.current
     if (!audio) return
-    
+
     audio.currentTime = value[0]
     setCurrentTime(value[0])
     onTimeUpdate?.(value[0]) // Immediate update for instant feedback
@@ -108,7 +108,7 @@ export function AudioControls({ audioUrl, onTimeUpdate, className = '', fileName
     audio.currentTime = newTime
     setCurrentTime(newTime)
     onTimeUpdate?.(newTime) // Immediate update for instant feedback
-    
+
     // Visual feedback
     const btn = document.getElementById('skip-back-btn')
     if (btn) {
@@ -124,7 +124,7 @@ export function AudioControls({ audioUrl, onTimeUpdate, className = '', fileName
     audio.currentTime = newTime
     setCurrentTime(newTime)
     onTimeUpdate?.(newTime) // Immediate update for instant feedback
-    
+
     // Visual feedback
     const btn = document.getElementById('skip-forward-btn')
     if (btn) {
@@ -139,11 +139,14 @@ export function AudioControls({ audioUrl, onTimeUpdate, className = '', fileName
     return `${mins}:${secs.toString().padStart(2, '0')}`
   }
 
+  // Don't render if there's no audio
+  if (!audioUrl) return null
+
   return (
-    <div className={`fixed bottom-0 left-0 right-0 z-40 ${className}`}>
+    <>
       <audio ref={audioRef} src={audioUrl} />
 
-      <div className="bg-background/80 backdrop-blur border-t">
+      <div className={`bg-background/80 backdrop-blur border-t ${className}`}>
         <div className="container max-w-5xl mx-auto px-4 py-4">
           {/* File name display */}
           {fileName && (
@@ -164,7 +167,7 @@ export function AudioControls({ audioUrl, onTimeUpdate, className = '', fileName
               >
                 <ChevronLeft className="h-5 w-5" />
               </Button>
-              
+
               <Button
                 variant="default"
                 size="icon"
@@ -178,7 +181,7 @@ export function AudioControls({ audioUrl, onTimeUpdate, className = '', fileName
                   <Play className="h-5 w-5 ml-0.5" />
                 )}
               </Button>
-              
+
               <Button
                 id="skip-forward-btn"
                 variant="ghost"
@@ -190,12 +193,12 @@ export function AudioControls({ audioUrl, onTimeUpdate, className = '', fileName
                 <ChevronRight className="h-5 w-5" />
               </Button>
             </div>
-            
+
             {/* Current time */}
             <span className="text-sm font-mono tabular-nums text-muted-foreground min-w-[3.5rem] text-center">
               {formatTime(currentTime)}
             </span>
-            
+
             {/* Timeline Slider */}
             <div className="flex-1 flex items-center gap-3">
               <Slider
@@ -207,15 +210,15 @@ export function AudioControls({ audioUrl, onTimeUpdate, className = '', fileName
                 aria-label="Seek audio"
               />
             </div>
-            
+
             {/* Duration */}
             <span className="text-sm font-mono tabular-nums text-muted-foreground min-w-[3.5rem] text-center">
               {formatTime(duration)}
             </span>
-            
+
           </div>
         </div>
       </div>
-    </div>
+    </>
   )
 }

@@ -25,8 +25,8 @@ import {
 import { useToast } from "@/hooks/use-toast";
 import { confettiPresets } from "@/components/confetti";
 import { TranscriptView } from "@/components/TranscriptView";
-import { AudioControls } from "@/components/AudioControls";
 import { LanguageSelector } from "@/components/LanguageSelector";
+import { AudioControls } from "@/components/AudioControls";
 import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
 import {
@@ -63,7 +63,8 @@ export default function Home() {
   const [minutesUsed, setMinutesUsed] = useState(0);
   const [dailyLimit] = useState(20);
   const [statusMessage, setStatusMessage] = useState("");
-  const [audioUrl, setAudioUrl] = useState<string>("");
+  const [audioUrl, setAudioUrl] = useState("");
+  const [audioFileName, setAudioFileName] = useState("");
   const [currentPlayTime, setCurrentPlayTime] = useState(0);
   const [isTranslating, setIsTranslating] = useState(false);
   const [originalTranscript, setOriginalTranscript] = useState("");
@@ -244,6 +245,7 @@ export default function Home() {
     // Create audio URL for playback
     const url = URL.createObjectURL(selectedFile);
     setAudioUrl(url);
+    setAudioFileName(selectedFile.name);
 
     // Get audio duration for time estimation
     const audio = new Audio(url);
@@ -667,6 +669,7 @@ export default function Home() {
     setError("");
     setProcessingTime(0);
     setAudioUrl("");
+    setAudioFileName("");
     setCurrentPlayTime(0);
     setIsTranslating(false);
     setCurrentLanguage("original");
@@ -685,14 +688,16 @@ export default function Home() {
     return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
   };
 
+  const handleTimeUpdate = (time: number) => {
+    setCurrentPlayTime(time);
+  };
+
   return (
-    <div className="min-h-screen overflow-hidden bg-background flex flex-col">
-      {/* Main Content Area - Flex to fill remaining space */}
-      <div className="flex-1 overflow-hidden flex flex-col">
-        {/* Centered content for non-transcript states */}
-        {state !== "complete" && (
-          <div className="flex-1 flex items-center justify-center p-4">
-            <Card className="w-full max-w-2xl">
+    <>
+      {/* Centered content for non-transcript states */}
+      {state !== "complete" && (
+        <div className="min-h-[calc(100vh-3.5rem)] flex items-center justify-center p-4">
+          <Card className="w-full max-w-2xl">
               <CardContent className="p-6 space-y-6">
                 {/* Upload Zone - State-based rendering */}
                 {state === "idle" && (
@@ -772,9 +777,10 @@ export default function Home() {
                                   { type: "audio/mpeg" }
                                 );
                                 setFile(sampleFile);
-                                
+
                                 // Set audio URL for playback
                                 setAudioUrl(sample.file);
+                                setAudioFileName(sampleFile.name);
                                 setAudioDuration(
                                   sampleTranscript.transcript.duration,
                                 );
@@ -959,35 +965,21 @@ export default function Home() {
 
               </CardContent>
             </Card>
-          </div>
-        )}
+        </div>
+      )}
 
-        {/* Full-screen Transcript Display */}
-        {transcript && state === "complete" && (
-          <div className="flex-1 flex flex-col overflow-hidden">
-            {/* Transcript Content - Scrollable with gradient background */}
-            <div className="flex-1 overflow-hidden bg-gradient-to-b from-gray-50 to-white dark:from-gray-950 dark:to-gray-900">
-              <TranscriptView
-                key={`transcript-${currentLanguage}-${utterances.length}`}
-                utterances={utterances}
-                chapters={chapters}
-                fullText={transcript}
-                currentTime={currentPlayTime * 1000}
-                words={allWords}
-              />
-            </div>
-          </div>
-        )}
-      </div>
-
-      {/* Audio Player at bottom */}
-      {transcript && state === "complete" && audioUrl && (
-        <AudioControls
-          audioUrl={audioUrl}
-          onTimeUpdate={setCurrentPlayTime}
-          fileName={file?.name}
-          className="sticky bottom-0 z-40"
-        />
+      {/* Transcript Display */}
+      {transcript && state === "complete" && (
+        <>
+          <TranscriptView
+            key={`transcript-${currentLanguage}-${utterances.length}`}
+            utterances={utterances}
+            chapters={chapters}
+            fullText={transcript}
+            currentTime={currentPlayTime * 1000}
+            words={allWords}
+          />
+        </>
       )}
 
       {/* Paywall Modal */}
@@ -1005,6 +997,17 @@ export default function Home() {
         open={showReverseTrial}
         onOpenChange={setShowReverseTrial}
       />
-    </div>
+
+      {/* Audio Player */}
+      {state === "complete" && (
+        <div className="sticky bottom-0 shrink-0 bg-background">
+          <AudioControls
+            audioUrl={audioUrl}
+            fileName={audioFileName}
+            onTimeUpdate={handleTimeUpdate}
+          />
+        </div>
+      )}
+    </>
   );
 }

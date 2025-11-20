@@ -1,7 +1,6 @@
 'use client'
 
 import { useEffect, useRef } from 'react'
-import { ScrollArea } from '@/components/ui/scroll-area'
 import { Card } from '@/components/ui/card'
 import { cn } from '@/lib/utils'
 
@@ -65,11 +64,9 @@ export function TranscriptView({
   // If no utterances, display plain text
   if (!utterances || utterances.length === 0) {
     return (
-      <ScrollArea className="h-full">
-        <div className="p-4 md:p-6 max-w-4xl mx-auto pb-52">
-          <p className="text-sm md:text-base leading-relaxed whitespace-pre-wrap break-words">{fullText}</p>
-        </div>
-      </ScrollArea>
+      <div className="p-4 md:p-6 max-w-4xl mx-auto pb-4">
+        <p className="text-sm md:text-base leading-relaxed whitespace-pre-wrap break-words">{fullText}</p>
+      </div>
     )
   }
 
@@ -126,12 +123,11 @@ export function TranscriptView({
   })
 
   return (
-    <ScrollArea className="h-full" ref={scrollRef}>
-      <div className="p-4 md:p-6 space-y-3 max-w-4xl mx-auto pb-52">
-        {/* Chapters section removed for better performance */}
-        
-        {/* Transcript segments - Standardized iMessage style for all */}
-        {groupedUtterances.map((group, groupIndex) => {
+    <div className="p-4 md:p-6 space-y-3 max-w-4xl mx-auto pb-4" ref={scrollRef}>
+      {/* Chapters section removed for better performance */}
+
+      {/* Transcript segments - Standardized iMessage style for all */}
+      {groupedUtterances.map((group, groupIndex) => {
           const isActive = currentTime >= group.segments[0].start && 
                           currentTime <= group.segments[group.segments.length - 1].end
           
@@ -202,10 +198,7 @@ export function TranscriptView({
             </div>
           )
         })}
-        {/* Spacer for audio player - ensures content isn't covered on desktop */}
-        <div className="h-52" aria-hidden="true" />
-      </div>
-    </ScrollArea>
+    </div>
   )
 }
 

@@ -44,10 +44,10 @@ export default function ViewTranscript() {
   const [utterances, setUtterances] = useState<any[]>([]);
   const [chapters, setChapters] = useState<any[]>([]);
   const [allWords, setAllWords] = useState<any[]>([]);
-  const [audioUrl, setAudioUrl] = useState<string>("");
-  const [fileName, setFileName] = useState<string>("");
-  const [audioDuration, setAudioDuration] = useState(0);
+  const [audioUrl, setAudioUrl] = useState("");
+  const [fileName, setFileName] = useState("");
   const [currentPlayTime, setCurrentPlayTime] = useState(0);
+  const [audioDuration, setAudioDuration] = useState(0);
   const [isTranslating, setIsTranslating] = useState(false);
   const [originalTranscript, setOriginalTranscript] = useState("");
   const [originalUtterances, setOriginalUtterances] = useState<any[]>([]);
@@ -198,6 +198,10 @@ export default function ViewTranscript() {
       setHeaderActions(null);
     }
   }, [transcript, loading, isTranslating, currentLanguage, copied]);
+
+  const handleTimeUpdate = (time: number) => {
+    setCurrentPlayTime(time);
+  };
 
   const handleTranslate = async (targetLanguage: string) => {
     if (!originalTranscript) return;
@@ -372,15 +376,6 @@ export default function ViewTranscript() {
 
   return (
     <>
-      {/* Audio not available notice */}
-      {!audioUrl && (
-        <div className="bg-muted/50 border-b px-4 py-2">
-          <p className="text-xs text-muted-foreground text-center">
-            Audio playback not available for this transcript
-          </p>
-        </div>
-      )}
-
       <TranscriptView
         key={`transcript-${currentLanguage}-${utterances.length}`}
         utterances={utterances}
@@ -389,16 +384,13 @@ export default function ViewTranscript() {
         currentTime={currentPlayTime * 1000}
         words={allWords}
       />
-
-      {/* Audio Player at bottom */}
-      {audioUrl && (
+      <div className="sticky bottom-0 shrink-0 bg-background">
         <AudioControls
           audioUrl={audioUrl}
-          onTimeUpdate={setCurrentPlayTime}
           fileName={fileName}
-          className="sticky bottom-0 z-40"
+          onTimeUpdate={handleTimeUpdate}
         />
-      )}
+      </div>
     </>
   );
 }

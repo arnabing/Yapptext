@@ -27,8 +27,8 @@ import {
 import { useToast } from "@/hooks/use-toast";
 import { confettiPresets } from "@/components/confetti";
 import { TranscriptView } from "@/components/TranscriptView";
-import { AudioControls } from "@/components/AudioControls";
 import { LanguageSelector } from "@/components/LanguageSelector";
+import { AudioControls } from "@/components/AudioControls";
 import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
 import {
@@ -67,7 +67,8 @@ export default function NewTranscript() {
   const [processingTime, setProcessingTime] = useState(0);
   const [minutesUsed, setMinutesUsed] = useState(0);
   const [statusMessage, setStatusMessage] = useState("");
-  const [audioUrl, setAudioUrl] = useState<string>("");
+  const [audioUrl, setAudioUrl] = useState("");
+  const [audioFileName, setAudioFileName] = useState("");
   const [currentPlayTime, setCurrentPlayTime] = useState(0);
   const [isTranslating, setIsTranslating] = useState(false);
   const [originalTranscript, setOriginalTranscript] = useState("");
@@ -377,6 +378,7 @@ export default function NewTranscript() {
 
       // Update audioUrl with the permanent Vercel Blob URL
       setAudioUrl(permanentBlobUrl);
+      setAudioFileName(file.name);
 
       setProgress(40);
       setStatusMessage("Processing audio with AI...");
@@ -752,6 +754,10 @@ export default function NewTranscript() {
     return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
   };
 
+  const handleTimeUpdate = (time: number) => {
+    setCurrentPlayTime(time);
+  };
+
   return (
     <>
       {/* Centered content for non-transcript states */}
@@ -1019,16 +1025,6 @@ export default function NewTranscript() {
             currentTime={currentPlayTime * 1000}
             words={allWords}
           />
-
-          {/* Audio Player at bottom */}
-          {audioUrl && (
-            <AudioControls
-              audioUrl={audioUrl}
-              onTimeUpdate={setCurrentPlayTime}
-              fileName={file?.name}
-              className="sticky bottom-0 z-40"
-            />
-          )}
         </>
       )}
 
@@ -1047,6 +1043,17 @@ export default function NewTranscript() {
         open={showReverseTrial}
         onOpenChange={setShowReverseTrial}
       />
+
+      {/* Audio Player */}
+      {state === "complete" && (
+        <div className="sticky bottom-0 shrink-0 bg-background">
+          <AudioControls
+            audioUrl={audioUrl}
+            fileName={audioFileName}
+            onTimeUpdate={handleTimeUpdate}
+          />
+        </div>
+      )}
     </>
   );
 }
