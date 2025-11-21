@@ -842,10 +842,13 @@ export function TranscriptionInterface({ isDarkMode = true }: TranscriptionInter
                             {state === "idle" && (
                                 <>
                                     <div
-                                        className={`group relative rounded-3xl shadow-2xl overflow-hidden transition-all duration-500 border ${isDragging
-                                                ? "border-brand-500/50 bg-[#0A0A0A]"
-                                                : "bg-[#0A0A0A] border-white/10"
-                                            }`}
+                                        className={`group relative rounded-3xl overflow-hidden transition-all duration-500 border ${
+                                            isDragging
+                                                ? `border-brand-500/50 ${isDarkMode ? 'bg-[#0A0A0A]' : 'bg-white'}`
+                                                : isDarkMode
+                                                    ? 'bg-[#0A0A0A] border-white/10 shadow-2xl'
+                                                    : 'bg-white border-slate-200 shadow-[0_20px_60px_-15px_rgba(0,0,0,0.3)]'
+                                        }`}
                                         onDragOver={handleDragOver}
                                         onDragLeave={handleDragLeave}
                                         onDrop={handleDrop}
@@ -875,10 +878,10 @@ export function TranscriptionInterface({ isDarkMode = true }: TranscriptionInter
 
                                                 {/* Text */}
                                                 <div className="text-center space-y-2">
-                                                    <h3 className="text-2xl font-bold text-white">
+                                                    <h3 className={`text-2xl font-bold ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>
                                                         Drop audio file here
                                                     </h3>
-                                                    <p className="text-sm text-gray-400">
+                                                    <p className={`text-sm ${isDarkMode ? 'text-gray-400' : 'text-slate-500'}`}>
                                                         wav, mp3, m4a supported up to 50MB
                                                     </p>
                                                 </div>
@@ -888,11 +891,19 @@ export function TranscriptionInterface({ isDarkMode = true }: TranscriptionInter
                                             <div className="flex gap-4 mb-8">
                                                 <button
                                                     onClick={() => fileInputRef.current?.click()}
-                                                    className="flex-1 rounded-xl shadow-sm bg-white text-black hover:bg-gray-100 py-3 font-medium text-sm border border-transparent transition-all"
+                                                    className={`flex-1 rounded-xl shadow-sm py-3 font-medium text-sm border border-transparent transition-all ${
+                                                        isDarkMode
+                                                            ? 'bg-white text-black hover:bg-gray-100'
+                                                            : 'bg-slate-900 text-white hover:bg-slate-800'
+                                                    }`}
                                                 >
                                                     Browse Files
                                                 </button>
-                                                <button className="px-6 rounded-xl font-medium text-sm border bg-[#111] text-white border-white/10 hover:bg-[#222] py-3 transition-all flex items-center justify-center">
+                                                <button className={`px-6 rounded-xl font-medium text-sm border py-3 transition-all flex items-center justify-center ${
+                                                    isDarkMode
+                                                        ? 'bg-[#111] text-white border-white/10 hover:bg-[#222]'
+                                                        : 'bg-white text-slate-700 border-slate-200 hover:bg-slate-50'
+                                                }`}>
                                                     <Upload className="h-4 w-4" />
                                                 </button>
                                             </div>
@@ -906,12 +917,12 @@ export function TranscriptionInterface({ isDarkMode = true }: TranscriptionInter
                                             />
 
                                             {/* Divider */}
-                                            <div className="relative mb-6 text-gray-600">
+                                            <div className={`relative mb-6 ${isDarkMode ? 'text-gray-600' : 'text-slate-400'}`}>
                                                 <div className="absolute inset-0 flex items-center">
-                                                    <div className="w-full border-t border-white/10" />
+                                                    <div className={`w-full border-t ${isDarkMode ? 'border-white/10' : 'border-slate-200'}`} />
                                                 </div>
                                                 <div className="relative flex justify-center text-xs">
-                                                    <span className="px-2 bg-[#0A0A0A]">or try a sample</span>
+                                                    <span className={`px-2 ${isDarkMode ? 'bg-[#0A0A0A]' : 'bg-white'}`}>or try a sample</span>
                                                 </div>
                                             </div>
 
@@ -920,7 +931,11 @@ export function TranscriptionInterface({ isDarkMode = true }: TranscriptionInter
                                                 {sampleAudios.map((sample, idx) => (
                                                     <button
                                                         key={idx}
-                                                        className="px-4 py-2 rounded-full text-xs font-medium transition-all flex items-center gap-2 border bg-[#111] border-white/10 hover:border-brand-500/50 hover:text-brand-400 text-gray-400"
+                                                        className={`px-4 py-2 rounded-full text-xs font-medium transition-all flex items-center gap-2 border ${
+                                                            isDarkMode
+                                                                ? 'bg-[#111] border-white/10 hover:border-brand-500/50 hover:text-brand-400 text-gray-400'
+                                                                : 'bg-slate-50 border-slate-200 hover:border-brand-500/50 hover:text-brand-600 text-slate-600'
+                                                        }`}
                                                         onClick={async () => {
                                                         console.log("Loading sample:", sample.name);
 
