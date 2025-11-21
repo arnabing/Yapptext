@@ -816,30 +816,56 @@ export function TranscriptionInterface() {
                             {state === "idle" && (
                                 <>
                                     <div
-                                        className={`border-2 border-dashed rounded-xl transition-all duration-300 ${isDragging
-                                                ? "border-primary bg-primary/5 scale-[1.02]"
-                                                : "border-white/20 bg-white/5 hover:bg-white/10 hover:border-white/30"
-                                            } backdrop-blur-sm`}
+                                        className={`relative rounded-3xl shadow-2xl overflow-hidden transition-all duration-500 border ${isDragging
+                                                ? "border-brand-500/50 bg-[#0A0A0A]"
+                                                : "bg-[#0A0A0A] border-white/10"
+                                            }`}
                                         onDragOver={handleDragOver}
                                         onDragLeave={handleDragLeave}
                                         onDrop={handleDrop}
                                     >
-                                        <div className="p-8 md:p-12 text-center">
-                                            <div className="w-16 h-16 mx-auto bg-white/10 rounded-full flex items-center justify-center mb-6">
-                                                <Upload className="h-8 w-8 text-white" />
+                                        {/* Dotted grid background */}
+                                        <div
+                                            className="absolute inset-0 opacity-30 pointer-events-none"
+                                            style={{
+                                                backgroundImage: 'radial-gradient(#888 1px, transparent 1px)',
+                                                backgroundSize: '20px 20px',
+                                            }}
+                                        />
+
+                                        {/* Content */}
+                                        <div className="relative p-12 md:p-16">
+                                            {/* Icon & Text */}
+                                            <div className="flex flex-col items-center space-y-6 mb-8">
+                                                {/* Upload Icon */}
+                                                <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-brand-500 to-orange-500 flex items-center justify-center shadow-lg transition-transform hover:scale-105 duration-300">
+                                                    <Upload className="h-10 w-10 text-white" />
+                                                </div>
+
+                                                {/* Text */}
+                                                <div className="text-center space-y-2">
+                                                    <h3 className="text-2xl font-bold text-white">
+                                                        Drop audio file here
+                                                    </h3>
+                                                    <p className="text-sm text-gray-400">
+                                                        wav, mp3, m4a supported up to 50MB
+                                                    </p>
+                                                </div>
                                             </div>
-                                            <p className="text-xl font-semibold mb-2 text-white">
-                                                Drag and drop an audio file
-                                            </p>
-                                            <p className="text-sm text-gray-400 mb-6">
-                                                or <span className="text-primary font-medium cursor-pointer hover:underline" onClick={() => fileInputRef.current?.click()}>browse to upload</span>
-                                            </p>
-                                            <Button
-                                                onClick={() => fileInputRef.current?.click()}
-                                                className="bg-red-600 hover:bg-red-700 text-white rounded-full px-8 py-6 text-lg font-medium shadow-lg shadow-red-600/20 transition-all hover:scale-105"
-                                            >
-                                                Upload Audio
-                                            </Button>
+
+                                            {/* Buttons */}
+                                            <div className="flex gap-4 mb-8">
+                                                <button
+                                                    onClick={() => fileInputRef.current?.click()}
+                                                    className="flex-1 rounded-xl shadow-sm bg-white text-black hover:bg-gray-100 py-3 font-medium text-sm border border-transparent transition-all"
+                                                >
+                                                    Browse Files
+                                                </button>
+                                                <button className="px-6 rounded-xl font-medium text-sm border bg-[#111] text-white border-white/10 hover:bg-[#222] py-3 transition-all flex items-center justify-center">
+                                                    <Upload className="h-4 w-4" />
+                                                </button>
+                                            </div>
+
                                             <input
                                                 ref={fileInputRef}
                                                 type="file"
@@ -847,24 +873,24 @@ export function TranscriptionInterface() {
                                                 onChange={handleFileInputChange}
                                                 className="hidden"
                                             />
-                                            <p className="text-xs text-gray-500 mt-6">
-                                                Supports MP3, WAV, M4A, WebM, MP4
-                                            </p>
-                                        </div>
-                                    </div>
 
-                                    {/* Sample Audio Pills */}
-                                    <div className="mt-8 text-center">
-                                        <p className="text-sm text-gray-400 mb-4">
-                                            Or try a sample:
-                                        </p>
-                                        <div className="flex flex-wrap justify-center gap-3">
-                                            {sampleAudios.map((sample, idx) => (
-                                                <Badge
-                                                    key={idx}
-                                                    variant="outline"
-                                                    className="cursor-pointer bg-white/5 hover:bg-white/10 border-white/10 text-gray-300 transition-all py-2 px-4 rounded-full flex items-center gap-2"
-                                                    onClick={async () => {
+                                            {/* Divider */}
+                                            <div className="relative mb-6 text-gray-600">
+                                                <div className="absolute inset-0 flex items-center">
+                                                    <div className="w-full border-t border-white/10" />
+                                                </div>
+                                                <div className="relative flex justify-center text-xs">
+                                                    <span className="px-2 bg-[#0A0A0A]">or try a sample</span>
+                                                </div>
+                                            </div>
+
+                                            {/* Sample Buttons */}
+                                            <div className="flex flex-wrap justify-center gap-3">
+                                                {sampleAudios.map((sample, idx) => (
+                                                    <button
+                                                        key={idx}
+                                                        className="px-4 py-2 rounded-full text-xs font-medium transition-all flex items-center gap-2 border bg-[#111] border-white/10 hover:border-brand-500/50 hover:text-brand-400 text-gray-400"
+                                                        onClick={async () => {
                                                         console.log("Loading sample:", sample.name);
 
                                                         // Check if we have a preloaded transcript for this sample
@@ -937,11 +963,11 @@ export function TranscriptionInterface() {
                                                         }
                                                     }}
                                                 >
-                                                    <PlayCircle className="w-3 h-3" />
+                                                    <PlayCircle className="w-3 h-3" fill="currentColor" />
                                                     {sample.name}
-                                                    <span className="text-xs opacity-50 ml-1">({sample.duration})</span>
-                                                </Badge>
+                                                </button>
                                             ))}
+                                            </div>
                                         </div>
                                     </div>
                                 </>
