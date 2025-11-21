@@ -83,14 +83,25 @@ const config = {
 					to: {
 						height: '0'
 					}
+				},
+				aurora: {
+					'0%, 100%': {
+						backgroundPosition: '0% 50%'
+					},
+					'50%': {
+						backgroundPosition: '100% 50%'
+					}
 				}
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
-				'accordion-up': 'accordion-up 0.2s ease-out'
+				'accordion-up': 'accordion-up 0.2s ease-out',
+				aurora: 'aurora 8s ease infinite'
 			},
 			fontFamily: {
-				display: ['"Sixtyfour Convergence Variable"', 'sans-serif'],
+				sans: ['var(--font-inter)', 'sans-serif'],
+				display: ['"Sixtyfour Convergence Variable"', 'var(--font-space-grotesk)', 'sans-serif'],
+				mono: ['var(--font-jetbrains-mono)', 'monospace'],
 			}
 		}
 	},
