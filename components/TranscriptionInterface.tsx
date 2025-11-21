@@ -49,7 +49,11 @@ import { useUser } from '@clerk/nextjs';
 
 type AppState = "idle" | "file-selected" | "processing" | "complete" | "error";
 
-export function TranscriptionInterface() {
+interface TranscriptionInterfaceProps {
+    isDarkMode?: boolean;
+}
+
+export function TranscriptionInterface({ isDarkMode = true }: TranscriptionInterfaceProps = {}) {
     const { toast } = useToast();
     // Optional: Header context might not be available if used outside of the main app layout
     // We'll handle this gracefully
@@ -88,6 +92,7 @@ export function TranscriptionInterface() {
     const [showReverseTrial, setShowReverseTrial] = useState(false); // Reverse trial popup state
     const [remainingMinutes, setRemainingMinutes] = useState<number | null>(null); // User's remaining minutes
     const [copied, setCopied] = useState(false); // Copy button feedback state
+    const [hasScrolled, setHasScrolled] = useState(false); // Track if user has scrolled (for mobile aurora effect)
 
     const fileInputRef = useRef<HTMLInputElement>(null);
     const processingTimerRef = useRef<NodeJS.Timeout | null>(null);
@@ -140,6 +145,27 @@ export function TranscriptionInterface() {
             }
         }
     }, [transcriptId]);
+
+    // Scroll detection for mobile aurora effect
+    useEffect(() => {
+        const isMobile = window.innerWidth < 768;
+
+        if (!isMobile) return; // Only track on mobile
+
+        const handleScroll = () => {
+            if (!hasScrolled && window.scrollY > 0) {
+                setHasScrolled(true);
+                // Remove listener after first scroll
+                window.removeEventListener('scroll', handleScroll);
+            }
+        };
+
+        window.addEventListener('scroll', handleScroll, { passive: true });
+
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+        };
+    }, [hasScrolled]);
 
     const loadSavedTranscript = async (id: string) => {
         setState("processing");
@@ -816,7 +842,7 @@ export function TranscriptionInterface() {
                             {state === "idle" && (
                                 <>
                                     <div
-                                        className={`relative rounded-3xl shadow-2xl overflow-hidden transition-all duration-500 border ${isDragging
+                                        className={`group relative rounded-3xl shadow-2xl overflow-hidden transition-all duration-500 border ${isDragging
                                                 ? "border-brand-500/50 bg-[#0A0A0A]"
                                                 : "bg-[#0A0A0A] border-white/10"
                                             }`}
@@ -824,9 +850,14 @@ export function TranscriptionInterface() {
                                         onDragLeave={handleDragLeave}
                                         onDrop={handleDrop}
                                     >
+                                        {/* Aurora background effect */}
+                                        <div className={`absolute inset-0 transition-opacity duration-1000 pointer-events-none ${hasScrolled ? 'opacity-100 animate-pulse md:opacity-0' : 'opacity-0'} md:group-hover:opacity-100`}>
+                                            <div className="absolute inset-0 aura-bg animate-aurora" />
+                                        </div>
+
                                         {/* Dotted grid background */}
                                         <div
-                                            className="absolute inset-0 opacity-30 pointer-events-none"
+                                            className="absolute inset-0 opacity-30 pointer-events-none z-10"
                                             style={{
                                                 backgroundImage: 'radial-gradient(#888 1px, transparent 1px)',
                                                 backgroundSize: '20px 20px',
@@ -834,7 +865,7 @@ export function TranscriptionInterface() {
                                         />
 
                                         {/* Content */}
-                                        <div className="relative p-12 md:p-16">
+                                        <div className="relative p-12 md:p-16 z-20">
                                             {/* Icon & Text */}
                                             <div className="flex flex-col items-center space-y-6 mb-8">
                                                 {/* Upload Icon */}
