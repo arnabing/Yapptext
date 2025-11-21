@@ -1,15 +1,11 @@
-"use client";
-
-import { Hero } from "@/components/landing/Hero";
-import { SocialProof } from "@/components/landing/SocialProof";
-import { Footer } from "@/components/landing/Footer";
+import { Hero } from "@/components/marketing/Hero";
+import { Features } from "@/components/marketing/Features";
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-black text-foreground dark">
+    <main className="min-h-screen bg-black text-white">
       <Hero />
-      <SocialProof />
-      <Footer />
+      <Features />
     </main>
   );
 }
