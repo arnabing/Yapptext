@@ -103,7 +103,7 @@ const config = {
 			},
 			fontFamily: {
 				sans: ['var(--font-inter)', 'sans-serif'],
-				display: ['"Sixtyfour Convergence Variable"', 'var(--font-space-grotesk)', 'sans-serif'],
+				display: ['var(--font-space-grotesk)', 'sans-serif'],
 				mono: ['var(--font-jetbrains-mono)', 'monospace'],
 			}
 		}
