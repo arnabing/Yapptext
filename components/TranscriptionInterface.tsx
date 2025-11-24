@@ -838,8 +838,8 @@ export function TranscriptionInterface({ isDarkMode = true }: TranscriptionInter
                             {state === "idle" && (
                                 <>
                                     <div
-                                        className={`group relative rounded-3xl overflow-hidden transition-all duration-500 ${
-                                            isDarkMode ? 'aura-bg' : 'aura-bg-light'
+                                        className={`group relative rounded-3xl overflow-hidden shadow-2xl transition-all duration-500 ${
+                                            isDarkMode ? 'bg-[#0A0A0A]' : 'bg-white'
                                         } border ${
                                             isDragging
                                                 ? isDarkMode ? 'border-purple-400/50' : 'border-purple-300/60'
@@ -849,6 +849,13 @@ export function TranscriptionInterface({ isDarkMode = true }: TranscriptionInter
                                         onDragLeave={handleDragLeave}
                                         onDrop={handleDrop}
                                     >
+                                        {/* Aurora effect - fades in with waveform */}
+                                        <div className={`absolute inset-0 pointer-events-none transition-opacity duration-1000 ${
+                                            showWaveform ? 'opacity-100' : 'opacity-0'
+                                        }`}>
+                                            <div className={`absolute inset-0 ${isDarkMode ? 'aura-bg' : 'aura-bg-light'}`} />
+                                        </div>
+
                                         {/* Dotted grid background */}
                                         <div
                                             className="absolute inset-0 opacity-30 pointer-events-none z-[1]"
@@ -928,13 +935,10 @@ export function TranscriptionInterface({ isDarkMode = true }: TranscriptionInter
                                             />
 
                                             {/* Divider */}
-                                            <div className={`relative mb-6 ${isDarkMode ? 'text-gray-600' : 'text-slate-400'}`}>
-                                                <div className="absolute inset-0 flex items-center">
-                                                    <div className={`w-full border-t ${isDarkMode ? 'border-white/10' : 'border-slate-200'}`} />
-                                                </div>
-                                                <div className="relative flex justify-center text-xs">
-                                                    <span className={`px-2 uppercase tracking-widest ${isDarkMode ? 'bg-[#0A0A0A]' : 'bg-white'}`}>or try a sample</span>
-                                                </div>
+                                            <div className="w-full flex items-center gap-4 mb-6 opacity-50">
+                                                <div className={`h-px flex-1 ${isDarkMode ? 'bg-white/10' : 'bg-slate-200'}`}></div>
+                                                <span className="text-xs uppercase tracking-widest">or try a sample</span>
+                                                <div className={`h-px flex-1 ${isDarkMode ? 'bg-white/10' : 'bg-slate-200'}`}></div>
                                             </div>
 
                                             {/* Sample Buttons */}
