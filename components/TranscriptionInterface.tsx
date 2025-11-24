@@ -14,6 +14,7 @@ import {
     AlertCircle,
     FileAudio,
     Clock,
+    Play,
     PlayCircle,
     Plus,
     MoreVertical,
@@ -21,11 +22,13 @@ import {
     Languages,
     Check,
     Loader2,
+    Mic,
 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { confettiPresets } from "@/components/confetti";
 import { TranscriptView } from "@/components/TranscriptView";
 import { LanguageSelector } from "@/components/LanguageSelector";
+import { ScrollingWaveform } from "@/components/ui/waveform";
 import { AudioControls } from "@/components/AudioControls";
 import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
@@ -92,7 +95,7 @@ export function TranscriptionInterface({ isDarkMode = true }: TranscriptionInter
     const [showReverseTrial, setShowReverseTrial] = useState(false); // Reverse trial popup state
     const [remainingMinutes, setRemainingMinutes] = useState<number | null>(null); // User's remaining minutes
     const [copied, setCopied] = useState(false); // Copy button feedback state
-    const [hasScrolled, setHasScrolled] = useState(false); // Track if user has scrolled (for mobile aurora effect)
+    const [showWaveform, setShowWaveform] = useState(false); // Delay-based waveform visibility
 
     const fileInputRef = useRef<HTMLInputElement>(null);
     const processingTimerRef = useRef<NodeJS.Timeout | null>(null);
@@ -146,26 +149,19 @@ export function TranscriptionInterface({ isDarkMode = true }: TranscriptionInter
         }
     }, [transcriptId]);
 
-    // Scroll detection for mobile aurora effect
+    // Waveform delay effect - show waveform after 2 seconds on idle state
     useEffect(() => {
-        const isMobile = window.innerWidth < 768;
+        if (state === "idle") {
+            const timer = setTimeout(() => {
+                setShowWaveform(true);
+            }, 2000); // 2 second delay
 
-        if (!isMobile) return; // Only track on mobile
-
-        const handleScroll = () => {
-            if (!hasScrolled && window.scrollY > 0) {
-                setHasScrolled(true);
-                // Remove listener after first scroll
-                window.removeEventListener('scroll', handleScroll);
-            }
-        };
-
-        window.addEventListener('scroll', handleScroll, { passive: true });
-
-        return () => {
-            window.removeEventListener('scroll', handleScroll);
-        };
-    }, [hasScrolled]);
+            return () => clearTimeout(timer);
+        } else {
+            // Hide waveform when not in idle state
+            setShowWaveform(false);
+        }
+    }, [state]);
 
     const loadSavedTranscript = async (id: string) => {
         setState("processing");
@@ -842,37 +838,52 @@ export function TranscriptionInterface({ isDarkMode = true }: TranscriptionInter
                             {state === "idle" && (
                                 <>
                                     <div
-                                        className={`group relative rounded-3xl overflow-hidden transition-all duration-500 border ${
+                                        className={`group relative rounded-3xl overflow-hidden transition-all duration-500 ${
+                                            isDarkMode ? 'aura-bg' : 'aura-bg-light'
+                                        } border ${
                                             isDragging
-                                                ? `border-brand-500/50 ${isDarkMode ? 'bg-[#0A0A0A]' : 'bg-white'}`
-                                                : isDarkMode
-                                                    ? 'bg-[#0A0A0A] border-white/10 shadow-2xl'
-                                                    : 'bg-white border-slate-200 shadow-[0_20px_60px_-15px_rgba(0,0,0,0.3)]'
+                                                ? isDarkMode ? 'border-purple-400/50' : 'border-purple-300/60'
+                                                : isDarkMode ? 'border-purple-400/30' : 'border-purple-300/30'
                                         }`}
                                         onDragOver={handleDragOver}
                                         onDragLeave={handleDragLeave}
                                         onDrop={handleDrop}
                                     >
-                                        {/* Aurora background effect */}
-                                        <div className={`absolute inset-0 transition-opacity duration-1000 pointer-events-none ${hasScrolled ? 'opacity-100 animate-pulse md:opacity-0' : 'opacity-0'} md:group-hover:opacity-100`}>
-                                            <div className="absolute inset-0 aura-bg animate-aurora" />
-                                        </div>
-
                                         {/* Dotted grid background */}
                                         <div
-                                            className="absolute inset-0 opacity-30 pointer-events-none z-10"
+                                            className="absolute inset-0 opacity-30 pointer-events-none z-[1]"
                                             style={{
                                                 backgroundImage: 'radial-gradient(#888 1px, transparent 1px)',
                                                 backgroundSize: '20px 20px',
                                             }}
                                         />
 
+                                        {/* Canvas waveform animation - fades in after 2 second delay */}
+                                        <div className={`absolute inset-0 pointer-events-none z-10 transition-opacity duration-1000 ${
+                                            showWaveform ? 'opacity-100' : 'opacity-0'
+                                        }`}>
+                                            <ScrollingWaveform
+                                                speed={60}
+                                                barWidth={3}
+                                                barGap={2}
+                                                barRadius={2}
+                                                height="100%"
+                                                barColor={isDarkMode ? "rgba(255, 255, 255, 0.075)" : "rgba(0, 0, 0, 0.075)"}
+                                                fadeEdges={true}
+                                                fadeWidth={40}
+                                            />
+                                        </div>
+
                                         {/* Content */}
                                         <div className="relative p-12 md:p-16 z-20">
                                             {/* Icon & Text */}
                                             <div className="flex flex-col items-center space-y-6 mb-8">
                                                 {/* Upload Icon */}
-                                                <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-brand-500 to-orange-500 flex items-center justify-center shadow-lg transition-transform hover:scale-105 duration-300">
+                                                <div className={`w-20 h-20 rounded-3xl flex items-center justify-center transition-transform hover:scale-105 duration-300 ${
+                                                    isDarkMode
+                                                        ? 'bg-gradient-to-br from-brand-500 to-orange-500 shadow-lg'
+                                                        : 'bg-[#F56040] shadow-[0_10px_40px_-10px_rgba(245,96,64,0.4)]'
+                                                }`}>
                                                     <Upload className="h-10 w-10 text-white" />
                                                 </div>
 
@@ -904,7 +915,7 @@ export function TranscriptionInterface({ isDarkMode = true }: TranscriptionInter
                                                         ? 'bg-[#111] text-white border-white/10 hover:bg-[#222]'
                                                         : 'bg-white text-slate-700 border-slate-200 hover:bg-slate-50'
                                                 }`}>
-                                                    <Upload className="h-4 w-4" />
+                                                    <Mic className="h-4 w-4" />
                                                 </button>
                                             </div>
 
@@ -922,7 +933,7 @@ export function TranscriptionInterface({ isDarkMode = true }: TranscriptionInter
                                                     <div className={`w-full border-t ${isDarkMode ? 'border-white/10' : 'border-slate-200'}`} />
                                                 </div>
                                                 <div className="relative flex justify-center text-xs">
-                                                    <span className={`px-2 ${isDarkMode ? 'bg-[#0A0A0A]' : 'bg-white'}`}>or try a sample</span>
+                                                    <span className={`px-2 uppercase tracking-widest ${isDarkMode ? 'bg-[#0A0A0A]' : 'bg-white'}`}>or try a sample</span>
                                                 </div>
                                             </div>
 
@@ -1009,7 +1020,7 @@ export function TranscriptionInterface({ isDarkMode = true }: TranscriptionInter
                                                         }
                                                     }}
                                                 >
-                                                    <PlayCircle className="w-3 h-3" fill="currentColor" />
+                                                    <Play size={10} fill="currentColor" />
                                                     {sample.name}
                                                 </button>
                                             ))}

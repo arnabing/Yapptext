@@ -9,7 +9,7 @@ export default function Home() {
   const [isDarkMode, setIsDarkMode] = useState(true);
 
   return (
-    <div className={`min-h-screen transition-colors duration-500 ${isDarkMode ? 'bg-black text-white' : 'bg-white text-slate-900'}`}>
+    <div className={`transition-colors duration-500 ${isDarkMode ? 'bg-black text-white' : 'bg-white text-slate-900'}`}>
       {/* Theme Toggle Button */}
       <button
         onClick={() => setIsDarkMode(!isDarkMode)}
