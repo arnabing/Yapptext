@@ -21,8 +21,12 @@ export function HeaderProvider({ children }: { children: ReactNode }) {
 
 export function useHeader() {
   const context = useContext(HeaderContext)
+  // Return safe defaults if provider is not available (e.g., on landing page)
   if (!context) {
-    throw new Error("useHeader must be used within a HeaderProvider.")
+    return {
+      headerActions: null,
+      setHeaderActions: () => {}
+    }
   }
   return context
 }

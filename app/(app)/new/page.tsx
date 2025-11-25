@@ -1,8 +1,8 @@
 "use client";
 
 import { useState, useRef, useEffect, ChangeEvent, DragEvent } from "react";
-import { useRouter } from "next/navigation";
-import { useUser } from '@clerk/nextjs';
+import { useRouter, useSearchParams } from "next/navigation";
+import { useUser, SignUpButton } from '@clerk/nextjs';
 import { upload } from '@vercel/blob/client';
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -53,6 +53,7 @@ export default function NewTranscript() {
   const { toast } = useToast();
   const { setHeaderActions } = useHeader();
   const router = useRouter();
+  const searchParams = useSearchParams();
   const { isSignedIn } = useUser();
 
   const [state, setState] = useState<AppState>("idle");
@@ -120,6 +121,41 @@ export default function NewTranscript() {
       })
       .catch(console.error);
   }, []);
+
+  // Load sample from sessionStorage when ?sample={id} parameter is present
+  useEffect(() => {
+    const sampleId = searchParams?.get('sample');
+    if (sampleId && typeof window !== 'undefined') {
+      const storedData = sessionStorage.getItem('demoTranscript');
+      if (storedData) {
+        try {
+          const data = JSON.parse(storedData);
+
+          // Populate state with sample data
+          setTranscript(data.text);
+          setOriginalTranscript(data.text);
+          setUtterances(data.utterances || []);
+          setOriginalUtterances(data.utterances || []);
+          setChapters(data.chapters || []);
+          setAllWords(data.words || []);
+          setAudioUrl(data.audioUrl);
+          setAudioFileName(data.fileName);
+          setAudioDuration(data.duration);
+
+          // Create mock file for display
+          const mockFile = new File([], data.fileName, { type: 'audio/mpeg' });
+          setFile(mockFile);
+
+          setState("complete");
+
+          // Clean up URL parameter
+          router.replace('/new', { scroll: false });
+        } catch (error) {
+          console.error('Failed to load sample from sessionStorage:', error);
+        }
+      }
+    }
+  }, [searchParams, router]);
 
   // Register header actions when transcript is ready
   useEffect(() => {
@@ -500,46 +536,64 @@ export default function NewTranscript() {
       setMinutesUsed(data.minutesUsed || minutesUsed + data.duration);
       setState("complete");
 
-      // Save transcript to database
-      try {
-        // Generate title from filename instead of transcript text
-        const baseTitle = file?.name.replace(/\.[^/.]+$/, '') || 'Untitled'; // Remove extension
-        const title = baseTitle.length > 50 ? baseTitle.slice(0, 50) + '...' : baseTitle;
-        const response = await fetch('/api/transcripts', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            title,
-            text: data.text,
-            fileName: file.name,
-            duration: Math.floor(audioDuration),
-            audioUrl: permanentBlobUrl,
-            utterances: data.utterances || [],
-            chapters: data.chapters || [],
-            words: data.allWords || [],
-          }),
-        });
+      // Generate title from filename
+      const baseTitle = file?.name.replace(/\.[^/.]+$/, '') || 'Untitled'; // Remove extension
+      const title = baseTitle.length > 50 ? baseTitle.slice(0, 50) + '...' : baseTitle;
 
-        if (response.ok) {
-          const savedTranscript = await response.json();
-
-          // Check if this was a duplicate
-          if (savedTranscript.isDuplicate) {
-            toast({
-              title: "Duplicate file detected",
-              description: "This file was recently transcribed. Opening existing transcript.",
-            });
-          }
-
-          // Navigate to the saved transcript with new route structure
-          router.push(`/t/${savedTranscript.id}`);
-        }
-      } catch (error) {
-        console.error('Failed to save transcript:', error);
-        // Don't show error to user - this is a background operation
+      // Store in sessionStorage for all users (guests + authenticated)
+      if (typeof window !== 'undefined') {
+        sessionStorage.setItem('demoTranscript', JSON.stringify({
+          title,
+          text: data.text,
+          fileName: file.name,
+          duration: Math.floor(audioDuration),
+          audioUrl: permanentBlobUrl,
+          utterances: data.utterances || [],
+          chapters: data.chapters || [],
+          words: data.allWords || [],
+        }));
       }
+
+      // Only save to database for authenticated users
+      if (isSignedIn) {
+        try {
+          const response = await fetch('/api/transcripts', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              title,
+              text: data.text,
+              fileName: file.name,
+              duration: Math.floor(audioDuration),
+              audioUrl: permanentBlobUrl,
+              utterances: data.utterances || [],
+              chapters: data.chapters || [],
+              words: data.allWords || [],
+            }),
+          });
+
+          if (response.ok) {
+            const savedTranscript = await response.json();
+
+            // Check if this was a duplicate
+            if (savedTranscript.isDuplicate) {
+              toast({
+                title: "Duplicate file detected",
+                description: "This file was recently transcribed. Opening existing transcript.",
+              });
+            }
+
+            // Navigate to the saved transcript with new route structure
+            router.push(`/t/${savedTranscript.id}`);
+          }
+        } catch (error) {
+          console.error('Failed to save transcript:', error);
+          // Don't show error to user - this is a background operation
+        }
+      }
+      // For guests, transcript stays on /new page with sign-up banner
 
       // Show success toast
       const speakerCount =
@@ -867,7 +921,7 @@ export default function NewTranscript() {
                                 }, 200);
 
                                 // After a brief delay, load the preloaded data
-                                setTimeout(() => {
+                                setTimeout(async () => {
                                   clearInterval(progressInterval);
                                   if (processingTimerRef.current) {
                                     clearInterval(processingTimerRef.current);
@@ -901,6 +955,35 @@ export default function NewTranscript() {
                                     title: "Sample loaded!",
                                     description: `${sample.name} transcript ready`,
                                   });
+
+                                  // Save sample transcript to database and redirect to proper view
+                                  try {
+                                    const response = await fetch('/api/transcripts', {
+                                      method: 'POST',
+                                      headers: {
+                                        'Content-Type': 'application/json',
+                                      },
+                                      body: JSON.stringify({
+                                        title: sample.name,
+                                        text: sampleTranscript.transcript.text,
+                                        fileName: `${sample.name}.mp3`,
+                                        duration: sampleTranscript.transcript.duration,
+                                        audioUrl: sample.file,
+                                        utterances: sampleTranscript.transcript.utterances || [],
+                                        chapters: sampleTranscript.transcript.chapters || [],
+                                        words: sampleTranscript.transcript.allWords || [],
+                                      }),
+                                    });
+
+                                    if (response.ok) {
+                                      const savedTranscript = await response.json();
+                                      // Redirect to the saved transcript view
+                                      router.push(`/t/${savedTranscript.id}`);
+                                    }
+                                  } catch (error) {
+                                    console.error('Failed to save sample transcript:', error);
+                                    // Don't block the user - they can still see the transcript on this page
+                                  }
                                 }, 1500); // Brief delay for realism
                               } else {
                                 // Fallback: load the audio file normally (for files without preloaded transcripts)
@@ -1025,6 +1108,25 @@ export default function NewTranscript() {
             currentTime={currentPlayTime * 1000}
             words={allWords}
           />
+
+          {/* Sign up CTA for guest users */}
+          {!isSignedIn && (
+            <div className="mt-8">
+              <Alert className="border-primary/50 bg-primary/5">
+                <AlertDescription className="flex items-center justify-between gap-4">
+                  <div className="flex-1">
+                    <p className="font-medium text-foreground mb-1">Love what you see?</p>
+                    <p className="text-sm text-muted-foreground">Sign up to save this transcript and create your own</p>
+                  </div>
+                  <SignUpButton mode="modal">
+                    <Button className="shrink-0">
+                      Sign Up to Save
+                    </Button>
+                  </SignUpButton>
+                </AlertDescription>
+              </Alert>
+            </div>
+          )}
         </>
       )}
 

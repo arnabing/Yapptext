@@ -2,7 +2,9 @@ import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server'
 
 // Define public routes (don't require auth)
 const isPublicRoute = createRouteMatcher([
-  '/', // Main app - allow anonymous users
+  '/', // Landing page - allow anonymous users
+  '/new', // Upload page - allow guests to upload and transcribe
+  '/t/(.*)', // Transcript view - allow guests to view transcripts
   '/sign-in(.*)',
   '/sign-up(.*)',
   '/api/webhooks(.*)', // Stripe/Clerk webhooks

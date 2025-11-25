@@ -48,7 +48,7 @@ import { PaywallModal } from "@/components/billing/PaywallModal";
 import { ReverseTrialPopup } from "@/components/billing/ReverseTrialPopup";
 import { useHeader } from "@/lib/header-context";
 import { useSearchParams, useRouter } from "next/navigation";
-import { useUser } from '@clerk/nextjs';
+import { useUser, SignUpButton } from '@clerk/nextjs';
 
 type AppState = "idle" | "file-selected" | "processing" | "complete" | "error";
 
@@ -598,11 +598,8 @@ export function TranscriptionInterface({ isDarkMode = true }: TranscriptionInter
                         });
                     }
 
-                    // Navigate to the saved transcript to update sidebar and URL
-                    // But since we are in the landing page component, we might want to just update the URL without full nav
-                    // Or if we are in the app, we push.
-                    // For now, let's push to the query param
-                    router.push(`/?transcriptId=${savedTranscript.id}`);
+                    // Navigate to the saved transcript view in the app
+                    router.push(`/t/${savedTranscript.id}`);
                 }
             } catch (error) {
                 console.error('Failed to save transcript:', error);
@@ -870,12 +867,12 @@ export function TranscriptionInterface({ isDarkMode = true }: TranscriptionInter
                                             showWaveform ? 'opacity-100' : 'opacity-0'
                                         }`}>
                                             <ScrollingWaveform
-                                                speed={60}
+                                                speed={30}
                                                 barWidth={3}
                                                 barGap={2}
                                                 barRadius={2}
                                                 height="100%"
-                                                barColor={isDarkMode ? "rgba(255, 255, 255, 0.075)" : "rgba(0, 0, 0, 0.075)"}
+                                                barColor={isDarkMode ? "rgba(255, 255, 255, 0.05)" : "rgba(0, 0, 0, 0.05)"}
                                                 fadeEdges={true}
                                                 fadeWidth={40}
                                             />
@@ -886,7 +883,9 @@ export function TranscriptionInterface({ isDarkMode = true }: TranscriptionInter
                                             {/* Icon & Text */}
                                             <div className="flex flex-col items-center space-y-6 mb-8">
                                                 {/* Upload Icon */}
-                                                <div className={`w-20 h-20 rounded-3xl flex items-center justify-center transition-transform hover:scale-105 duration-300 ${
+                                                <div
+                                                    onClick={() => fileInputRef.current?.click()}
+                                                    className={`w-20 h-20 rounded-3xl flex items-center justify-center transition-transform hover:scale-105 duration-300 cursor-pointer ${
                                                     isDarkMode
                                                         ? 'bg-gradient-to-br from-brand-500 to-orange-500 shadow-lg'
                                                         : 'bg-[#F56040] shadow-[0_10px_40px_-10px_rgba(245,96,64,0.4)]'
@@ -909,7 +908,7 @@ export function TranscriptionInterface({ isDarkMode = true }: TranscriptionInter
                                             <div className="flex gap-4 mb-8">
                                                 <button
                                                     onClick={() => fileInputRef.current?.click()}
-                                                    className={`flex-1 rounded-xl shadow-sm py-3 font-medium text-sm border border-transparent transition-all ${
+                                                    className={`flex-1 rounded-xl shadow-lg py-3 font-medium text-sm border border-transparent transition-all ${
                                                         isDarkMode
                                                             ? 'bg-white text-black hover:bg-gray-100'
                                                             : 'bg-slate-900 text-white hover:bg-slate-800'
@@ -1007,18 +1006,73 @@ export function TranscriptionInterface({ isDarkMode = true }: TranscriptionInter
                                                                         clearInterval(processingTimerRef.current);
                                                                     }
 
-                                                                    setTranscript(sampleTranscript.transcript.text);
-                                                                    setOriginalTranscript(sampleTranscript.transcript.text);
-                                                                    setUtterances(sampleTranscript.transcript.utterances);
-                                                                    setOriginalUtterances(sampleTranscript.transcript.utterances);
-                                                                    setChapters(sampleTranscript.transcript.chapters || []);
-                                                                    setAllWords(sampleTranscript.transcript.allWords || []);
-                                                                    setState("complete");
+                                                                    setProgress(100);
 
-                                                                    toast({
-                                                                        title: "✨ Sample loaded!",
-                                                                        description: "Explore the transcript features.",
-                                                                    });
+                                                                    // Store sample data in sessionStorage for all users
+                                                                    if (typeof window !== 'undefined') {
+                                                                        sessionStorage.setItem('demoTranscript', JSON.stringify({
+                                                                            title: sample.name,
+                                                                            text: sampleTranscript.transcript.text,
+                                                                            fileName: `${sample.name}.mp3`,
+                                                                            duration: sampleTranscript.transcript.duration,
+                                                                            audioUrl: sample.file,
+                                                                            utterances: sampleTranscript.transcript.utterances || [],
+                                                                            chapters: sampleTranscript.transcript.chapters || [],
+                                                                            words: sampleTranscript.transcript.allWords || [],
+                                                                        }));
+                                                                    }
+
+                                                                    // If user is signed in, save to database and redirect
+                                                                    if (isSignedIn) {
+                                                                        (async () => {
+                                                                            try {
+                                                                                setStatusMessage("Saving transcript...");
+
+                                                                                const response = await fetch('/api/transcripts', {
+                                                                                    method: 'POST',
+                                                                                    headers: {
+                                                                                        'Content-Type': 'application/json',
+                                                                                    },
+                                                                                    body: JSON.stringify({
+                                                                                        title: sample.name,
+                                                                                        text: sampleTranscript.transcript.text,
+                                                                                        fileName: `${sample.name}.mp3`,
+                                                                                        duration: sampleTranscript.transcript.duration,
+                                                                                        audioUrl: sample.file,
+                                                                                        utterances: sampleTranscript.transcript.utterances || [],
+                                                                                        chapters: sampleTranscript.transcript.chapters || [],
+                                                                                        words: sampleTranscript.transcript.allWords || [],
+                                                                                    }),
+                                                                                });
+
+                                                                                if (response.ok) {
+                                                                                    const savedTranscript = await response.json();
+
+                                                                                    toast({
+                                                                                        title: "✨ Sample loaded!",
+                                                                                        description: "Explore the transcript features.",
+                                                                                    });
+
+                                                                                    confettiPresets.success();
+
+                                                                                    // Redirect to the saved transcript view in the app
+                                                                                    router.push(`/t/${savedTranscript.id}`);
+                                                                                }
+                                                                            } catch (error) {
+                                                                                console.error('Failed to save sample transcript:', error);
+                                                                            }
+                                                                        })();
+                                                                    } else {
+                                                                        // Guest user - redirect to /new to show sample in app with sidebar
+                                                                        toast({
+                                                                            title: "✨ Sample loaded!",
+                                                                            description: "Sign up to save this transcript.",
+                                                                        });
+
+                                                                        confettiPresets.success();
+
+                                                                        router.push(`/new?sample=${sample.id}`);
+                                                                    }
                                                                 }
                                                             }, 500);
                                                         }
@@ -1152,6 +1206,25 @@ export function TranscriptionInterface({ isDarkMode = true }: TranscriptionInter
                             chapters={chapters}
                             words={allWords}
                         />
+
+                        {/* Sign up CTA for guest users */}
+                        {!isSignedIn && (
+                            <div className="mt-8">
+                                <Alert className="border-primary/50 bg-primary/5">
+                                    <AlertDescription className="flex items-center justify-between gap-4">
+                                        <div className="flex-1">
+                                            <p className="font-medium text-foreground mb-1">Love what you see?</p>
+                                            <p className="text-sm text-muted-foreground">Sign up to save this transcript and create your own</p>
+                                        </div>
+                                        <SignUpButton mode="modal">
+                                            <Button className="shrink-0">
+                                                Sign Up to Save
+                                            </Button>
+                                        </SignUpButton>
+                                    </AlertDescription>
+                                </Alert>
+                            </div>
+                        )}
                     </div>
                 </div>
             )}
