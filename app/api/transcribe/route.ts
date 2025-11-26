@@ -1,12 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { transcribeWithAssemblyAI, estimateAudioDuration } from '@/lib/assemblyai'
-import { getCurrentUserId, getCurrentUserEmail, getClientIP, hashIP } from '@/lib/auth'
+import { getCurrentUserId, getCurrentUserEmail, getClientIP } from '@/lib/auth'
 import {
   canUserTranscribe,
   logUsage,
-  ensureUserExists,
-  hasAnonymousIPUsedFreeTier,
-  markAnonymousIPUsed
+  ensureUserExists
 } from '@/lib/usage'
 import { TRANSCRIPTION_MODELS } from '@/lib/constants'
 
@@ -17,23 +15,10 @@ export async function POST(request: NextRequest) {
   console.log('Timestamp:', new Date().toISOString())
 
   try {
-    // Get user ID and IP address
+    // Get user ID
     const userId = await getCurrentUserId()
-    const ip = getClientIP(request)
-    const hashedIP = await hashIP(ip)
 
     console.log('User ID:', userId || 'anonymous')
-
-    // Check if anonymous user has already used their free transcript
-    if (!userId && hasAnonymousIPUsedFreeTier(hashedIP)) {
-      return NextResponse.json(
-        {
-          error: 'You\'ve used your free transcript. Sign up to get 60 minutes per month!',
-          requiresAuth: true
-        },
-        { status: 429 }
-      )
-    }
 
     // Parse form data
     console.log('Parsing form data...')
@@ -146,12 +131,6 @@ export async function POST(request: NextRequest) {
         console.error('Error logging usage:', error)
         // Don't fail the request if usage logging fails
       }
-    }
-
-    // Mark anonymous IP as used
-    if (!userId) {
-      markAnonymousIPUsed(hashedIP)
-      console.log('Marked anonymous IP as used')
     }
 
     // Return successful response
