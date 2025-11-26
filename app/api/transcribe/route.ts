@@ -1,14 +1,14 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { transcribeWithAssemblyAI, estimateAudioDuration } from '@/lib/assemblyai'
+import { submitTranscriptionJob, estimateAudioDuration } from '@/lib/assemblyai'
 import { getCurrentUserId, getCurrentUserEmail, getClientIP } from '@/lib/auth'
 import {
   canUserTranscribe,
   logUsage,
   ensureUserExists
 } from '@/lib/usage'
-import { TRANSCRIPTION_MODELS } from '@/lib/constants'
+import { TRANSCRIPTION_MODELS, isSampleFile } from '@/lib/constants'
 
-export const maxDuration = 60 // Maximum function duration: 60 seconds
+export const maxDuration = 10 // Maximum function duration: 10 seconds (just for job submission)
 
 export async function POST(request: NextRequest) {
   console.log('\n=== TRANSCRIBE ENDPOINT START ===')
@@ -106,45 +106,35 @@ export async function POST(request: NextRequest) {
 
     const startTime = Date.now()
 
-    // Single model transcription - no reconciliation
-    console.log(`Starting ${selectedModel} transcription...`)
-    const result = await transcribeWithAssemblyAI(audioUrl || audioFile, {
+    // Submit transcription job asynchronously - returns immediately with transcript ID
+    console.log(`Submitting ${selectedModel} transcription job...`)
+    const transcriptId = await submitTranscriptionJob(audioUrl || audioFile, {
       model: selectedModel as 'nano' | 'universal',
       enableSentiment,
       enableKeyPhrases,
       isUrl: !!audioUrl
     })
 
-    const processingTime = Date.now() - startTime
-    console.log(`Transcription completed in ${processingTime}ms`)
+    const submissionTime = Date.now() - startTime
+    console.log(`Job submitted in ${submissionTime}ms with ID: ${transcriptId}`)
 
-    // Log usage for authenticated users
-    if (userId && result.duration > 0) {
-      try {
-        const email = await getCurrentUserEmail()
-        if (email) {
-          await ensureUserExists(userId, email)
-          await logUsage(userId, result.duration, selectedModel as any)
-          console.log(`Logged ${result.duration} minutes for user ${userId}`)
-        }
-      } catch (error) {
-        console.error('Error logging usage:', error)
-        // Don't fail the request if usage logging fails
-      }
-    }
+    // Store metadata for usage tracking (will log when job completes)
+    // We'll handle usage logging in the status check endpoint when job completes
+    const isSample = audioUrl ? isSampleFile(audioUrl) : false
 
-    // Return successful response
+    // Return transcript ID immediately for frontend polling
     return NextResponse.json({
-      text: result.text,
-      utterances: result.utterances,
-      chapters: result.chapters,
-      duration: result.duration,
-      allWords: result.allWords,
-      sentimentAnalysis: result.sentimentAnalysis,
-      keyPhrases: result.keyPhrases,
-      confidenceMetrics: result.confidenceMetrics,
-      processingTime,
-      model: selectedModel
+      transcriptId,
+      status: 'queued',
+      submissionTime,
+      model: selectedModel,
+      // Include metadata for status endpoint
+      metadata: {
+        userId: userId || null,
+        isSample,
+        audioUrl: audioUrl || null,
+        fileName: audioFile?.name || null
+      }
     })
   } catch (error: any) {
     console.error('=== TRANSCRIPTION ERROR ===')

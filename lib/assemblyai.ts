@@ -274,6 +274,216 @@ export async function transcribeWithAssemblyAI(audioInput: File | string, option
   }
 }
 
+/**
+ * Submit a transcription job to AssemblyAI without waiting for completion
+ * Returns the transcript ID immediately for frontend polling
+ */
+export async function submitTranscriptionJob(audioInput: File | string, options?: {
+  model?: 'nano' | 'universal'
+  enableSentiment?: boolean
+  enableKeyPhrases?: boolean
+  isUrl?: boolean
+  speakersExpected?: number
+}): Promise<string> {
+  console.log('=== SUBMITTING ASSEMBLYAI TRANSCRIPTION JOB ===')
+  console.log('- Input type:', typeof audioInput)
+  console.log('- Is URL:', options?.isUrl || false)
+  console.log('- Model:', options?.model || 'universal')
+
+  if (!process.env.ASSEMBLYAI_API_KEY) {
+    throw new Error('ASSEMBLYAI_API_KEY is not configured')
+  }
+
+  try {
+    const selectedModel = options?.model || 'universal'
+
+    // Prepare transcription options
+    let transcriptOptions: any = {
+      speaker_labels: true,
+      speech_model: selectedModel,
+      language_code: 'en',
+      format_text: true,
+      punctuate: true,
+    }
+
+    // Handle URL vs File input
+    if (options?.isUrl && typeof audioInput === 'string') {
+      console.log('Using audio URL:', audioInput)
+      transcriptOptions.audio = audioInput
+    } else if (audioInput instanceof File) {
+      console.log('Converting file to buffer...')
+      const buffer = await audioInput.arrayBuffer()
+      console.log('- File size:', (buffer.byteLength / 1024 / 1024).toFixed(2), 'MB')
+      transcriptOptions.audio = Buffer.from(buffer)
+    } else {
+      throw new Error('Invalid audio input: must be a URL string or File object')
+    }
+
+    // Add optional features
+    if (options?.enableSentiment) {
+      transcriptOptions.sentiment_analysis = true
+    }
+
+    if (options?.enableKeyPhrases) {
+      transcriptOptions.auto_highlights = true
+    }
+
+    if (options?.speakersExpected && Number.isFinite(options.speakersExpected)) {
+      transcriptOptions.speakers_expected = options.speakersExpected
+    }
+
+    const client = getClient()
+
+    // Submit job without waiting - returns immediately with transcript object containing id
+    console.log('Submitting transcription job...')
+    const transcript = await client.transcripts.submit(transcriptOptions)
+
+    console.log('=== JOB SUBMITTED SUCCESSFULLY ===')
+    console.log('- Transcript ID:', transcript.id)
+    console.log('- Status:', transcript.status)
+
+    return transcript.id
+  } catch (error: any) {
+    console.error('=== JOB SUBMISSION ERROR ===')
+    console.error('- Error:', error?.message)
+    throw error
+  }
+}
+
+/**
+ * Get the current status and result of a transcription job
+ */
+export async function getTranscriptionStatus(transcriptId: string): Promise<{
+  status: 'queued' | 'processing' | 'completed' | 'error'
+  transcript?: {
+    text: string
+    utterances: TranscriptSegment[]
+    chapters: Chapter[]
+    duration: number
+    allWords: Word[]
+    sentimentAnalysis?: any
+    keyPhrases?: string[]
+    confidenceMetrics?: {
+      averageConfidence: number
+      lowConfidenceWords: Array<{word: string, confidence: number, timestamp: number}>
+    }
+  }
+  error?: string
+}> {
+  console.log('=== CHECKING TRANSCRIPTION STATUS ===')
+  console.log('- Transcript ID:', transcriptId)
+
+  if (!process.env.ASSEMBLYAI_API_KEY) {
+    throw new Error('ASSEMBLYAI_API_KEY is not configured')
+  }
+
+  try {
+    const client = getClient()
+    const result = await client.transcripts.get(transcriptId)
+
+    console.log('- Current status:', result.status)
+
+    // If still processing, return status only
+    if (result.status === 'queued' || result.status === 'processing') {
+      return { status: result.status }
+    }
+
+    // If error, return error info
+    if (result.status === 'error') {
+      console.error('- Transcription error:', result.error)
+      return {
+        status: 'error',
+        error: result.error || 'Transcription failed'
+      }
+    }
+
+    // If completed, process and return full transcript
+    console.log('=== TRANSCRIPTION COMPLETED ===')
+
+    // Map utterances to our format
+    const utterances: TranscriptSegment[] = result.utterances?.map((utt: any) => ({
+      speaker: `Speaker ${utt.speaker}`,
+      text: utt.text,
+      start: utt.start,
+      end: utt.end,
+      words: utt.words?.map((w: any) => ({
+        text: w.text,
+        start: w.start,
+        end: w.end,
+        confidence: w.confidence,
+        speaker: `Speaker ${utt.speaker}`
+      }))
+    })) || []
+
+    // Collect all words for word-level highlighting
+    const allWords: Word[] = result.words?.map((w: any) => ({
+      text: w.text,
+      start: w.start,
+      end: w.end,
+      confidence: w.confidence,
+      speaker: w.speaker !== undefined ? `Speaker ${w.speaker}` : undefined
+    })) || []
+
+    const chapters: Chapter[] = []
+
+    // Calculate duration in minutes
+    const durationMs = result.audio_duration || 0
+    const duration = Math.ceil(durationMs / 60000)
+
+    // Extract sentiment analysis and key phrases
+    const sentimentAnalysis = result.sentiment_analysis_results || null
+    const keyPhrases = result.auto_highlights_result?.results?.map(
+      (highlight: any) => highlight.text
+    ) || []
+
+    // Calculate confidence metrics
+    let confidenceMetrics = undefined
+    if (allWords.length > 0) {
+      const confidences = allWords.map(w => w.confidence).filter(c => c !== undefined)
+      const averageConfidence = confidences.length > 0
+        ? confidences.reduce((a, b) => a + b, 0) / confidences.length
+        : 0
+
+      const lowConfidenceWords = allWords
+        .filter(w => w.confidence < 0.8)
+        .map(w => ({
+          word: w.text,
+          confidence: w.confidence,
+          timestamp: w.start
+        }))
+        .slice(0, 50)
+
+      confidenceMetrics = {
+        averageConfidence,
+        lowConfidenceWords
+      }
+    }
+
+    console.log('- Text length:', result.text?.length || 0, 'characters')
+    console.log('- Utterances:', utterances.length)
+    console.log('- Words:', allWords.length)
+    console.log('- Duration:', duration, 'minutes')
+
+    return {
+      status: 'completed',
+      transcript: {
+        text: result.text || '',
+        utterances,
+        chapters,
+        duration,
+        allWords,
+        sentimentAnalysis,
+        keyPhrases,
+        confidenceMetrics
+      }
+    }
+  } catch (error: any) {
+    console.error('=== STATUS CHECK ERROR ===')
+    console.error('- Error:', error?.message)
+    throw error
+  }
+}
+
 export function estimateAudioDuration(fileSize: number): number {
   // Estimate based on typical bitrate (128 kbps)
   // 128 kbps = 16 KB/s = 960 KB/min

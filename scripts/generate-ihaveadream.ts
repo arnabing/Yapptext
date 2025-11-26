@@ -39,12 +39,12 @@ async function generateIHaveADream() {
     console.log(`📁 File size: ${(fileBuffer.length / 1024 / 1024).toFixed(2)}MB`)
 
     // Upload and transcribe with nano model (no speaker labels for single speaker)
-    console.log('🚀 Uploading to AssemblyAI with nano model (single speaker)...')
+    console.log('🚀 Uploading to AssemblyAI with universal model (single speaker)...')
     const startTime = Date.now()
-    
+
     const transcript = await client.transcripts.transcribe({
       audio: fileBuffer,
-      speech_model: 'nano', // Fast model for single speaker
+      speech_model: 'universal', // Using universal as default model
       speaker_labels: false, // Single speaker - no diarization needed
       language_code: 'en',
       punctuate: true,

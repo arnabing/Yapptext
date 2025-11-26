@@ -464,65 +464,38 @@ export function TranscriptionInterface({ isDarkMode = true }: TranscriptionInter
                 formData.append("durationMinutes", durationMinutes.toString());
             }
 
-            // Use XMLHttpRequest for processing progress
-            const xhr = new XMLHttpRequest();
-
-            const uploadPromise = new Promise<any>((resolve, reject) => {
-                // No need for upload progress here since blob upload handles it
-
-                xhr.addEventListener("load", () => {
-                    if (xhr.status === 200) {
-                        try {
-                            const data = JSON.parse(xhr.responseText);
-                            resolve(data);
-                        } catch (e) {
-                            reject(new Error("Invalid response format"));
-                        }
-                    } else {
-                        try {
-                            const errorData = JSON.parse(xhr.responseText);
-                            // Check for usage limit or auth errors (status 429)
-                            if (xhr.status === 429) {
-                                if (errorData.requiresAuth) {
-                                    // Anonymous user hit their limit - need to sign up
-                                    setShowPaywall(true);
-                                } else if (errorData.requiresUpgrade) {
-                                    // Authenticated user hit their tier limit - show paywall
-                                    setShowPaywall(true);
-                                }
-                            }
-                            reject(
-                                new Error(
-                                    errorData.error || `Request failed with status ${xhr.status}`,
-                                ),
-                            );
-                        } catch {
-                            reject(new Error(`Request failed with status ${xhr.status}`));
-                        }
-                    }
-                });
-
-                xhr.addEventListener("error", () => {
-                    reject(new Error("Network error occurred. Please try again."));
-                });
-
-                xhr.addEventListener("timeout", () => {
-                    reject(
-                        new Error("Request timed out. Please try with a smaller file."),
-                    );
-                });
-
-                xhr.open("POST", "/api/transcribe");
-                xhr.timeout = 120000; // 2 minutes timeout
-                xhr.send(formData);
+            // Submit transcription job (returns immediately with transcript ID)
+            console.log("Submitting transcription job...");
+            const submitResponse = await fetch('/api/transcribe', {
+                method: 'POST',
+                body: formData
             });
 
+            if (!submitResponse.ok) {
+                const errorData = await submitResponse.json();
+                // Check for usage limit or auth errors (status 429)
+                if (submitResponse.status === 429) {
+                    if (errorData.requiresAuth) {
+                        // Anonymous user hit their limit - need to sign up
+                        setShowPaywall(true);
+                    } else if (errorData.requiresUpgrade) {
+                        // Authenticated user hit their tier limit - show paywall
+                        setShowPaywall(true);
+                    }
+                }
+                throw new Error(errorData.error || `Failed to submit job: ${submitResponse.status}`);
+            }
+
+            const submitData = await submitResponse.json();
+            const transcriptId = submitData.transcriptId;
+            console.log("Job submitted with ID:", transcriptId);
+
             // After upload completes, show processing status
-            console.log("Upload complete, starting transcription processing...");
+            console.log("Upload complete, polling for transcription status...");
             setProgress(40); // Upload complete, now processing
             setStatusMessage("Processing transcript...");
 
-            // Calculate progress based on estimated time
+            // Calculate progress based on estimated time and poll status
             const startProcessingTime = Date.now();
             const progressInterval = setInterval(() => {
                 const elapsed = (Date.now() - startProcessingTime) / 1000;
@@ -533,14 +506,70 @@ export function TranscriptionInterface({ isDarkMode = true }: TranscriptionInter
                 );
             }, 2000); // Log every 2 seconds
 
-            const data = await uploadPromise;
+            // Poll for status every 3 seconds
+            let data: any = null;
+            let pollAttempts = 0;
+            const maxPollAttempts = 60; // 3 minutes max (60 * 3 seconds)
+
+            while (!data && pollAttempts < maxPollAttempts) {
+                await new Promise(resolve => setTimeout(resolve, 3000)); // Wait 3 seconds
+                pollAttempts++;
+
+                console.log(`Polling attempt ${pollAttempts}...`);
+
+                // Build status check URL with metadata for usage logging
+                const statusUrl = new URL(`/api/transcribe-status/${transcriptId}`, window.location.origin);
+                if (submitData.metadata?.userId) {
+                    statusUrl.searchParams.set('userId', submitData.metadata.userId);
+                }
+                if (submitData.metadata?.isSample !== undefined) {
+                    statusUrl.searchParams.set('isSample', String(submitData.metadata.isSample));
+                }
+                if (submitData.metadata?.audioUrl) {
+                    statusUrl.searchParams.set('audioUrl', submitData.metadata.audioUrl);
+                }
+                if (submitData.model) {
+                    statusUrl.searchParams.set('model', submitData.model);
+                }
+
+                const statusResponse = await fetch(statusUrl.toString());
+
+                if (!statusResponse.ok) {
+                    console.error('Status check failed:', statusResponse.status);
+                    continue; // Try again
+                }
+
+                const statusData = await statusResponse.json();
+                console.log('Current status:', statusData.status);
+                console.log('Status response:', JSON.stringify(statusData, null, 2));
+
+                if (statusData.status === 'completed') {
+                    data = statusData;
+                    break;
+                } else if (statusData.status === 'error') {
+                    clearInterval(progressInterval);
+                    throw new Error(statusData.error || 'Transcription failed');
+                }
+                // Otherwise keep polling (queued or processing)
+            }
+
             clearInterval(progressInterval);
+
+            if (!data) {
+                throw new Error('Transcription timed out after 3 minutes');
+            }
+
+            // Validate we got transcript data
+            if (!data.text) {
+                console.error('ERROR: Polling completed but no text received:', data);
+                throw new Error('Transcription completed but no transcript text received');
+            }
 
             const totalTime = (Date.now() - startProcessingTime) / 1000;
             console.log("\n=== TRANSCRIPTION COMPLETE ===");
             console.log("Total processing time:", totalTime.toFixed(1), "seconds");
             console.log("Text length:", data.text?.length || 0, "characters");
-            console.log("Words:", data.words || 0);
+            console.log("Words:", data.allWords?.length || 0);
             console.log("Utterances:", data.utterances?.length || 0);
             console.log(
                 "Speakers:",
@@ -565,48 +594,7 @@ export function TranscriptionInterface({ isDarkMode = true }: TranscriptionInter
             setMinutesUsed(data.minutesUsed || minutesUsed + data.duration);
             setState("complete");
 
-            // Save transcript to database
-            try {
-                // Generate title from filename instead of transcript text
-                const baseTitle = file?.name.replace(/\.[^/.]+$/, '') || 'Untitled'; // Remove extension
-                const title = baseTitle.length > 50 ? baseTitle.slice(0, 50) + '...' : baseTitle;
-                const response = await fetch('/api/transcripts', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        title,
-                        text: data.text,
-                        fileName: file.name,
-                        duration: Math.floor(audioDuration),
-                        audioUrl: permanentBlobUrl,
-                        utterances: data.utterances || [],
-                        chapters: data.chapters || [],
-                        words: data.allWords || [],
-                    }),
-                });
-
-                if (response.ok) {
-                    const savedTranscript = await response.json();
-
-                    // Check if this was a duplicate
-                    if (savedTranscript.isDuplicate) {
-                        toast({
-                            title: "Duplicate file detected",
-                            description: "This file was recently transcribed. Opening existing transcript.",
-                        });
-                    }
-
-                    // Navigate to the saved transcript view in the app
-                    router.push(`/t/${savedTranscript.id}`);
-                }
-            } catch (error) {
-                console.error('Failed to save transcript:', error);
-                // Don't show error to user - this is a background operation
-            }
-
-            // Show success toast
+            // Show success toast for all users
             const speakerCount =
                 data.utterances?.length > 0
                     ? new Set(data.utterances.map((u: any) => u.speaker)).size
@@ -614,7 +602,7 @@ export function TranscriptionInterface({ isDarkMode = true }: TranscriptionInter
 
             toast({
                 title: "✨ Transcript ready!",
-                description: `Successfully transcribed ${data.words || data.text.split(" ").length} words${speakerCount > 0 ? ` with ${speakerCount} speaker${speakerCount > 1 ? "s" : ""} detected` : ""}`,
+                description: `Successfully transcribed ${data.allWords?.length || data.text?.split(" ").length || 0} words${speakerCount > 0 ? ` with ${speakerCount} speaker${speakerCount > 1 ? "s" : ""} detected` : ""}`,
             });
 
             // Trigger confetti after a short delay
@@ -810,6 +798,11 @@ export function TranscriptionInterface({ isDarkMode = true }: TranscriptionInter
         setStatusMessage("");
         if (fileInputRef.current) {
             fileInputRef.current.value = "";
+        }
+
+        // Clear sessionStorage to prevent demo transcript from persisting
+        if (typeof window !== 'undefined') {
+            sessionStorage.removeItem('demoTranscript');
         }
     };
 

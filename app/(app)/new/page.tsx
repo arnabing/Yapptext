@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useEffect, ChangeEvent, DragEvent } from "react";
+import { useState, useRef, useEffect, ChangeEvent, DragEvent, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useUser, SignUpButton } from '@clerk/nextjs';
 import { upload } from '@vercel/blob/client';
@@ -49,7 +49,7 @@ import { useHeader } from "@/lib/header-context";
 
 type AppState = "idle" | "file-selected" | "processing" | "complete" | "error";
 
-export default function NewTranscript() {
+function NewTranscriptContent() {
   const { toast } = useToast();
   const { setHeaderActions } = useHeader();
   const router = useRouter();
@@ -77,7 +77,7 @@ export default function NewTranscript() {
   const [currentLanguage, setCurrentLanguage] = useState("original");
   const [audioDuration, setAudioDuration] = useState(0); // in seconds
   const [estimatedTime, setEstimatedTime] = useState(0); // in seconds
-  const [selectedModel, setSelectedModel] = useState<'turbo' | 'standard'>('standard'); // Model selection
+  const [selectedModel, setSelectedModel] = useState<'nano' | 'universal'>('universal'); // Model selection
   const [showPaywall, setShowPaywall] = useState(false); // Paywall modal state
   const [showReverseTrial, setShowReverseTrial] = useState(false); // Reverse trial popup state
   const [remainingMinutes, setRemainingMinutes] = useState<number | null>(null); // User's remaining minutes
@@ -122,10 +122,9 @@ export default function NewTranscript() {
       .catch(console.error);
   }, []);
 
-  // Load sample from sessionStorage when ?sample={id} parameter is present
+  // Load transcript from sessionStorage (for samples or guest uploads)
   useEffect(() => {
-    const sampleId = searchParams?.get('sample');
-    if (sampleId && typeof window !== 'undefined') {
+    if (typeof window !== 'undefined' && state === 'idle') {
       const storedData = sessionStorage.getItem('demoTranscript');
       if (storedData) {
         try {
@@ -148,14 +147,17 @@ export default function NewTranscript() {
 
           setState("complete");
 
-          // Clean up URL parameter
-          router.replace('/new', { scroll: false });
+          // Clean up URL parameter if present
+          const sampleId = searchParams?.get('sample');
+          if (sampleId) {
+            router.replace('/new', { scroll: false });
+          }
         } catch (error) {
-          console.error('Failed to load sample from sessionStorage:', error);
+          console.error('Failed to load transcript from sessionStorage:', error);
         }
       }
     }
-  }, [searchParams, router]);
+  }, [searchParams, router, state]);
 
   // Register header actions when transcript is ready
   useEffect(() => {
@@ -241,7 +243,7 @@ export default function NewTranscript() {
 
               <DropdownMenuSeparator />
 
-              <DropdownMenuItem onClick={() => router.push('/new')}>
+              <DropdownMenuItem onClick={reset}>
                 <Plus className="h-4 w-4 mr-2" />
                 New transcription
               </DropdownMenuItem>
@@ -581,12 +583,11 @@ export default function NewTranscript() {
             if (savedTranscript.isDuplicate) {
               toast({
                 title: "Duplicate file detected",
-                description: "This file was recently transcribed. Opening existing transcript.",
+                description: "This file was recently transcribed. Showing existing transcript.",
               });
             }
 
-            // Navigate to the saved transcript with new route structure
-            router.push(`/t/${savedTranscript.id}`);
+            // Transcript will display inline on /new page
           }
         } catch (error) {
           console.error('Failed to save transcript:', error);
@@ -799,6 +800,11 @@ export default function NewTranscript() {
     if (fileInputRef.current) {
       fileInputRef.current.value = "";
     }
+
+    // Clear sessionStorage to prevent demo transcript from persisting
+    if (typeof window !== 'undefined') {
+      sessionStorage.removeItem('demoTranscript');
+    }
   };
 
   const getFileSize = (bytes: number) => {
@@ -977,8 +983,7 @@ export default function NewTranscript() {
 
                                     if (response.ok) {
                                       const savedTranscript = await response.json();
-                                      // Redirect to the saved transcript view
-                                      router.push(`/t/${savedTranscript.id}`);
+                                      // Sample transcript will display inline on /new page
                                     }
                                   } catch (error) {
                                     console.error('Failed to save sample transcript:', error);
@@ -1157,5 +1162,13 @@ export default function NewTranscript() {
         </div>
       )}
     </>
+  );
+}
+
+export default function NewTranscript() {
+  return (
+    <Suspense fallback={<div className="flex items-center justify-center min-h-screen"><Loader2 className="h-8 w-8 animate-spin" /></div>}>
+      <NewTranscriptContent />
+    </Suspense>
   );
 }

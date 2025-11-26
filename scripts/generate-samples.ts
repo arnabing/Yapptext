@@ -67,7 +67,7 @@ async function generateTranscript(sample: SampleFile) {
     
     const transcript = await client.transcripts.transcribe({
       audio: fileBuffer,
-      speech_model: 'nano', // Using nano as it will be default
+      speech_model: 'universal', // Using universal as default model
       speaker_labels: true,
       language_detection: true,
       punctuate: true,

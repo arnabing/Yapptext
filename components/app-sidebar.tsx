@@ -212,7 +212,19 @@ export function AppSidebar() {
           </SidebarMenu>
 
           <Button
-            onClick={() => router.push('/new')}
+            onClick={() => {
+              // Clear sessionStorage to ensure fresh start
+              if (typeof window !== 'undefined') {
+                sessionStorage.removeItem('demoTranscript');
+              }
+
+              // If already on /new, force reload. Otherwise navigate.
+              if (pathname === '/new') {
+                window.location.href = '/new';
+              } else {
+                router.push('/new');
+              }
+            }}
             className="w-full"
             variant="outline"
           >
@@ -263,7 +275,7 @@ export function AppSidebar() {
                         ) : (
                           <>
                             <SidebarMenuButton asChild isActive={isActive}>
-                              <Link href={`/t/${transcript.id}`}>
+                              <Link href="/new">
                                 <FileText />
                                 <span className="truncate">{transcript.title}</span>
                               </Link>
@@ -309,7 +321,7 @@ export function AppSidebar() {
                 <div className="space-y-2">
                   <div className="flex justify-between text-sm">
                     <span className="font-medium">
-                      {isSignedIn ? 'Monthly Usage' : 'Daily Usage'}
+                      Monthly Usage
                     </span>
                     <span className="text-xs text-muted-foreground">
                       {minutesUsed}/{limit} min
