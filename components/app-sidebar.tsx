@@ -169,8 +169,20 @@ export function AppSidebar() {
       if (response.ok) {
         setTranscripts(transcripts.filter(t => t.id !== id))
 
-        if (pathname === `/t/${id}`) {
-          router.push('/new')
+        // If the deleted transcript is currently loaded, clear it and go to /new
+        if (typeof window !== 'undefined') {
+          try {
+            const stored = sessionStorage.getItem('demoTranscript')
+            if (stored) {
+              const data = JSON.parse(stored)
+              if (data.id === id) {
+                sessionStorage.removeItem('demoTranscript')
+                router.push('/new')
+              }
+            }
+          } catch (e) {
+            // Ignore parse errors
+          }
         }
       }
     } catch (error) {
@@ -242,8 +254,51 @@ export function AppSidebar() {
               <SidebarGroupContent>
                 <SidebarMenu>
                   {transcripts.map((transcript) => {
-                    const isActive = pathname === `/t/${transcript.id}`
+                    // Check if this transcript is currently loaded in sessionStorage
+                    const isActive = typeof window !== 'undefined' && (() => {
+                      try {
+                        const stored = sessionStorage.getItem('demoTranscript')
+                        if (stored) {
+                          const data = JSON.parse(stored)
+                          return data.id === transcript.id
+                        }
+                      } catch (e) {
+                        return false
+                      }
+                      return false
+                    })()
+
                     const isRenaming = renamingId === transcript.id
+
+                    const handleLoadTranscript = async () => {
+                      try {
+                        // Fetch full transcript data from API
+                        const response = await fetch(`/api/transcripts/${transcript.id}`)
+                        if (!response.ok) throw new Error('Failed to load transcript')
+
+                        const data = await response.json()
+
+                        // Store in sessionStorage (same format as demo transcripts)
+                        if (typeof window !== 'undefined') {
+                          sessionStorage.setItem('demoTranscript', JSON.stringify({
+                            id: transcript.id,
+                            title: data.title,
+                            text: data.text,
+                            fileName: data.fileName,
+                            duration: data.duration,
+                            audioUrl: data.audioUrl,
+                            utterances: data.utterances || [],
+                            chapters: data.chapters || [],
+                            words: data.words || [],
+                          }))
+                        }
+
+                        // Navigate to /new which will load from sessionStorage
+                        router.push('/new')
+                      } catch (error) {
+                        console.error('Failed to load transcript:', error)
+                      }
+                    }
 
                     return (
                       <SidebarMenuItem key={transcript.id}>
@@ -274,11 +329,9 @@ export function AppSidebar() {
                           </div>
                         ) : (
                           <>
-                            <SidebarMenuButton asChild isActive={isActive}>
-                              <Link href="/new">
-                                <FileText />
-                                <span className="truncate">{transcript.title}</span>
-                              </Link>
+                            <SidebarMenuButton onClick={handleLoadTranscript} isActive={isActive}>
+                              <FileText />
+                              <span className="truncate">{transcript.title}</span>
                             </SidebarMenuButton>
 
                             <DropdownMenu>
