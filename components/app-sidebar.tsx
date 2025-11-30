@@ -31,6 +31,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarSeparator,
+  useSidebar,
 } from '@/components/ui/sidebar'
 import {
   DropdownMenu,
@@ -60,6 +61,7 @@ export function AppSidebar() {
   const router = useRouter()
   const { user, isSignedIn } = useUser()
   const { signOut, redirectToSignIn } = useClerk()
+  const { isMobile, setOpenMobile } = useSidebar()
   const [usageData, setUsageData] = useState<{
     minutesUsed: number
     remaining: number
@@ -230,9 +232,9 @@ export function AppSidebar() {
                 sessionStorage.removeItem('demoTranscript');
               }
 
-              // If already on /new, force reload. Otherwise navigate.
+              // If already on /new, replace route to trigger re-render. Otherwise navigate.
               if (pathname === '/new') {
-                window.location.href = '/new';
+                router.replace('/new');
               } else {
                 router.push('/new');
               }
@@ -293,8 +295,13 @@ export function AppSidebar() {
                           }))
                         }
 
-                        // Navigate to /new which will load from sessionStorage
-                        router.push('/new')
+                        // Close mobile sidebar for smooth UX feedback
+                        if (isMobile) {
+                          setOpenMobile(false)
+                        }
+
+                        // Navigate to /new with timestamp to force re-render
+                        router.push(`/new?t=${Date.now()}`)
                       } catch (error) {
                         console.error('Failed to load transcript:', error)
                       }
