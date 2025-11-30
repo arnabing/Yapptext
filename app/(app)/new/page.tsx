@@ -1182,7 +1182,7 @@ function NewTranscriptContent() {
 
       {/* Audio Player */}
       {state === "complete" && (
-        <div className="sticky bottom-0 shrink-0 bg-background">
+        <div className="sticky bottom-0 shrink-0">
           <AudioControls
             audioUrl={audioUrl}
             fileName={audioFileName}
