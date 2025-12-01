@@ -12,7 +12,7 @@ export default function AppLayout({
     <HeaderProvider>
       <SidebarProvider defaultOpen={false}>
         <AppSidebar />
-        <SidebarInset className="flex flex-col h-screen overflow-y-auto">
+        <SidebarInset className="flex flex-col h-screen">
           <header className="sticky top-0 z-20 flex h-14 shrink-0 items-center gap-2 border-b px-4 bg-background">
             <SidebarTrigger />
             <div className="flex-1" />
