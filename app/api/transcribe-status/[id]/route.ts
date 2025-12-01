@@ -3,12 +3,9 @@ import { getTranscriptionStatus } from '@/lib/assemblyai'
 import { getCurrentUserId, getCurrentUserEmail } from '@/lib/auth'
 import { logUsage, ensureUserExists } from '@/lib/usage'
 import { isSampleFile } from '@/lib/constants'
+import { db } from '@/lib/db'
 
 export const maxDuration = 10 // Maximum function duration: 10 seconds
-
-// In-memory storage for tracking which jobs have had usage logged
-// In production, you'd use a database or cache like Redis
-const usageLoggedJobs = new Set<string>()
 
 export async function GET(
   request: NextRequest,
@@ -35,34 +32,41 @@ export async function GET(
     console.log('Current status:', result.status)
 
     // If completed and we haven't logged usage yet, log it now
-    if (result.status === 'completed' && result.transcript && !usageLoggedJobs.has(transcriptId)) {
-      // Get metadata from query params (passed from frontend)
-      const searchParams = request.nextUrl.searchParams
-      const userId = searchParams.get('userId')
-      const isSample = searchParams.get('isSample') === 'true'
-      const audioUrl = searchParams.get('audioUrl')
-      const model = searchParams.get('model') || 'universal'
+    if (result.status === 'completed' && result.transcript) {
+      // Check if we've already logged usage for this transcript (database-based deduplication)
+      const existingLog = await db.usageLog.findUnique({
+        where: { transcriptId: transcriptId }
+      })
 
-      console.log('Logging usage:', { userId, isSample, audioUrl, model })
+      if (!existingLog) {
+        // Get metadata from query params (passed from frontend)
+        const searchParams = request.nextUrl.searchParams
+        const userId = searchParams.get('userId')
+        const isSample = searchParams.get('isSample') === 'true'
+        const audioUrl = searchParams.get('audioUrl')
+        const model = searchParams.get('model') || 'universal'
 
-      // Log usage for authenticated users (but not for sample files)
-      if (userId && result.transcript.duration > 0 && !isSample) {
-        try {
-          const email = await getCurrentUserEmail()
-          if (email) {
-            await ensureUserExists(userId, email)
-            await logUsage(userId, result.transcript.duration, model as any)
-            console.log(`Logged ${result.transcript.duration} minutes for user ${userId}`)
+        console.log('Logging usage:', { userId, isSample, audioUrl, model })
 
-            // Mark this job as logged
-            usageLoggedJobs.add(transcriptId)
+        // Log usage for authenticated users (but not for sample files)
+        if (userId && result.transcript.duration > 0 && !isSample) {
+          try {
+            const email = await getCurrentUserEmail()
+            if (email) {
+              await ensureUserExists(userId, email)
+              // Pass transcriptId for database-based deduplication
+              await logUsage(userId, result.transcript.duration, model as any, transcriptId)
+              console.log(`Logged ${result.transcript.duration} minutes for user ${userId}`)
+            }
+          } catch (error) {
+            console.error('Error logging usage:', error)
+            // Don't fail the request if usage logging fails
           }
-        } catch (error) {
-          console.error('Error logging usage:', error)
-          // Don't fail the request if usage logging fails
+        } else if (isSample) {
+          console.log(`Skipping usage logging for sample file: ${audioUrl}`)
         }
-      } else if (isSample) {
-        console.log(`Skipping usage logging for sample file: ${audioUrl}`)
+      } else {
+        console.log(`Usage already logged for transcript ${transcriptId}`)
       }
     }
 

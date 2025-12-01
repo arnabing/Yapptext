@@ -141,11 +141,13 @@ export async function canUserTranscribe(
  * @param clerkId - The Clerk user ID
  * @param audioMinutes - Duration of audio in minutes
  * @param mode - Transcription mode used
+ * @param transcriptId - Optional AssemblyAI transcript ID for deduplication
  */
 export async function logUsage(
   clerkId: string,
   audioMinutes: number,
-  mode: TranscriptionMode
+  mode: TranscriptionMode,
+  transcriptId?: string
 ): Promise<void> {
   // Get the database user record to get the internal ID
   const user = await db.user.findUnique({
@@ -162,6 +164,7 @@ export async function logUsage(
       userId: user.id, // Use internal database ID, not clerkId
       minutes: Math.ceil(audioMinutes), // Round up to nearest minute
       mode,
+      transcriptId, // For deduplication in serverless environments
     },
   })
 }

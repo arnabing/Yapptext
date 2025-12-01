@@ -41,14 +41,15 @@ model User {
 }
 
 model UsageLog {
-  id        String   @id @default(cuid())
-  userId    String
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id           String   @id @default(cuid())
+  userId       String
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  minutes   Int      // Minutes of audio transcribed
-  mode      String   // "turbo" | "standard" | "reasoning"
+  minutes      Int      // Minutes of audio transcribed
+  mode         String   // "turbo" | "standard" | "reasoning"
+  transcriptId String?  @unique // AssemblyAI transcript ID for deduplication
 
-  createdAt DateTime @default(now())
+  createdAt    DateTime @default(now())
 
   @@index([userId, createdAt])
 }
