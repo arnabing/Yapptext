@@ -47,6 +47,7 @@ import { PaywallModal } from "@/components/billing/PaywallModal";
 import { ReverseTrialPopup } from "@/components/billing/ReverseTrialPopup";
 import { useHeader } from "@/lib/header-context";
 import { useTranscriptContext } from "@/lib/transcript-context";
+import { DotFlow, transcriptionFlowItems } from "@/components/ui/dot-flow";
 
 type AppState = "idle" | "file-selected" | "processing" | "complete" | "error";
 
@@ -1108,40 +1109,33 @@ function NewTranscriptContent() {
                 )}
 
                 {state === "processing" && (
-                  <Card>
-                    <CardContent className="p-6">
-                      <div className="space-y-4">
-                        <div>
-                          <div className="flex items-center justify-between mb-2">
-                            <p className="text-sm font-medium">
-                              {statusMessage}
-                            </p>
-                            <span className="text-sm text-muted-foreground">
-                              {progress}%
-                            </span>
-                          </div>
-                          <Progress value={progress} className="h-2" />
-                        </div>
+                  <div className="flex flex-col items-center gap-6 py-8">
+                    <DotFlow
+                      items={transcriptionFlowItems}
+                      isPlaying={true}
+                      className="shadow-lg shadow-black/20"
+                    />
 
-                        <div className="flex items-center justify-between text-xs text-muted-foreground">
-                          <div className="flex items-center gap-1">
-                            <Clock className="h-3 w-3" />
-                            <span>
-                              {processingTime > 0 &&
-                                `${processingTime}s elapsed`}
-                            </span>
-                          </div>
-                          {estimatedTime > 0 &&
-                            processingTime < estimatedTime && (
-                              <span>
-                                ~{Math.max(0, estimatedTime - processingTime)}s
-                                remaining
-                              </span>
-                            )}
+                    <div className="w-full max-w-xs space-y-3">
+                      <Progress value={progress} className="h-2" />
+                      <div className="flex items-center justify-between text-xs text-muted-foreground">
+                        <div className="flex items-center gap-1">
+                          <Clock className="h-3 w-3" />
+                          <span>
+                            {processingTime > 0 &&
+                              `${processingTime}s elapsed`}
+                          </span>
                         </div>
+                        {estimatedTime > 0 &&
+                          processingTime < estimatedTime && (
+                            <span>
+                              ~{Math.max(0, estimatedTime - processingTime)}s
+                              remaining
+                            </span>
+                          )}
                       </div>
-                    </CardContent>
-                  </Card>
+                    </div>
+                  </div>
                 )}
 
                 {state === "error" && (

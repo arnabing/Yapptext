@@ -49,6 +49,7 @@ import { ReverseTrialPopup } from "@/components/billing/ReverseTrialPopup";
 import { useHeader } from "@/lib/header-context";
 import { useSearchParams, useRouter } from "next/navigation";
 import { useUser, SignUpButton } from '@clerk/nextjs';
+import { DotFlow, transcriptionFlowItems } from "@/components/ui/dot-flow";
 
 type AppState = "idle" | "file-selected" | "processing" | "complete" | "error";
 
@@ -1104,32 +1105,28 @@ export function TranscriptionInterface({ isDarkMode = true }: TranscriptionInter
 
                             {/* Processing State */}
                             {state === "processing" && (
-                                <div className="border border-white/10 rounded-xl p-8 bg-white/5 backdrop-blur-sm text-center">
-                                    <div className="relative w-20 h-20 mx-auto mb-6">
-                                        <div className="absolute inset-0 rounded-full border-4 border-white/10"></div>
-                                        <div
-                                            className="absolute inset-0 rounded-full border-4 border-primary border-t-transparent animate-spin"
-                                        ></div>
-                                        <div className="absolute inset-0 flex items-center justify-center font-bold text-white">
-                                            {progress}%
+                                <div className="flex flex-col items-center gap-6 py-8">
+                                    <DotFlow
+                                        items={transcriptionFlowItems}
+                                        isPlaying={true}
+                                    />
+
+                                    <div className="w-full max-w-xs space-y-3">
+                                        <Progress value={progress} className="h-2" />
+                                        <div className="flex items-center justify-between text-xs text-muted-foreground">
+                                            <div className="flex items-center gap-1">
+                                                <Clock className="h-3 w-3" />
+                                                <span>
+                                                    {processingTime > 0 && `${processingTime}s elapsed`}
+                                                </span>
+                                            </div>
+                                            {estimatedTime > 0 && processingTime < estimatedTime && (
+                                                <span>
+                                                    ~{Math.max(0, estimatedTime - processingTime)}s remaining
+                                                </span>
+                                            )}
                                         </div>
                                     </div>
-
-                                    <h3 className="text-xl font-semibold mb-2 text-white">{statusMessage}</h3>
-                                    <p className="text-sm text-gray-400 mb-6">
-                                        <Clock className="inline-block w-4 h-4 mr-1" />
-                                        {processingTime}s elapsed
-                                    </p>
-
-                                    <div className="w-full bg-white/10 rounded-full h-2 mb-2 overflow-hidden">
-                                        <div
-                                            className="bg-primary h-2 rounded-full transition-all duration-300 ease-out"
-                                            style={{ width: `${progress}%` }}
-                                        ></div>
-                                    </div>
-                                    <p className="text-xs text-gray-500">
-                                        Please don't close this tab while we process your audio.
-                                    </p>
                                 </div>
                             )}
 

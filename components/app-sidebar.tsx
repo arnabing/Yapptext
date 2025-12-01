@@ -49,6 +49,7 @@ import { Separator } from '@/components/ui/separator'
 import { PaywallModal } from '@/components/billing/PaywallModal'
 import { USAGE_LIMITS, PRICING_TIERS } from '@/lib/constants'
 import { useTranscriptContext } from '@/lib/transcript-context'
+import { DotLoader, loadingFrames } from '@/components/ui/dot-loader'
 
 type Transcript = {
   id: string
@@ -74,6 +75,7 @@ export function AppSidebar() {
   const [renamingId, setRenamingId] = useState<string | null>(null)
   const [newTitle, setNewTitle] = useState('')
   const [userTier, setUserTier] = useState<string>(isSignedIn ? PRICING_TIERS.FREE : PRICING_TIERS.ANONYMOUS)
+  const [loadingId, setLoadingId] = useState<string | null>(null)
 
   const isPro = userTier === PRICING_TIERS.PRO
   const limit = USAGE_LIMITS[userTier as keyof typeof USAGE_LIMITS]?.minutesPerMonth || 20
@@ -257,6 +259,8 @@ export function AppSidebar() {
 
                     const handleLoadTranscript = async () => {
                       try {
+                        setLoadingId(transcript.id)
+
                         // Fetch full transcript data from API
                         const response = await fetch(`/api/transcripts/${transcript.id}`)
                         if (!response.ok) throw new Error('Failed to load transcript')
@@ -289,6 +293,8 @@ export function AppSidebar() {
                         }
                       } catch (error) {
                         console.error('Failed to load transcript:', error)
+                      } finally {
+                        setLoadingId(null)
                       }
                     }
 
@@ -321,8 +327,21 @@ export function AppSidebar() {
                           </div>
                         ) : (
                           <>
-                            <SidebarMenuButton onClick={handleLoadTranscript} isActive={isActive}>
-                              <FileText />
+                            <SidebarMenuButton
+                              onClick={handleLoadTranscript}
+                              isActive={isActive}
+                              disabled={loadingId === transcript.id}
+                            >
+                              {loadingId === transcript.id ? (
+                                <DotLoader
+                                  frames={loadingFrames}
+                                  duration={80}
+                                  className="gap-[1px]"
+                                  dotClassName="bg-muted-foreground/30 [&.active]:bg-primary size-[3px]"
+                                />
+                              ) : (
+                                <FileText />
+                              )}
                               <span className="truncate">{transcript.title}</span>
                             </SidebarMenuButton>
 
