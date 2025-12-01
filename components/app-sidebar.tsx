@@ -243,8 +243,8 @@ export function AppSidebar() {
           </Button>
         </SidebarHeader>
 
-        {/* SCROLLABLE CONTENT */}
-        <SidebarContent className="flex flex-col">
+        {/* SCROLLABLE CONTENT - Only transcripts scroll */}
+        <SidebarContent>
           {/* CUSTOM: Recent Transcripts */}
           {isSignedIn && transcripts.length > 0 && (
             <SidebarGroup>
@@ -375,50 +375,48 @@ export function AppSidebar() {
               </SidebarGroupContent>
             </SidebarGroup>
           )}
-
-          {isSignedIn && transcripts.length > 0 && <SidebarSeparator />}
-
-          {/* CUSTOM: Usage & Upgrade Card */}
-          <SidebarGroup className="flex-none mt-auto">
-            <Card className="mx-2 border-sidebar-border bg-sidebar">
-              <CardContent className="pt-6 space-y-4">
-                <div className="space-y-2">
-                  <div className="flex justify-between text-sm">
-                    <span className="font-medium">
-                      Monthly Usage
-                    </span>
-                    <span className="text-xs text-muted-foreground">
-                      {minutesUsed}/{limit} min
-                    </span>
-                  </div>
-                  <Progress value={usagePercent} className="h-2" />
-                  {!isPro && usagePercent > 80 && (
-                    <p className="text-xs text-orange-600">Running low on minutes</p>
-                  )}
-                  {!isSignedIn && (
-                    <p className="text-xs text-muted-foreground">
-                      Sign in for more minutes
-                    </p>
-                  )}
-                </div>
-
-                {!isPro && (
-                  <>
-                    <Separator />
-                    <Button
-                      onClick={() => setShowPaywall(true)}
-                      className="w-full"
-                      variant="default"
-                    >
-                      <Crown className="h-4 w-4 mr-2" />
-                      Upgrade to Pro
-                    </Button>
-                  </>
-                )}
-              </CardContent>
-            </Card>
-          </SidebarGroup>
         </SidebarContent>
+
+        {/* FIXED: Usage & Upgrade Card - Does NOT scroll with transcripts */}
+        <div className="p-2 border-t border-sidebar-border">
+          <Card className="border-sidebar-border bg-sidebar">
+            <CardContent className="pt-4 pb-4 space-y-3">
+              <div className="space-y-2">
+                <div className="flex justify-between text-sm">
+                  <span className="font-medium">
+                    Monthly Usage
+                  </span>
+                  <span className="text-xs text-muted-foreground">
+                    {minutesUsed}/{limit} min
+                  </span>
+                </div>
+                <Progress value={usagePercent} className="h-2" />
+                {!isPro && usagePercent > 80 && (
+                  <p className="text-xs text-orange-600">Running low on minutes</p>
+                )}
+                {!isSignedIn && (
+                  <p className="text-xs text-muted-foreground">
+                    Sign in for more minutes
+                  </p>
+                )}
+              </div>
+
+              {!isPro && (
+                <>
+                  <Separator />
+                  <Button
+                    onClick={() => setShowPaywall(true)}
+                    className="w-full"
+                    variant="default"
+                  >
+                    <Crown className="h-4 w-4 mr-2" />
+                    Upgrade to Pro
+                  </Button>
+                </>
+              )}
+            </CardContent>
+          </Card>
+        </div>
 
         {/* CUSTOM: User Menu Footer */}
         <SidebarFooter className="border-t border-sidebar-border">
