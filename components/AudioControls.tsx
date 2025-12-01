@@ -159,25 +159,6 @@ export function AudioControls({ audioUrl, fileName, onTimeUpdate, className = ''
     <>
       <audio ref={audioRef} src={audioUrl} preload="metadata" />
 
-      {/* Top center: File name pill (fixed in header area) */}
-      {fileName && (
-        <div className="fixed top-4 left-1/2 -translate-x-1/2 z-30 max-w-[calc(100%-160px)]">
-          <LiquidGlassCard
-            draggable={false}
-            blurIntensity="md"
-            shadowIntensity="sm"
-            glowIntensity="xs"
-            borderRadius="9999px"
-            tint="auto"
-            className="h-10 flex items-center justify-center px-4 max-w-[140px] sm:max-w-[180px]"
-          >
-            <span className="relative z-30 text-xs text-muted-foreground truncate">
-              {fileName.length > 20 ? `${fileName.slice(0, 17)}...` : fileName}
-            </span>
-          </LiquidGlassCard>
-        </div>
-      )}
-
       {/* Bottom: Controls pill */}
       <div className={`flex justify-center px-4 pb-[calc(1rem+env(safe-area-inset-bottom))] ${className}`}>
         <LiquidGlassCard

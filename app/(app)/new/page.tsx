@@ -49,6 +49,7 @@ import { useHeader } from "@/lib/header-context";
 import { useTranscriptContext } from "@/lib/transcript-context";
 import { useSidebar } from "@/components/ui/sidebar";
 import { DotFlow, transcriptionFlowItems } from "@/components/ui/dot-flow";
+import { LiquidGlassCard } from "@/components/ui/liquid-glass";
 
 type AppState = "idle" | "file-selected" | "processing" | "complete" | "error";
 
@@ -1204,12 +1205,30 @@ function NewTranscriptContent() {
         onOpenChange={setShowReverseTrial}
       />
 
+      {/* File name pill - fixed at top center (outside audio controls wrapper) */}
+      {state === "complete" && audioFileName && (
+        <div className="fixed top-4 left-1/2 -translate-x-1/2 z-30 max-w-[calc(100%-160px)]">
+          <LiquidGlassCard
+            draggable={false}
+            blurIntensity="md"
+            shadowIntensity="sm"
+            glowIntensity="xs"
+            borderRadius="9999px"
+            tint="auto"
+            className="h-10 flex items-center justify-center px-4 max-w-[140px] sm:max-w-[180px]"
+          >
+            <span className="relative z-30 text-xs text-muted-foreground truncate">
+              {audioFileName.length > 20 ? `${audioFileName.slice(0, 17)}...` : audioFileName}
+            </span>
+          </LiquidGlassCard>
+        </div>
+      )}
+
       {/* Audio Player - fixed to bottom of viewport */}
       {state === "complete" && (
         <div className={`fixed bottom-0 right-0 z-20 transition-[left] duration-200 ${sidebarOpen ? 'md:left-[16rem]' : 'left-0'}`}>
           <AudioControls
             audioUrl={audioUrl}
-            fileName={audioFileName}
             onTimeUpdate={handleTimeUpdate}
           />
         </div>
