@@ -48,6 +48,7 @@ import { Card, CardContent } from '@/components/ui/card'
 import { Separator } from '@/components/ui/separator'
 import { PaywallModal } from '@/components/billing/PaywallModal'
 import { USAGE_LIMITS, PRICING_TIERS } from '@/lib/constants'
+import { useTranscriptContext } from '@/lib/transcript-context'
 
 type Transcript = {
   id: string
@@ -61,7 +62,8 @@ export function AppSidebar() {
   const router = useRouter()
   const { user, isSignedIn } = useUser()
   const { signOut, redirectToSignIn } = useClerk()
-  const { isMobile, setOpenMobile } = useSidebar()
+  const { isMobile, setOpenMobile, setOpen } = useSidebar()
+  const { setTranscriptData, clearTranscriptData, transcriptData } = useTranscriptContext()
   const [usageData, setUsageData] = useState<{
     minutesUsed: number
     remaining: number
@@ -171,20 +173,9 @@ export function AppSidebar() {
       if (response.ok) {
         setTranscripts(transcripts.filter(t => t.id !== id))
 
-        // If the deleted transcript is currently loaded, clear it and go to /new
-        if (typeof window !== 'undefined') {
-          try {
-            const stored = sessionStorage.getItem('demoTranscript')
-            if (stored) {
-              const data = JSON.parse(stored)
-              if (data.id === id) {
-                sessionStorage.removeItem('demoTranscript')
-                router.push('/new')
-              }
-            }
-          } catch (e) {
-            // Ignore parse errors
-          }
+        // If the deleted transcript is currently loaded, clear it
+        if (transcriptData?.id === id) {
+          clearTranscriptData()
         }
       }
     } catch (error) {
@@ -227,16 +218,19 @@ export function AppSidebar() {
 
           <Button
             onClick={() => {
-              // Clear sessionStorage to ensure fresh start
-              if (typeof window !== 'undefined') {
-                sessionStorage.removeItem('demoTranscript');
+              // Clear transcript data via context (also clears sessionStorage)
+              clearTranscriptData()
+
+              // Close sidebar
+              if (isMobile) {
+                setOpenMobile(false)
+              } else {
+                setOpen(false)
               }
 
-              // If already on /new, replace route to trigger re-render. Otherwise navigate.
-              if (pathname === '/new') {
-                router.replace('/new');
-              } else {
-                router.push('/new');
+              // Navigate to /new if not already there
+              if (pathname !== '/new') {
+                router.push('/new')
               }
             }}
             className="w-full"
@@ -256,19 +250,8 @@ export function AppSidebar() {
               <SidebarGroupContent>
                 <SidebarMenu>
                   {transcripts.map((transcript) => {
-                    // Check if this transcript is currently loaded in sessionStorage
-                    const isActive = typeof window !== 'undefined' && (() => {
-                      try {
-                        const stored = sessionStorage.getItem('demoTranscript')
-                        if (stored) {
-                          const data = JSON.parse(stored)
-                          return data.id === transcript.id
-                        }
-                      } catch (e) {
-                        return false
-                      }
-                      return false
-                    })()
+                    // Check if this transcript is currently loaded via context
+                    const isActive = transcriptData?.id === transcript.id
 
                     const isRenaming = renamingId === transcript.id
 
@@ -280,28 +263,30 @@ export function AppSidebar() {
 
                         const data = await response.json()
 
-                        // Store in sessionStorage (same format as demo transcripts)
-                        if (typeof window !== 'undefined') {
-                          sessionStorage.setItem('demoTranscript', JSON.stringify({
-                            id: transcript.id,
-                            title: data.title,
-                            text: data.text,
-                            fileName: data.fileName,
-                            duration: data.duration,
-                            audioUrl: data.audioUrl,
-                            utterances: data.utterances || [],
-                            chapters: data.chapters || [],
-                            words: data.words || [],
-                          }))
-                        }
+                        // Update transcript via context (also updates sessionStorage)
+                        setTranscriptData({
+                          id: transcript.id,
+                          title: data.title,
+                          text: data.text,
+                          fileName: data.fileName,
+                          duration: data.duration,
+                          audioUrl: data.audioUrl,
+                          utterances: data.utterances || [],
+                          chapters: data.chapters || [],
+                          words: data.words || [],
+                        })
 
-                        // Close mobile sidebar for smooth UX feedback
+                        // Close sidebar for smooth UX feedback (both mobile and desktop)
                         if (isMobile) {
                           setOpenMobile(false)
+                        } else {
+                          setOpen(false)
                         }
 
-                        // Navigate to /new with timestamp to force re-render
-                        router.push(`/new?t=${Date.now()}`)
+                        // Only navigate if not already on /new
+                        if (pathname !== '/new') {
+                          router.push('/new')
+                        }
                       } catch (error) {
                         console.error('Failed to load transcript:', error)
                       }

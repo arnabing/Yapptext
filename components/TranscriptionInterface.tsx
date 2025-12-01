@@ -828,21 +828,18 @@ export function TranscriptionInterface({ isDarkMode = true }: TranscriptionInter
                             {state === "idle" && (
                                 <>
                                     <div
-                                        className={`group relative rounded-3xl overflow-hidden shadow-2xl transition-all duration-500 ${
-                                            isDarkMode ? 'bg-[#0A0A0A]' : 'bg-white'
-                                        } border ${
-                                            isDragging
+                                        className={`group relative rounded-3xl overflow-hidden shadow-2xl transition-all duration-500 ${isDarkMode ? 'bg-[#0A0A0A]' : 'bg-white'
+                                            } border ${isDragging
                                                 ? isDarkMode ? 'border-purple-400/50' : 'border-purple-300/60'
                                                 : isDarkMode ? 'border-purple-400/30' : 'border-purple-300/30'
-                                        }`}
+                                            }`}
                                         onDragOver={handleDragOver}
                                         onDragLeave={handleDragLeave}
                                         onDrop={handleDrop}
                                     >
                                         {/* Aurora effect - fades in with waveform */}
-                                        <div className={`absolute inset-0 pointer-events-none transition-opacity duration-1000 ${
-                                            showWaveform ? 'opacity-100' : 'opacity-0'
-                                        }`}>
+                                        <div className={`absolute inset-0 pointer-events-none transition-opacity duration-1000 ${showWaveform ? 'opacity-100' : 'opacity-0'
+                                            }`}>
                                             <div className={`absolute inset-0 ${isDarkMode ? 'aura-bg' : 'aura-bg-light'}`} />
                                         </div>
 
@@ -856,9 +853,8 @@ export function TranscriptionInterface({ isDarkMode = true }: TranscriptionInter
                                         />
 
                                         {/* Canvas waveform animation - fades in after 2 second delay */}
-                                        <div className={`absolute inset-0 pointer-events-none z-10 transition-opacity duration-1000 ${
-                                            showWaveform ? 'opacity-100' : 'opacity-0'
-                                        }`}>
+                                        <div className={`absolute inset-0 pointer-events-none z-10 transition-opacity duration-1000 ${showWaveform ? 'opacity-100' : 'opacity-0'
+                                            }`}>
                                             <ScrollingWaveform
                                                 speed={30}
                                                 barWidth={3}
@@ -878,11 +874,10 @@ export function TranscriptionInterface({ isDarkMode = true }: TranscriptionInter
                                                 {/* Upload Icon */}
                                                 <div
                                                     onClick={() => fileInputRef.current?.click()}
-                                                    className={`w-20 h-20 rounded-3xl flex items-center justify-center transition-transform hover:scale-105 duration-300 cursor-pointer ${
-                                                    isDarkMode
+                                                    className={`w-20 h-20 rounded-3xl flex items-center justify-center transition-transform hover:scale-105 duration-300 cursor-pointer ${isDarkMode
                                                         ? 'bg-gradient-to-br from-brand-500 to-orange-500 shadow-lg'
                                                         : 'bg-[#F56040] shadow-[0_10px_40px_-10px_rgba(245,96,64,0.4)]'
-                                                }`}>
+                                                        }`}>
                                                     <Upload className="h-10 w-10 text-white" />
                                                 </div>
 
@@ -901,19 +896,17 @@ export function TranscriptionInterface({ isDarkMode = true }: TranscriptionInter
                                             <div className="flex gap-4 mb-8">
                                                 <button
                                                     onClick={() => fileInputRef.current?.click()}
-                                                    className={`flex-1 rounded-xl shadow-lg py-3 font-medium text-sm border border-transparent transition-all ${
-                                                        isDarkMode
-                                                            ? 'bg-white text-black hover:bg-gray-100'
-                                                            : 'bg-slate-900 text-white hover:bg-slate-800'
-                                                    }`}
+                                                    className={`flex-1 rounded-xl shadow-lg py-3 font-medium text-sm border border-transparent transition-all ${isDarkMode
+                                                        ? 'bg-white text-black hover:bg-gray-100'
+                                                        : 'bg-slate-900 text-white hover:bg-slate-800'
+                                                        }`}
                                                 >
                                                     Browse Files
                                                 </button>
-                                                <button className={`px-6 rounded-xl font-medium text-sm border py-3 transition-all flex items-center justify-center ${
-                                                    isDarkMode
-                                                        ? 'bg-[#111] text-white border-white/10 hover:bg-[#222]'
-                                                        : 'bg-white text-slate-700 border-slate-200 hover:bg-slate-50'
-                                                }`}>
+                                                <button className={`px-6 rounded-xl font-medium text-sm border py-3 transition-all flex items-center justify-center ${isDarkMode
+                                                    ? 'bg-[#111] text-white border-white/10 hover:bg-[#222]'
+                                                    : 'bg-white text-slate-700 border-slate-200 hover:bg-slate-50'
+                                                    }`}>
                                                     <Mic className="h-4 w-4" />
                                                 </button>
                                             </div>
@@ -938,143 +931,142 @@ export function TranscriptionInterface({ isDarkMode = true }: TranscriptionInter
                                                 {sampleAudios.map((sample, idx) => (
                                                     <button
                                                         key={idx}
-                                                        className={`px-4 py-2 rounded-full text-xs font-medium transition-all flex items-center gap-2 border ${
-                                                            isDarkMode
-                                                                ? 'bg-[#111] border-white/10 hover:border-brand-500/50 hover:text-brand-400 text-gray-400'
-                                                                : 'bg-slate-50 border-slate-200 hover:border-brand-500/50 hover:text-brand-600 text-slate-600'
-                                                        }`}
+                                                        className={`px-4 py-2 rounded-full text-xs font-medium transition-all flex items-center gap-2 border ${isDarkMode
+                                                            ? 'bg-[#111] border-white/10 hover:border-brand-500/50 hover:text-brand-400 text-gray-400'
+                                                            : 'bg-slate-50 border-slate-200 hover:border-brand-500/50 hover:text-brand-600 text-slate-600'
+                                                            }`}
                                                         onClick={async () => {
-                                                        console.log("Loading sample:", sample.name);
+                                                            console.log("Loading sample:", sample.name);
 
-                                                        // Check if we have a preloaded transcript for this sample
-                                                        const sampleTranscript = getSampleTranscript(
-                                                            sample.id,
-                                                        );
-
-                                                        if (sampleTranscript) {
-                                                            // Use preloaded transcript for a seamless experience
-                                                            setState("processing");
-                                                            setProgress(0);
-                                                            setStatusMessage("Loading sample...");
-                                                            setProcessingTime(0);
-
-                                                            // Start processing timer for realism
-                                                            processingTimerRef.current = setInterval(() => {
-                                                                setProcessingTime((prev) => prev + 1);
-                                                            }, 1000);
-
-                                                            // Create a File object for the sample to show filename
-                                                            const sampleFile = new File(
-                                                                [],
-                                                                `${sample.name}.mp3`,
-                                                                { type: "audio/mpeg" }
-                                                            );
-                                                            setFile(sampleFile);
-
-                                                            // Set audio URL for playback
-                                                            setAudioUrl(sample.file);
-                                                            setAudioFileName(sampleFile.name);
-                                                            setAudioDuration(
-                                                                sampleTranscript.transcript.duration,
+                                                            // Check if we have a preloaded transcript for this sample
+                                                            const sampleTranscript = getSampleTranscript(
+                                                                sample.id,
                                                             );
 
-                                                            // Simulate processing with realistic progress
-                                                            let currentProgress = 0;
-                                                            const progressInterval = setInterval(() => {
-                                                                currentProgress += 20;
-                                                                setProgress(Math.min(currentProgress, 90));
+                                                            if (sampleTranscript) {
+                                                                // Use preloaded transcript for a seamless experience
+                                                                setState("processing");
+                                                                setProgress(0);
+                                                                setStatusMessage("Loading sample...");
+                                                                setProcessingTime(0);
 
-                                                                if (currentProgress >= 40) {
-                                                                    setStatusMessage(
-                                                                        "Processing transcript...",
-                                                                    );
-                                                                }
-                                                                if (currentProgress >= 70) {
-                                                                    setStatusMessage("Analyzing speakers...");
-                                                                }
+                                                                // Start processing timer for realism
+                                                                processingTimerRef.current = setInterval(() => {
+                                                                    setProcessingTime((prev) => prev + 1);
+                                                                }, 1000);
 
-                                                                if (currentProgress >= 100) {
-                                                                    clearInterval(progressInterval);
-                                                                    if (processingTimerRef.current) {
-                                                                        clearInterval(processingTimerRef.current);
+                                                                // Create a File object for the sample to show filename
+                                                                const sampleFile = new File(
+                                                                    [],
+                                                                    `${sample.name}.mp3`,
+                                                                    { type: "audio/mpeg" }
+                                                                );
+                                                                setFile(sampleFile);
+
+                                                                // Set audio URL for playback
+                                                                setAudioUrl(sample.file);
+                                                                setAudioFileName(sampleFile.name);
+                                                                setAudioDuration(
+                                                                    sampleTranscript.transcript.duration,
+                                                                );
+
+                                                                // Simulate processing with realistic progress
+                                                                let currentProgress = 0;
+                                                                const progressInterval = setInterval(() => {
+                                                                    currentProgress += 20;
+                                                                    setProgress(Math.min(currentProgress, 90));
+
+                                                                    if (currentProgress >= 40) {
+                                                                        setStatusMessage(
+                                                                            "Processing transcript...",
+                                                                        );
+                                                                    }
+                                                                    if (currentProgress >= 70) {
+                                                                        setStatusMessage("Analyzing speakers...");
                                                                     }
 
-                                                                    setProgress(100);
+                                                                    if (currentProgress >= 100) {
+                                                                        clearInterval(progressInterval);
+                                                                        if (processingTimerRef.current) {
+                                                                            clearInterval(processingTimerRef.current);
+                                                                        }
 
-                                                                    // Store sample data in sessionStorage for all users
-                                                                    if (typeof window !== 'undefined') {
-                                                                        sessionStorage.setItem('demoTranscript', JSON.stringify({
-                                                                            title: sample.name,
-                                                                            text: sampleTranscript.transcript.text,
-                                                                            fileName: `${sample.name}.mp3`,
-                                                                            duration: sampleTranscript.transcript.duration,
-                                                                            audioUrl: sample.file,
-                                                                            utterances: sampleTranscript.transcript.utterances || [],
-                                                                            chapters: sampleTranscript.transcript.chapters || [],
-                                                                            words: sampleTranscript.transcript.allWords || [],
-                                                                        }));
-                                                                    }
+                                                                        setProgress(100);
 
-                                                                    // If user is signed in, save to database and redirect
-                                                                    if (isSignedIn) {
-                                                                        (async () => {
-                                                                            try {
-                                                                                setStatusMessage("Saving transcript...");
+                                                                        // Store sample data in sessionStorage for all users
+                                                                        if (typeof window !== 'undefined') {
+                                                                            sessionStorage.setItem('demoTranscript', JSON.stringify({
+                                                                                title: sample.name,
+                                                                                text: sampleTranscript.transcript.text,
+                                                                                fileName: `${sample.name}.mp3`,
+                                                                                duration: sampleTranscript.transcript.duration,
+                                                                                audioUrl: sample.file,
+                                                                                utterances: sampleTranscript.transcript.utterances || [],
+                                                                                chapters: sampleTranscript.transcript.chapters || [],
+                                                                                words: sampleTranscript.transcript.allWords || [],
+                                                                            }));
+                                                                        }
 
-                                                                                const response = await fetch('/api/transcripts', {
-                                                                                    method: 'POST',
-                                                                                    headers: {
-                                                                                        'Content-Type': 'application/json',
-                                                                                    },
-                                                                                    body: JSON.stringify({
-                                                                                        title: sample.name,
-                                                                                        text: sampleTranscript.transcript.text,
-                                                                                        fileName: `${sample.name}.mp3`,
-                                                                                        duration: sampleTranscript.transcript.duration,
-                                                                                        audioUrl: sample.file,
-                                                                                        utterances: sampleTranscript.transcript.utterances || [],
-                                                                                        chapters: sampleTranscript.transcript.chapters || [],
-                                                                                        words: sampleTranscript.transcript.allWords || [],
-                                                                                    }),
-                                                                                });
+                                                                        // If user is signed in, save to database and redirect
+                                                                        if (isSignedIn) {
+                                                                            (async () => {
+                                                                                try {
+                                                                                    setStatusMessage("Saving transcript...");
 
-                                                                                if (response.ok) {
-                                                                                    const savedTranscript = await response.json();
-
-                                                                                    toast({
-                                                                                        title: "✨ Sample loaded!",
-                                                                                        description: "Explore the transcript features.",
+                                                                                    const response = await fetch('/api/transcripts', {
+                                                                                        method: 'POST',
+                                                                                        headers: {
+                                                                                            'Content-Type': 'application/json',
+                                                                                        },
+                                                                                        body: JSON.stringify({
+                                                                                            title: sample.name,
+                                                                                            text: sampleTranscript.transcript.text,
+                                                                                            fileName: `${sample.name}.mp3`,
+                                                                                            duration: sampleTranscript.transcript.duration,
+                                                                                            audioUrl: sample.file,
+                                                                                            utterances: sampleTranscript.transcript.utterances || [],
+                                                                                            chapters: sampleTranscript.transcript.chapters || [],
+                                                                                            words: sampleTranscript.transcript.allWords || [],
+                                                                                        }),
                                                                                     });
 
-                                                                                    confettiPresets.success();
+                                                                                    if (response.ok) {
+                                                                                        const savedTranscript = await response.json();
 
-                                                                                    // Redirect to the saved transcript view in the app
-                                                                                    router.push(`/t/${savedTranscript.id}`);
+                                                                                        toast({
+                                                                                            title: "✨ Sample loaded!",
+                                                                                            description: "Explore the transcript features.",
+                                                                                        });
+
+                                                                                        confettiPresets.success();
+
+                                                                                        // Redirect to the saved transcript view in the app
+                                                                                        router.push(`/t/${savedTranscript.id}`);
+                                                                                    }
+                                                                                } catch (error) {
+                                                                                    console.error('Failed to save sample transcript:', error);
                                                                                 }
-                                                                            } catch (error) {
-                                                                                console.error('Failed to save sample transcript:', error);
-                                                                            }
-                                                                        })();
-                                                                    } else {
-                                                                        // Guest user - redirect to /new to show sample in app with sidebar
-                                                                        toast({
-                                                                            title: "✨ Sample loaded!",
-                                                                            description: "Sign up to save this transcript.",
-                                                                        });
+                                                                            })();
+                                                                        } else {
+                                                                            // Guest user - redirect to /new to show sample in app with sidebar
+                                                                            toast({
+                                                                                title: "✨ Sample loaded!",
+                                                                                description: "Sign up to save this transcript.",
+                                                                            });
 
-                                                                        confettiPresets.success();
+                                                                            confettiPresets.success();
 
-                                                                        router.push(`/new?sample=${sample.id}`);
+                                                                            router.push(`/new?sample=${sample.id}`);
+                                                                        }
                                                                     }
-                                                                }
-                                                            }, 500);
-                                                        }
-                                                    }}
-                                                >
-                                                    <Play size={10} fill="currentColor" />
-                                                    {sample.name}
-                                                </button>
-                                            ))}
+                                                                }, 500);
+                                                            }
+                                                        }}
+                                                    >
+                                                        <Play size={10} fill="currentColor" />
+                                                        {sample.name}
+                                                    </button>
+                                                ))}
                                             </div>
                                         </div>
                                     </div>

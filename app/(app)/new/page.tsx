@@ -46,6 +46,7 @@ import { formatTranscriptAsPlainText, formatTranscriptAsHTML } from "@/lib/forma
 import { PaywallModal } from "@/components/billing/PaywallModal";
 import { ReverseTrialPopup } from "@/components/billing/ReverseTrialPopup";
 import { useHeader } from "@/lib/header-context";
+import { useTranscriptContext } from "@/lib/transcript-context";
 
 type AppState = "idle" | "file-selected" | "processing" | "complete" | "error";
 
@@ -55,6 +56,7 @@ function NewTranscriptContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const { isSignedIn } = useUser();
+  const { transcriptData, clearTranscriptData, setTranscriptData } = useTranscriptContext();
 
   const [state, setState] = useState<AppState>("idle");
   const [file, setFile] = useState<File | null>(null);
@@ -122,15 +124,37 @@ function NewTranscriptContent() {
       .catch(console.error);
   }, []);
 
-  // Load transcript from sessionStorage (for samples or guest uploads)
+  // Load transcript from context (set by sidebar) or sessionStorage (for page reloads)
   useEffect(() => {
-    if (typeof window !== 'undefined' && state === 'idle') {
+    // First check context (set by sidebar clicks)
+    if (transcriptData) {
+      // Populate state with transcript data from context
+      setTranscript(transcriptData.text);
+      setOriginalTranscript(transcriptData.text);
+      setUtterances(transcriptData.utterances || []);
+      setOriginalUtterances(transcriptData.utterances || []);
+      setChapters(transcriptData.chapters || []);
+      setAllWords(transcriptData.words || []);
+      setAudioUrl(transcriptData.audioUrl);
+      setAudioFileName(transcriptData.fileName);
+      setAudioDuration(transcriptData.duration);
+
+      // Create mock file for display
+      const mockFile = new File([], transcriptData.fileName, { type: 'audio/mpeg' });
+      setFile(mockFile);
+
+      setState("complete");
+      return;
+    }
+
+    // Fallback: check sessionStorage on initial mount (for page reloads)
+    if (typeof window !== 'undefined') {
       const storedData = sessionStorage.getItem('demoTranscript');
       if (storedData) {
         try {
           const data = JSON.parse(storedData);
 
-          // Populate state with sample data
+          // Populate state with transcript data
           setTranscript(data.text);
           setOriginalTranscript(data.text);
           setUtterances(data.utterances || []);
@@ -147,7 +171,10 @@ function NewTranscriptContent() {
 
           setState("complete");
 
-          // Clean up URL parameter if present
+          // Also sync to context for consistency
+          setTranscriptData(data);
+
+          // Clean up URL parameter if present (sample)
           const sampleId = searchParams?.get('sample');
           if (sampleId) {
             router.replace('/new', { scroll: false });
@@ -157,7 +184,7 @@ function NewTranscriptContent() {
         }
       }
     }
-  }, [searchParams, router, state]);
+  }, [transcriptData, searchParams, router, setTranscriptData]);
 
   // Register header actions when transcript is ready
   useEffect(() => {
@@ -830,10 +857,8 @@ function NewTranscriptContent() {
       fileInputRef.current.value = "";
     }
 
-    // Clear sessionStorage to prevent demo transcript from persisting
-    if (typeof window !== 'undefined') {
-      sessionStorage.removeItem('demoTranscript');
-    }
+    // Clear transcript data via context (also clears sessionStorage)
+    clearTranscriptData();
   };
 
   const getFileSize = (bytes: number) => {
@@ -848,10 +873,10 @@ function NewTranscriptContent() {
   };
 
   return (
-    <>
+    <div className="flex flex-col min-h-full">
       {/* Centered content for non-transcript states */}
       {state !== "complete" && (
-        <div className="min-h-[calc(100vh-3.5rem)] flex items-center justify-center p-4">
+        <div className="flex-1 flex items-center justify-center p-4">
             <Card className="w-full max-w-2xl">
               <CardContent className="p-6 space-y-6">
                 {/* Upload Zone - State-based rendering */}
@@ -1180,9 +1205,9 @@ function NewTranscriptContent() {
         onOpenChange={setShowReverseTrial}
       />
 
-      {/* Audio Player */}
+      {/* Audio Player - sticky to bottom of scrollable content area */}
       {state === "complete" && (
-        <div className="sticky bottom-0 shrink-0">
+        <div className="sticky bottom-0 z-30">
           <AudioControls
             audioUrl={audioUrl}
             fileName={audioFileName}
@@ -1190,7 +1215,7 @@ function NewTranscriptContent() {
           />
         </div>
       )}
-    </>
+    </div>
   );
 }
 
