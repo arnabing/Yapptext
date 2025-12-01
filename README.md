@@ -29,10 +29,13 @@ Our goal is to get to human‑level transcription with AI by combining multiple 
 
 ## Tech Stack
 
-- **Framework**: Next.js 14 (App Router)
-- **UI**: Shadcn/ui components + Tailwind CSS
+- **Framework**: Next.js 16 (App Router)
+- **UI**: Shadcn/ui components + Tailwind CSS v3 (Green theme)
+- **Authentication**: Clerk
+- **Database**: PostgreSQL + Prisma ORM
 - **Transcription**: AssemblyAI API (with speaker detection)
 - **Translation**: OpenAI GPT-3.5 API
+- **Storage**: Vercel Blob (for large audio files)
 - **Rate Limiting**: Vercel KV (Redis)
 - **Deployment**: Vercel
 
@@ -170,12 +173,17 @@ With the default 20-minute daily limit per user:
 - ✅ Success animations with confetti
 - ✅ Vercel Blob storage for large files (>4.5MB)
 - ✅ Keyboard shortcuts for audio controls (space, arrows)
+- ✅ User accounts with Clerk authentication
+- ✅ Transcript history saved to database
+- ✅ Sidebar navigation with transcript management
+- ✅ Mobile-responsive sidebar with auto-close
+- ✅ Green accent theme (light/dark mode)
+- ✅ Glassmorphism audio player design
 
 ## Future Enhancements
 
 - [ ] Live microphone recording
 - [ ] Multiple export formats (SRT, VTT, PDF)
-- [ ] User accounts with transcript history
 - [ ] Batch processing for multiple files
 - [ ] Real-time transcription
 - [ ] Custom vocabulary and terminology
