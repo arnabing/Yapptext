@@ -36,6 +36,24 @@ export async function POST(req: Request) {
       },
     })
 
+    // Check for existing transcript with same audioUrl (prevents sample duplicates)
+    if (audioUrl) {
+      const existing = await db.transcript.findFirst({
+        where: {
+          userId: user.id,
+          audioUrl: audioUrl,
+        },
+      })
+
+      if (existing) {
+        return NextResponse.json({
+          id: existing.id,
+          isDuplicate: true,
+          message: 'Transcript already exists'
+        })
+      }
+    }
+
     const transcript = await db.transcript.create({
       data: {
         userId: user.id,
