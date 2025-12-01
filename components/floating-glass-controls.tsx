@@ -7,13 +7,16 @@ import { LiquidGlassCard } from '@/components/ui/liquid-glass'
 import { PanelLeft } from 'lucide-react'
 
 export function FloatingGlassControls() {
-  const { toggleSidebar } = useSidebar()
+  const { toggleSidebar, state } = useSidebar()
   const { headerActions } = useHeader()
+
+  // On desktop, shift sidebar button right when sidebar is open
+  const sidebarOpen = state === 'expanded'
 
   return (
     <>
-      {/* Top-left: Sidebar trigger */}
-      <div className="fixed top-4 left-4 z-40">
+      {/* Top-left: Sidebar trigger - shifts right when sidebar is open on desktop */}
+      <div className={`fixed top-4 z-40 transition-[left] duration-200 ${sidebarOpen ? 'md:left-[calc(16rem+1rem)]' : 'left-4'}`}>
         <LiquidGlassButton
           onClick={toggleSidebar}
           aria-label="Toggle Sidebar"
@@ -33,7 +36,7 @@ export function FloatingGlassControls() {
             glowIntensity="xs"
             borderRadius="9999px"
             tint="auto"
-            className="flex items-center gap-1 px-2 py-1.5"
+            className="h-10 flex items-center gap-1 px-2"
           >
             <div className="relative z-30 flex items-center gap-1">
               {headerActions}

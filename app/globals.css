@@ -193,21 +193,27 @@
   display: none;  /* Chrome, Safari and Opera */
 }
 
-/* Sidebar glass effect */
-[data-sidebar="sidebar"] {
-  background: rgba(255, 255, 255, 0.7) !important;
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
-  border-radius: 16px;
-  margin: 8px;
-  height: calc(100% - 16px) !important;
-  border: 1px solid rgba(255, 255, 255, 0.4);
-  z-index: 50;
-}
+/* Sidebar glass effect - desktop only */
+@media (min-width: 768px) {
+  /* Remove all borders from the fixed sidebar container wrapper */
+  [data-side] > div + div.fixed {
+    border: none !important;
+  }
 
-.dark [data-sidebar="sidebar"] {
-  background: rgba(0, 0, 0, 0.5) !important;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  [data-sidebar="sidebar"]:not([data-mobile="true"]) {
+    background: rgba(255, 255, 255, 0.7) !important;
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border-radius: 16px;
+    margin: 8px;
+    height: calc(100% - 16px) !important;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+  }
+
+  .dark [data-sidebar="sidebar"]:not([data-mobile="true"]) {
+    background: rgba(0, 0, 0, 0.5) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
 }
 
 /* Mobile sidebar sheet - curved edges with spacing all around */

@@ -14,7 +14,7 @@ export default function AppLayout({
       <HeaderProvider>
         <SidebarProvider defaultOpen={false}>
           <AppSidebar />
-          <SidebarInset className="flex flex-col min-h-screen">
+          <SidebarInset className="relative flex flex-col min-h-screen">
             <FloatingGlassControls />
             <div className="flex-1 overflow-y-auto">
               {children}

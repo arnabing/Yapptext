@@ -47,6 +47,7 @@ import { PaywallModal } from "@/components/billing/PaywallModal";
 import { ReverseTrialPopup } from "@/components/billing/ReverseTrialPopup";
 import { useHeader } from "@/lib/header-context";
 import { useTranscriptContext } from "@/lib/transcript-context";
+import { useSidebar } from "@/components/ui/sidebar";
 import { DotFlow, transcriptionFlowItems } from "@/components/ui/dot-flow";
 
 type AppState = "idle" | "file-selected" | "processing" | "complete" | "error";
@@ -58,6 +59,8 @@ function NewTranscriptContent() {
   const searchParams = useSearchParams();
   const { isSignedIn } = useUser();
   const { transcriptData, clearTranscriptData, setTranscriptData } = useTranscriptContext();
+  const { state: sidebarState } = useSidebar();
+  const sidebarOpen = sidebarState === 'expanded';
 
   const [state, setState] = useState<AppState>("idle");
   const [file, setFile] = useState<File | null>(null);
@@ -1154,7 +1157,7 @@ function NewTranscriptContent() {
 
       {/* Transcript Display */}
       {transcript && state === "complete" && (
-        <>
+        <div className="pt-16 pb-28">
           <TranscriptView
             key={`transcript-${currentLanguage}-${utterances.length}`}
             utterances={utterances}
@@ -1182,7 +1185,7 @@ function NewTranscriptContent() {
               </Alert>
             </div>
           )}
-        </>
+        </div>
       )}
 
       {/* Paywall Modal */}
@@ -1203,7 +1206,7 @@ function NewTranscriptContent() {
 
       {/* Audio Player - fixed to bottom of viewport */}
       {state === "complete" && (
-        <div className="fixed bottom-0 left-0 right-0 z-30">
+        <div className={`fixed bottom-0 right-0 z-20 transition-[left] duration-200 ${sidebarOpen ? 'md:left-[16rem]' : 'left-0'}`}>
           <AudioControls
             audioUrl={audioUrl}
             fileName={audioFileName}
