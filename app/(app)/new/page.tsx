@@ -194,9 +194,10 @@ function NewTranscriptContent() {
         <>
           <Button
             size="sm"
-            variant="outline"
+            variant="ghost"
             onClick={copyToClipboard}
             aria-label="Copy transcript"
+            className="text-foreground hover:bg-white/20 dark:hover:bg-white/10"
           >
             {copied ? (
               <>
@@ -215,8 +216,9 @@ function NewTranscriptContent() {
             <DropdownMenuTrigger asChild>
               <Button
                 size="sm"
-                variant="outline"
+                variant="ghost"
                 aria-label="More options"
+                className="text-foreground hover:bg-white/20 dark:hover:bg-white/10"
               >
                 <MoreVertical className="h-4 w-4" />
               </Button>
@@ -1199,9 +1201,9 @@ function NewTranscriptContent() {
         onOpenChange={setShowReverseTrial}
       />
 
-      {/* Audio Player - sticky to bottom of scrollable content area */}
+      {/* Audio Player - fixed to bottom of viewport */}
       {state === "complete" && (
-        <div className="sticky bottom-0 z-30">
+        <div className="fixed bottom-0 left-0 right-0 z-30">
           <AudioControls
             audioUrl={audioUrl}
             fileName={audioFileName}

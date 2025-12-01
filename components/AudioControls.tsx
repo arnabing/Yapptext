@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect } from 'react'
 import { Button } from '@/components/ui/button'
 import { Slider } from '@/components/ui/slider'
+import { LiquidGlassCard } from '@/components/ui/liquid-glass'
 import { Play, Pause, Rewind, FastForward, Loader2 } from 'lucide-react'
 
 interface AudioControlsProps {
@@ -158,69 +159,68 @@ export function AudioControls({ audioUrl, fileName, onTimeUpdate, className = ''
     <>
       <audio ref={audioRef} src={audioUrl} preload="metadata" />
 
-      <div className={`bg-white/30 dark:bg-black/40 backdrop-blur-md border-t border-white/20 dark:border-white/10 shadow-2xl relative ${className}`}>
-        {/* Buffering indicator */}
-        {isBuffering && (
-          <div className="absolute inset-0 flex items-center justify-center bg-black/10 backdrop-blur-sm">
-            <Loader2 className="h-6 w-6 animate-spin text-red-500" />
-          </div>
-        )}
-
-        <div className="container max-w-5xl mx-auto px-4 py-6 pb-[calc(1.5rem+env(safe-area-inset-bottom))]">
-          {/* File name display */}
-          {fileName && (
-            <div className="text-xs text-muted-foreground mb-2 text-center truncate">
+      {/* Top center: File name pill (fixed in header area) */}
+      {fileName && (
+        <div className="fixed top-4 left-1/2 -translate-x-1/2 z-40">
+          <LiquidGlassCard
+            draggable={false}
+            blurIntensity="md"
+            shadowIntensity="sm"
+            glowIntensity="xs"
+            borderRadius="9999px"
+            tint="auto"
+            className="h-10 flex items-center justify-center px-4 max-w-[200px] sm:max-w-xs"
+          >
+            <span className="relative z-30 text-xs text-muted-foreground whitespace-nowrap truncate">
               {fileName}
+            </span>
+          </LiquidGlassCard>
+        </div>
+      )}
+
+      {/* Bottom: Controls pill */}
+      <div className={`flex justify-center px-4 pb-[calc(1rem+env(safe-area-inset-bottom))] ${className}`}>
+        <LiquidGlassCard
+          draggable={false}
+          blurIntensity="lg"
+          shadowIntensity="lg"
+          glowIntensity="sm"
+          borderRadius="9999px"
+          tint="auto"
+          className="relative z-30 w-full max-w-2xl"
+        >
+          {/* Buffering indicator */}
+          {isBuffering && (
+            <div className="absolute inset-0 flex items-center justify-center bg-black/10 backdrop-blur-sm z-40 rounded-full">
+              <Loader2 className="h-5 w-5 animate-spin text-primary" />
             </div>
           )}
 
-          <div className="flex flex-col gap-2.5">
-            {/* Full-width slider */}
-            <div className="w-full">
-              <Slider
-                value={[currentTime]}
-                max={duration || 100}
-                step={0.1}
-                onValueChange={handleSliderChange}
-                onValueCommit={handleSliderCommit}
-                className="w-full"
-                aria-label="Seek audio"
-              />
-            </div>
-
-            {/* Times below slider */}
-            <div className="flex items-center justify-between -mt-1">
-              <span className="text-xs font-mono tabular-nums text-muted-foreground">
-                {formatTime(currentTime)}
-              </span>
-              <span className="text-xs font-mono tabular-nums text-muted-foreground">
-                {formatTime(duration)}
-              </span>
-            </div>
-
-            {/* Centered controls */}
-            <div className="flex items-center justify-center gap-2 pt-1">
+          <div className="flex items-center gap-3 px-3 py-2 relative z-30">
+            {/* Left: Playback controls */}
+            <div className="flex items-center gap-1 shrink-0">
               <Button
                 id="skip-back-btn"
                 size="icon"
                 variant="ghost"
                 onClick={skipBackward}
-                className="h-9 w-9 transition-transform"
+                className="h-8 w-8 transition-transform hover:bg-white/10"
                 title="Skip back 10 seconds"
               >
-                <Rewind className="h-5 w-5" />
+                <Rewind className="h-4 w-4" />
               </Button>
 
               <Button
                 size="icon"
+                variant="ghost"
                 onClick={togglePlayPause}
-                className="h-11 w-11 mx-1 shadow-md hover:shadow-lg transition-all"
+                className="h-9 w-9 hover:bg-white/10"
                 title={isPlaying ? 'Pause' : 'Play'}
               >
                 {isPlaying ? (
-                  <Pause className="h-6 w-6" />
+                  <Pause className="h-5 w-5" />
                 ) : (
-                  <Play className="h-6 w-6 ml-0.5" />
+                  <Play className="h-5 w-5 ml-0.5" />
                 )}
               </Button>
 
@@ -229,14 +229,33 @@ export function AudioControls({ audioUrl, fileName, onTimeUpdate, className = ''
                 size="icon"
                 variant="ghost"
                 onClick={skipForward}
-                className="h-9 w-9 transition-transform"
+                className="h-8 w-8 transition-transform hover:bg-white/10"
                 title="Skip forward 10 seconds"
               >
-                <FastForward className="h-5 w-5" />
+                <FastForward className="h-4 w-4" />
               </Button>
             </div>
+
+            {/* Center: Slider with time */}
+            <div className="flex-1 flex items-center gap-2 min-w-0">
+              <span className="text-xs font-mono tabular-nums text-muted-foreground shrink-0 w-10 text-right">
+                {formatTime(currentTime)}
+              </span>
+              <Slider
+                value={[currentTime]}
+                max={duration || 100}
+                step={0.1}
+                onValueChange={handleSliderChange}
+                onValueCommit={handleSliderCommit}
+                className="flex-1"
+                aria-label="Seek audio"
+              />
+              <span className="text-xs font-mono tabular-nums text-muted-foreground shrink-0 w-10">
+                {formatTime(duration)}
+              </span>
+            </div>
           </div>
-        </div>
+        </LiquidGlassCard>
       </div>
     </>
   )
