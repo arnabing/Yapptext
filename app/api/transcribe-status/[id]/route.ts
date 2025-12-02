@@ -32,41 +32,51 @@ export async function GET(
     console.log('Current status:', result.status)
 
     // If completed and we haven't logged usage yet, log it now
+    // This is done in a non-blocking way to avoid connection pool issues
     if (result.status === 'completed' && result.transcript) {
-      // Check if we've already logged usage for this transcript (database-based deduplication)
-      const existingLog = await db.usageLog.findUnique({
-        where: { transcriptId: transcriptId }
-      })
+      // Get metadata from query params (passed from frontend)
+      const searchParams = request.nextUrl.searchParams
+      const userId = searchParams.get('userId')
+      const isSample = searchParams.get('isSample') === 'true'
+      const audioUrl = searchParams.get('audioUrl')
+      const model = searchParams.get('model') || 'universal'
 
-      if (!existingLog) {
-        // Get metadata from query params (passed from frontend)
-        const searchParams = request.nextUrl.searchParams
-        const userId = searchParams.get('userId')
-        const isSample = searchParams.get('isSample') === 'true'
-        const audioUrl = searchParams.get('audioUrl')
-        const model = searchParams.get('model') || 'universal'
-
-        console.log('Logging usage:', { userId, isSample, audioUrl, model })
-
-        // Log usage for authenticated users (but not for sample files)
-        if (userId && result.transcript.duration > 0 && !isSample) {
+      // Log usage for authenticated users (but not for sample files)
+      // Wrap everything in try-catch to ensure the response is never blocked
+      if (userId && result.transcript.duration > 0 && !isSample) {
+        // Fire and forget - don't await, don't block response
+        (async () => {
           try {
-            const email = await getCurrentUserEmail()
-            if (email) {
-              await ensureUserExists(userId, email)
-              // Pass transcriptId for database-based deduplication
-              await logUsage(userId, result.transcript.duration, model as any, transcriptId)
-              console.log(`Logged ${result.transcript.duration} minutes for user ${userId}`)
+            // Quick timeout for database check to avoid blocking
+            const timeoutPromise = new Promise((_, reject) =>
+              setTimeout(() => reject(new Error('DB timeout')), 3000)
+            )
+
+            const checkPromise = db.usageLog.findUnique({
+              where: { transcriptId: transcriptId },
+              select: { id: true } // Only select id for faster query
+            })
+
+            const existingLog = await Promise.race([checkPromise, timeoutPromise]).catch(() => null)
+
+            if (!existingLog) {
+              console.log('Logging usage:', { userId, model, transcriptId })
+              const email = await getCurrentUserEmail()
+              if (email) {
+                await ensureUserExists(userId, email)
+                await logUsage(userId, result.transcript!.duration, model as any, transcriptId)
+                console.log(`Logged ${result.transcript!.duration} minutes for user ${userId}`)
+              }
+            } else {
+              console.log(`Usage already logged for transcript ${transcriptId}`)
             }
           } catch (error) {
-            console.error('Error logging usage:', error)
-            // Don't fail the request if usage logging fails
+            console.error('Non-blocking usage logging error:', error)
+            // This is non-blocking, so we just log and continue
           }
-        } else if (isSample) {
-          console.log(`Skipping usage logging for sample file: ${audioUrl}`)
-        }
-      } else {
-        console.log(`Usage already logged for transcript ${transcriptId}`)
+        })()
+      } else if (isSample) {
+        console.log(`Skipping usage logging for sample file: ${audioUrl}`)
       }
     }
 
