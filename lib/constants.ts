@@ -173,13 +173,18 @@ export const SUPPORTED_AUDIO_FORMATS = [
 
 /**
  * Supported video formats (audio will be extracted client-side)
+ * Includes Apple iOS formats: HEVC (H.265), MOV, M4V
  */
 export const SUPPORTED_VIDEO_FORMATS = [
   'video/mp4',
   'video/webm',
-  'video/quicktime',  // .mov
+  'video/quicktime',  // .mov (iOS default)
   'video/x-msvideo',  // .avi
   'video/x-matroska', // .mkv
+  'video/hevc',       // HEVC/H.265 (iOS)
+  'video/x-m4v',      // .m4v (Apple)
+  'video/3gpp',       // .3gp (mobile)
+  'video/3gpp2',      // .3g2 (mobile)
 ] as const
 
 /**

@@ -983,7 +983,7 @@ export function TranscriptionInterface({ isDarkMode = true }: TranscriptionInter
                                             <input
                                                 ref={fileInputRef}
                                                 type="file"
-                                                accept="audio/*,video/*,.mp3,.wav,.m4a,.webm,.mp4,.mov,.avi,.mkv"
+                                                accept="audio/*,video/*,.mp3,.wav,.m4a,.webm,.mp4,.mov,.avi,.mkv,.m4v,.hevc,.3gp"
                                                 onChange={handleFileInputChange}
                                                 className="hidden"
                                             />

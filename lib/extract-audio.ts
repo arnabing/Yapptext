@@ -110,7 +110,8 @@ export function isVideoFile(file: File): boolean {
   }
 
   // Fallback to extension check for files with missing/incorrect MIME types
-  const videoExtensions = /\.(mp4|mov|avi|mkv|webm|wmv|flv|m4v|3gp|mpeg|mpg)$/i
+  // Includes Apple formats: .mov, .m4v, HEVC (.hevc, .h265)
+  const videoExtensions = /\.(mp4|mov|avi|mkv|webm|wmv|flv|m4v|3gp|mpeg|mpg|hevc|h265|heic)$/i
   return videoExtensions.test(file.name)
 }
 
