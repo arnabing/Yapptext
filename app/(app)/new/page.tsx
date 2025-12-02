@@ -85,7 +85,7 @@ function NewTranscriptContent() {
   const [currentLanguage, setCurrentLanguage] = useState("original");
   const [audioDuration, setAudioDuration] = useState(0); // in seconds
   const [estimatedTime, setEstimatedTime] = useState(0); // in seconds
-  const [selectedModel, setSelectedModel] = useState<'nano' | 'universal'>('universal'); // Model selection
+  // Model is always 'universal' (maps to AssemblyAI 'best' model)
   const [showPaywall, setShowPaywall] = useState(false); // Paywall modal state
   const [showReverseTrial, setShowReverseTrial] = useState(false); // Reverse trial popup state
   const [remainingMinutes, setRemainingMinutes] = useState<number | null>(null); // User's remaining minutes
@@ -551,7 +551,7 @@ function NewTranscriptContent() {
       formData.append("audioUrl", blob.url);
       formData.append("fileName", file.name);
       formData.append("fileSize", file.size.toString());
-      formData.append("model", selectedModel); // Send model selection
+      formData.append("model", "universal"); // Always use best quality model
       formData.append("enableSentiment", "false"); // Disabled for speed
       formData.append("enableKeyPhrases", "false"); // Disabled for speed
 

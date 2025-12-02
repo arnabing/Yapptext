@@ -68,28 +68,17 @@ export async function POST(request: NextRequest) {
     const transcriptionTasks: Promise<any>[] = []
     const taskLabels: string[] = []
     
-    // AssemblyAI - Standard (Universal) Model
+    // AssemblyAI - Best Model (highest quality)
     if (process.env.ASSEMBLYAI_API_KEY) {
       transcriptionTasks.push(
         transcribeWithAssemblyAI(audioUrl || audioFile, {
-          model: 'universal',
+          model: 'universal',  // Maps to 'best' model
           enableSentiment: false,
           enableKeyPhrases: false,
           isUrl: !!audioUrl
         })
       )
-      taskLabels.push('AssemblyAI-Universal')
-
-      // Also test AssemblyAI Nano (Fast & Cheap)
-      transcriptionTasks.push(
-        transcribeWithAssemblyAI(audioUrl || audioFile, {
-          model: 'nano',
-          enableSentiment: false,
-          enableKeyPhrases: false,
-          isUrl: !!audioUrl
-        })
-      )
-      taskLabels.push('AssemblyAI-Nano')
+      taskLabels.push('AssemblyAI-Best')
     }
     
     // Gemini

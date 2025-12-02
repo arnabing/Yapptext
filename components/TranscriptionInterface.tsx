@@ -57,9 +57,18 @@ type AppState = "idle" | "file-selected" | "processing" | "complete" | "error";
 
 interface TranscriptionInterfaceProps {
     isDarkMode?: boolean;
+    onComplete?: (data: {
+        transcript: string;
+        utterances: any[];
+        chapters: any[];
+        words: any[];
+        audioUrl: string;
+        fileName: string;
+        duration: number;
+    }) => void;
 }
 
-export function TranscriptionInterface({ isDarkMode = true }: TranscriptionInterfaceProps = {}) {
+export function TranscriptionInterface({ isDarkMode = true, onComplete }: TranscriptionInterfaceProps = {}) {
     const { toast } = useToast();
     // Optional: Header context might not be available if used outside of the main app layout
     // We'll handle this gracefully
@@ -93,7 +102,7 @@ export function TranscriptionInterface({ isDarkMode = true }: TranscriptionInter
     const [currentLanguage, setCurrentLanguage] = useState("original");
     const [audioDuration, setAudioDuration] = useState(0); // in seconds
     const [estimatedTime, setEstimatedTime] = useState(0); // in seconds
-    const [selectedModel, setSelectedModel] = useState<'nano' | 'universal'>('universal'); // Model selection
+    // Model is always 'universal' (maps to AssemblyAI 'best' model)
     const [showPaywall, setShowPaywall] = useState(false); // Paywall modal state
     const [showReverseTrial, setShowReverseTrial] = useState(false); // Reverse trial popup state
     const [remainingMinutes, setRemainingMinutes] = useState<number | null>(null); // User's remaining minutes
@@ -523,7 +532,7 @@ export function TranscriptionInterface({ isDarkMode = true }: TranscriptionInter
             formData.append("audioUrl", blob.url);
             formData.append("fileName", file.name);
             formData.append("fileSize", file.size.toString());
-            formData.append("model", selectedModel); // Send model selection
+            formData.append("model", "universal"); // Always use best quality model
             formData.append("enableSentiment", "false"); // Disabled for speed
             formData.append("enableKeyPhrases", "false"); // Disabled for speed
 
@@ -662,6 +671,20 @@ export function TranscriptionInterface({ isDarkMode = true }: TranscriptionInter
             setAllWords(data.allWords || []);
             setMinutesUsed(data.minutesUsed || minutesUsed + data.duration);
             setState("complete");
+
+            // Call onComplete callback if provided (allows parent to handle redirect)
+            if (onComplete) {
+                onComplete({
+                    transcript: data.text,
+                    utterances: data.utterances || [],
+                    chapters: data.chapters || [],
+                    words: data.allWords || [],
+                    audioUrl: audioUrl,
+                    fileName: audioFileName,
+                    duration: data.duration,
+                });
+                return; // Exit early - parent handles display
+            }
 
             // Show success toast for all users
             const speakerCount =
@@ -1227,7 +1250,8 @@ export function TranscriptionInterface({ isDarkMode = true }: TranscriptionInter
             )}
 
             {/* Completed State - Full Width Transcript View */}
-            {state === "complete" && (
+            {/* Only render if onComplete callback is NOT provided (parent handles display otherwise) */}
+            {state === "complete" && !onComplete && (
                 <div className="space-y-6 animate-in fade-in duration-500">
                     {/* Audio Player */}
                     <div className="sticky top-14 z-30 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b pb-4 pt-2 -mx-4 px-4 md:-mx-8 md:px-8">

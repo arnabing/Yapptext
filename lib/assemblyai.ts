@@ -52,7 +52,7 @@ export interface TranscriptionResult {
 }
 
 export async function transcribeWithAssemblyAI(audioInput: File | string, options?: {
-  model?: 'nano' | 'universal'  // Default: 'universal' (standard quality)
+  model?: 'universal'  // Always uses AssemblyAI 'best' model for highest quality
   enableSentiment?: boolean
   enableKeyPhrases?: boolean
   isUrl?: boolean
@@ -85,17 +85,15 @@ export async function transcribeWithAssemblyAI(audioInput: File | string, option
   try {
     const startTime = Date.now()
 
-    // Select model: universal (standard) or nano (fastest/cheapest)
-    // Both support speaker labels and multi-speaker detection
-    const selectedModel = options?.model || 'universal'
-
-    // Prepare transcription options
+    // Always use the 'best' model for highest quality transcription
+    // Prepare transcription options with enhanced quality settings
     let transcriptOptions: any = {
-      speaker_labels: true,  // Both models support speaker detection
-      speech_model: selectedModel,  // Correct parameter: singular string, not array
-      language_code: 'en',
+      speaker_labels: true,  // Enable speaker diarization
+      speech_model: 'best',  // Always use highest quality model
+      language_detection: true,  // Auto-detect language for better accuracy
       format_text: true,
       punctuate: true,
+      disfluencies: false,  // Keep filler words for natural transcription
     }
     
     // Handle URL vs File input - SDK expects 'audio' for BOTH URLs and buffers
@@ -112,9 +110,9 @@ export async function transcribeWithAssemblyAI(audioInput: File | string, option
     }
     
     console.log('Starting AssemblyAI transcription with options:')
-    console.log(`- Model: ${selectedModel}${selectedModel === 'universal' ? ' (Standard quality, multi-language)' : ' (Fast & cheap)'}`)
+    console.log(`- Speech model: ${transcriptOptions.speech_model}`)
     console.log('- speaker_labels: true')
-    console.log('- language_code: en')
+    console.log('- language_detection: true')
     console.log('- sentiment_analysis:', options?.enableSentiment || false)
     console.log('- auto_highlights:', options?.enableKeyPhrases || false)
     if (options?.speakersExpected) {
@@ -280,7 +278,7 @@ export async function transcribeWithAssemblyAI(audioInput: File | string, option
  * Returns the transcript ID immediately for frontend polling
  */
 export async function submitTranscriptionJob(audioInput: File | string, options?: {
-  model?: 'nano' | 'universal'
+  model?: 'universal'  // Always uses AssemblyAI 'best' model
   enableSentiment?: boolean
   enableKeyPhrases?: boolean
   isUrl?: boolean
@@ -296,15 +294,14 @@ export async function submitTranscriptionJob(audioInput: File | string, options?
   }
 
   try {
-    const selectedModel = options?.model || 'universal'
-
-    // Prepare transcription options
+    // Always use the 'best' model for highest quality transcription
     let transcriptOptions: any = {
-      speaker_labels: true,
-      speech_model: selectedModel,
-      language_code: 'en',
+      speaker_labels: true,  // Enable speaker diarization
+      speech_model: 'best',  // Always use highest quality model
+      language_detection: true,  // Auto-detect language for better accuracy
       format_text: true,
       punctuate: true,
+      disfluencies: false,  // Keep filler words for natural transcription
     }
 
     // Handle URL vs File input
@@ -336,7 +333,7 @@ export async function submitTranscriptionJob(audioInput: File | string, options?
     const client = getClient()
 
     // Submit job without waiting - returns immediately with transcript object containing id
-    console.log('Submitting transcription job...')
+    console.log('Submitting transcription job with speech_model: best')
     const transcript = await client.transcripts.submit(transcriptOptions)
 
     console.log('=== JOB SUBMITTED SUCCESSFULLY ===')

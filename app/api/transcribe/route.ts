@@ -28,15 +28,14 @@ export async function POST(request: NextRequest) {
     const audioUrl = formData.get('audioUrl') as string
     const audioFile = formData.get('audio') as File
 
-    // Get model selection
-    const selectedModel = (formData.get('model') as string) || TRANSCRIPTION_MODELS.UNIVERSAL
+    // Always use universal (maps to 'best' model in AssemblyAI)
     const enableSentiment = formData.get('enableSentiment') === 'true'
     const enableKeyPhrases = formData.get('enableKeyPhrases') === 'true'
 
     console.log('Form data parsed')
     console.log('Audio URL:', audioUrl ? 'present' : 'missing')
     console.log('Audio file:', audioFile ? 'present' : 'missing')
-    console.log('Model:', selectedModel)
+    console.log('Model: best (highest quality)')
     console.log('Options:', { enableSentiment, enableKeyPhrases })
 
     if (!audioUrl && !audioFile) {
@@ -107,9 +106,9 @@ export async function POST(request: NextRequest) {
     const startTime = Date.now()
 
     // Submit transcription job asynchronously - returns immediately with transcript ID
-    console.log(`Submitting ${selectedModel} transcription job...`)
+    console.log('Submitting transcription job (best model)...')
     const transcriptId = await submitTranscriptionJob(audioUrl || audioFile, {
-      model: selectedModel as 'nano' | 'universal',
+      model: 'universal',  // Always use best quality
       enableSentiment,
       enableKeyPhrases,
       isUrl: !!audioUrl
@@ -127,7 +126,7 @@ export async function POST(request: NextRequest) {
       transcriptId,
       status: 'queued',
       submissionTime,
-      model: selectedModel,
+      model: 'universal',
       // Include metadata for status endpoint
       metadata: {
         userId: userId || null,

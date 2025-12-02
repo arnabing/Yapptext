@@ -87,7 +87,24 @@ export default function LandingPage() {
               <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-red-500"></div>
             </div>
           }>
-            <TranscriptionInterface isDarkMode={false} />
+            <TranscriptionInterface
+              isDarkMode={false}
+              onComplete={(data) => {
+                // Store transcript data in sessionStorage for /new page to read
+                sessionStorage.setItem('demoTranscript', JSON.stringify({
+                  title: data.fileName,
+                  text: data.transcript,
+                  fileName: data.fileName,
+                  duration: data.duration,
+                  audioUrl: data.audioUrl,
+                  utterances: data.utterances,
+                  chapters: data.chapters,
+                  words: data.words,
+                }));
+                // Redirect to main app
+                router.push('/new');
+              }}
+            />
           </Suspense>
         </div>
       </div>

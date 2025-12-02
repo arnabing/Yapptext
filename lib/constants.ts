@@ -12,12 +12,10 @@ export const PRICING_TIERS = {
 export type PricingTier = typeof PRICING_TIERS[keyof typeof PRICING_TIERS]
 
 /**
- * Transcription models available
- * Users can choose model regardless of tier
+ * Transcription model - always use best quality
  */
 export const TRANSCRIPTION_MODELS = {
-  NANO: 'nano',           // Fastest, cheapest - good for drafts
-  UNIVERSAL: 'universal',  // Standard quality, multi-language
+  UNIVERSAL: 'universal',  // Maps to AssemblyAI 'best' model for highest quality
 } as const
 
 export type TranscriptionModel = typeof TRANSCRIPTION_MODELS[keyof typeof TRANSCRIPTION_MODELS]
@@ -96,7 +94,7 @@ export const TIER_FEATURES = {
       '1 free transcript',
       'Up to 20 minutes',
       'Speaker detection',
-      'Choose Nano or Universal model',
+      'Best-in-class accuracy',
       'Download transcripts',
     ],
     cta: 'Sign up for more',
@@ -108,7 +106,7 @@ export const TIER_FEATURES = {
       '60 minutes per month',
       'Unlimited files',
       'Speaker detection',
-      'Choose Nano or Universal model',
+      'Best-in-class accuracy',
       'Download transcripts',
     ],
     cta: 'Current plan',
@@ -122,7 +120,7 @@ export const TIER_FEATURES = {
       '500 minutes per month',
       'Unlimited files',
       'Speaker detection',
-      'Choose Nano or Universal model',
+      'Best-in-class accuracy',
       'Download transcripts',
       'Priority support',
       'API access (coming soon)',
