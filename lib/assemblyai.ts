@@ -200,8 +200,9 @@ export async function transcribeWithAssemblyAI(audioInput: File | string, option
   const chapters: Chapter[] = [] // Disabled for better performance
 
     // Calculate duration in minutes
-    const durationMs = completedTranscript.audio_duration || 0
-    const duration = Math.ceil(durationMs / 60000)
+    // Note: AssemblyAI returns audio_duration in SECONDS, not milliseconds
+    const durationSeconds = completedTranscript.audio_duration || 0
+    const duration = Math.ceil(durationSeconds / 60)
 
     // Extract sentiment analysis results if available
     const sentimentAnalysis = completedTranscript.sentiment_analysis_results || null
@@ -427,8 +428,9 @@ export async function getTranscriptionStatus(transcriptId: string): Promise<{
     const chapters: Chapter[] = []
 
     // Calculate duration in minutes
-    const durationMs = result.audio_duration || 0
-    const duration = Math.ceil(durationMs / 60000)
+    // Note: AssemblyAI returns audio_duration in SECONDS, not milliseconds
+    const durationSeconds = result.audio_duration || 0
+    const duration = Math.ceil(durationSeconds / 60)
 
     // Extract sentiment analysis and key phrases
     const sentimentAnalysis = result.sentiment_analysis_results || null

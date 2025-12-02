@@ -68,7 +68,7 @@ export function AppSidebar() {
   const [usageData, setUsageData] = useState<{
     minutesUsed: number
     remaining: number
-    dailyLimit: number
+    monthlyLimit: number
   } | null>(null)
   const [showPaywall, setShowPaywall] = useState(false)
   const [transcripts, setTranscripts] = useState<Transcript[]>([])
@@ -94,7 +94,7 @@ export function AppSidebar() {
             setUsageData({
               minutesUsed: data.minutesUsed,
               remaining: data.minutesLimit - data.minutesUsed,
-              dailyLimit: data.minutesLimit
+              monthlyLimit: data.minutesLimit
             })
           }
 
@@ -112,7 +112,7 @@ export function AppSidebar() {
             setUsageData({
               minutesUsed: data.minutesUsed || 0,
               remaining: data.remaining || 20,
-              dailyLimit: 20
+              monthlyLimit: 20
             })
           }
         }

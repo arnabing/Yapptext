@@ -50,6 +50,7 @@ import { useTranscriptContext } from "@/lib/transcript-context";
 import { useSidebar } from "@/components/ui/sidebar";
 import { DotFlow, transcriptionFlowItems } from "@/components/ui/dot-flow";
 import { LiquidGlassCard } from "@/components/ui/liquid-glass";
+import { isVideoFile, extractAudioFromVideo } from "@/lib/extract-audio";
 
 type AppState = "idle" | "file-selected" | "processing" | "complete" | "error";
 
@@ -349,14 +350,26 @@ function NewTranscriptContent() {
   };
 
   const handleFileSelect = (selectedFile: File) => {
-    // Create audio URL for playback
+    // Create URL for playback
     const url = URL.createObjectURL(selectedFile);
     setAudioUrl(url);
 
-    // Get audio duration for time estimation
-    const audio = new Audio(url);
-    audio.addEventListener("loadedmetadata", () => {
-      const duration = Math.round(audio.duration); // duration in seconds
+    // Detect if this is a video file
+    const isVideo = isVideoFile(selectedFile);
+
+    // Use appropriate media element for duration detection
+    // Video element is needed for video-only containers like MOV, AVI, MKV
+    const mediaElement = isVideo
+      ? document.createElement('video')
+      : new Audio(url);
+
+    mediaElement.preload = 'metadata';
+    if (isVideo) {
+      (mediaElement as HTMLVideoElement).src = url;
+    }
+
+    mediaElement.addEventListener("loadedmetadata", () => {
+      const duration = Math.round(mediaElement.duration); // duration in seconds
       const durationMinutes = Math.ceil(duration / 60); // Convert to minutes, round up
 
       // Check duration (10 hours max for AssemblyAI)
@@ -365,7 +378,7 @@ function NewTranscriptContent() {
       if (duration > maxDurationSeconds) {
         const durationHours = (duration / 3600).toFixed(1);
         setError(
-          `Audio duration (${durationHours} hours) exceeds ${maxDurationHours}-hour limit.`
+          `Media duration (${durationHours} hours) exceeds ${maxDurationHours}-hour limit.`
         );
         setState("error");
         return;
@@ -386,14 +399,15 @@ function NewTranscriptContent() {
 
       setAudioDuration(duration);
       // Estimate processing time: ~0.5 seconds per minute of audio (based on AssemblyAI benchmarks)
-      const estimatedProcessingTime = Math.max(
-        10,
-        Math.round((duration * 0.5) / 60),
-      );
+      // Add extra time for video extraction if needed
+      const baseProcessingTime = Math.max(10, Math.round((duration * 0.5) / 60));
+      const estimatedProcessingTime = isVideo ? baseProcessingTime + 10 : baseProcessingTime;
       setEstimatedTime(estimatedProcessingTime);
     });
 
+    // Validate file type - support both audio and video
     const validTypes = [
+      // Audio types
       "audio/mp3",
       "audio/mpeg",
       "audio/wav",
@@ -403,14 +417,24 @@ function NewTranscriptContent() {
       "audio/x-m4a",
       "audio/webm",
       "audio/mp4",
+      // Video types
+      "video/mp4",
+      "video/webm",
+      "video/quicktime",  // .mov (iOS default)
+      "video/x-msvideo",  // .avi
+      "video/x-matroska", // .mkv
+      "video/hevc",       // HEVC/H.265 (iOS)
+      "video/x-m4v",      // .m4v (Apple)
+      "video/3gpp",       // .3gp (mobile)
+      "video/3gpp2",      // .3g2 (mobile)
     ];
 
     if (
       !validTypes.includes(selectedFile.type) &&
-      !selectedFile.name.match(/\.(mp3|wav|m4a|webm|mp4)$/i)
+      !selectedFile.name.match(/\.(mp3|wav|m4a|webm|mp4|mov|avi|mkv|m4v|hevc|3gp|3g2)$/i)
     ) {
       setError(
-        "Please upload a valid audio file (MP3, WAV, M4A, WebM, or MP4)",
+        "Please upload a valid audio or video file (MP3, WAV, M4A, MP4, MOV, etc.)",
       );
       setState("error");
       return;
@@ -446,26 +470,62 @@ function NewTranscriptContent() {
     setState("processing");
     setProgress(0);
     setProcessingTime(0);
-    setStatusMessage("Uploading audio...");
+    setStatusMessage("Preparing file...");
 
     processingTimerRef.current = setInterval(() => {
       setProcessingTime((prev) => prev + 1);
     }, 1000);
 
     try {
+      // Step 0: Extract audio from video files (if applicable)
+      let fileToUpload = file;
+      const isVideo = isVideoFile(file);
+
+      if (isVideo) {
+        setStatusMessage("Extracting audio from video...");
+        setProgress(2);
+
+        try {
+          console.log("Extracting audio from video file...");
+          fileToUpload = await extractAudioFromVideo(file, (progress, message) => {
+            // Map extraction progress (0-1) to 2-35%
+            const mappedProgress = 2 + Math.round(progress * 33);
+            setProgress(mappedProgress);
+            setStatusMessage(message);
+          });
+          console.log("Audio extracted:", fileToUpload.name, (fileToUpload.size / 1024 / 1024).toFixed(2), "MB");
+          setProgress(35);
+        } catch (extractionError) {
+          console.error("Audio extraction failed:", extractionError);
+          setError("Failed to extract audio from video. Please try uploading an audio file directly.");
+          setState("error");
+          if (processingTimerRef.current) {
+            clearInterval(processingTimerRef.current);
+          }
+          return;
+        }
+      }
+
       // Step 1: Upload file to Vercel Blob for fast, direct upload
       setStatusMessage("Uploading audio to cloud storage...");
 
       // Add timestamp to filename to ensure uniqueness
       const timestamp = Date.now();
-      const uniqueFilename = `${timestamp}-${file.name}`;
+      const uniqueFilename = `${timestamp}-${fileToUpload.name}`;
 
-      const blob = await upload(uniqueFilename, file, {
+      // Progress mapping depends on whether we did video extraction
+      // Video: extraction used 0-35%, upload uses 35-70%
+      // Audio: upload uses 0-40%
+      const uploadProgressStart = isVideo ? 35 : 0;
+      const uploadProgressEnd = isVideo ? 70 : 40;
+
+      const blob = await upload(uniqueFilename, fileToUpload, {
         access: 'public',
         handleUploadUrl: '/api/upload',
         onUploadProgress: (event) => {
           if (event.loaded && event.total) {
-            const percentComplete = Math.round((event.loaded / event.total) * 40); // 0-40% for upload
+            const uploadPercent = event.loaded / event.total;
+            const percentComplete = Math.round(uploadProgressStart + uploadPercent * (uploadProgressEnd - uploadProgressStart));
             setProgress(percentComplete);
             console.log(
               `Upload progress: ${percentComplete}% (${(event.loaded / 1024 / 1024).toFixed(2)}MB / ${(event.total / 1024 / 1024).toFixed(2)}MB)`,
@@ -481,9 +541,9 @@ function NewTranscriptContent() {
 
       // Update audioUrl with the permanent Vercel Blob URL
       setAudioUrl(permanentBlobUrl);
-      setAudioFileName(file.name);
+      setAudioFileName(file.name); // Keep original file name for display
 
-      setProgress(40);
+      setProgress(isVideo ? 70 : 40);
       setStatusMessage("Processing audio with AI...");
 
       // Step 2: Send the blob URL to our transcribe endpoint
@@ -631,6 +691,12 @@ function NewTranscriptContent() {
       setAllWords(data.allWords || []);
       setMinutesUsed(data.minutesUsed || minutesUsed + data.duration);
       setState("complete");
+
+      // Trigger sidebar refresh after delay to capture async usage logging
+      // The usage is logged via fire-and-forget in transcribe-status endpoint
+      setTimeout(() => {
+        triggerSidebarRefresh();
+      }, 2000);
 
       // Generate title from filename
       const baseTitle = file?.name.replace(/\.[^/.]+$/, '') || 'Untitled'; // Remove extension
@@ -934,7 +1000,7 @@ function NewTranscriptContent() {
                       <div className="p-8 md:p-16 text-center">
                         <Upload className="mx-auto h-12 w-12 text-gray-400 mb-4" />
                         <p className="text-xl font-semibold mb-2">
-                          Drag and drop an audio file
+                          Drag and drop your file
                         </p>
                         <p className="text-sm text-muted-foreground mb-4">
                           or <span className="text-primary font-medium cursor-pointer">browse to upload</span>
@@ -943,17 +1009,17 @@ function NewTranscriptContent() {
                           onClick={() => fileInputRef.current?.click()}
                           className="mt-4"
                         >
-                          Upload your audio
+                          Upload your file
                         </Button>
                         <input
                           ref={fileInputRef}
                           type="file"
-                          accept="audio/*,.mp3,.wav,.m4a,.webm,.mp4"
+                          accept="audio/*,video/*,.mp3,.wav,.m4a,.webm,.mp4,.mov,.avi,.mkv,.m4v,.hevc,.3gp"
                           onChange={handleFileInputChange}
                           className="hidden"
                         />
                         <p className="text-xs text-muted-foreground mt-6">
-                          Supports MP3, WAV, M4A, WebM, MP4
+                          Supports audio &amp; video: MP3, WAV, M4A, MP4, MOV
                         </p>
                       </div>
                     </div>
