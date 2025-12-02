@@ -64,7 +64,7 @@ export function AppSidebar() {
   const { user, isSignedIn } = useUser()
   const { signOut, redirectToSignIn } = useClerk()
   const { isMobile, setOpenMobile, setOpen } = useSidebar()
-  const { setTranscriptData, clearTranscriptData, transcriptData } = useTranscriptContext()
+  const { setTranscriptData, clearTranscriptData, transcriptData, refreshCounter } = useTranscriptContext()
   const [usageData, setUsageData] = useState<{
     minutesUsed: number
     remaining: number
@@ -81,6 +81,7 @@ export function AppSidebar() {
   const limit = USAGE_LIMITS[userTier as keyof typeof USAGE_LIMITS]?.minutesPerMonth || 20
 
   // Fetch usage data and transcripts
+  // Re-fetch when refreshCounter changes (triggered after saving new transcript)
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -121,7 +122,7 @@ export function AppSidebar() {
     }
 
     fetchData()
-  }, [isSignedIn])
+  }, [isSignedIn, refreshCounter])
 
   const handleManageBilling = async () => {
     try {

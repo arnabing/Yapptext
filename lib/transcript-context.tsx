@@ -18,12 +18,16 @@ type TranscriptContextType = {
   transcriptData: TranscriptData
   setTranscriptData: (data: TranscriptData) => void
   clearTranscriptData: () => void
+  // Refresh counter - increment to trigger sidebar refresh
+  refreshCounter: number
+  triggerSidebarRefresh: () => void
 }
 
 const TranscriptContext = createContext<TranscriptContextType | null>(null)
 
 export function TranscriptProvider({ children }: { children: ReactNode }) {
   const [transcriptData, setTranscriptDataState] = useState<TranscriptData>(null)
+  const [refreshCounter, setRefreshCounter] = useState(0)
 
   const setTranscriptData = useCallback((data: TranscriptData) => {
     setTranscriptDataState(data)
@@ -40,8 +44,18 @@ export function TranscriptProvider({ children }: { children: ReactNode }) {
     }
   }, [])
 
+  const triggerSidebarRefresh = useCallback(() => {
+    setRefreshCounter(c => c + 1)
+  }, [])
+
   return (
-    <TranscriptContext.Provider value={{ transcriptData, setTranscriptData, clearTranscriptData }}>
+    <TranscriptContext.Provider value={{
+      transcriptData,
+      setTranscriptData,
+      clearTranscriptData,
+      refreshCounter,
+      triggerSidebarRefresh
+    }}>
       {children}
     </TranscriptContext.Provider>
   )

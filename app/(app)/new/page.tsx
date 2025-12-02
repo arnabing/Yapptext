@@ -59,7 +59,7 @@ function NewTranscriptContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const { isSignedIn } = useUser();
-  const { transcriptData, clearTranscriptData, setTranscriptData } = useTranscriptContext();
+  const { transcriptData, clearTranscriptData, setTranscriptData, triggerSidebarRefresh } = useTranscriptContext();
   const { state: sidebarState } = useSidebar();
   const sidebarOpen = sidebarState === 'expanded';
 
@@ -681,7 +681,8 @@ function NewTranscriptContent() {
               });
             }
 
-            // Transcript will display inline on /new page
+            // Trigger sidebar refresh to show new transcript in history
+            triggerSidebarRefresh();
           }
         } catch (error) {
           console.error('Failed to save transcript:', error);
@@ -1075,7 +1076,8 @@ function NewTranscriptContent() {
 
                                     if (response.ok) {
                                       const savedTranscript = await response.json();
-                                      // Sample transcript will display inline on /new page
+                                      // Trigger sidebar refresh to show new transcript in history
+                                      triggerSidebarRefresh();
                                     }
                                   } catch (error) {
                                     console.error('Failed to save sample transcript:', error);
