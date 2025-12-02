@@ -1204,19 +1204,18 @@ export function TranscriptionInterface({ isDarkMode = true }: TranscriptionInter
 
                             {/* Error State */}
                             {state === "error" && (
-                                <div className="border border-red-500/20 rounded-xl p-8 bg-red-500/5 backdrop-blur-sm text-center">
-                                    <div className="w-16 h-16 mx-auto bg-red-500/10 rounded-full flex items-center justify-center mb-4">
-                                        <AlertCircle className="h-8 w-8 text-red-500" />
+                                <div className="border border-destructive/20 rounded-xl p-8 bg-destructive/5 backdrop-blur-sm text-center">
+                                    <div className="w-16 h-16 mx-auto bg-destructive/10 rounded-full flex items-center justify-center mb-4">
+                                        <AlertCircle className="h-8 w-8 text-destructive" />
                                     </div>
-                                    <h3 className="text-xl font-semibold mb-2 text-white">Transcription Failed</h3>
-                                    <p className="text-sm text-gray-400 mb-6 max-w-md mx-auto">
+                                    <h3 className="text-xl font-semibold mb-2 text-foreground">Transcription Failed</h3>
+                                    <p className="text-sm text-muted-foreground mb-6 max-w-md mx-auto">
                                         {error}
                                     </p>
 
                                     <Button
                                         onClick={reset}
                                         variant="outline"
-                                        className="border-white/10 text-white hover:bg-white/10"
                                     >
                                         Try Again
                                     </Button>
