@@ -157,7 +157,7 @@ export const MAX_FILE_SIZE = 100 * 1024 * 1024
 /**
  * Supported audio formats
  */
-export const SUPPORTED_FORMATS = [
+export const SUPPORTED_AUDIO_FORMATS = [
   'audio/mpeg',
   'audio/mp3',
   'audio/wav',
@@ -169,4 +169,23 @@ export const SUPPORTED_FORMATS = [
   'audio/ogg',
   'audio/webm',
   'audio/flac',
+] as const
+
+/**
+ * Supported video formats (audio will be extracted client-side)
+ */
+export const SUPPORTED_VIDEO_FORMATS = [
+  'video/mp4',
+  'video/webm',
+  'video/quicktime',  // .mov
+  'video/x-msvideo',  // .avi
+  'video/x-matroska', // .mkv
+] as const
+
+/**
+ * All supported media formats (audio + video)
+ */
+export const SUPPORTED_FORMATS = [
+  ...SUPPORTED_AUDIO_FORMATS,
+  ...SUPPORTED_VIDEO_FORMATS,
 ] as const

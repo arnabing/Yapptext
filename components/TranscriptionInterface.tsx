@@ -13,6 +13,7 @@ import {
     Copy,
     AlertCircle,
     FileAudio,
+    FileVideo,
     Clock,
     Play,
     PlayCircle,
@@ -44,6 +45,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { getSampleTranscript } from "@/lib/sample-transcripts";
 import { formatTranscriptAsPlainText, formatTranscriptAsHTML } from "@/lib/format-transcript";
+import { isVideoFile, extractAudioFromVideo } from "@/lib/extract-audio";
 import { PaywallModal } from "@/components/billing/PaywallModal";
 import { ReverseTrialPopup } from "@/components/billing/ReverseTrialPopup";
 import { useHeader } from "@/lib/header-context";
@@ -325,15 +327,27 @@ export function TranscriptionInterface({ isDarkMode = true }: TranscriptionInter
     };
 
     const handleFileSelect = (selectedFile: File) => {
-        // Create audio URL for playback
+        // Create URL for playback/metadata
         const url = URL.createObjectURL(selectedFile);
         setAudioUrl(url);
         setAudioFileName(selectedFile.name);
 
-        // Get audio duration for time estimation
-        const audio = new Audio(url);
-        audio.addEventListener("loadedmetadata", () => {
-            const duration = Math.round(audio.duration); // duration in seconds
+        // Detect if this is a video file
+        const isVideo = isVideoFile(selectedFile);
+
+        // Use appropriate media element for duration detection
+        // Video element is needed for video-only containers like MOV, AVI, MKV
+        const mediaElement = isVideo
+            ? document.createElement('video')
+            : new Audio(url);
+
+        mediaElement.preload = 'metadata';
+        if (isVideo) {
+            (mediaElement as HTMLVideoElement).src = url;
+        }
+
+        mediaElement.addEventListener("loadedmetadata", () => {
+            const duration = Math.round(mediaElement.duration); // duration in seconds
 
             // Check duration (10 hours max for AssemblyAI)
             const maxDurationHours = 10;
@@ -341,7 +355,7 @@ export function TranscriptionInterface({ isDarkMode = true }: TranscriptionInter
             if (duration > maxDurationSeconds) {
                 const durationHours = (duration / 3600).toFixed(1);
                 setError(
-                    `Audio duration (${durationHours} hours) exceeds ${maxDurationHours}-hour limit.`
+                    `File duration (${durationHours} hours) exceeds ${maxDurationHours}-hour limit.`
                 );
                 setState("error");
                 return;
@@ -349,14 +363,28 @@ export function TranscriptionInterface({ isDarkMode = true }: TranscriptionInter
 
             setAudioDuration(duration);
             // Estimate processing time: ~0.5 seconds per minute of audio (based on AssemblyAI benchmarks)
+            // Add extra time for video files due to audio extraction
+            const extraTime = isVideo ? 10 : 0;
             const estimatedProcessingTime = Math.max(
                 10,
-                Math.round((duration * 0.5) / 60),
+                Math.round((duration * 0.5) / 60) + extraTime,
             );
             setEstimatedTime(estimatedProcessingTime);
         });
 
+        // Fallback for files that can't be decoded (e.g., unsupported codecs)
+        mediaElement.addEventListener("error", () => {
+            console.warn("Could not read media metadata, using file size estimate");
+            // Estimate: ~1 min per 10MB for video, ~1 min per 1MB for audio
+            const estimatedMinutes = isVideo
+                ? Math.ceil(selectedFile.size / (10 * 1024 * 1024))
+                : Math.ceil(selectedFile.size / (1024 * 1024));
+            setAudioDuration(estimatedMinutes * 60);
+            setEstimatedTime(Math.max(10, estimatedMinutes));
+        });
+
         const validTypes = [
+            // Audio types
             "audio/mp3",
             "audio/mpeg",
             "audio/wav",
@@ -366,14 +394,20 @@ export function TranscriptionInterface({ isDarkMode = true }: TranscriptionInter
             "audio/x-m4a",
             "audio/webm",
             "audio/mp4",
+            // Video types (will be converted to audio)
+            "video/mp4",
+            "video/webm",
+            "video/quicktime",
+            "video/x-msvideo",
+            "video/x-matroska",
         ];
 
         if (
             !validTypes.includes(selectedFile.type) &&
-            !selectedFile.name.match(/\.(mp3|wav|m4a|webm|mp4)$/i)
+            !selectedFile.name.match(/\.(mp3|wav|m4a|webm|mp4|mov|avi|mkv)$/i)
         ) {
             setError(
-                "Please upload a valid audio file (MP3, WAV, M4A, WebM, or MP4)",
+                "Please upload a valid audio or video file (MP3, WAV, M4A, MP4, MOV, AVI, or MKV)",
             );
             setState("error");
             return;
@@ -415,26 +449,60 @@ export function TranscriptionInterface({ isDarkMode = true }: TranscriptionInter
         setState("processing");
         setProgress(0);
         setProcessingTime(0);
-        setStatusMessage("Uploading audio...");
 
         processingTimerRef.current = setInterval(() => {
             setProcessingTime((prev) => prev + 1);
         }, 1000);
 
         try {
+            // Step 0: Extract audio from video files (if applicable)
+            let fileToUpload = file;
+            const isVideo = isVideoFile(file);
+
+            if (isVideo) {
+                setStatusMessage("Extracting audio from video...");
+                setProgress(2);
+
+                try {
+                    console.log("Extracting audio from video file...");
+                    fileToUpload = await extractAudioFromVideo(file, (progress, message) => {
+                        // Map extraction progress (0-1) to 2-35%
+                        const mappedProgress = 2 + Math.round(progress * 33);
+                        setProgress(mappedProgress);
+                        setStatusMessage(message);
+                    });
+                    console.log("Audio extracted:", fileToUpload.name, (fileToUpload.size / 1024 / 1024).toFixed(2), "MB");
+                    setProgress(35);
+                } catch (extractionError) {
+                    console.error("Audio extraction failed:", extractionError);
+                    setError("Failed to extract audio from video. Please try uploading an audio file directly.");
+                    setState("error");
+                    if (processingTimerRef.current) {
+                        clearInterval(processingTimerRef.current);
+                    }
+                    return;
+                }
+            }
+
             // Step 1: Upload file to Vercel Blob for fast, direct upload
             setStatusMessage("Uploading audio to cloud storage...");
 
             // Add timestamp to filename to ensure uniqueness
             const timestamp = Date.now();
-            const uniqueFilename = `${timestamp}-${file.name}`;
+            const uniqueFilename = `${timestamp}-${fileToUpload.name}`;
 
-            const blob = await upload(uniqueFilename, file, {
+            // Adjust progress range based on whether we extracted audio
+            const uploadProgressStart = isVideo ? 35 : 0;
+            const uploadProgressEnd = isVideo ? 55 : 40;
+
+            const blob = await upload(uniqueFilename, fileToUpload, {
                 access: 'public',
                 handleUploadUrl: '/api/upload',
                 onUploadProgress: (event) => {
                     if (event.loaded && event.total) {
-                        const percentComplete = Math.round((event.loaded / event.total) * 40); // 0-40% for upload
+                        // Map upload progress to appropriate range based on whether we extracted audio
+                        const uploadRange = uploadProgressEnd - uploadProgressStart;
+                        const percentComplete = uploadProgressStart + Math.round((event.loaded / event.total) * uploadRange);
                         setProgress(percentComplete);
                         console.log(
                             `Upload progress: ${percentComplete}% (${(event.loaded / 1024 / 1024).toFixed(2)}MB / ${(event.total / 1024 / 1024).toFixed(2)}MB)`,
@@ -447,7 +515,7 @@ export function TranscriptionInterface({ isDarkMode = true }: TranscriptionInter
             const permanentBlobUrl = blob.url;
             setAudioUrl(permanentBlobUrl);
 
-            setProgress(40);
+            setProgress(uploadProgressEnd);
             setStatusMessage("Processing audio with AI...");
 
             // Step 2: Send the blob URL to our transcribe endpoint
@@ -915,7 +983,7 @@ export function TranscriptionInterface({ isDarkMode = true }: TranscriptionInter
                                             <input
                                                 ref={fileInputRef}
                                                 type="file"
-                                                accept="audio/*,.mp3,.wav,.m4a,.webm,.mp4"
+                                                accept="audio/*,video/*,.mp3,.wav,.m4a,.webm,.mp4,.mov,.avi,.mkv"
                                                 onChange={handleFileInputChange}
                                                 className="hidden"
                                             />
@@ -1078,7 +1146,11 @@ export function TranscriptionInterface({ isDarkMode = true }: TranscriptionInter
                             {state === "file-selected" && file && (
                                 <div className="border border-white/10 rounded-xl p-8 bg-white/5 backdrop-blur-sm text-center">
                                     <div className="w-16 h-16 mx-auto bg-primary/10 rounded-full flex items-center justify-center mb-4">
-                                        <FileAudio className="h-8 w-8 text-primary" />
+                                        {isVideoFile(file) ? (
+                                            <FileVideo className="h-8 w-8 text-primary" />
+                                        ) : (
+                                            <FileAudio className="h-8 w-8 text-primary" />
+                                        )}
                                     </div>
                                     <h3 className="text-xl font-semibold mb-2 text-white">{file.name}</h3>
                                     <p className="text-sm text-gray-400 mb-6">
