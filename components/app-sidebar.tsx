@@ -230,13 +230,11 @@ export function AppSidebar() {
                 setOpen(false)
               }
 
-              // Navigate to /new if not already there
-              if (pathname !== '/new') {
-                router.push('/new')
-              }
+              // Navigate to /new with a timestamp param to force re-render
+              // This ensures the page resets even if already on /new
+              router.push(`/new?reset=${Date.now()}`)
             }}
-            className="w-full"
-            variant="outline"
+            className="w-full bg-foreground text-background hover:bg-foreground/90"
           >
             <Plus className="h-4 w-4 mr-2" />
             New transcription

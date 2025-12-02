@@ -131,6 +131,37 @@ function NewTranscriptContent() {
 
   // Load transcript from context (set by sidebar) or sessionStorage (for page reloads)
   useEffect(() => {
+    // Check for reset param - if present, reset all local state and clear URL
+    const resetParam = searchParams?.get('reset');
+    if (resetParam) {
+      // Reset all local state
+      setState("idle");
+      setFile(null);
+      setTranscript("");
+      setOriginalTranscript("");
+      setUtterances([]);
+      setOriginalUtterances([]);
+      setChapters([]);
+      setAllWords([]);
+      setProgress(0);
+      setError("");
+      setProcessingTime(0);
+      setAudioUrl("");
+      setAudioFileName("");
+      setCurrentPlayTime(0);
+      setIsTranslating(false);
+      setCurrentLanguage("original");
+      setAudioDuration(0);
+      setEstimatedTime(0);
+      setStatusMessage("");
+      if (fileInputRef.current) {
+        fileInputRef.current.value = "";
+      }
+      // Clean up URL
+      router.replace('/new', { scroll: false });
+      return;
+    }
+
     // First check context (set by sidebar clicks)
     if (transcriptData) {
       // Populate state with transcript data from context
