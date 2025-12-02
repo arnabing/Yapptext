@@ -3,6 +3,8 @@ import { Inter, Space_Grotesk, JetBrains_Mono } from 'next/font/google'
 import { ClerkProvider } from '@clerk/nextjs'
 import { Toaster } from '@/components/ui/toaster'
 import { Analytics } from '@vercel/analytics/react'
+import { PostHogProvider } from '@/components/providers/PostHogProvider'
+import { PostHogPageView } from '@/components/providers/PostHogPageView'
 import "@fontsource-variable/sixtyfour-convergence/full.css"
 import './globals.css'
 
@@ -48,13 +50,16 @@ export default function RootLayout({
 }) {
   return (
     <ClerkProvider>
-      <html lang="en">
-        <body className={`${inter.variable} ${spaceGrotesk.variable} ${jetbrainsMono.variable} font-sans`}>
-          {children}
-          <Analytics />
-          <Toaster />
-        </body>
-      </html>
+      <PostHogProvider>
+        <html lang="en">
+          <body className={`${inter.variable} ${spaceGrotesk.variable} ${jetbrainsMono.variable} font-sans`}>
+            <PostHogPageView />
+            {children}
+            <Analytics />
+            <Toaster />
+          </body>
+        </html>
+      </PostHogProvider>
     </ClerkProvider>
   )
 }
