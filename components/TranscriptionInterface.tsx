@@ -581,7 +581,8 @@ export function TranscriptionInterface({ isDarkMode = true, onComplete, onStateC
             // After upload completes, show processing status
             console.log("Upload complete, polling for transcription status...");
             setProcessingPhase('processing');
-            setProgress(40); // Upload complete, now processing
+            // Don't reset progress - use Math.max to ensure monotonic progress
+            setProgress(prev => Math.max(prev, uploadProgressEnd));
             setStatusMessage("Processing transcript...");
 
             const startProcessingTime = Date.now();
@@ -623,10 +624,12 @@ export function TranscriptionInterface({ isDarkMode = true, onComplete, onStateC
                 console.log('Current status:', statusData.status, 'percent:', statusData.percentComplete);
 
                 // Update progress bar with actual percentage from AssemblyAI
-                // Map 0-100% from AssemblyAI to 40-95% in our progress bar (upload is 0-40%)
+                // Map 0-100% from AssemblyAI to uploadProgressEnd-95% in our progress bar
+                // Use Math.max to ensure progress never decreases (monotonic)
                 if (statusData.percentComplete !== undefined && statusData.percentComplete > 0) {
-                    const mappedProgress = 40 + (statusData.percentComplete / 100) * 55;
-                    setProgress(Math.round(Math.min(95, mappedProgress)));
+                    const processingStart = isVideo ? 55 : 40;
+                    const mappedProgress = processingStart + (statusData.percentComplete / 100) * (95 - processingStart);
+                    setProgress(prev => Math.max(prev, Math.round(Math.min(95, mappedProgress))));
                     console.log(`Processing: ${statusData.percentComplete}% complete (display: ${Math.round(mappedProgress)}%)`);
                 }
 
@@ -1207,12 +1210,14 @@ export function TranscriptionInterface({ isDarkMode = true, onComplete, onStateC
                             {state === "processing" && (
                                 <div className="flex flex-col items-center gap-6 py-8">
                                     <DotFlow
+                                        key={processingPhase}
                                         items={
                                             processingPhase === 'extraction' ? videoExtractionFlowItems :
                                             processingPhase === 'upload' ? uploadFlowItems :
                                             processingFlowItems
                                         }
                                         isPlaying={true}
+                                        loop={true}
                                     />
 
                                     <div className="w-full max-w-xs space-y-3">

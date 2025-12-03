@@ -16,6 +16,7 @@ export type DotFlowProps = {
         repeatCount?: number;
     }[];
     isPlaying?: boolean;
+    loop?: boolean; // If true, cycle through items indefinitely
     className?: string;
     dotClassName?: string;
     textClassName?: string;
@@ -24,6 +25,7 @@ export type DotFlowProps = {
 export const DotFlow = ({
     items,
     isPlaying = true,
+    loop = false,
     className,
     dotClassName,
     textClassName,
@@ -332,104 +334,105 @@ export const quickFlowItems: DotFlowProps["items"] = [
 // Phase-specific flow items with witty messages
 // ============================================
 
-// Video extraction phase
+// Video extraction phase - longer durations for ~5-6 seconds per message
 export const videoExtractionFlowItems: DotFlowProps["items"] = [
     {
         title: "Unwrapping your video...",
         frames: radarFrames,
-        duration: 100,
-        repeatCount: 2,
+        duration: 150,
+        repeatCount: 5,
     },
     {
         title: "Separating the audio layer...",
         frames: waveformFrames,
-        duration: 120,
-        repeatCount: 2,
+        duration: 150,
+        repeatCount: 5,
     },
     {
         title: "FFmpeg doing its magic...",
         frames: sparkleFrames,
         duration: 150,
-        repeatCount: 2,
+        repeatCount: 5,
     },
     {
         title: "Almost extracted...",
         frames: pulseFrames,
-        duration: 100,
-        repeatCount: 2,
+        duration: 150,
+        repeatCount: 5,
     },
 ];
 
-// Upload phase
+// Upload phase - longer durations for ~5-6 seconds per message
 export const uploadFlowItems: DotFlowProps["items"] = [
     {
         title: "Beaming to the cloud...",
         frames: spinnerFrames,
-        duration: 80,
-        repeatCount: 3,
+        duration: 150,
+        repeatCount: 5,
     },
     {
         title: "Uploading at the speed of WiFi...",
         frames: radarFrames,
-        duration: 100,
-        repeatCount: 2,
+        duration: 150,
+        repeatCount: 5,
     },
     {
         title: "Almost there...",
         frames: pulseFrames,
-        duration: 100,
-        repeatCount: 2,
+        duration: 150,
+        repeatCount: 5,
     },
 ];
 
 // AI Processing phase (main transcription) - with witty messages
+// Longer durations (~5-6 seconds per message) since transcription takes 10-60+ seconds
 export const processingFlowItems: DotFlowProps["items"] = [
     {
         title: "Waking up the AI...",
         frames: brainFrames,
-        duration: 100,
-        repeatCount: 2,
+        duration: 150,
+        repeatCount: 5,
     },
     {
         title: "Listening very carefully...",
         frames: microphoneFrames,
-        duration: 120,
-        repeatCount: 2,
+        duration: 150,
+        repeatCount: 5,
     },
     {
         title: "Teaching robots to understand humans...",
         frames: dnaFrames,
         duration: 150,
-        repeatCount: 2,
+        repeatCount: 5,
     },
     {
         title: "Who said what? Figuring it out...",
         frames: sparkleFrames,
-        duration: 120,
-        repeatCount: 3,
+        duration: 150,
+        repeatCount: 5,
     },
     {
         title: "Connecting the neural dots...",
         frames: brainFrames,
-        duration: 100,
-        repeatCount: 2,
+        duration: 150,
+        repeatCount: 5,
     },
     {
         title: "Adding commas, because grammar matters...",
         frames: typingFrames,
-        duration: 100,
-        repeatCount: 3,
+        duration: 150,
+        repeatCount: 5,
     },
     {
         title: "Almost done, pinky promise...",
         frames: checkmarkFrames,
-        duration: 120,
-        repeatCount: 2,
+        duration: 150,
+        repeatCount: 5,
     },
     {
         title: "Final touches...",
         frames: sparkleFrames,
-        duration: 100,
-        repeatCount: 2,
+        duration: 150,
+        repeatCount: 5,
     },
 ];

@@ -39,6 +39,9 @@ export async function loadFFmpeg(
 
 /**
  * Extract audio from a video file
+ * Uses native format settings per AssemblyAI recommendation:
+ * "Submit your audio in its native format without additional transcoding"
+ *
  * @param videoFile - The video file to extract audio from
  * @param onProgress - Progress callback (0-1)
  * @returns A new File object containing the extracted audio as MP3
@@ -47,9 +50,16 @@ export async function extractAudioFromVideo(
   videoFile: File,
   onProgress?: (progress: number, message: string) => void
 ): Promise<File> {
+  const totalStartTime = performance.now()
+  console.log('\n=== AUDIO EXTRACTION STARTED ===')
+  console.log('Input file:', videoFile.name)
+  console.log('Input size:', (videoFile.size / 1024 / 1024).toFixed(2), 'MB')
+
   onProgress?.(0, 'Loading video processor...')
 
+  const loadStartTime = performance.now()
   const ff = await loadFFmpeg((msg) => onProgress?.(0.1, msg))
+  console.log('FFmpeg load time:', ((performance.now() - loadStartTime) / 1000).toFixed(2), 's')
 
   onProgress?.(0.15, 'Reading video file...')
 
@@ -61,16 +71,20 @@ export async function extractAudioFromVideo(
   })
 
   // Write the video file to ffmpeg's virtual filesystem
+  const writeStartTime = performance.now()
   const inputName = 'input' + getExtension(videoFile.name)
   await ff.writeFile(inputName, await fetchFile(videoFile))
+  console.log('File write time:', ((performance.now() - writeStartTime) / 1000).toFixed(2), 's')
 
   onProgress?.(0.2, 'Extracting audio...')
 
   // Extract audio as MP3
+  // Using standard quality settings - AssemblyAI recommends native format
   // -vn: no video
   // -acodec libmp3lame: use MP3 codec
   // -ab 128k: 128kbps bitrate (good quality, reasonable size)
   // -ar 44100: 44.1kHz sample rate
+  const extractStartTime = performance.now()
   await ff.exec([
     '-i', inputName,
     '-vn',
@@ -79,11 +93,14 @@ export async function extractAudioFromVideo(
     '-ar', '44100',
     'output.mp3'
   ])
+  console.log('FFmpeg extraction time:', ((performance.now() - extractStartTime) / 1000).toFixed(2), 's')
 
   onProgress?.(0.9, 'Finalizing...')
 
   // Read the output file
+  const readStartTime = performance.now()
   const audioData = await ff.readFile('output.mp3')
+  console.log('File read time:', ((performance.now() - readStartTime) / 1000).toFixed(2), 's')
 
   // Clean up virtual filesystem
   await ff.deleteFile(inputName)
@@ -95,6 +112,13 @@ export async function extractAudioFromVideo(
   const uint8Data = audioData as Uint8Array
   const audioBlob = new Blob([uint8Data.slice().buffer as ArrayBuffer], { type: 'audio/mpeg' })
   const audioFile = new File([audioBlob], audioFileName, { type: 'audio/mpeg' })
+
+  const totalTime = (performance.now() - totalStartTime) / 1000
+  const compressionRatio = ((1 - audioFile.size / videoFile.size) * 100).toFixed(1)
+  console.log('=== AUDIO EXTRACTION COMPLETE ===')
+  console.log('Output size:', (audioFile.size / 1024 / 1024).toFixed(2), 'MB')
+  console.log('Compression:', compressionRatio, '% smaller')
+  console.log('Total extraction time:', totalTime.toFixed(2), 's')
 
   onProgress?.(1, 'Audio extracted!')
 
