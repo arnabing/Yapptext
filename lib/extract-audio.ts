@@ -6,6 +6,7 @@ let loadPromise: Promise<FFmpeg> | null = null
 
 /**
  * Lazy load FFmpeg WASM - only loaded when a video file is uploaded
+ * Self-hosted from /public/ffmpeg for reliability (no external CDN dependency)
  */
 export async function loadFFmpeg(
   onProgress?: (message: string) => void
@@ -21,8 +22,8 @@ export async function loadFFmpeg(
 
     const ff = new FFmpeg()
 
-    // Load from CDN with proper CORS headers
-    const baseURL = 'https://unpkg.com/@ffmpeg/core@0.12.6/dist/umd'
+    // Self-hosted from Vercel's edge CDN (public folder)
+    const baseURL = '/ffmpeg'
 
     await ff.load({
       coreURL: await toBlobURL(`${baseURL}/ffmpeg-core.js`, 'text/javascript'),

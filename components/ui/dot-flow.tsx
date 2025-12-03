@@ -201,6 +201,53 @@ const spinnerFrames: number[][] = [
     [10, 3],
 ];
 
+// DNA helix / double spiral pattern
+const dnaFrames: number[][] = [
+    [0, 6, 10, 12, 17, 24, 31, 36, 38, 42, 48],
+    [1, 5, 9, 13, 18, 24, 30, 35, 39, 43, 47],
+    [2, 4, 8, 14, 19, 24, 29, 34, 40, 44, 46],
+    [3, 7, 15, 20, 24, 28, 33, 41, 45],
+    [2, 4, 8, 14, 21, 24, 27, 34, 40, 44, 46],
+    [1, 5, 9, 13, 22, 24, 26, 35, 39, 43, 47],
+    [0, 6, 10, 12, 23, 24, 25, 36, 38, 42, 48],
+];
+
+// Waveform / equalizer bars
+const waveformFrames: number[][] = [
+    [42, 35, 28, 43, 36, 44, 37, 30, 45],
+    [35, 28, 21, 36, 29, 22, 37, 30, 38],
+    [28, 21, 14, 29, 22, 15, 30, 23, 31],
+    [21, 14, 7, 22, 15, 8, 23, 16, 24],
+    [14, 7, 0, 15, 8, 1, 16, 9, 17],
+    [21, 14, 7, 22, 15, 8, 23, 16, 24],
+    [28, 21, 14, 29, 22, 15, 30, 23, 31],
+    [35, 28, 21, 36, 29, 22, 37, 30, 38],
+];
+
+// Heartbeat / pulse pattern
+const pulseFrames: number[][] = [
+    [21, 22, 23],
+    [21, 22, 23, 14, 30],
+    [21, 22, 23, 7, 14, 30, 37],
+    [21, 22, 23, 0, 7, 14, 30, 37, 44],
+    [21, 22, 23, 1, 8, 15, 29, 36, 43],
+    [21, 22, 23, 2, 16, 28, 42],
+    [21, 22, 23, 3, 17, 27, 41],
+    [21, 22, 23],
+];
+
+// Radar sweep
+const radarFrames: number[][] = [
+    [24, 17, 10, 3],
+    [24, 18, 12, 6],
+    [24, 25, 26, 27],
+    [24, 32, 40, 48],
+    [24, 31, 38, 45],
+    [24, 30, 36, 42],
+    [24, 23, 22, 21],
+    [24, 16, 8, 0],
+];
+
 // Export pre-built transcription flow items
 export const transcriptionFlowItems: DotFlowProps["items"] = [
     {
@@ -278,5 +325,111 @@ export const quickFlowItems: DotFlowProps["items"] = [
         frames: brainFrames,
         duration: 80,
         repeatCount: 1,
+    },
+];
+
+// ============================================
+// Phase-specific flow items with witty messages
+// ============================================
+
+// Video extraction phase
+export const videoExtractionFlowItems: DotFlowProps["items"] = [
+    {
+        title: "Unwrapping your video...",
+        frames: radarFrames,
+        duration: 100,
+        repeatCount: 2,
+    },
+    {
+        title: "Separating the audio layer...",
+        frames: waveformFrames,
+        duration: 120,
+        repeatCount: 2,
+    },
+    {
+        title: "FFmpeg doing its magic...",
+        frames: sparkleFrames,
+        duration: 150,
+        repeatCount: 2,
+    },
+    {
+        title: "Almost extracted...",
+        frames: pulseFrames,
+        duration: 100,
+        repeatCount: 2,
+    },
+];
+
+// Upload phase
+export const uploadFlowItems: DotFlowProps["items"] = [
+    {
+        title: "Beaming to the cloud...",
+        frames: spinnerFrames,
+        duration: 80,
+        repeatCount: 3,
+    },
+    {
+        title: "Uploading at the speed of WiFi...",
+        frames: radarFrames,
+        duration: 100,
+        repeatCount: 2,
+    },
+    {
+        title: "Almost there...",
+        frames: pulseFrames,
+        duration: 100,
+        repeatCount: 2,
+    },
+];
+
+// AI Processing phase (main transcription) - with witty messages
+export const processingFlowItems: DotFlowProps["items"] = [
+    {
+        title: "Waking up the AI...",
+        frames: brainFrames,
+        duration: 100,
+        repeatCount: 2,
+    },
+    {
+        title: "Listening very carefully...",
+        frames: microphoneFrames,
+        duration: 120,
+        repeatCount: 2,
+    },
+    {
+        title: "Teaching robots to understand humans...",
+        frames: dnaFrames,
+        duration: 150,
+        repeatCount: 2,
+    },
+    {
+        title: "Who said what? Figuring it out...",
+        frames: sparkleFrames,
+        duration: 120,
+        repeatCount: 3,
+    },
+    {
+        title: "Connecting the neural dots...",
+        frames: brainFrames,
+        duration: 100,
+        repeatCount: 2,
+    },
+    {
+        title: "Adding commas, because grammar matters...",
+        frames: typingFrames,
+        duration: 100,
+        repeatCount: 3,
+    },
+    {
+        title: "Almost done, pinky promise...",
+        frames: checkmarkFrames,
+        duration: 120,
+        repeatCount: 2,
+    },
+    {
+        title: "Final touches...",
+        frames: sparkleFrames,
+        duration: 100,
+        repeatCount: 2,
     },
 ];

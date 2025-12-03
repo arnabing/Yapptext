@@ -1,7 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { getTranscriptionStatus } from '@/lib/assemblyai'
-import { getCurrentUserId, getCurrentUserEmail } from '@/lib/auth'
+import { getCurrentUserEmail } from '@/lib/auth'
 import { logUsage, ensureUserExists } from '@/lib/usage'
+import { incrementGuestUsage } from '@/lib/guest-usage'
 import { isSampleFile } from '@/lib/constants'
 import { db } from '@/lib/db'
 
@@ -77,6 +78,22 @@ export async function GET(
         })()
       } else if (isSample) {
         console.log(`Skipping usage logging for sample file: ${audioUrl}`)
+      } else if (!userId && result.transcript.duration > 0 && !isSample) {
+        // Log usage for guest/anonymous users
+        const guestId = request.cookies.get('yapp_guest_id')?.value
+        if (guestId) {
+          // Fire and forget - don't await, don't block response
+          (async () => {
+            try {
+              const newUsage = await incrementGuestUsage(guestId, result.transcript!.duration)
+              console.log(`Logged ${result.transcript!.duration} minutes for guest ${guestId} (total: ${newUsage})`)
+            } catch (error) {
+              console.error('Non-blocking guest usage logging error:', error)
+            }
+          })()
+        } else {
+          console.log('No guest ID cookie found, skipping guest usage logging')
+        }
       }
     }
 

@@ -51,7 +51,7 @@ import { ReverseTrialPopup } from "@/components/billing/ReverseTrialPopup";
 import { useHeader } from "@/lib/header-context";
 import { useSearchParams, useRouter } from "next/navigation";
 import { useUser, SignUpButton } from '@clerk/nextjs';
-import { DotFlow, transcriptionFlowItems } from "@/components/ui/dot-flow";
+import { DotFlow, transcriptionFlowItems, videoExtractionFlowItems, uploadFlowItems, processingFlowItems } from "@/components/ui/dot-flow";
 
 type AppState = "idle" | "file-selected" | "processing" | "complete" | "error";
 
@@ -82,6 +82,7 @@ export function TranscriptionInterface({ isDarkMode = true, onComplete, onStateC
     const transcriptId = searchParams?.get('transcriptId');
 
     const [state, setState] = useState<AppState>("idle");
+    const [processingPhase, setProcessingPhase] = useState<'extraction' | 'upload' | 'processing'>('processing');
     const [file, setFile] = useState<File | null>(null);
     const [transcript, setTranscript] = useState("");
     const [utterances, setUtterances] = useState<any[]>([]);
@@ -139,15 +140,16 @@ export function TranscriptionInterface({ isDarkMode = true, onComplete, onStateC
     ];
 
     useEffect(() => {
-        // Check usage limit on load
-        fetch("/api/check-limit")
+        // Check usage limit on load - use different endpoint for guests vs authenticated
+        const endpoint = isSignedIn ? "/api/check-limit" : "/api/guest-usage";
+        fetch(endpoint)
             .then((res) => res.json())
             .then((data) => {
                 setMinutesUsed(data.minutesUsed || 0);
-                setRemainingMinutes(data.remainingMinutes);
+                setRemainingMinutes(data.minutesRemaining ?? data.remainingMinutes);
             })
             .catch(console.error);
-    }, []);
+    }, [isSignedIn]);
 
     // Notify parent of state changes
     useEffect(() => {
@@ -475,6 +477,7 @@ export function TranscriptionInterface({ isDarkMode = true, onComplete, onStateC
             const isVideo = isVideoFile(file);
 
             if (isVideo) {
+                setProcessingPhase('extraction');
                 setStatusMessage("Extracting audio from video...");
                 setProgress(2);
 
@@ -500,6 +503,7 @@ export function TranscriptionInterface({ isDarkMode = true, onComplete, onStateC
             }
 
             // Step 1: Upload file to Vercel Blob for fast, direct upload
+            setProcessingPhase('upload');
             setStatusMessage("Uploading audio to cloud storage...");
 
             // Add timestamp to filename to ensure uniqueness
@@ -576,6 +580,7 @@ export function TranscriptionInterface({ isDarkMode = true, onComplete, onStateC
 
             // After upload completes, show processing status
             console.log("Upload complete, polling for transcription status...");
+            setProcessingPhase('processing');
             setProgress(40); // Upload complete, now processing
             setStatusMessage("Processing transcript...");
 
@@ -1202,7 +1207,11 @@ export function TranscriptionInterface({ isDarkMode = true, onComplete, onStateC
                             {state === "processing" && (
                                 <div className="flex flex-col items-center gap-6 py-8">
                                     <DotFlow
-                                        items={transcriptionFlowItems}
+                                        items={
+                                            processingPhase === 'extraction' ? videoExtractionFlowItems :
+                                            processingPhase === 'upload' ? uploadFlowItems :
+                                            processingFlowItems
+                                        }
                                         isPlaying={true}
                                     />
 

@@ -94,8 +94,10 @@ export async function transcribeWithAssemblyAI(audioInput: File | string, option
       format_text: true,
       punctuate: true,
       disfluencies: false,  // Keep filler words for natural transcription
+      // Add default speaker hints for better multi-speaker detection
+      speakers_expected: 4,  // Reasonable default for most content (podcasts, interviews)
     }
-    
+
     // Handle URL vs File input - SDK expects 'audio' for BOTH URLs and buffers
     if (options?.isUrl && typeof audioInput === 'string') {
       console.log('Using audio URL:', audioInput)
@@ -128,10 +130,12 @@ export async function transcribeWithAssemblyAI(audioInput: File | string, option
       transcriptOptions.auto_highlights = true
     }
 
-    // Hint expected number of speakers if provided (diarization hint)
+    // Override default speakers_expected if user provides a specific value
     if (options?.speakersExpected && Number.isFinite(options.speakersExpected)) {
       transcriptOptions.speakers_expected = options.speakersExpected
+      console.log('- Using user-provided speakers_expected:', options.speakersExpected)
     }
+    console.log('- speakers_expected:', transcriptOptions.speakers_expected)
 
     const client = getClient()
     // transcribe() already polls until completed - no need for waitUntilReady
@@ -302,6 +306,8 @@ export async function submitTranscriptionJob(audioInput: File | string, options?
       format_text: true,
       punctuate: true,
       disfluencies: false,  // Keep filler words for natural transcription
+      // Add default speaker hints for better multi-speaker detection
+      speakers_expected: 4,  // Reasonable default for most content (podcasts, interviews)
     }
 
     // Handle URL vs File input
@@ -326,14 +332,17 @@ export async function submitTranscriptionJob(audioInput: File | string, options?
       transcriptOptions.auto_highlights = true
     }
 
+    // Override default speakers_expected if user provides a specific value
     if (options?.speakersExpected && Number.isFinite(options.speakersExpected)) {
       transcriptOptions.speakers_expected = options.speakersExpected
+      console.log('- Using user-provided speakers_expected:', options.speakersExpected)
     }
 
     const client = getClient()
 
     // Submit job without waiting - returns immediately with transcript object containing id
     console.log('Submitting transcription job with speech_model: best')
+    console.log('- speakers_expected:', transcriptOptions.speakers_expected)
     const transcript = await client.transcripts.submit(transcriptOptions)
 
     console.log('=== JOB SUBMITTED SUCCESSFULLY ===')

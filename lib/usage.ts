@@ -280,52 +280,9 @@ export async function getUserUsageSummary(userId: string) {
 }
 
 /**
- * Track anonymous usage by IP (stored in-memory/cache)
- * Note: For production, consider Redis or similar
+ * Guest/anonymous usage tracking is now handled via Vercel KV
+ * See: /lib/guest-usage.ts
+ *
+ * The in-memory Map approach was removed because it doesn't persist
+ * across serverless function cold starts.
  */
-const anonymousUsageCache = new Map<string, { count: number; lastUsed: Date }>()
-
-/**
- * Check if anonymous IP has used their free transcript
- */
-export function hasAnonymousIPUsedFreeTier(ip: string): boolean {
-  const usage = anonymousUsageCache.get(ip)
-  if (!usage) {
-    return false
-  }
-
-  // Reset if more than 24 hours ago
-  const hoursSinceLastUse = (Date.now() - usage.lastUsed.getTime()) / (1000 * 60 * 60)
-  if (hoursSinceLastUse > 24) {
-    anonymousUsageCache.delete(ip)
-    return false
-  }
-
-  return usage.count >= USAGE_LIMITS[PRICING_TIERS.ANONYMOUS].filesPerSession
-}
-
-/**
- * Mark anonymous IP as having used their free transcript
- */
-export function markAnonymousIPUsed(ip: string): void {
-  const existing = anonymousUsageCache.get(ip)
-  if (existing) {
-    existing.count++
-    existing.lastUsed = new Date()
-  } else {
-    anonymousUsageCache.set(ip, { count: 1, lastUsed: new Date() })
-  }
-}
-
-/**
- * Clear old anonymous usage data (call periodically)
- */
-export function cleanupAnonymousUsageCache(): void {
-  const now = Date.now()
-  for (const [ip, usage] of anonymousUsageCache.entries()) {
-    const hoursSinceLastUse = (now - usage.lastUsed.getTime()) / (1000 * 60 * 60)
-    if (hoursSinceLastUse > 24) {
-      anonymousUsageCache.delete(ip)
-    }
-  }
-}

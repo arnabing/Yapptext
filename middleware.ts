@@ -1,4 +1,6 @@
 import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server'
+import { NextResponse } from 'next/server'
+import { generateGuestId } from '@/lib/guest-usage'
 
 // Define public routes (don't require auth)
 const isPublicRoute = createRouteMatcher([
@@ -10,6 +12,7 @@ const isPublicRoute = createRouteMatcher([
   '/api/webhooks(.*)', // Stripe/Clerk webhooks
   '/api/upload(.*)', // Blob upload (handled in route)
   '/api/transcribe(.*)', // Transcription API (auth checked internally)
+  '/api/guest-usage', // Guest usage check endpoint
 ])
 
 // Define which routes require authentication
@@ -19,9 +22,38 @@ const isProtectedRoute = createRouteMatcher([
   '/billing(.*)',
 ])
 
+// Routes where we want to set guest cookies
+const isGuestTrackingRoute = createRouteMatcher([
+  '/',
+  '/new',
+  '/api/transcribe(.*)',
+  '/api/guest-usage',
+])
+
 export default clerkMiddleware(async (auth, req) => {
+  const { userId } = await auth()
+
   // Allow public routes without auth
   if (isPublicRoute(req)) {
+    // Set guest cookie for anonymous users on tracking routes
+    if (!userId && isGuestTrackingRoute(req)) {
+      const existingGuestId = req.cookies.get('yapp_guest_id')?.value
+
+      if (!existingGuestId) {
+        const response = NextResponse.next()
+        const newGuestId = generateGuestId()
+
+        response.cookies.set('yapp_guest_id', newGuestId, {
+          httpOnly: true,
+          secure: process.env.NODE_ENV === 'production',
+          sameSite: 'lax',
+          maxAge: 60 * 60 * 24 * 30, // 30 days
+          path: '/'
+        })
+
+        return response
+      }
+    }
     return
   }
 
