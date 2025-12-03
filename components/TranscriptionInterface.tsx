@@ -414,14 +414,18 @@ export function TranscriptionInterface({ isDarkMode = true, onComplete, onStateC
             // Video types (will be converted to audio)
             "video/mp4",
             "video/webm",
-            "video/quicktime",
-            "video/x-msvideo",
-            "video/x-matroska",
+            "video/quicktime",  // .mov (iOS default)
+            "video/x-msvideo",  // .avi
+            "video/x-matroska", // .mkv
+            "video/hevc",       // HEVC/H.265 (iOS)
+            "video/x-m4v",      // .m4v (Apple)
+            "video/3gpp",       // .3gp (mobile)
+            "video/3gpp2",      // .3g2 (mobile)
         ];
 
         if (
             !validTypes.includes(selectedFile.type) &&
-            !selectedFile.name.match(/\.(mp3|wav|m4a|webm|mp4|mov|avi|mkv)$/i)
+            !selectedFile.name.match(/\.(mp3|wav|m4a|webm|mp4|mov|avi|mkv|m4v|hevc|3gp|3g2)$/i)
         ) {
             setError(
                 "Please upload a valid audio or video file (MP3, WAV, M4A, MP4, MOV, AVI, or MKV)",
