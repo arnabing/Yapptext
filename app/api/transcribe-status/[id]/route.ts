@@ -99,9 +99,10 @@ export async function GET(
         error: result.error || 'Transcription failed'
       }, { status: 500 })
     } else {
-      // Still queued or processing
+      // Still queued or processing - include percent complete for accurate progress bar
       return NextResponse.json({
-        status: result.status
+        status: result.status,
+        percentComplete: result.percentComplete || 0
       })
     }
   } catch (error: any) {

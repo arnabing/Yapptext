@@ -353,6 +353,7 @@ export async function submitTranscriptionJob(audioInput: File | string, options?
  */
 export async function getTranscriptionStatus(transcriptId: string): Promise<{
   status: 'queued' | 'processing' | 'completed' | 'error'
+  percentComplete?: number
   transcript?: {
     text: string
     utterances: TranscriptSegment[]
@@ -381,9 +382,13 @@ export async function getTranscriptionStatus(transcriptId: string): Promise<{
 
     console.log('- Current status:', result.status)
 
-    // If still processing, return status only
+    // If still processing, return status and percent complete
     if (result.status === 'queued' || result.status === 'processing') {
-      return { status: result.status }
+      console.log('- Percent complete:', (result as any).percent_complete || 0)
+      return {
+        status: result.status,
+        percentComplete: (result as any).percent_complete || 0
+      }
     }
 
     // If error, return error info

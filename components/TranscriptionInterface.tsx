@@ -579,16 +579,7 @@ export function TranscriptionInterface({ isDarkMode = true, onComplete, onStateC
             setProgress(40); // Upload complete, now processing
             setStatusMessage("Processing transcript...");
 
-            // Calculate progress based on estimated time and poll status
             const startProcessingTime = Date.now();
-            const progressInterval = setInterval(() => {
-                const elapsed = (Date.now() - startProcessingTime) / 1000;
-                const progress = Math.min(95, 40 + (elapsed / estimatedTime) * 55); // 40-95% for processing
-                setProgress(Math.round(progress));
-                console.log(
-                    `Processing: ${Math.round(elapsed)}s elapsed, progress: ${Math.round(progress)}%`,
-                );
-            }, 2000); // Log every 2 seconds
 
             // Poll for status every 3 seconds
             let data: any = null;
@@ -624,20 +615,24 @@ export function TranscriptionInterface({ isDarkMode = true, onComplete, onStateC
                 }
 
                 const statusData = await statusResponse.json();
-                console.log('Current status:', statusData.status);
-                console.log('Status response:', JSON.stringify(statusData, null, 2));
+                console.log('Current status:', statusData.status, 'percent:', statusData.percentComplete);
+
+                // Update progress bar with actual percentage from AssemblyAI
+                // Map 0-100% from AssemblyAI to 40-95% in our progress bar (upload is 0-40%)
+                if (statusData.percentComplete !== undefined && statusData.percentComplete > 0) {
+                    const mappedProgress = 40 + (statusData.percentComplete / 100) * 55;
+                    setProgress(Math.round(Math.min(95, mappedProgress)));
+                    console.log(`Processing: ${statusData.percentComplete}% complete (display: ${Math.round(mappedProgress)}%)`);
+                }
 
                 if (statusData.status === 'completed') {
                     data = statusData;
                     break;
                 } else if (statusData.status === 'error') {
-                    clearInterval(progressInterval);
                     throw new Error(statusData.error || 'Transcription failed');
                 }
                 // Otherwise keep polling (queued or processing)
             }
-
-            clearInterval(progressInterval);
 
             if (!data) {
                 throw new Error('Transcription timed out after 3 minutes');
