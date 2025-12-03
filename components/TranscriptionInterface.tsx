@@ -919,7 +919,7 @@ export function TranscriptionInterface({ isDarkMode = true, onComplete, onStateC
         <>
             {/* Centered content for non-transcript states */}
             {state !== "complete" && (
-                <div className="w-full max-w-3xl mx-auto">
+                <div className={`w-full max-w-3xl mx-auto ${state !== "idle" ? "min-h-[60vh] flex items-center justify-center" : ""}`}>
                     <Card className="w-full border-0 shadow-none bg-transparent">
                         <CardContent className="p-0 space-y-6">
                             {/* Upload Zone - State-based rendering */}
