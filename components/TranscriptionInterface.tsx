@@ -66,9 +66,10 @@ interface TranscriptionInterfaceProps {
         fileName: string;
         duration: number;
     }) => void;
+    onStateChange?: (state: AppState) => void;
 }
 
-export function TranscriptionInterface({ isDarkMode = true, onComplete }: TranscriptionInterfaceProps = {}) {
+export function TranscriptionInterface({ isDarkMode = true, onComplete, onStateChange }: TranscriptionInterfaceProps = {}) {
     const { toast } = useToast();
     // Optional: Header context might not be available if used outside of the main app layout
     // We'll handle this gracefully
@@ -147,6 +148,11 @@ export function TranscriptionInterface({ isDarkMode = true, onComplete }: Transc
             })
             .catch(console.error);
     }, []);
+
+    // Notify parent of state changes
+    useEffect(() => {
+        onStateChange?.(state);
+    }, [state, onStateChange]);
 
     // Load saved transcript when transcriptId changes
     useEffect(() => {
@@ -976,10 +982,10 @@ export function TranscriptionInterface({ isDarkMode = true, onComplete }: Transc
                                                 {/* Text */}
                                                 <div className="text-center space-y-2">
                                                     <h3 className={`text-2xl font-bold ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>
-                                                        Drop audio file here
+                                                        Drop your file here
                                                     </h3>
                                                     <p className={`text-sm ${isDarkMode ? 'text-gray-400' : 'text-slate-500'}`}>
-                                                        wav, mp3, m4a supported up to 50MB
+                                                        Audio or video, up to 2GB
                                                     </p>
                                                 </div>
                                             </div>
@@ -1167,7 +1173,7 @@ export function TranscriptionInterface({ isDarkMode = true, onComplete }: Transc
 
                             {/* File Selected State */}
                             {state === "file-selected" && file && (
-                                <div className="border border-white/10 rounded-xl p-8 bg-white/5 backdrop-blur-sm text-center">
+                                <div className="border border-border rounded-xl p-8 bg-muted/30 backdrop-blur-sm text-center">
                                     <div className="w-16 h-16 mx-auto bg-primary/10 rounded-full flex items-center justify-center mb-4">
                                         {isVideoFile(file) ? (
                                             <FileVideo className="h-8 w-8 text-primary" />
@@ -1175,8 +1181,8 @@ export function TranscriptionInterface({ isDarkMode = true, onComplete }: Transc
                                             <FileAudio className="h-8 w-8 text-primary" />
                                         )}
                                     </div>
-                                    <h3 className="text-xl font-semibold mb-2 text-white">{file.name}</h3>
-                                    <p className="text-sm text-gray-400 mb-6">
+                                    <h3 className="text-xl font-semibold mb-2 text-foreground">{file.name}</h3>
+                                    <p className="text-sm text-muted-foreground mb-6">
                                         {getFileSize(file.size)} • {estimatedTime > 0 ? `~${Math.ceil(estimatedTime / 60)} min processing` : 'Calculating...'}
                                     </p>
 
@@ -1184,13 +1190,12 @@ export function TranscriptionInterface({ isDarkMode = true, onComplete }: Transc
                                         <Button
                                             variant="outline"
                                             onClick={reset}
-                                            className="border-white/10 text-white hover:bg-white/10"
                                         >
                                             Cancel
                                         </Button>
                                         <Button
                                             onClick={processFile}
-                                            className="bg-red-600 hover:bg-red-700 text-white shadow-lg shadow-red-600/20"
+                                            className="bg-primary hover:bg-primary/90 text-primary-foreground shadow-lg shadow-primary/20"
                                         >
                                             Start Transcription
                                         </Button>
