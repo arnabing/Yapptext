@@ -105,14 +105,14 @@ export function AppSidebar() {
             setTranscripts(data.transcripts || [])
           }
         } else {
-          // Fetch usage data for anonymous users
-          const limitResponse = await fetch('/api/check-limit')
+          // Fetch usage data for anonymous/guest users from Vercel KV
+          const limitResponse = await fetch('/api/guest-usage')
           if (limitResponse.ok) {
             const data = await limitResponse.json()
             setUsageData({
               minutesUsed: data.minutesUsed || 0,
-              remaining: data.remaining || 20,
-              monthlyLimit: 20
+              remaining: data.minutesRemaining ?? 20,
+              monthlyLimit: data.limit || 20
             })
           }
         }

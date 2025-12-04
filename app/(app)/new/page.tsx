@@ -51,6 +51,8 @@ import { useSidebar } from "@/components/ui/sidebar";
 import { DotFlow, transcriptionFlowItems } from "@/components/ui/dot-flow";
 import { LiquidGlassCard } from "@/components/ui/liquid-glass";
 import { isVideoFile, extractAudioFromVideo } from "@/lib/extract-audio";
+import { useUsage } from "@/hooks/use-usage";
+import { PAYWALL_CONFIG } from "@/lib/constants";
 
 type AppState = "idle" | "file-selected" | "processing" | "complete" | "error";
 
@@ -74,7 +76,6 @@ function NewTranscriptContent() {
   const [error, setError] = useState("");
   const [isDragging, setIsDragging] = useState(false);
   const [processingTime, setProcessingTime] = useState(0);
-  const [minutesUsed, setMinutesUsed] = useState(0);
   const [statusMessage, setStatusMessage] = useState("");
   const [audioUrl, setAudioUrl] = useState("");
   const [audioFileName, setAudioFileName] = useState("");
@@ -87,9 +88,12 @@ function NewTranscriptContent() {
   const [estimatedTime, setEstimatedTime] = useState(0); // in seconds
   // Model is always 'universal' (maps to AssemblyAI 'best' model)
   const [showPaywall, setShowPaywall] = useState(false); // Paywall modal state
+  const [paywallReason, setPaywallReason] = useState<string>(""); // Reason for showing paywall
   const [showReverseTrial, setShowReverseTrial] = useState(false); // Reverse trial popup state
-  const [remainingMinutes, setRemainingMinutes] = useState<number | null>(null); // User's remaining minutes
   const [copied, setCopied] = useState(false); // Copy button feedback state
+
+  // Consolidated usage tracking hook - replaces manual fetch logic
+  const { usage, canTranscribe, addUsage } = useUsage();
 
   const fileInputRef = useRef<HTMLInputElement>(null);
   const processingTimerRef = useRef<NodeJS.Timeout | null>(null);
@@ -119,16 +123,7 @@ function NewTranscriptContent() {
     },
   ];
 
-  useEffect(() => {
-    // Check usage limit on load
-    fetch("/api/check-limit")
-      .then((res) => res.json())
-      .then((data) => {
-        setMinutesUsed(data.minutesUsed || 0);
-        setRemainingMinutes(data.remainingMinutes);
-      })
-      .catch(console.error);
-  }, []);
+  // Usage data is now fetched via useUsage() hook - no manual fetch needed
 
   // Load transcript from context (set by sidebar) or sessionStorage (for page reloads)
   useEffect(() => {
@@ -384,17 +379,12 @@ function NewTranscriptContent() {
         return;
       }
 
-      // Check quota for authenticated users
-      if (isSignedIn && remainingMinutes !== null) {
-        if (durationMinutes > remainingMinutes) {
-          const minutesNeeded = durationMinutes - remainingMinutes;
-          setError(
-            `This ${durationMinutes}-minute file exceeds your remaining quota (${remainingMinutes} minutes left). You need ${minutesNeeded} more minutes.`
-          );
-          setState("error");
-          setShowPaywall(true); // Show upgrade modal
-          return;
-        }
+      // Pre-transcription quota check using consolidated hook
+      const quotaCheck = canTranscribe(durationMinutes);
+      if (!quotaCheck.allowed) {
+        setPaywallReason(quotaCheck.reason || "You've reached your usage limit");
+        setShowPaywall(true);
+        return;
       }
 
       setAudioDuration(duration);
@@ -689,7 +679,10 @@ function NewTranscriptContent() {
       setOriginalUtterances(data.utterances || []); // Store original utterances
       setChapters(data.chapters || []);
       setAllWords(data.allWords || []);
-      setMinutesUsed(data.minutesUsed || minutesUsed + data.duration);
+      // Update local usage state for immediate UI feedback
+      if (data.duration) {
+        addUsage(data.duration);
+      }
       setState("complete");
 
       // Trigger sidebar refresh after delay to capture async usage logging
@@ -1293,9 +1286,13 @@ function NewTranscriptContent() {
         open={showPaywall}
         onOpenChange={setShowPaywall}
         onClose={() => {
-          // When user closes paywall without upgrading, show reverse trial offer
-          setShowReverseTrial(true);
+          // Show reverse trial when user closes paywall without upgrading
+          if (PAYWALL_CONFIG.enableReverseTrial && isSignedIn) {
+            setShowReverseTrial(true);
+          }
         }}
+        usageData={usage || undefined}
+        reason={paywallReason}
       />
 
       {/* Reverse Trial Popup */}

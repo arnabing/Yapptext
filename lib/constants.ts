@@ -192,3 +192,20 @@ export const SUPPORTED_FORMATS = [
   ...SUPPORTED_AUDIO_FORMATS,
   ...SUPPORTED_VIDEO_FORMATS,
 ] as const
+
+/**
+ * Paywall configuration
+ * Toggle to experiment with different paywall strategies
+ */
+export const PAYWALL_CONFIG = {
+  /**
+   * If true, all users must sign in before transcribing.
+   * If false, guests can transcribe up to 20 min/month without signing in.
+   */
+  requireSignInToTranscribe: false,
+
+  /**
+   * If true, show reverse trial popup when user closes paywall modal.
+   */
+  enableReverseTrial: true,
+} as const

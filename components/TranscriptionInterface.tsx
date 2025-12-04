@@ -52,6 +52,8 @@ import { useHeader } from "@/lib/header-context";
 import { useSearchParams, useRouter } from "next/navigation";
 import { useUser, SignUpButton } from '@clerk/nextjs';
 import { DotFlow, transcriptionFlowItems, videoExtractionFlowItems, uploadFlowItems, processingFlowItems } from "@/components/ui/dot-flow";
+import { useUsage } from "@/hooks/use-usage";
+import { PAYWALL_CONFIG } from "@/lib/constants";
 
 type AppState = "idle" | "file-selected" | "processing" | "complete" | "error";
 
@@ -92,8 +94,6 @@ export function TranscriptionInterface({ isDarkMode = true, onComplete, onStateC
     const [error, setError] = useState("");
     const [isDragging, setIsDragging] = useState(false);
     const [processingTime, setProcessingTime] = useState(0);
-    const [minutesUsed, setMinutesUsed] = useState(0);
-    const [dailyLimit] = useState(20);
     const [statusMessage, setStatusMessage] = useState("");
     const [audioUrl, setAudioUrl] = useState("");
     const [audioFileName, setAudioFileName] = useState("");
@@ -106,10 +106,13 @@ export function TranscriptionInterface({ isDarkMode = true, onComplete, onStateC
     const [estimatedTime, setEstimatedTime] = useState(0); // in seconds
     // Model is always 'universal' (maps to AssemblyAI 'best' model)
     const [showPaywall, setShowPaywall] = useState(false); // Paywall modal state
+    const [paywallReason, setPaywallReason] = useState<string>(""); // Reason for showing paywall
     const [showReverseTrial, setShowReverseTrial] = useState(false); // Reverse trial popup state
-    const [remainingMinutes, setRemainingMinutes] = useState<number | null>(null); // User's remaining minutes
     const [copied, setCopied] = useState(false); // Copy button feedback state
     const [showWaveform, setShowWaveform] = useState(false); // Delay-based waveform visibility
+
+    // Consolidated usage tracking hook - replaces manual fetch logic
+    const { usage, loading: usageLoading, canTranscribe, addUsage, refetch: refetchUsage } = useUsage();
 
     const fileInputRef = useRef<HTMLInputElement>(null);
     const processingTimerRef = useRef<NodeJS.Timeout | null>(null);
@@ -139,17 +142,7 @@ export function TranscriptionInterface({ isDarkMode = true, onComplete, onStateC
         },
     ];
 
-    useEffect(() => {
-        // Check usage limit on load - use different endpoint for guests vs authenticated
-        const endpoint = isSignedIn ? "/api/check-limit" : "/api/guest-usage";
-        fetch(endpoint)
-            .then((res) => res.json())
-            .then((data) => {
-                setMinutesUsed(data.minutesUsed || 0);
-                setRemainingMinutes(data.minutesRemaining ?? data.remainingMinutes);
-            })
-            .catch(console.error);
-    }, [isSignedIn]);
+    // Usage data is now fetched via useUsage() hook - no manual fetch needed
 
     // Notify parent of state changes
     useEffect(() => {
@@ -461,9 +454,19 @@ export function TranscriptionInterface({ isDarkMode = true, onComplete, onStateC
         console.log("Audio duration:", audioDuration, "seconds");
         console.log("Estimated processing time:", estimatedTime, "seconds");
 
-        if (minutesUsed >= dailyLimit) {
-            setError("Daily limit reached. Please try again tomorrow.");
-            setState("error");
+        // Check if sign-in is required (configurable paywall mode)
+        if (PAYWALL_CONFIG.requireSignInToTranscribe && !isSignedIn) {
+            setPaywallReason("Sign in to start transcribing");
+            setShowPaywall(true);
+            return;
+        }
+
+        // Pre-transcription quota check using estimated duration
+        const estimatedMinutes = Math.ceil(audioDuration / 60);
+        const quotaCheck = canTranscribe(estimatedMinutes);
+        if (!quotaCheck.allowed) {
+            setPaywallReason(quotaCheck.reason || "You've reached your usage limit");
+            setShowPaywall(true);
             return;
         }
 
@@ -682,7 +685,10 @@ export function TranscriptionInterface({ isDarkMode = true, onComplete, onStateC
             setOriginalUtterances(data.utterances || []); // Store original utterances
             setChapters(data.chapters || []);
             setAllWords(data.allWords || []);
-            setMinutesUsed(data.minutesUsed || minutesUsed + data.duration);
+            // Update local usage state for immediate UI feedback
+            if (data.duration) {
+                addUsage(data.duration);
+            }
             setState("complete");
 
             // Call onComplete callback if provided (allows parent to handle redirect)
@@ -1327,6 +1333,14 @@ export function TranscriptionInterface({ isDarkMode = true, onComplete, onStateC
             <PaywallModal
                 open={showPaywall}
                 onOpenChange={setShowPaywall}
+                onClose={() => {
+                    // Show reverse trial when user closes paywall without upgrading
+                    if (PAYWALL_CONFIG.enableReverseTrial && isSignedIn) {
+                        setShowReverseTrial(true);
+                    }
+                }}
+                usageData={usage || undefined}
+                reason={paywallReason}
             />
 
             <ReverseTrialPopup

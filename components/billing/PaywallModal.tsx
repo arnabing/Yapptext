@@ -13,12 +13,16 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Badge } from '@/components/ui/badge'
 import { Check, Zap, Crown } from 'lucide-react'
 import { TIER_FEATURES, PRICING_TIERS } from '@/lib/constants'
+import type { UsageData } from '@/hooks/use-usage'
 
 interface PaywallModalProps {
   open: boolean
   onOpenChange: (open: boolean) => void
   onClose?: () => void // Called when user closes without selecting
   trigger?: 'usage-exceeded' | 'upgrade-prompt'
+  // Context-aware props for personalized messaging
+  usageData?: UsageData
+  reason?: string
 }
 
 export function PaywallModal({
@@ -26,6 +30,8 @@ export function PaywallModal({
   onOpenChange,
   onClose,
   trigger = 'usage-exceeded',
+  usageData,
+  reason,
 }: PaywallModalProps) {
   const [isLoading, setIsLoading] = useState<string | null>(null)
 
@@ -76,10 +82,24 @@ export function PaywallModal({
               ? 'Upgrade to continue transcribing'
               : 'Choose the perfect plan for you'}
           </DialogTitle>
-          <DialogDescription className="text-base">
-            {trigger === 'usage-exceeded'
-              ? "You've reached your monthly limit. Upgrade to Pro for 500 minutes per month."
-              : 'All plans include the same accuracy - gated by capacity only. Speaker detection, custom vocabulary, and downloads included.'}
+          <DialogDescription className="text-base space-y-2">
+            {/* Show personalized reason if provided */}
+            {reason && (
+              <span className="block font-medium text-foreground">{reason}</span>
+            )}
+            {/* Show usage stats if available */}
+            {usageData && (
+              <span className="block">
+                You&apos;ve used {usageData.minutesUsed} of {usageData.minutesLimit} minutes this month
+                {usageData.isGuest && ' as a guest'}.
+              </span>
+            )}
+            {/* Default messaging based on trigger */}
+            <span className="block">
+              {trigger === 'usage-exceeded'
+                ? 'Upgrade to Pro for 500 minutes per month.'
+                : 'All plans include the same accuracy - gated by capacity only.'}
+            </span>
           </DialogDescription>
         </DialogHeader>
 
