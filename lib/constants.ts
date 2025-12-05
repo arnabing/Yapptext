@@ -202,7 +202,7 @@ export const PAYWALL_CONFIG = {
    * If true, all users must sign in before transcribing.
    * If false, guests can transcribe up to 20 min/month without signing in.
    */
-  requireSignInToTranscribe: false,
+  requireSignInToTranscribe: true,
 
   /**
    * If true, show reverse trial popup when user closes paywall modal.

@@ -50,7 +50,7 @@ import { PaywallModal } from "@/components/billing/PaywallModal";
 import { ReverseTrialPopup } from "@/components/billing/ReverseTrialPopup";
 import { useHeader } from "@/lib/header-context";
 import { useSearchParams, useRouter } from "next/navigation";
-import { useUser, SignUpButton } from '@clerk/nextjs';
+import { useUser, useClerk, SignUpButton } from '@clerk/nextjs';
 import { DotFlow, transcriptionFlowItems, videoExtractionFlowItems, uploadFlowItems, processingFlowItems } from "@/components/ui/dot-flow";
 import { useUsage } from "@/hooks/use-usage";
 import { PAYWALL_CONFIG } from "@/lib/constants";
@@ -81,6 +81,7 @@ export function TranscriptionInterface({ isDarkMode = true, onComplete, onStateC
     const searchParams = useSearchParams();
     const router = useRouter();
     const { isSignedIn } = useUser();
+    const { openSignIn } = useClerk();
     const transcriptId = searchParams?.get('transcriptId');
 
     const [state, setState] = useState<AppState>("idle");
@@ -456,8 +457,7 @@ export function TranscriptionInterface({ isDarkMode = true, onComplete, onStateC
 
         // Check if sign-in is required (configurable paywall mode)
         if (PAYWALL_CONFIG.requireSignInToTranscribe && !isSignedIn) {
-            setPaywallReason("Sign in to start transcribing");
-            setShowPaywall(true);
+            openSignIn({ afterSignInUrl: '/new' });
             return;
         }
 

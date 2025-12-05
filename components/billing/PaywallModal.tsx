@@ -90,8 +90,7 @@ export function PaywallModal({
             {/* Show usage stats if available */}
             {usageData && (
               <span className="block">
-                You&apos;ve used {usageData.minutesUsed} of {usageData.minutesLimit} minutes this month
-                {usageData.isGuest && ' as a guest'}.
+                You&apos;ve used {usageData.minutesUsed} of {usageData.minutesLimit} minutes this month.
               </span>
             )}
             {/* Default messaging based on trigger */}

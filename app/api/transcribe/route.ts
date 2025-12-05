@@ -15,10 +15,18 @@ export async function POST(request: NextRequest) {
   console.log('Timestamp:', new Date().toISOString())
 
   try {
-    // Get user ID
+    // Get user ID - REQUIRED for all transcriptions
     const userId = await getCurrentUserId()
 
-    console.log('User ID:', userId || 'anonymous')
+    if (!userId) {
+      console.log('Unauthorized: No user ID')
+      return NextResponse.json(
+        { error: 'Authentication required. Please sign in to transcribe.' },
+        { status: 401 }
+      )
+    }
+
+    console.log('User ID:', userId)
 
     // Parse form data
     console.log('Parsing form data...')
@@ -101,6 +109,28 @@ export async function POST(request: NextRequest) {
       console.log(`User tier: ${usageCheck.tier}, minutes remaining: ${usageCheck.minutesRemaining}`)
     } else if (audioUrl) {
       console.log(`Processing audio from URL: ${audioUrl}`)
+
+      // Check if this is a sample file (samples bypass quota)
+      if (!isSampleFile(audioUrl)) {
+        // For URL uploads, we can't estimate duration from file size
+        // Do a basic quota check to ensure user has ANY remaining quota
+        const usageCheck = await canUserTranscribe(userId, 0, audioUrl)
+
+        if (usageCheck.minutesRemaining !== undefined && usageCheck.minutesRemaining <= 0) {
+          return NextResponse.json(
+            {
+              error: 'Monthly quota exceeded. Upgrade for more minutes.',
+              tier: usageCheck.tier,
+              requiresUpgrade: true
+            },
+            { status: 429 }
+          )
+        }
+
+        console.log(`User tier: ${usageCheck.tier}, minutes remaining: ${usageCheck.minutesRemaining}`)
+      } else {
+        console.log('Sample file detected - bypassing quota check')
+      }
     }
 
     const startTime = Date.now()

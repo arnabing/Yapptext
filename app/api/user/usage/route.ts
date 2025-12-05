@@ -23,6 +23,11 @@ export async function GET() {
         minutesLimit: USAGE_LIMITS[PRICING_TIERS.FREE].minutesPerMonth,
         percentUsed: 0,
         tier: PRICING_TIERS.FREE
+      }, {
+        headers: {
+          'Cache-Control': 'private, no-cache, max-age=0, must-revalidate',
+          'Vary': 'Cookie, Authorization'
+        }
       })
     }
 
@@ -48,6 +53,11 @@ export async function GET() {
       minutesLimit: limit,
       percentUsed: limit > 0 ? (minutesUsed / limit) * 100 : 0,
       tier
+    }, {
+      headers: {
+        'Cache-Control': 'private, no-cache, max-age=0, must-revalidate',
+        'Vary': 'Cookie, Authorization'
+      }
     })
   } catch (error) {
     console.error('Error fetching user usage:', error)

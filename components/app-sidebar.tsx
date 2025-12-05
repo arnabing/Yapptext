@@ -80,41 +80,35 @@ export function AppSidebar() {
   const isPro = userTier === PRICING_TIERS.PRO
   const limit = USAGE_LIMITS[userTier as keyof typeof USAGE_LIMITS]?.minutesPerMonth || 20
 
-  // Fetch usage data and transcripts
+  // Fetch usage data and transcripts for signed-in users only
   // Re-fetch when refreshCounter changes (triggered after saving new transcript)
   useEffect(() => {
     const fetchData = async () => {
-      try {
-        if (isSignedIn) {
-          // Fetch usage data for authenticated users
-          const usageResponse = await fetch('/api/user/usage')
-          if (usageResponse.ok) {
-            const data = await usageResponse.json()
-            setUserTier(data.tier || PRICING_TIERS.FREE)
-            setUsageData({
-              minutesUsed: data.minutesUsed,
-              remaining: data.minutesLimit - data.minutesUsed,
-              monthlyLimit: data.minutesLimit
-            })
-          }
+      if (!isSignedIn) {
+        // Not signed in - no usage data to fetch
+        setUsageData(null)
+        setTranscripts([])
+        return
+      }
 
-          // Fetch transcripts
-          const transcriptsResponse = await fetch('/api/transcripts')
-          if (transcriptsResponse.ok) {
-            const data = await transcriptsResponse.json()
-            setTranscripts(data.transcripts || [])
-          }
-        } else {
-          // Fetch usage data for anonymous/guest users from Vercel KV
-          const limitResponse = await fetch('/api/guest-usage')
-          if (limitResponse.ok) {
-            const data = await limitResponse.json()
-            setUsageData({
-              minutesUsed: data.minutesUsed || 0,
-              remaining: data.minutesRemaining ?? 20,
-              monthlyLimit: data.limit || 20
-            })
-          }
+      try {
+        // Fetch usage data for authenticated users
+        const usageResponse = await fetch('/api/user/usage')
+        if (usageResponse.ok) {
+          const data = await usageResponse.json()
+          setUserTier(data.tier || PRICING_TIERS.FREE)
+          setUsageData({
+            minutesUsed: data.minutesUsed,
+            remaining: data.minutesLimit - data.minutesUsed,
+            monthlyLimit: data.minutesLimit
+          })
+        }
+
+        // Fetch transcripts
+        const transcriptsResponse = await fetch('/api/transcripts')
+        if (transcriptsResponse.ok) {
+          const data = await transcriptsResponse.json()
+          setTranscripts(data.transcripts || [])
         }
       } catch (error) {
         console.error('Failed to fetch data:', error)
@@ -380,38 +374,44 @@ export function AppSidebar() {
         <div className="p-2 border-t border-sidebar-border">
           <Card className="border-sidebar-border bg-sidebar">
             <CardContent className="pt-4 pb-4 space-y-3">
-              <div className="space-y-2">
-                <div className="flex justify-between text-sm">
-                  <span className="font-medium">
-                    Monthly Usage
-                  </span>
-                  <span className="text-xs text-muted-foreground">
-                    {minutesUsed}/{limit} min
-                  </span>
-                </div>
-                <Progress value={usagePercent} className="h-2" />
-                {!isPro && usagePercent > 80 && (
-                  <p className="text-xs text-orange-600">Running low on minutes</p>
-                )}
-                {!isSignedIn && (
-                  <p className="text-xs text-muted-foreground">
-                    Sign in for more minutes
-                  </p>
-                )}
-              </div>
-
-              {!isPro && (
+              {isSignedIn ? (
                 <>
-                  <Separator />
-                  <Button
-                    onClick={() => setShowPaywall(true)}
-                    className="w-full"
-                    variant="default"
-                  >
-                    <Crown className="h-4 w-4 mr-2" />
-                    Upgrade to Pro
-                  </Button>
+                  <div className="space-y-2">
+                    <div className="flex justify-between text-sm">
+                      <span className="font-medium">
+                        Monthly Usage
+                      </span>
+                      <span className="text-xs text-muted-foreground">
+                        {minutesUsed}/{limit} min
+                      </span>
+                    </div>
+                    <Progress value={usagePercent} className="h-2" />
+                    {!isPro && usagePercent > 80 && (
+                      <p className="text-xs text-orange-600">Running low on minutes</p>
+                    )}
+                  </div>
+
+                  {!isPro && (
+                    <>
+                      <Separator />
+                      <Button
+                        onClick={() => setShowPaywall(true)}
+                        className="w-full"
+                        variant="default"
+                      >
+                        <Crown className="h-4 w-4 mr-2" />
+                        Upgrade to Pro
+                      </Button>
+                    </>
+                  )}
                 </>
+              ) : (
+                <div className="space-y-2">
+                  <p className="text-sm font-medium">Get started</p>
+                  <p className="text-xs text-muted-foreground">
+                    Sign in to transcribe your files and track usage
+                  </p>
+                </div>
               )}
             </CardContent>
           </Card>
