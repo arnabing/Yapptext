@@ -29,7 +29,7 @@ export type TranscriptionMode = TranscriptionModel
  */
 export const TIER_PRICES = {
   [PRICING_TIERS.PRO]: {
-    monthly: 29,
+    monthly: 20,
     currency: 'USD',
     stripePriceId: process.env.NEXT_PUBLIC_STRIPE_PRO_MONTHLY_PRICE_ID,
   },
@@ -50,7 +50,7 @@ export const USAGE_LIMITS = {
     trackingMethod: 'ip', // Track by IP address
   },
   [PRICING_TIERS.FREE]: {
-    minutesPerMonth: 60,
+    minutesPerMonth: 30,
     filesPerSession: -1, // Unlimited files (within minute limit)
     allowDownload: true,
     defaultModel: TRANSCRIPTION_MODELS.UNIVERSAL,
@@ -59,7 +59,7 @@ export const USAGE_LIMITS = {
     trackingMethod: 'user', // Track by user ID
   },
   [PRICING_TIERS.PRO]: {
-    minutesPerMonth: 500,  // NOT unlimited - prevents abuse
+    minutesPerMonth: 300,  // 5 hours/month - generous for most users
     filesPerSession: -1,   // Unlimited files
     allowDownload: true,
     defaultModel: TRANSCRIPTION_MODELS.UNIVERSAL,
@@ -94,39 +94,33 @@ export const TIER_FEATURES = {
       '1 free transcript',
       'Up to 20 minutes',
       'Speaker detection',
-      'Best-in-class accuracy',
+      'World-class accuracy',
       'Download transcripts',
     ],
     cta: 'Sign up for more',
   },
   [PRICING_TIERS.FREE]: {
     name: 'Free',
-    description: 'Get started - no credit card required',
+    description: 'Get started for free',
     features: [
-      '60 minutes per month',
-      'Unlimited files',
+      '30 minutes per month',
       'Speaker detection',
-      'Best-in-class accuracy',
-      'Download transcripts',
+      'World-class accuracy',
     ],
     cta: 'Current plan',
     badge: null,
   },
   [PRICING_TIERS.PRO]: {
     name: 'Pro',
-    description: 'For power users and professionals',
+    description: 'For power users',
     price: TIER_PRICES[PRICING_TIERS.PRO].monthly,
     features: [
-      '500 minutes per month',
-      'Unlimited files',
-      'Speaker detection',
-      'Best-in-class accuracy',
-      'Download transcripts',
+      '5 hours per month',
+      'Priority processing',
       'Priority support',
-      'API access (coming soon)',
     ],
-    cta: 'Upgrade to Pro',
-    badge: 'Best Value',
+    cta: 'Get Pro',
+    badge: 'Popular',
   },
 } as const
 

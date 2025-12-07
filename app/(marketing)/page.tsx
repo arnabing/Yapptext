@@ -30,7 +30,7 @@ function LandingHeader() {
         {/* Right: CTA */}
         <SignUpButton mode="modal">
           <Button size="sm" className="rounded-full">
-            Get Started
+            Sign up free
           </Button>
         </SignUpButton>
       </div>
