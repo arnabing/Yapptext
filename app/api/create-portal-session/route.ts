@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { auth } from '@clerk/nextjs/server'
 import Stripe from 'stripe'
+import { db } from '@/lib/db'
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
   apiVersion: '2025-10-29.clover',
@@ -17,37 +18,26 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // In a real implementation, you would:
-    // 1. Look up the user's Stripe customer ID from your database
-    // 2. Create a portal session for that customer
-    //
-    // For now, we'll return an error since billing is not fully set up
-    // TODO: Implement proper Stripe customer lookup from database
+    // Get user's Stripe customer ID
+    const user = await db.user.findUnique({
+      where: { clerkId: userId },
+      select: { stripeCustomerId: true }
+    })
 
-    // Example of what the full implementation would look like:
-    // const user = await prisma.user.findUnique({
-    //   where: { clerkUserId: userId },
-    //   select: { stripeCustomerId: true }
-    // })
-    //
-    // if (!user?.stripeCustomerId) {
-    //   return NextResponse.json(
-    //     { error: 'No billing account found' },
-    //     { status: 404 }
-    //   )
-    // }
-    //
-    // const session = await stripe.billingPortal.sessions.create({
-    //   customer: user.stripeCustomerId,
-    //   return_url: `${request.headers.get('origin')}/settings`,
-    // })
-    //
-    // return NextResponse.json({ url: session.url })
+    if (!user?.stripeCustomerId) {
+      return NextResponse.json(
+        { error: 'No billing account found. Subscribe to Pro first.' },
+        { status: 404 }
+      )
+    }
 
-    return NextResponse.json(
-      { error: 'Billing portal not yet configured. Please upgrade Stripe integration.' },
-      { status: 501 }
-    )
+    // Create Stripe billing portal session
+    const session = await stripe.billingPortal.sessions.create({
+      customer: user.stripeCustomerId,
+      return_url: `${request.nextUrl.origin}/new`,
+    })
+
+    return NextResponse.json({ url: session.url })
   } catch (error) {
     console.error('Portal session error:', error)
     return NextResponse.json(
