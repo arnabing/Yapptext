@@ -14,10 +14,7 @@ Our goal is to get to human‑level transcription with AI by combining multiple 
 - 🌍 **99 language support** with automatic detection
 - 💬 **Translation** - Translate transcripts to any language
 - ⏱️ **Word-level timestamps** - Synchronized highlighting during playback
-- 🧠 **Three Transcription Modes**:
-  - **Turbo**: 3x faster with Nano model for quick transcriptions
-  - **Standard**: Universal-2 model with speaker detection (default)
-  - **Reasoning**: Dual-model approach with AI reconciliation for maximum accuracy
+- 🧠 **World-class Transcription**: Universal-2 model with speaker detection
 - 🎭 **Sentiment Analysis** - Analyze emotional tone of conversations
 - 🔑 **Key Phrases** - Automatic extraction of important concepts
 - 🎪 **Sample Audio** - Built-in demos for quick testing
@@ -25,7 +22,8 @@ Our goal is to get to human‑level transcription with AI by combining multiple 
 - 📱 Mobile-responsive design
 - ⚡ Simple drag-and-drop interface
 - 📋 One-click copy to clipboard
-- 🚦 Rate limiting: 20 minutes of audio per day (configurable)
+- 💳 **Freemium Model**: Free tier (30 min/month) + Pro tier ($20/month, 300 min)
+- 💼 **Stripe Billing**: Secure checkout and subscription management
 
 ## Tech Stack
 
@@ -34,9 +32,9 @@ Our goal is to get to human‑level transcription with AI by combining multiple 
 - **Authentication**: Clerk
 - **Database**: PostgreSQL + Prisma ORM
 - **Transcription**: AssemblyAI API (with speaker detection)
+- **Payments**: Stripe (Checkout + Customer Portal)
 - **Translation**: OpenAI GPT-3.5 API
 - **Storage**: Vercel Blob (for large audio files)
-- **Rate Limiting**: Vercel KV (Redis)
 - **Deployment**: Vercel
 
 ## Local Development
@@ -61,7 +59,12 @@ Our goal is to get to human‑level transcription with AI by combining multiple 
    ```env
    ASSEMBLYAI_API_KEY=your_assemblyai_key
    OPENAI_API_KEY=your_openai_key
-   GEMINI_API_KEY=your_gemini_key  # Optional, for Reasoning mode
+
+   # Stripe (for billing)
+   STRIPE_SECRET_KEY=sk_live_...
+   NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=pk_live_...
+   NEXT_PUBLIC_STRIPE_PRO_MONTHLY_PRICE_ID=price_...
+   STRIPE_WEBHOOK_SECRET=whsec_...
    ```
 
 6. Run the development server:
@@ -97,58 +100,31 @@ Our goal is to get to human‑level transcription with AI by combining multiple 
 
 ## Configuration
 
-### Rate Limiting
-Edit `lib/rate-limit.ts` to change the daily limit:
-```typescript
-const DAILY_LIMIT_MINUTES = 20 // Change this value
-```
+### Pricing Tiers
+Edit `lib/constants.ts` to change usage limits:
+- **Free**: 30 minutes/month
+- **Pro**: 300 minutes/month ($20/month)
 
 ### File Size Limit
 - **Small files (<4.5MB)**: Direct upload to API
-- **Large files (up to 2GB)**: Automatically uploaded to Vercel Blob storage
-- Edit limits in `app/page.tsx` and `app/api/transcribe/route.ts`
+- **Large files (up to 100MB)**: Automatically uploaded to Vercel Blob storage
 
 ## API Usage & Pricing
 
-### Transcription Modes
-
-#### Turbo Mode
-- **Model**: AssemblyAI Nano
-- **Cost**: ~$0.12 per hour (~$0.002 per minute)
-- **Speed**: 3x faster than Standard
-- **Use for**: Quick transcriptions, single speaker
-- **Limitation**: No speaker detection
-
-#### Standard Mode (Default)
+### Transcription
 - **Model**: AssemblyAI Universal-2 (best tier)
 - **Cost**: ~$0.37 per hour (~$0.006 per minute)
 - **Features**: Speaker detection, high accuracy
-- **Use for**: Multiple speakers, conversations
-
-#### Reasoning Mode (Maximum Accuracy)
-- **Models**: AssemblyAI Universal-2 + Gemini 2.5 Flash
-- **Cost**: ~$0.37/hour (AssemblyAI) + minimal Gemini costs
-- **Features**: Dual-model transcription with AI reconciliation
-- **Use for**: Critical accuracy needs, complex audio
-- **Benefit**: Near-human transcription accuracy (97%+)
 
 ### API Providers
 
 **AssemblyAI**:
-- **Free Credits**: $50 on signup (135 hours with Universal, 400+ hours with Nano)
-- **Note**: Only Universal and Slam-1 models support speaker labels
-
-**Gemini (for Reasoning mode)**:
-- **Free Tier**: 1 million tokens/month free
-- **Cost after free tier**: $0.075 per 1M input tokens
+- **Free Credits**: $50 on signup (~135 hours)
+- **Note**: Only Universal model supports speaker labels
 
 **OpenAI (Translation)**:
 - **Cost**: ~$0.002 per 1,000 tokens (roughly 750 words)
 - **Used for**: Text translation to other languages
-
-With the default 20-minute daily limit per user:
-- Maximum transcription cost per user per day: ~$0.09
-- Monthly cost for 100 daily users: ~$270
 
 ## Privacy & Security
 
@@ -165,16 +141,13 @@ With the default 20-minute daily limit per user:
 - ✅ 99 language support with auto-detection
 - ✅ Translation to any language
 - ✅ Word-level timestamps with synchronized highlighting
-- ✅ Sentiment analysis (optional)
-- ✅ Key phrases extraction (optional)
-- ✅ Smart model selection (Universal for speakers, Nano for speed)
 - ✅ Sample audio for testing
-- ✅ Improved audio controls with seek buttons
 - ✅ Success animations with confetti
 - ✅ Vercel Blob storage for large files (>4.5MB)
 - ✅ Keyboard shortcuts for audio controls (space, arrows)
 - ✅ User accounts with Clerk authentication
 - ✅ Transcript history saved to database
+- ✅ Stripe billing with Customer Portal
 - ✅ Sidebar navigation with transcript management
 - ✅ Mobile-responsive sidebar with auto-close
 - ✅ Green accent theme (light/dark mode)
@@ -186,7 +159,6 @@ With the default 20-minute daily limit per user:
 - [ ] Multiple export formats (SRT, VTT, PDF)
 - [ ] Batch processing for multiple files
 - [ ] Real-time transcription
-- [ ] Custom vocabulary and terminology
 
 ## Testing & Evaluation (Proof that the system works)
 

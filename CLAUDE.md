@@ -137,8 +137,8 @@ export default function Page() {
 - `clerkId` - Unique Clerk user ID
 - `email` - User email
 - `stripeCustomerId` - Stripe customer reference
-- `subscriptionTier` - "turbo" | "standard" | "reasoning"
-- `subscriptionStatus` - Subscription state
+- `subscriptionTier` - "free" | "pro"
+- `subscriptionStatus` - "active" | "cancelled" | "past_due" | null
 - Relations: `usageLogs[]`, `transcripts[]`
 
 **Transcript** - Saved transcriptions
@@ -152,7 +152,7 @@ export default function Page() {
 **UsageLog** - Tracks minutes transcribed per user
 - `userId` - Foreign key to User
 - `minutes` - Audio duration transcribed
-- `mode` - "turbo" | "standard" | "reasoning"
+- `mode` - "universal" (single model now)
 
 ### Usage Tracking
 
@@ -172,6 +172,35 @@ When transcription completes (`/api/transcribe-status/[id]`):
 NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=pk_...
 CLERK_SECRET_KEY=sk_...
 ```
+
+## Stripe Billing Integration
+
+### Pricing Tiers
+- **Free**: 30 min/month
+- **Pro**: $20/month, 300 min/month (5 hours)
+
+### API Routes
+
+**`/api/checkout`** - Creates Stripe Checkout session
+- Requires authenticated user
+- Gets/creates Stripe customer, links to Clerk userId
+- Redirects to Stripe hosted checkout page
+- On success, redirects to `/new?upgrade=success`
+
+**`/api/webhooks/stripe`** - Handles subscription lifecycle
+- Events: `checkout.session.completed`, `customer.subscription.updated`, `customer.subscription.deleted`, `invoice.payment_failed`
+- Updates `subscriptionTier` and `subscriptionStatus` in database
+- Uses `stripeCustomerId` to find user
+
+**`/api/create-portal-session`** - Stripe Customer Portal
+- Opens Stripe's hosted billing portal
+- Users can cancel subscription, update payment method
+- Returns to `/new` after portal actions
+
+### Important Notes
+- **Never manually edit subscriptions in Stripe Dashboard** - always use Customer Portal or API, otherwise webhooks won't fire
+- Stripe webhooks update the database automatically on subscription changes
+- Use `PRICING_TIERS.FREE` and `PRICING_TIERS.PRO` constants from `lib/constants.ts`
 
 ## File Upload Strategy
 
@@ -244,9 +273,10 @@ OPENAI_API_KEY=sk-...
 # Gemini (Optional - for Reasoning mode)
 GEMINI_API_KEY=...
 
-# Stripe (Optional - for billing)
-STRIPE_SECRET_KEY=sk_...
-NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=pk_...
+# Stripe (Required for billing)
+STRIPE_SECRET_KEY=sk_live_...
+NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=pk_live_...
+NEXT_PUBLIC_STRIPE_PRO_MONTHLY_PRICE_ID=price_...
 STRIPE_WEBHOOK_SECRET=whsec_...
 
 # Vercel KV (Optional - for rate limiting)
@@ -291,9 +321,8 @@ while (!data && pollAttempts < 60) {
 ## Code Patterns
 
 ### Transcription Models
-- `nano` - 3x faster, no speaker detection (~$0.002/min)
-- `universal` - Default, supports speakers (~$0.006/min)
-- Both accessed via `lib/assemblyai.ts`
+- `universal` - Default model, supports speakers (~$0.006/min)
+- Accessed via `lib/assemblyai.ts`
 
 ### Speaker Diarization
 Enabled by default in `universal` model:
