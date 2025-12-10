@@ -23,7 +23,6 @@ import {
     Languages,
     Check,
     Loader2,
-    Mic,
 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { confettiPresets } from "@/components/confetti";
@@ -1015,12 +1014,6 @@ export function TranscriptionInterface({ isDarkMode = true, onComplete, onStateC
                                                         }`}
                                                 >
                                                     Browse Files
-                                                </button>
-                                                <button className={`px-6 rounded-xl font-medium text-sm border py-3 transition-all flex items-center justify-center ${isDarkMode
-                                                    ? 'bg-[#111] text-white border-white/10 hover:bg-[#222]'
-                                                    : 'bg-white text-slate-700 border-slate-200 hover:bg-slate-50'
-                                                    }`}>
-                                                    <Mic className="h-4 w-4" />
                                                 </button>
                                             </div>
 
