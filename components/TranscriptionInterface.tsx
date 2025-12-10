@@ -108,6 +108,7 @@ export function TranscriptionInterface({ isDarkMode = true, onComplete, onStateC
     // Model is always 'universal' (maps to AssemblyAI 'best' model)
     const [showPaywall, setShowPaywall] = useState(false); // Paywall modal state
     const [paywallReason, setPaywallReason] = useState<string>(""); // Reason for showing paywall
+    const [isPaywallGuest, setIsPaywallGuest] = useState(false); // True if paywall triggered for guest
     const [showReverseTrial, setShowReverseTrial] = useState(false); // Reverse trial popup state
     const [copied, setCopied] = useState(false); // Copy button feedback state
     const [showWaveform, setShowWaveform] = useState(false); // Delay-based waveform visibility
@@ -466,6 +467,7 @@ export function TranscriptionInterface({ isDarkMode = true, onComplete, onStateC
         const quotaCheck = canTranscribe(estimatedMinutes);
         if (!quotaCheck.allowed) {
             setPaywallReason(quotaCheck.reason || "You've reached your usage limit");
+            setIsPaywallGuest(quotaCheck.isGuest || false);
             setShowPaywall(true);
             return;
         }
@@ -1341,6 +1343,7 @@ export function TranscriptionInterface({ isDarkMode = true, onComplete, onStateC
                 }}
                 usageData={usage || undefined}
                 reason={paywallReason}
+                isGuest={isPaywallGuest}
             />
 
             <ReverseTrialPopup

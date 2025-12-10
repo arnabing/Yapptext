@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
-import { useUser, useClerk } from '@clerk/nextjs'
+import { useUser, useClerk, SignUpButton } from '@clerk/nextjs'
 import {
   FileText,
   CreditCard,
@@ -17,6 +17,7 @@ import {
   Pencil,
   Trash2,
   AudioWaveform,
+  Mic,
 } from 'lucide-react'
 import {
   Sidebar,
@@ -406,11 +407,28 @@ export function AppSidebar() {
                   )}
                 </>
               ) : (
-                <div className="space-y-2">
-                  <p className="text-sm font-medium">Get started</p>
+                <div className="space-y-3">
+                  <div className="flex items-center gap-2">
+                    <Mic className="h-4 w-4 text-primary" />
+                    <span className="text-sm font-medium">Free Account</span>
+                  </div>
+                  <div className="space-y-2">
+                    <div className="flex justify-between text-sm">
+                      <span className="text-xs text-muted-foreground">Monthly Usage</span>
+                      <span className="text-xs text-muted-foreground">
+                        0/{USAGE_LIMITS[PRICING_TIERS.FREE].minutesPerMonth} min
+                      </span>
+                    </div>
+                    <Progress value={0} className="h-2" />
+                  </div>
                   <p className="text-xs text-muted-foreground">
-                    Sign in to transcribe your files and track usage
+                    Sign up to transcribe your own files
                   </p>
+                  <SignUpButton mode="modal" forceRedirectUrl="/new">
+                    <Button className="w-full" size="sm">
+                      Sign Up Free
+                    </Button>
+                  </SignUpButton>
                 </div>
               )}
             </CardContent>

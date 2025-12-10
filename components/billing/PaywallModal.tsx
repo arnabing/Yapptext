@@ -9,9 +9,10 @@ import {
 import { VisuallyHidden } from '@radix-ui/react-visually-hidden'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
-import { Sparkles, Check } from 'lucide-react'
+import { Sparkles, Check, Mic } from 'lucide-react'
 import { LiquidGlassCard } from '@/components/ui/liquid-glass'
-import { TIER_FEATURES, TIER_PRICES, PRICING_TIERS } from '@/lib/constants'
+import { TIER_FEATURES, TIER_PRICES, PRICING_TIERS, USAGE_LIMITS } from '@/lib/constants'
+import { useUser, SignUpButton } from '@clerk/nextjs'
 import type { UsageData } from '@/hooks/use-usage'
 
 interface PaywallModalProps {
@@ -21,6 +22,7 @@ interface PaywallModalProps {
   trigger?: 'usage-exceeded' | 'upgrade-prompt'
   usageData?: UsageData
   reason?: string
+  isGuest?: boolean  // If true, show sign-up flow instead of upgrade
 }
 
 export function PaywallModal({
@@ -30,8 +32,13 @@ export function PaywallModal({
   trigger = 'usage-exceeded',
   usageData,
   reason,
+  isGuest = false,
 }: PaywallModalProps) {
   const [isLoading, setIsLoading] = useState<string | null>(null)
+  const { isSignedIn } = useUser()
+
+  // Use prop or detect from auth state
+  const showGuestFlow = isGuest || !isSignedIn
 
   const handleClose = (open: boolean) => {
     if (!open && onClose) {
@@ -47,6 +54,88 @@ export function PaywallModal({
     window.location.href = `/api/checkout?tier=${tier}`
   }
 
+  // Guest sign-up modal
+  if (showGuestFlow) {
+    const freeMinutes = USAGE_LIMITS[PRICING_TIERS.FREE].minutesPerMonth
+
+    return (
+      <Dialog open={open} onOpenChange={handleClose}>
+        <DialogContent className="max-w-md p-0 bg-transparent border-none shadow-none [&>button]:hidden">
+          <VisuallyHidden>
+            <DialogTitle>Sign up to transcribe</DialogTitle>
+          </VisuallyHidden>
+          <LiquidGlassCard
+            draggable={false}
+            blurIntensity="xl"
+            shadowIntensity="lg"
+            glowIntensity="md"
+            tint="auto"
+            borderRadius="24px"
+            className="p-8"
+          >
+            {/* Header */}
+            <div className="text-center mb-6 relative z-30">
+              <div className="mx-auto w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mb-4">
+                <Mic className="h-8 w-8 text-primary" />
+              </div>
+              <h2 className="text-2xl font-bold mb-2">
+                Sign up to transcribe your files
+              </h2>
+              <p className="text-muted-foreground">
+                Get {freeMinutes} free minutes every month
+              </p>
+            </div>
+
+            {/* Features */}
+            <ul className="space-y-3 mb-6 relative z-30">
+              {TIER_FEATURES[PRICING_TIERS.FREE].features.map((feature, i) => (
+                <li key={i} className="flex items-center gap-3 text-sm">
+                  <Check className="h-5 w-5 text-primary flex-shrink-0" />
+                  <span>{feature}</span>
+                </li>
+              ))}
+            </ul>
+
+            {/* CTA */}
+            <div className="space-y-3 relative z-30">
+              <SignUpButton mode="modal" forceRedirectUrl="/new">
+                <Button className="w-full bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70">
+                  Sign Up Free
+                </Button>
+              </SignUpButton>
+              <p className="text-xs text-center text-muted-foreground">
+                No credit card required
+              </p>
+            </div>
+
+            {/* Close button */}
+            <button
+              onClick={() => handleClose(false)}
+              className="absolute top-4 right-4 z-40 p-2 rounded-full hover:bg-foreground/10 transition-colors"
+              aria-label="Close"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <path d="M18 6 6 18" />
+                <path d="m6 6 12 12" />
+              </svg>
+            </button>
+          </LiquidGlassCard>
+        </DialogContent>
+      </Dialog>
+    )
+  }
+
+  // Authenticated user upgrade modal
   return (
     <Dialog open={open} onOpenChange={handleClose}>
       <DialogContent className="max-w-2xl p-0 bg-transparent border-none shadow-none [&>button]:hidden">

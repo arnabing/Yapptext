@@ -14,6 +14,7 @@ export interface CanTranscribeResult {
   allowed: boolean
   reason?: string
   remaining: number
+  isGuest?: boolean  // True if user is not signed in
 }
 
 /**
@@ -91,9 +92,9 @@ export function useUsage(refreshTrigger?: number) {
    * @returns Object with allowed status, reason if denied, and remaining minutes
    */
   const canTranscribe = useCallback((estimatedMinutes: number): CanTranscribeResult => {
-    // Not signed in - auth required
+    // Not signed in - auth required (guest user)
     if (!isSignedIn) {
-      return { allowed: false, reason: 'Sign in required', remaining: 0 }
+      return { allowed: false, reason: 'sign_in_required', remaining: 0, isGuest: true }
     }
 
     if (loading) {
@@ -109,7 +110,7 @@ export function useUsage(refreshTrigger?: number) {
       return {
         allowed: false,
         reason: `You've used all ${usage.minutesLimit} minutes this month. ${
-          usage.tier === 'free' ? 'Upgrade to Pro for 500 min/month.' : ''
+          usage.tier === 'free' ? 'Upgrade to Pro for 300 min/month.' : ''
         }`.trim(),
         remaining: 0
       }
@@ -120,7 +121,7 @@ export function useUsage(refreshTrigger?: number) {
       return {
         allowed: false,
         reason: `This file is ~${Math.ceil(estimatedMinutes)} min but you only have ${Math.floor(usage.remaining)} min remaining. ${
-          usage.tier === 'free' ? 'Upgrade to Pro for 500 min/month.' : ''
+          usage.tier === 'free' ? 'Upgrade to Pro for 300 min/month.' : ''
         }`.trim(),
         remaining: usage.remaining
       }
