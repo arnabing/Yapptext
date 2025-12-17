@@ -23,6 +23,7 @@ import {
     Languages,
     Check,
     Loader2,
+    UserPlus,
 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { confettiPresets } from "@/components/confetti";
@@ -49,7 +50,7 @@ import { PaywallModal } from "@/components/billing/PaywallModal";
 import { ReverseTrialPopup } from "@/components/billing/ReverseTrialPopup";
 import { useHeader } from "@/lib/header-context";
 import { useSearchParams, useRouter } from "next/navigation";
-import { useUser, useClerk, SignUpButton } from '@clerk/nextjs';
+import { useUser, SignUpButton } from '@clerk/nextjs';
 import { DotFlow, transcriptionFlowItems, videoExtractionFlowItems, uploadFlowItems, processingFlowItems } from "@/components/ui/dot-flow";
 import { useUsage } from "@/hooks/use-usage";
 import { PAYWALL_CONFIG } from "@/lib/constants";
@@ -80,7 +81,6 @@ export function TranscriptionInterface({ isDarkMode = true, onComplete, onStateC
     const searchParams = useSearchParams();
     const router = useRouter();
     const { isSignedIn } = useUser();
-    const { openSignIn } = useClerk();
     const transcriptId = searchParams?.get('transcriptId');
 
     const [state, setState] = useState<AppState>("idle");
@@ -312,6 +312,8 @@ export function TranscriptionInterface({ isDarkMode = true, onComplete, onStateC
 
     const handleDragOver = (e: DragEvent<HTMLDivElement>) => {
         e.preventDefault();
+        // Block drag for guests - they need to sign in first
+        if (!isSignedIn) return;
         setIsDragging(true);
     };
 
@@ -323,6 +325,9 @@ export function TranscriptionInterface({ isDarkMode = true, onComplete, onStateC
     const handleDrop = (e: DragEvent<HTMLDivElement>) => {
         e.preventDefault();
         setIsDragging(false);
+
+        // Block drop for guests - they need to sign in first
+        if (!isSignedIn) return;
 
         const files = e.dataTransfer.files;
         if (files.length > 0) {
@@ -454,12 +459,6 @@ export function TranscriptionInterface({ isDarkMode = true, onComplete, onStateC
         console.log("Type:", file.type);
         console.log("Audio duration:", audioDuration, "seconds");
         console.log("Estimated processing time:", estimatedTime, "seconds");
-
-        // Check if sign-in is required (configurable paywall mode)
-        if (PAYWALL_CONFIG.requireSignInToTranscribe && !isSignedIn) {
-            openSignIn({ afterSignInUrl: '/new' });
-            return;
-        }
 
         // Pre-transcription quota check using estimated duration
         const estimatedMinutes = Math.ceil(audioDuration / 60);
@@ -981,49 +980,85 @@ export function TranscriptionInterface({ isDarkMode = true, onComplete, onStateC
 
                                         {/* Content */}
                                         <div className="relative p-12 md:p-16 z-20">
-                                            {/* Icon & Text */}
-                                            <div className="flex flex-col items-center space-y-6 mb-8">
-                                                {/* Upload Icon */}
-                                                <div
-                                                    onClick={() => fileInputRef.current?.click()}
-                                                    className={`w-20 h-20 rounded-3xl flex items-center justify-center transition-transform hover:scale-105 duration-300 cursor-pointer ${isDarkMode
-                                                        ? 'bg-gradient-to-br from-brand-500 to-orange-500 shadow-lg'
-                                                        : 'bg-[#F56040] shadow-[0_10px_40px_-10px_rgba(245,96,64,0.4)]'
-                                                        }`}>
-                                                    <Upload className="h-10 w-10 text-white" />
+                                            {/* Conditional: Guest sign-in CTA vs Upload UI */}
+                                            {!isSignedIn ? (
+                                                /* Guest: Sign-in CTA */
+                                                <div className="flex flex-col items-center space-y-6 mb-8">
+                                                    <div
+                                                        className={`w-20 h-20 rounded-3xl flex items-center justify-center ${isDarkMode
+                                                            ? 'bg-gradient-to-br from-brand-500 to-orange-500 shadow-lg'
+                                                            : 'bg-[#F56040] shadow-[0_10px_40px_-10px_rgba(245,96,64,0.4)]'
+                                                            }`}>
+                                                        <UserPlus className="h-10 w-10 text-white" />
+                                                    </div>
+
+                                                    <div className="text-center space-y-2">
+                                                        <h3 className={`text-2xl font-bold ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>
+                                                            Sign in to transcribe
+                                                        </h3>
+                                                        <p className={`text-sm ${isDarkMode ? 'text-gray-400' : 'text-slate-500'}`}>
+                                                            Get 30 free minutes every month
+                                                        </p>
+                                                    </div>
+
+                                                    <SignUpButton mode="modal" forceRedirectUrl="/new">
+                                                        <button
+                                                            className={`px-8 rounded-xl shadow-lg py-3 font-medium text-sm border border-transparent transition-all ${isDarkMode
+                                                                ? 'bg-white text-black hover:bg-gray-100'
+                                                                : 'bg-slate-900 text-white hover:bg-slate-800'
+                                                                }`}
+                                                        >
+                                                            Sign Up Free
+                                                        </button>
+                                                    </SignUpButton>
                                                 </div>
+                                            ) : (
+                                                /* Authenticated: Upload UI */
+                                                <>
+                                                    <div className="flex flex-col items-center space-y-6 mb-8">
+                                                        {/* Upload Icon */}
+                                                        <div
+                                                            onClick={() => fileInputRef.current?.click()}
+                                                            className={`w-20 h-20 rounded-3xl flex items-center justify-center transition-transform hover:scale-105 duration-300 cursor-pointer ${isDarkMode
+                                                                ? 'bg-gradient-to-br from-brand-500 to-orange-500 shadow-lg'
+                                                                : 'bg-[#F56040] shadow-[0_10px_40px_-10px_rgba(245,96,64,0.4)]'
+                                                                }`}>
+                                                            <Upload className="h-10 w-10 text-white" />
+                                                        </div>
 
-                                                {/* Text */}
-                                                <div className="text-center space-y-2">
-                                                    <h3 className={`text-2xl font-bold ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>
-                                                        Drop your file here
-                                                    </h3>
-                                                    <p className={`text-sm ${isDarkMode ? 'text-gray-400' : 'text-slate-500'}`}>
-                                                        Audio or video, up to 2GB
-                                                    </p>
-                                                </div>
-                                            </div>
+                                                        {/* Text */}
+                                                        <div className="text-center space-y-2">
+                                                            <h3 className={`text-2xl font-bold ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>
+                                                                Drop your file here
+                                                            </h3>
+                                                            <p className={`text-sm ${isDarkMode ? 'text-gray-400' : 'text-slate-500'}`}>
+                                                                Audio or video, up to 2GB
+                                                            </p>
+                                                        </div>
+                                                    </div>
 
-                                            {/* Buttons */}
-                                            <div className="flex gap-4 mb-8">
-                                                <button
-                                                    onClick={() => fileInputRef.current?.click()}
-                                                    className={`flex-1 rounded-xl shadow-lg py-3 font-medium text-sm border border-transparent transition-all ${isDarkMode
-                                                        ? 'bg-white text-black hover:bg-gray-100'
-                                                        : 'bg-slate-900 text-white hover:bg-slate-800'
-                                                        }`}
-                                                >
-                                                    Browse Files
-                                                </button>
-                                            </div>
+                                                    {/* Buttons */}
+                                                    <div className="flex gap-4 mb-8">
+                                                        <button
+                                                            onClick={() => fileInputRef.current?.click()}
+                                                            className={`flex-1 rounded-xl shadow-lg py-3 font-medium text-sm border border-transparent transition-all ${isDarkMode
+                                                                ? 'bg-white text-black hover:bg-gray-100'
+                                                                : 'bg-slate-900 text-white hover:bg-slate-800'
+                                                                }`}
+                                                        >
+                                                            Browse Files
+                                                        </button>
+                                                    </div>
 
-                                            <input
-                                                ref={fileInputRef}
-                                                type="file"
-                                                accept="audio/*,video/*,.mp3,.wav,.m4a,.webm,.mp4,.mov,.avi,.mkv,.m4v,.hevc,.3gp"
-                                                onChange={handleFileInputChange}
-                                                className="hidden"
-                                            />
+                                                    <input
+                                                        ref={fileInputRef}
+                                                        type="file"
+                                                        accept="audio/*,video/*,.mp3,.wav,.m4a,.webm,.mp4,.mov,.avi,.mkv,.m4v,.hevc,.3gp"
+                                                        onChange={handleFileInputChange}
+                                                        className="hidden"
+                                                    />
+                                                </>
+                                            )}
 
                                             {/* Divider */}
                                             <div className="w-full flex items-center gap-4 mb-6 opacity-50">
