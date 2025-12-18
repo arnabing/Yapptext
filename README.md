@@ -159,10 +159,22 @@ Edit `lib/constants.ts` to change usage limits:
 - [ ] Multiple export formats (SRT, VTT, PDF)
 - [ ] Batch processing for multiple files
 - [ ] Real-time transcription
-- [ ] **ChatGPT Deep Link**: "Discuss with ChatGPT" button on transcripts
-  - URL format: `https://chatgpt.com/?q=Your+prompt+here`
-  - Auto-submits prompt when clicked
-  - Can specify model: `?model=gpt-4`
+- [ ] **AI Actions Dropdown** (ChatGPT Deep Links) - Zero-cost AI features via ChatGPT
+  - URL format: `https://chatgpt.com/?q=Your+prompt+here` (auto-submits)
+  - **Primary Actions:**
+    - 📝 Summarize - "Give me a 3-bullet summary"
+    - ✅ Action Items - "Extract tasks and action items"
+    - 💡 Key Takeaways - "What are the main insights?"
+    - ❓ Ask Questions - Open-ended chat with transcript context
+  - **Content Creation:**
+    - 📧 Email Summary - "Draft an email summarizing this"
+    - 📰 Blog Post - "Turn this into a blog post"
+    - 🐦 Social Posts - "Create Twitter/LinkedIn posts"
+    - 📋 Meeting Notes - "Format as professional meeting notes"
+  - **Analysis:**
+    - 🎭 Sentiment Analysis - "Analyze tone and emotions"
+    - 👥 Speaker Insights - "Analyze each speaker's style"
+  - **Why this approach:** Zero API costs (user's ChatGPT account), always latest model, unlimited features via prompts
   - Reference: [Tenable Security Research](https://de.tenable.com/security/research/tra-2025-22)
 
 ## Testing & Evaluation (Proof that the system works)
