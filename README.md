@@ -159,6 +159,11 @@ Edit `lib/constants.ts` to change usage limits:
 - [ ] Multiple export formats (SRT, VTT, PDF)
 - [ ] Batch processing for multiple files
 - [ ] Real-time transcription
+- [ ] **ChatGPT Deep Link**: "Discuss with ChatGPT" button on transcripts
+  - URL format: `https://chatgpt.com/?q=Your+prompt+here`
+  - Auto-submits prompt when clicked
+  - Can specify model: `?model=gpt-4`
+  - Reference: [Tenable Security Research](https://de.tenable.com/security/research/tra-2025-22)
 
 ## Testing & Evaluation (Proof that the system works)
 
