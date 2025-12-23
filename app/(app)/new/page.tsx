@@ -44,6 +44,9 @@ import {
 import { getSampleTranscript } from "@/lib/sample-transcripts";
 import { formatTranscriptAsPlainText, formatTranscriptAsHTML } from "@/lib/format-transcript";
 import { PaywallModal } from "@/components/billing/PaywallModal";
+import { ChatGPTIcon } from "@/components/icons/chatgpt-icon";
+import { Icon } from "@iconify/react";
+import { AI_ACTIONS, openChatGPT } from "@/lib/chatgpt-actions";
 import { ReverseTrialPopup } from "@/components/billing/ReverseTrialPopup";
 import { useHeader } from "@/lib/header-context";
 import { useTranscriptContext } from "@/lib/transcript-context";
@@ -231,17 +234,53 @@ function NewTranscriptContent() {
             className="text-foreground hover:bg-white/20 dark:hover:bg-white/10"
           >
             {copied ? (
-              <>
-                <Check className="h-4 w-4 sm:mr-2" />
-                <span className="hidden sm:inline">Copied</span>
-              </>
+              <Check className="h-4 w-4" />
             ) : (
-              <>
-                <Copy className="h-4 w-4 sm:mr-2" />
-                <span className="hidden sm:inline">Copy</span>
-              </>
+              <Copy className="h-4 w-4" />
             )}
           </Button>
+
+          {/* ChatGPT AI Actions Dropdown */}
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button
+                size="sm"
+                variant="ghost"
+                aria-label="AI Actions"
+                className="text-foreground hover:bg-white/20 dark:hover:bg-white/10"
+              >
+                <ChatGPTIcon className="h-4 w-4" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end" className="w-48">
+              {AI_ACTIONS.map((action) => (
+                <DropdownMenuItem
+                  key={action.id}
+                  onClick={() => {
+                    const { success, url } = openChatGPT(action.id, transcript)
+                    if (success) {
+                      toast({
+                        title: "ChatGPT opened",
+                        description: "Press Enter to send your prompt",
+                      })
+                    } else {
+                      toast({
+                        title: "Popup blocked",
+                        description: (
+                          <a href={url} target="_blank" rel="noopener noreferrer" className="underline text-primary">
+                            Click here to open ChatGPT
+                          </a>
+                        ),
+                      })
+                    }
+                  }}
+                >
+                  <Icon icon={action.icon} className="h-4 w-4 mr-2" />
+                  {action.label}
+                </DropdownMenuItem>
+              ))}
+            </DropdownMenuContent>
+          </DropdownMenu>
 
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
@@ -1301,30 +1340,12 @@ function NewTranscriptContent() {
         onOpenChange={setShowReverseTrial}
       />
 
-      {/* File name pill - fixed at top center (outside audio controls wrapper) */}
-      {state === "complete" && audioFileName && (
-        <div className="fixed top-4 left-1/2 -translate-x-1/2 z-30 max-w-[calc(100%-160px)]">
-          <LiquidGlassCard
-            draggable={false}
-            blurIntensity="md"
-            shadowIntensity="sm"
-            glowIntensity="xs"
-            borderRadius="9999px"
-            tint="auto"
-            className="h-10 flex items-center justify-center px-4 max-w-[140px] sm:max-w-[180px]"
-          >
-            <span className="relative z-30 text-xs text-muted-foreground truncate">
-              {audioFileName.length > 20 ? `${audioFileName.slice(0, 17)}...` : audioFileName}
-            </span>
-          </LiquidGlassCard>
-        </div>
-      )}
-
       {/* Audio Player - fixed to bottom of viewport */}
       {state === "complete" && (
         <div className={`fixed bottom-0 right-0 z-20 transition-[left] duration-200 ${sidebarOpen ? 'md:left-[16rem]' : 'left-0'}`}>
           <AudioControls
             audioUrl={audioUrl}
+            fileName={audioFileName}
             onTimeUpdate={handleTimeUpdate}
           />
         </div>

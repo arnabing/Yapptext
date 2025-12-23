@@ -166,74 +166,86 @@ export function AudioControls({ audioUrl, fileName, onTimeUpdate, className = ''
           blurIntensity="lg"
           shadowIntensity="lg"
           glowIntensity="sm"
-          borderRadius="9999px"
+          borderRadius={fileName ? "1.5rem" : "9999px"}
           tint="auto"
           className="relative z-30 w-full max-w-2xl"
         >
           {/* Buffering indicator */}
           {isBuffering && (
-            <div className="absolute inset-0 flex items-center justify-center bg-black/10 backdrop-blur-sm z-40 rounded-full">
+            <div className={`absolute inset-0 flex items-center justify-center bg-black/10 backdrop-blur-sm z-40 ${fileName ? 'rounded-3xl' : 'rounded-full'}`}>
               <Loader2 className="h-5 w-5 animate-spin text-primary" />
             </div>
           )}
 
-          <div className="flex items-center gap-3 px-3 py-2 relative z-30">
-            {/* Left: Playback controls */}
-            <div className="flex items-center gap-1 shrink-0">
-              <Button
-                id="skip-back-btn"
-                size="icon"
-                variant="ghost"
-                onClick={skipBackward}
-                className="h-8 w-8 transition-transform hover:bg-white/10"
-                title="Skip back 10 seconds"
-              >
-                <Rewind className="h-4 w-4" />
-              </Button>
+          <div className="flex flex-col relative z-30">
+            {/* Top row: Filename centered */}
+            {fileName && (
+              <div className="text-center px-4 pt-2 pb-1">
+                <span className="text-xs text-muted-foreground truncate block" title={fileName}>
+                  {fileName.length > 30 ? `${fileName.slice(0, 27)}...` : fileName}
+                </span>
+              </div>
+            )}
 
-              <Button
-                size="icon"
-                variant="ghost"
-                onClick={togglePlayPause}
-                className="h-9 w-9 hover:bg-white/10"
-                title={isPlaying ? 'Pause' : 'Play'}
-              >
-                {isPlaying ? (
-                  <Pause className="h-5 w-5" />
-                ) : (
-                  <Play className="h-5 w-5 ml-0.5" />
-                )}
-              </Button>
+            {/* Bottom row: Playback controls + slider */}
+            <div className="flex items-center gap-3 px-3 py-2">
+              {/* Left: Playback controls */}
+              <div className="flex items-center gap-1 shrink-0">
+                <Button
+                  id="skip-back-btn"
+                  size="icon"
+                  variant="ghost"
+                  onClick={skipBackward}
+                  className="h-8 w-8 transition-transform hover:bg-white/10"
+                  title="Skip back 10 seconds"
+                >
+                  <Rewind className="h-4 w-4" />
+                </Button>
 
-              <Button
-                id="skip-forward-btn"
-                size="icon"
-                variant="ghost"
-                onClick={skipForward}
-                className="h-8 w-8 transition-transform hover:bg-white/10"
-                title="Skip forward 10 seconds"
-              >
-                <FastForward className="h-4 w-4" />
-              </Button>
-            </div>
+                <Button
+                  size="icon"
+                  variant="ghost"
+                  onClick={togglePlayPause}
+                  className="h-9 w-9 hover:bg-white/10"
+                  title={isPlaying ? 'Pause' : 'Play'}
+                >
+                  {isPlaying ? (
+                    <Pause className="h-5 w-5" />
+                  ) : (
+                    <Play className="h-5 w-5 ml-0.5" />
+                  )}
+                </Button>
 
-            {/* Center: Slider with time */}
-            <div className="flex-1 flex items-center gap-2 min-w-0">
-              <span className="text-xs font-mono tabular-nums text-muted-foreground shrink-0 w-10 text-right">
-                {formatTime(currentTime)}
-              </span>
-              <Slider
-                value={[currentTime]}
-                max={duration || 100}
-                step={0.1}
-                onValueChange={handleSliderChange}
-                onValueCommit={handleSliderCommit}
-                className="flex-1"
-                aria-label="Seek audio"
-              />
-              <span className="text-xs font-mono tabular-nums text-muted-foreground shrink-0 w-10">
-                {formatTime(duration)}
-              </span>
+                <Button
+                  id="skip-forward-btn"
+                  size="icon"
+                  variant="ghost"
+                  onClick={skipForward}
+                  className="h-8 w-8 transition-transform hover:bg-white/10"
+                  title="Skip forward 10 seconds"
+                >
+                  <FastForward className="h-4 w-4" />
+                </Button>
+              </div>
+
+              {/* Center: Slider with time */}
+              <div className="flex-1 flex items-center gap-2 min-w-0">
+                <span className="text-xs font-mono tabular-nums text-muted-foreground shrink-0 w-10 text-right">
+                  {formatTime(currentTime)}
+                </span>
+                <Slider
+                  value={[currentTime]}
+                  max={duration || 100}
+                  step={0.1}
+                  onValueChange={handleSliderChange}
+                  onValueCommit={handleSliderCommit}
+                  className="flex-1"
+                  aria-label="Seek audio"
+                />
+                <span className="text-xs font-mono tabular-nums text-muted-foreground shrink-0 w-10">
+                  {formatTime(duration)}
+                </span>
+              </div>
             </div>
           </div>
         </LiquidGlassCard>

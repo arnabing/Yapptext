@@ -49,6 +49,9 @@ import { isVideoFile, extractAudioFromVideo } from "@/lib/extract-audio";
 import { PaywallModal } from "@/components/billing/PaywallModal";
 import { ReverseTrialPopup } from "@/components/billing/ReverseTrialPopup";
 import { useHeader } from "@/lib/header-context";
+import { ChatGPTIcon } from "@/components/icons/chatgpt-icon";
+import { Icon } from "@iconify/react";
+import { AI_ACTIONS, openChatGPT } from "@/lib/chatgpt-actions";
 import { useSearchParams, useRouter } from "next/navigation";
 import { useUser, SignUpButton } from '@clerk/nextjs';
 import { DotFlow, transcriptionFlowItems, videoExtractionFlowItems, uploadFlowItems, processingFlowItems } from "@/components/ui/dot-flow";
@@ -225,17 +228,52 @@ export function TranscriptionInterface({ isDarkMode = true, onComplete, onStateC
                         aria-label="Copy transcript"
                     >
                         {copied ? (
-                            <>
-                                <Check className="h-4 w-4 sm:mr-2" />
-                                <span className="hidden sm:inline">Copied</span>
-                            </>
+                            <Check className="h-4 w-4" />
                         ) : (
-                            <>
-                                <Copy className="h-4 w-4 sm:mr-2" />
-                                <span className="hidden sm:inline">Copy</span>
-                            </>
+                            <Copy className="h-4 w-4" />
                         )}
                     </Button>
+
+                    {/* ChatGPT AI Actions Dropdown */}
+                    <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                            <Button
+                                size="sm"
+                                variant="outline"
+                                aria-label="AI Actions"
+                            >
+                                <ChatGPTIcon className="h-4 w-4" />
+                            </Button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent align="end" className="w-48">
+                            {AI_ACTIONS.map((action) => (
+                                <DropdownMenuItem
+                                    key={action.id}
+                                    onClick={() => {
+                                        const { success, url } = openChatGPT(action.id, transcript)
+                                        if (success) {
+                                            toast({
+                                                title: "ChatGPT opened",
+                                                description: "Press Enter to send your prompt",
+                                            })
+                                        } else {
+                                            toast({
+                                                title: "Popup blocked",
+                                                description: (
+                                                    <a href={url} target="_blank" rel="noopener noreferrer" className="underline text-primary">
+                                                        Click here to open ChatGPT
+                                                    </a>
+                                                ),
+                                            })
+                                        }
+                                    }}
+                                >
+                                    <Icon icon={action.icon} className="h-4 w-4 mr-2" />
+                                    {action.label}
+                                </DropdownMenuItem>
+                            ))}
+                        </DropdownMenuContent>
+                    </DropdownMenu>
 
                     <DropdownMenu>
                         <DropdownMenuTrigger asChild>
