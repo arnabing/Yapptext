@@ -1,15 +1,19 @@
-import { AssemblyAI } from 'assemblyai'
+// Lazy import to avoid module evaluation at build time
+let AssemblyAI: any = null
+let client: any = null
 
-console.log('AssemblyAI lib loading, API key exists:', !!process.env.ASSEMBLYAI_API_KEY)
-console.log('AssemblyAI API key length:', process.env.ASSEMBLYAI_API_KEY?.length)
-
-let client: AssemblyAI | null = null
-
-function getClient(): AssemblyAI {
+async function getClient() {
   if (!client) {
     if (!process.env.ASSEMBLYAI_API_KEY) {
       throw new Error('ASSEMBLYAI_API_KEY is not configured')
     }
+
+    // Dynamic import to avoid build-time evaluation
+    if (!AssemblyAI) {
+      const module = await import('assemblyai')
+      AssemblyAI = module.AssemblyAI
+    }
+
     client = new AssemblyAI({
       apiKey: process.env.ASSEMBLYAI_API_KEY
     })
@@ -137,7 +141,7 @@ export async function transcribeWithAssemblyAI(audioInput: File | string, option
     }
     console.log('- speakers_expected:', transcriptOptions.speakers_expected)
 
-    const client = getClient()
+    const client = await getClient()
     // transcribe() already polls until completed - no need for waitUntilReady
     const completedTranscript = await client.transcripts.transcribe(transcriptOptions)
     
@@ -338,7 +342,7 @@ export async function submitTranscriptionJob(audioInput: File | string, options?
       console.log('- Using user-provided speakers_expected:', options.speakersExpected)
     }
 
-    const client = getClient()
+    const client = await getClient()
 
     // Submit job without waiting - returns immediately with transcript object containing id
     console.log('Submitting transcription job with speech_model: best')
@@ -386,7 +390,7 @@ export async function getTranscriptionStatus(transcriptId: string): Promise<{
   }
 
   try {
-    const client = getClient()
+    const client = await getClient()
     const result = await client.transcripts.get(transcriptId)
 
     console.log('- Current status:', result.status)
